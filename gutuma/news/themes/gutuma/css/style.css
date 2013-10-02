@@ -1,0 +1,347 @@
+/************************************************************************
+ * @project Gutuma Newsletter Managment
+ * @author Rowan Seymour
+ * @copyright This source is distributed under the GPL
+ * @file Default theme main stylesheet
+ * @modifications Cyril Maguire
+ */
+/* Gutama plugin package
+ * @version 1.6
+ * @date	01/10/2013
+ * @author	Cyril MAGUIRE
+*/
+
+ 
+* {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 16px;
+}
+
+body {
+	background-color: #cde8e3;
+	text-align: center;
+	padding: 0px;
+	margin: 0px;
+}
+
+p {
+	margin: 10px 0px 10px 0px;
+}
+
+h2 {
+	font-size: 16px;
+	margin: 10px 0px 16px 0px;
+}
+
+h3 {
+	font-size: 14px;
+}
+
+a {
+	color: #467dc0;
+	text-decoration: none;
+	border-bottom: 1px dotted #467dc0;
+}
+
+a.imglink {
+	border: none;
+}
+
+code {
+	font-family: "Courier New", Courier, mono;
+}
+
+img {
+	border: none;
+}
+
+form {
+	margin: 0px;
+	padding: 0px;
+}
+
+input.textfield {
+	background-color: #F8F8F8;
+	border-top: 1px solid #abadb3;
+	border-right: 1px solid #e3e9ef;
+	border-bottom: 1px solid #e3e9ef;	
+	border-left: 1px solid #e3e9ef;
+	padding: 2px;
+	margin: 0px;	
+}
+
+textarea {
+	background-color: #F8F8F8;
+	border-top: 1px solid #abadb3;
+	border-right: 1px solid #e3e9ef;
+	border-bottom: 1px solid #e3e9ef;	
+	border-left: 1px solid #e3e9ef;		
+	padding: 4px;
+	margin: 0px;
+	font-family: "Courier New", Courier, mono;	
+}
+
+hr {
+	border-top: 1px dotted black;
+	border-right: 0;
+	border-bottom: 0;	
+	border-left: 0;
+	height: 1px;
+	background-color: white;
+	/*margin: 10px 0px 10px 0px;*/
+}
+
+div#demobanner {
+	background-color: #f6f8c1;
+	border-bottom: 1px solid #e6ea75;
+	text-align: center;
+	font-weight: bold;
+	padding: 3px;
+}
+
+div#page {
+	background-color: #FFFFFF;
+	text-align: left;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	margin-bottom: 20px; 
+	width: 700px;
+}
+
+div#header {
+	height: 70px;
+	background-image: url(../images/header_bg.jpg);
+}
+
+div#headertitle {
+	float: left;
+}
+
+div#headertitle h1 {
+	margin: 0px;
+	padding: 0px;
+	text-indent: -10000px;
+}
+
+div#headerwelcome {
+	float: right;
+	font-size: 10px;
+	color: white;
+	margin: 10px;
+	text-align: right;
+}
+
+div#headerwelcome a {
+	font-size: 10px;
+	color: #AADDFF;
+}
+
+/* Main menu */
+
+div#mainmenu {
+	height: 30px;
+	background-image: url(../images/menu_bg.jpg);
+}
+
+div#mainmenu ul {
+	padding: 6px 10px 0px 0px;
+	margin: 0px;
+	list-style-type: none;
+	text-align: right;
+}
+
+div#mainmenu ul li {
+	display: inline;
+	padding-left: 20px;
+	font-weight: bold;
+}
+
+div#mainmenu ul li a {	
+	color: #AADDFF;
+	border: none;
+}
+
+div#mainmenu ul li a.current {	
+	color: #FFFFFF;
+}
+
+div#mainmenu ul li a:hover {
+	color: #FFFFFF;
+}
+
+/* Sub menu */
+
+div#sectionheader {
+	width: 100%;
+	overflow: hidden;
+}
+
+ul#sectionmenu {
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+
+ul#sectionmenu li {
+	display: inline;
+	padding-left: 20px;
+	font-weight: bold;
+	line-height: 12px;
+}
+
+ul#sectionmenu li a {	
+	color: #489689;
+	border: none;
+}
+
+ul#sectionmenu li a.current {	
+	color: #7dbcb1;
+}
+
+ul#sectionmenu li a:hover {
+	color: #7dbcb1;
+}
+
+/* Other objects */
+
+div#content {
+	padding: 10px;
+	min-height: 300px;
+}
+
+div#footer {
+	text-align: center;
+	font-size: 10px;
+	color: white;
+	background-color: #003333;
+	padding: 10px;
+	height: 50px;
+	background-image: url(../images/footer_bg.jpg);
+}
+
+div#footer a {
+	font-size: 10px;
+	color: #AADDFF;
+}
+
+span.yes {
+	font-weight: bold;
+	color: #009966;
+}
+
+span.no {
+	font-weight: bold;
+	color: #CC0000;	
+}
+
+div#statusmsg {
+	padding: 10px;
+	background-color: #F0F0FF;
+	margin-bottom: 10px;
+}
+
+div#errormsg {
+	padding: 10px;
+	background-color: #FFF0F0;
+	margin-bottom: 10px;
+	overflow: hidden;
+	width: auto;	
+}
+
+div#debugmsg {
+	padding: 10px;
+	background-color: #FFFFCC;
+}
+
+div.menubar {
+	background-color: #d8eeea;
+	padding: 5px;
+	text-align: right;
+	margin-bottom: 10px;
+	overflow: hidden;
+	width: auto;
+}
+
+div.messagepreview {
+	height: 250px;
+	border: 1px solid black;
+	padding: 5px;
+	overflow: auto;
+}
+
+/* Pager bar classes */
+
+div.pager {
+	background-color: white;
+	overflow: hidden;
+	width: 100%;
+}
+
+div.pagercontrols {
+	float: left;
+	width: 140px;
+	text-align: center;
+	margin-left: 270px;
+	padding: 10px 0px 10px 0px;
+}
+
+div.pagerinfo {
+	float: right;
+	padding: 10px 0px 10px 0px;
+}
+
+/* Results table classes */
+
+table {
+	width: 100%;
+}
+
+table.results tr td {
+	border-bottom: 1px dotted black;
+	padding: 5px;
+}
+
+table.results tr td.emptyresults {
+	padding: 10px;
+	font-style: italic;
+	text-align: center;
+}
+
+/* Field set classes */
+
+div.formfieldset {
+}
+
+div.formfield {
+	width: 100%;
+	overflow: hidden;
+	padding: 10px 0px 10px 0px;	
+	border-bottom: 1px dotted black;
+}
+
+div.formfieldcomment {
+	margin-bottom: 10px;
+}
+
+div.formfielddivider {
+	clear: both;
+	height: 10px;
+}
+
+div.formfieldlabel {
+	float: left;
+	width: 50%;
+	font-weight: bold;
+	margin: 0px;
+	padding: 0px;
+}
+
+div.formfieldcontrols {
+	float: right;
+	clear: right;
+	width: 50%;
+	margin: 0px;
+	padding: 0px;
+}

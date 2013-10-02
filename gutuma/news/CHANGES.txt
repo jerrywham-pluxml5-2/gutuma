@@ -1,0 +1,264 @@
+=====================================================================
+ CHANGE LOG FOR GUTUMA
+=====================================================================
+
+1.6.3 [23-SEP-2013] (BETA)
+=====================================================================
+
+New features
++ Better Pluxml 5.2 integration. All in one plugin. Better used of Pluxml lib and 
+conventions
++ List of valid users in settings
+
+Bug fixes :
++ Fixed authentification failed with valid user
++ Fixed lang in session
+
+1.6.2 [29-OCT-2012] (BETA)
+=====================================================================
+
+New features
++ Better Pluxml integration. All in one plugin. Better used of Pluxml lib and 
+conventions
++ List of valid users in settings
+
+Bug fixes :
++ Fixed error with subscription ajax link and form
++ Fixed authentification failed with valid user
++ Fixed multiple issues with redirection and root link
++ Fixed issue in administration of users
+
+1.6.1 [30-APR-2012] (BETA)
+=====================================================================
+
+New features
++ t() function to translate all the interface
++ Themes for gutuma
++ Pluxml integration
++ Obfuscation of config file
+
+1.6 [23-SEP-2008] (BETA)
+=====================================================================
+
+New features:
++ Added install and upgrade framework - Gutuma detects a fresh
+  installation and redirects to the install page. Will also detect
+  an upgrade and redirect to an update script. Install page is
+  automatically deleted from server on completion
++ Added ability to save a newsletter as a draft and send later
++ Added outbox which stores messages that couldn't be sent to all
+  recipients in one batch
++ Added settings for controlling the number of deliveries per batch
+  and the time limit for a batch send, to help avoid script timeouts
+  when sending to very large lists
++ Added CRON interface - cron.php which can be called to periodically
+  send newsletters
++ Upgraded editor to TinyMCE 3.2.0.1
+
+Bug fixes:
++ Fixed all E_NOTICE level warnings (not usually visible anyway)
+
+
+1.5.1 [17-SEP-2008] (BETA)
+=====================================================================
+
+New features:
++ Added a convenient back button to the Edit list page
++ Better HTML -> plain text automatic conversion
+
+Bug fixes:
++ Fixed undefined function error when importing a CSV
++ Fixed special characters not being converted properly in plain
+  text versions of newsletters
++ Fixed security issue relating to multiple installations on one
+  server
+
+
+1.5 [13-SEP-2008] (BETA)
+=====================================================================
+********** This is the first release which requires PHP5 ************
+
+New features:
++ Uses AJAX for several list management operations
++ Buttons are now optional on subscribe gadgets with forms
++ Added Test functionality - you can send test messages from the
+  transport settings page to check SMTP/Sendmail/PHP mail settings
++ Added option to create new list as private
++ Added option for admin notification messages on new user subscribe
+  or unsubscribe
++ Added ability to display failed recipients in the error message
++ Added quick mail links to manage lists page
++ Added option for auto-detecting SMTP settings
++ Added option for disabling PHP mail()
+
+Bug fixes:
++ Fixed menu display issue caused by strrpos problem
++ Fixed uncaught exception when Sendmail fails
++ Subscribe gadgets no longer get errors if email isn't configured
+  properly on the server
+
+TODO:
++ Get TinyMCE compressor working for faster compose page loads
+
+
+1.1 [06-SEP-2008] (BETA)
+=====================================================================
+New features:
++ Revamped the Integration page to make it easier to generate
+  different gadgets which can be generated dynamically through a
+	Javascript API.
++ Added an AJAX interface and two new AJAX subscribe gadgets 
++ Password on settings page masked and not sent to page for security
++ Better HTML -> plain text automatic conversion
++ Automatic signatures on newsletters are now optional
++ User must confirm before leaving compose page with unsent message
+
+TODO:
++ Get TinyMCE compressor working for faster compose page loads
++ Test for SMTP Settings
+
+
+1.0 [03-SEP-2008] (RC1)
+=====================================================================
+Bug fixes:
++ Fixed PHP4 incompatibility issues with fgets and fgetss calls
++ Fixed PHP4 incompatibility issues with html_entity_decode
+
+
+1.0 [28-AUG-2008] (BETA)
+=====================================================================
+Known issues:
++ None
+
+New features:
++ Messages can now have file attachments!
++ Messages can be sent to address lists and individual addresses in
+  one go.
++ When address occurs on more than one list in the to field, subject
+  prefix is taken from first occuring list
++ Collective name can be set for all lists, which is then used with
+  messages not specific to one list
++ Automatic welcome and goodbye messages for subscribers
++ Added setting to limit the number of messages sent on one
+  connection - default 1000
++ Improved basic subscription form for embedding in other sites
++ Upgrading now much easier as existing installation can just be
+  written over. Config.php won't be lost because its not part of the
+  release files.
+	
+Bug fixes:
++ Fixed sample basic form on the integration page not sending list id
+
+TODOS:
++ Admin notification messages for subscribes and unsubscribes
++ Better automatic HTML -> TEXT conversion
++ Hide password in settings - use retype to check
++ Wordpress widget plugin?
++ Limit subscriptions from ip per day
+
+
+0.7.6 [24-AUG-2008] (BETA)
+=====================================================================
+Known issues:
++ None
+
+New features:
++ Replaced almost all tables with DIVs for easier CSS styling
++ Added update checker to home page - tells you when a newer version
+  is available
+
+Bug fixes:
++ Disabled TinyMCE compression whilst still experiencing problems
+  with Firefox - it can be easily reenabled by a define in gutuma.php
++ Fixed login redirect not including query string, i.e., list ID
+
+TODOS:
++ Message attachments
++ Automatic welcome/goodbye messages
+
+
+0.7.5 [23-AUG-2008] (BETA)
+=====================================================================
+Known issues:
++ Compressor sometimes prevents TinyMCE working in Firefox
+
+New features:
++ Added check for duplicate list names when creating a new one
++ Added ability to send same message to multiple lists
++ Upgraded to TinyMCE 3.1.1
++ Added TinyMCE compressor for faster page initialization
++ Added ability to search for addresses
+
+Bug fixes:
++ Fixed admin name changes not being saved
++ Fixed paging controls allowing one page step to far
+
+
+0.7 [16-AUG-2008] (BETA)
+=====================================================================
+Known issues:
++ None
+
+New features:
++ Added DEMO mode where sending messages and changing settings is
+  disabled
++ Added SMTP port and encryption options
++ Added option to automatically send sent emails to administrator
++ Added private field on address lists
++ Removed unnecessary buttons from TinyMCE
+
+Bug fixes:
++ Fixed SMTP username/password being ignored
++ Removed PHP4 incompatible use of default values and parameters
+  passed by reference
++ Fixed HTML->text conversion problems
++ Fixed TinyMCE issue on IE7
+
+TODOS:
++ Send same message to multiple lists (almost finished)
++ More integration gadgets
++ Automatic welcome/goodbye messages
+
+
+0.6 [11-AUG-2008] (BETA)
+=====================================================================
+Known Issues:
++ None
+
+New features:
++ Added preview mode on Compose page so plain text version can be
+  checked/edited before email is sent.
++ Added 'Remember me' and fixed default button on login page
++ Added checking for duplicate addresses when adding new ones
++ Added sorting for lists when adding new addresses
++ Everything is XHTML
+
+Bug fixes:
++ Fixed unreliable relative urls for redirecting
++ Fixed problems with certain PHP server vars not being available on
+  some servers
++ Fixed plain text conversion problems with entities, newlines and
+  links
++ Fixed removal of slashes when magic quotes is enabled
+
+TODOS:
++ Send same message to multiple lists
++ Add more SMTP settings to allow GMail SMTP etc
++ Create widget for other sites to send subscription requestions
++ Search for addresses
+
+
+0.5 [09-AUG-2008] (First release - Alpha)
+=====================================================================
+Known Issues:
++ Problems on servers not populating $_SERVER['DOCUMENT_ROOT']
++ Text versions of HTML emails not formatted properly
++ New addresses not checked for duplicates or sorted
+
+TODOS:
++ Default button on login page
++ Add support info to home page
++ Add more SMTP settings to allow GMail SMTP etc
++ Add unsubscribe link to all messages
++ Create widget for other sites to send subscription requestions
++ Remove extension when creating name for imported list

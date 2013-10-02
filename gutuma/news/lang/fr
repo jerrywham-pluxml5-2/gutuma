@@ -1,0 +1,370 @@
+//************************************************************************
+// * @project Gutuma Newsletter Managment
+// * @author Cyril MAGUIRE
+// * @copyright This source is distributed under the GPL
+// * @file Fr translatoin page
+// *
+// * Gutama plugin package
+// * @version 1.3
+// * @date	29/10/2012
+// * @author	Cyril MAGUIRE
+// *
+Gutuma Newsletter Management[::->]Gestion des Newsletters
+Sorry - Gutuma requires at least PHP5. Please contact your hosting provider and ask them to upgrade.[::->]Désolé - Gutuma nécessite au moins PHP5. Merci de contacter votre hébergeur afin de lui demander une mise à niveau.
+Welcome [::->]Bienvenue 
+Logout[::->]Déconnexion
+Home[::->]Informations
+Newsletters[::->]Newsletters
+Lists[::->]Listes
+Gadgets[::->]Gadgets
+Settings[::->]Réglages
+</a> is now available. Please upgrade.[::->]</a> est disponible. Merci de faire la mise à jour.
+You are using a pre-release or beta version of Gutuma. Please report any bugs or problems you encounter.[::->]Vous utilisez une version précoce ou béta de Gutuma. Merci de reporter tous les bugs ou tous les problèmes que vous pourriez rencontrer.
+Welcome to Gutuma - an easy to use, yet feature rich newsletter management tool, geared towards web designers and people out in the field.[::->]Bienvenue sur Gutuma - un outil de gestion de newsletters, facile à utiliser, mais riche en fonctionnalités, axé sur les concepteurs de sites Web et les non initiés.
+Installation checklist[::->]Vérification de l'installation
+directory is writable...[::->]le dossier est éditable...
+is writable...[::->]est éditable
+Admin email address has been set...[::->]L'adresse admin est renseignée...
+Admin password has been changed...[::->]Le mot de passe admin a été changé...
+Install script[::->]Le script d'installation
+deleted...[::->]a été supprimé...
+System information[::->]Informations sur le système
+Gutuma version:[::->]Version de Gutuma :
+PHP version:[::->]Version de PHP :
+Currently storing:[::->]Actuellement enregistrées :
+addresse% in[::->]adresse[%%] dans
+list%[::->]liste[%%]
+Mailbox:[::->]Boîte aux lettres :
+draft%[::->]brouillon[%%]
+sending[::->]envoi[%%]
+SMTP server:[::->]Serveur SMTP :
+Licence[::->]Licence
+Gutuma is free open source software released under the GPL version 3 licence. However, if you would like to assist further development of this project please consider making a donation, which will be much appreciated.[::->]Gutuma est un logiciel libre open source sous licence GPL version 3. Malgré ça, si vous souhaitez assister à un développement ultérieur de ce projet, merci d'envisager un don, qui sera fortement apprécié.
+PayPal - The safer, easier way to pay online.[::->]PayPal
+is released under the GPL[::->]est sous licence GPL
+Help[::->]Aide
+//************************************************************************
+//			LOGIN
+//************************************************************************
+Incorrect username or password[::->]<span style="color:red;">Identifiant ou mot de passe invalide</span>
+Username[::->]Identifiant
+Password[::->]Mot de passe
+Remember me[::->]Se souvenir de moi
+Log In[::->]Connexion
+//************************************************************************
+//			LISTS
+//************************************************************************
+List <b><i>%</i></b> imported from CSV file[::->]La liste <b><i>[%%]</i></b> a été importée à partir d'un fichier CSV
+Uploaded file is not a csv file[::->]Le fichier téléchargé n'est pas un fichier csv
+Manage lists[::->]Gérer les listes
+Edit[::->]Éditer
+Send newsletter to[::->]Envoyer la newsletter à cette liste
+Download as CSV[::->]Télécharger comme fichier CSV
+Delete[::->]Supprimer
+An error occured whilst making AJAX request[::->]Une erreur est survenue lors de la requête AJAX
+Are you sure you want to delete this list? All addresses will be lost![::->]Êtes-vous sûr de vouloir supprimer cette liste ? Toutes les adresses seront perdues !
+These are the lists which have already been created.[::->]Voici les listes qui ont déjà été créées.
+Name[::->]Nom
+Addresses[::->]Adresses
+Private[::->]Privée
+Yes[::->]Oui
+No[::->]Non
+No lists[::->]Aucune liste
+Create new list[::->]Créer une nouvelle liste
+Add[::->]Ajouter
+Import list[::->]Importer une liste
+A new list can be created from a CSV file of addresses. The format of this file should be email addresses in the first column - other columns will be ignored.[::->]Une nouvelle liste peut être créée à partir d'un fichier CSV. Ce fichier doit être formé par des adresses de courriels dans la première colonne - les autres colonnes seront ignorées.
+Import[::->]Importer
+No action specified in AJAX request[::->]Aucune action précisée dans la requête AJAX
+This action requires a valid session. Try logging in again.[::->]Cette action nécessite une session valide. Merci de tenter de vous reconnecter
+Invalid list[::->]Liste non valide
+New list <b><i>%</i></b> added[::->]Nouvelle liste <b><i>[%%]</i></b> ajoutée
+List <b><i>%</i></b> deleted[::->]Liste <b><i>[%%]</i></b> supprimée
+Address <b><i>%</i></b> removed[::->]Adresse <b><i>[%%]</i></b> supprimée
+Subscription[::->]Abonnement
+Unsubscription[::->]Désabonnement
+ successful![::->] réussi !
+Invalid newsletter[::->]Newsletter non valide
+Newsletter deleted[::->]Newsletter supprimée
+Address <b><i>%</i></b> already in the list[::->]L'adresse <b><i>[%%]</i></b> est déjà dans la liste
+Addresses cannot be more than % characters[::->]Une adresse ne peut pas avoir plus de [%%] caractères
+Lists can have a maximum of % addresses in demo mode[::->]Les listes peuvent contenir un maximum de [%%] adresses en mode de démonstration
+//************************************************************************
+//			EDITLIST
+//************************************************************************
+Address <b><i>%</i></b> not found in the list <b><i>%</i></b>[::->]L'adresse <b><i>[%%]</i></b> n'a pas été trouvée dans la liste <b><i>[%%]</i></b>
+Unable to write list file. Check permissions for directory <code>%</code>[::->]Impossible d'écrire dans le fichier de la liste. Vérifiez les permissions du dossier <code>[%%]</code>
+Unable to delete list. Check permissions for directory <code>%</code>[::->]Impossible de supprimer la liste. Vérifiez les permissions du dossier <code>[%%]</code>
+Unable to read list file[::->]<span style="color:red;">Impossible de lire le fichier de la liste</span>
+Invalid list name. Names must only contain alphanumeric characters, spaces and dashes[::->]Nom de liste non valide.<br/>Les noms ne doivent être formés que de caractères<br/>alphanumériques, d'espaces ou de tirets
+A list with the name <b><i>%</i></b> already exists[::->]Une liste nommée <b><i>[%%]</i></b> existe déjà
+You can have a maximum of % lists in demo mode[::->]Vous pouvez avoir un maximum de [%%] listes en mode de démonstration
+Unable to open CSV file for reading[::->]Impossible d'ouvrir et de lire le fichier CSV
+//************************************************************************
+//			COMPOSE
+//************************************************************************
+Newsletter sent to first batch of recipients[::->]La newsletter a été envoyée au premier lot de destinataires
+Newsletter sent to all recipients[::->]La newsletter a été envoyée à tous les destinataires
+Attachment <b><i>%</i></b> added[::->]Pièce jointe <b><i>[%%]</i></b> ajoutée
+Attachment <i>%</i> removed[::->]Pièce jointe <b><i>[%%]</i></b> retirée
+Newsletter saved as draft[::->]La newsletter a été enregistrée comme un brouillon
+Are you sure you want to send a message with an empty subject?[::->]Êtes-vous sûr de vouloir envoyer ce message sans spécifier le sujet de l'envoi ?
+Your message has not been sent or saved, and will be lost if you leave this page.[::->]Votre message n'a été ni envoyé ni sauvegardé, et il sera définitivement perdu si vous quittez cette page
+Preview [::->]Aperçu de 
+Compose [::->]Écrire 
+newsletter[::->]la newsletter
+Drafts[::->]Brouillons
+Outbox[::->]Boîte d'envois
+A address list must be created before a newsletter can be sent[::->]Une liste d'adresses doit être créée avant de pouvoir envoyer une newsletter
+A valid admin email must be specified before a newsletter can be sent[::->]Un email d'administration doit être renseigné avant de pouvoir envoyer une newsletter
+Save[::->]Enregistrer
+Edit[::->]Modifier
+Preview[::->]Aperçu
+Send[::->]Envoyer
+Address book: [::->]Carnet d'adresses 
+Add[::->]Ajouter
+To[::->]Destinataire
+Subject[::->]Sujet
+Below is the plain text version that will also be sent so that users with non-HTML email clients can receive this newsletter. You can edit this before the email is sent.[::->]Ci-dessous, la version textuelle qui sera également envoyée afin que les utilisateurs d'un client de messagerie ne prenant pas en charge le langage HTML puissent recevoir cette newsletter. Vous pouvez la modifier avant que le courriel ne soit envoyé.
+Attach[::->]Joindre
+Compose[::->]Rédaction
+Remove[::->]Retirer
+Unable to access mailbox[::->]Impossible d'accéder à la boite d'envois
+Unable to initialize mailer[::->]Impossible d'initialiser la messagerie
+List updated[::->]Liste modifiée
+Edit list[::->]Modifier une liste
+Address <b><i>%</i></b> added to list[::->]L'adresse <b><i>[%%]</i></b> a été ajoutée à la liste
+You must enter a valid email address[::->]Vous devez entrer une adresse de courriel valide
+Are you sure you want to remove this address?[::->]Êtes vous sûr de vouloir supprimer cette adresse ?
+Back[::->]Retour
+If the list is marked as private then people cannot subscribe to it, and it will not be listed on the default subscribe page[::->]Si la liste est qualifiée de privée alors le public ne pourra pas s'y abonner et elle ne sera pas listée par défaut sur la page de souscription
+Subscribers[::->]Abonnés
+Search[::->]Rechercher
+Clear[::->]Effacer
+Address[::->]Adresse
+No addresses[::->]Aucune adresse
+Showing <span id="%_start">%</span> to <span id="%_end">%</span> of <span id="%_total">%</span>[::->]Adresses <span id="[%%]_start">[%%]</span> à <span id="[%%]_end">[%%]</span> sur <span id="[%%]_total">[%%]</span>
+More[::->]Plus
+Less[::->]Moins
+Subscribe to my newsletter[::->]S'abonner à la newsletter
+Subscribe to my newsletter![::->]S\'abonner à la newsletter !
+Subscribe[::->]S'inscrire
+Your email[::->]Votre email
+All[::->]Toutes
+//************************************************************************
+//			INTEGRATE
+//************************************************************************
+Gadgets for other sites[::->]Gadgets pour les autres sites
+Here you can generate gadgets for other websites so that people can easily find and subscribe to your newsletters.[::->]Ici vous pouvez générer des gadgets pour les autres sites afin que les personnes puissent facilement trouver et souscrire à vos newsletters
+Next[::->]Suivant
+Basic subscribe link[::->]Lien basique
+Basic subscribe form[::->]Formulaire basique
+Subscribe[::->]Souscrire
+AJAX subscribe link[::->]Lien AJAX
+AJAX subscribe form[::->]Formulaire AJAX
+Update[::->]Mettre à jour
+Address list[::->]Liste d'adresses
+Link text[::->]Texte du lien
+This can be left blank to create the gadget without a button[::->]Ceci peut être laissé vide afin de créer un gadget sans boutton
+Button text[::->]Texte du boutton
+If two or more gadgets are going to be used on the same page, then they need to use unique prefixes[::->]Si deux gadgets ou plus doivent être utilisés sur une même page, ils doivent avoir des préfixes uniques
+Control prefix[::->]Préfixe du contrôle
+Email hint[::->]Indice pour l'email
+Script call (recommended)[::->]Appel du script (recommandé)
+The following should be added to the HEAD section of your webpage[::->]Le texte suivant doit être placé dans la section HEAD de votre page web
+This should be pasted to the place in your webpage where you want the gadget to appear[::->]Le texte ci-dessous doit être placé dans votre page web à l'endroit où vous souhaitez voir apparaitre le gadget
+Actual HTML (advanced)[::->]HTML actuel (avancé)
+If you need to customize the gadget, you can copy and paste the actual HTML instead.[::->]Si vous avez besoin de customiser le gadget, vous pouvez copier et coller le code HTML actuel.
+<strong>NOTE</strong> This gadget requires you to include <code>%</code> as above even if you use this HTML.[::->]<strong>NOTE</strong> Ce gadget nécessite que vous incluiez la page <code>[%%]</code> comme ci-dessus même si vous utilisez du HTML.
+//************************************************************************
+//			NEWSLETTERS
+//************************************************************************
+Newsletter[::->]Newsletter
+Edit and send[::->]Modifier et envoyer
+Send to remaining recipients[::->]Envoyer aux destinataires restants
+Are you sure you want to delete this newsletter?[::->]Êtes vous sûr de vouloir supprimer cette newslette ?
+These are the newsletters which have not yet been sent.[::->]Voici les newsletters qui n'ont pas encore été envoyées.
+These are the newsletters which have been sent but have not yet been delivered to all recipients.[::->]Voici les newsletters qui ont été envoyées mais non délivrées à tous les destinataires.
+Recipients[::->]Destinataires
+No newsletters[::->]Aucune newsletter
+Progress[::->]Progression
+//************************************************************************
+//			SETTINGS
+//************************************************************************
+General settings[::->]Réglages généraux
+Transport settings[::->]Réglages d'acheminement
+Message settings[::->]Réglages des messages
+Typed passwords did not match[::->]Les mots de passe saisis ne correspondent pas
+Settings successfully saved[::->]Réglages correctement enregistrés
+Administrator email must be set before mail can be sent[::->]Le courriel de l'administrateur doit être renseigné avant de pouvoir effectuer l'envoi
+No method of mail transportation has been configured[::->]Aucune méthode d'acheminement des emails n'a été configurée
+If you have received this email then your settings clearly work![::->]Si vous avez reçu cet email c'est que vos réglages ont correctement fonctionné
+List of valid users[::->]Liste des utilisateurs validés
+Login of user[::->]Login de l'utilisateur
+No other user[::->]Aucun autre utilisateur
+Unable to send test message using SMTP[::->]Impossible d'envoyer le message de test en utilisant SMTP
+Unable to initialize mailer with the SMTP settings[::->]Impossible d'initialiser la messagerie avec ces réglages SMTP
+Unable to send test message using Sendmail[::->]Impossible d'envoyer le message de test en utilisant Sendmail
+Unable to initialize mailer with Sendmail[::->]Impossible d'initialiser la messagerie avec Sendmail
+Unable to send test message using PHP mail[::->]Impossible d'envoyer le message de test en utilisant PHP mail
+Unable to initialize mailer with PHP mail[::->]Impossible d'initialiser la messagerie avec PHP mail
+Test messages sent to <br><i>%</i></b>[::->]Message de test envoyé à <b><i>[%%]</i></b>
+General[::->]Général
+Transport[::->]Transport
+Messages[::->]Messages
+Test[::->]Test
+The following is usually the name of your organization or company. It is used in messages not specific to one list[::->]Le texte suivant est généralement le nom de l'organisation ou de l'entreprise. Il est utilisé dans tous les messages pas seulement dans ceux appartenant à une seule liste.
+Collective name[::->]Nom collectif
+The following user details are used as the <em>From</em> field of all sent messages. To minimize the chances of your messages being misidentified as spam, ensure that the email address is valid[::->]Les renseignements suivants sont utilisés dans le champ <em>Expéditeur</em> de tous les messages. Afin de minimiser les risques que vos messages soient identifiés par mégarde comme des pourriels, assurez-vous que cette adresse soit valide. 
+Administrator name[::->]Nom de l'administrateur
+Administrator email[::->]Adresse de l'administrateur
+Your login details[::->]Vos identifiants de connexion
+Administrator username[::->]Pseudonyme de l'administrateur
+Change administrator password[::->]Modifier le mot de passe administrateur
+Retype[::->]Confirmer
+The following is the name of the folder which contains all the Theme's files (Becarefull to respect casse)[::->]Le champ suivant est le nom du dossier qui contient les fichiers du thème (attention de respecter la casse !)
+Name of the theme[::->]Nom du thème
+Gutuma will first try to use an SMTP server to send messages. If that fails, <code>Sendmail</code> may be tried followed by PHP <code>mail()</code>[::->]Gutuma essaiera d'utiliser en premier le serveur SMTP pour envoyer les messages. S'il échoue, <code>Sendmail</code> sera utilisé ensuite, puis la fonction PHP <code>mail()</code>.
+Use SMTP[::->]Utiliser SMTP
+If server and port are left blank, Gutuma will attempt to auto-detect them[::->]Si le serveur et le port ne sont pas renseignés, Gutuma tentera de les détecter automatiquement
+SMTP server[::->]Serveur SMTP
+SMTP port[::->]Port SMTP
+Encryption[::->]Mode de cryptage
+None[::->]Aucun
+SMTP username<[::->]Pseudonyme SMTP
+SMTP password[::->]Mot de passe SMTP
+If Sendmail is available on your server you can enable it here[::->]Si Sendmail est disponible sur votre serveur, vous pouvez l'activer d'ici
+Use Sendmail[::->]Utiliser Sendmail
+You may experience problems with sending to large address lists with PHP <code>mail()</code>[::->]Vous pouvez rencontrer des problèmes avec des listes d'adresses longues en utilisant PHP <code>mail()</code>
+Use PHP mai[::->]Utiliser PHP mail
+Some SMTP servers have restrictions on the number of emails that can be sent per connection so you can limit the number of messages sent in a single batch. You can also set a time limit on batch sends to avoid timeouts.[::->]Certains serveur SMTP ayant des restrictions quant au nombre de courriels pouvant être envoyés par connection, vous pouvez limiter le nombre de messages envoyés dans un seul lot. Vous pouvez aussi paramétrer le temps limite d'envoi des lots afin d'éviter les déconnexions.
+Max batch size[::->]Taille de lot maximale
+ emails[::->] courriels
+Batch time limit[::->]Temps limite par lot
+seconds[::->]secondes
+List names can be automatically added to the subject of sent newsletters, e.g. <code>[List] Subject</code>[::->]Le nom des listes peut être automatiquement ajouté au sujet des newsletters envoyées, par exemple <code>[List] Subject</code>
+Prefix list name on subjects[::->]Préfixe du nom de liste dans le sujet
+If a newsletter is sent to more than one list, and a person is subscribed to more than one of those lists, the name of the list that occurs first in the <i>To</i> field will be used as the subject prefix. You can override this however, and use the collective name instead for all newsletters sent to more than one list[::->]Si une newsletter est envoyée à plus d'une liste, et qu'une personne soit inscrite dans plus d'une de ces listes, le nom de la liste qui apparait en premier dans le champ <i>Destinataires</i> sera utilisé comme préfixe de sujet. Vous pouvez malgré tout effacer ce comportement et utiliser un nom collectif à la place pour toutes les newsletters envoyées à plus d'une liste
+Use collective name for multi-list subjects[::->]Utiliser un nom collectif pour les sujets des listes multiples 
+A signature containing an unsubscribe link can be automatically appended to all sent newsletters[::->]Une signature contenant un lien de désinscription peut être automatiquement ajouté pour toutes les newsletteres envoyées
+Append unsubscribe link to sent newsletters[::->]Ajouter un lien de désinscription aux newsletters envoyées
+Send copy of sent newsletters to Administrator[::->]Envoyer une copie des newsletters envoyées à l'administrateur
+Subscriber confirmations[::->]Confirmations des abonnés
+Send welcome message to new subscribers[::->]Envoyer un message de bienvenue aux nouveaux adhérents
+Send goodbye message to unsubscribers[::->]Envoyer un message d'au revoir aux personnes ayant annulé leur adhésion
+Administrator notifications[::->]Notifications de l'adminsitrateur
+Notify of new subscribes[::->]Alerter pour les nouveaux adhérents
+Notify of unsubscribes[::->]Alerter pour les personnes ayant annulé leur adhésion
+//************************************************************************
+//			SUBSCRIBE
+//************************************************************************
+You must enter a valid email address[::->]Vous devez saisir une adresse valide
+Newsletters[::->]Newsletters
+Your email address[::->]Votre adresse de courriel
+Unsubscribe[::->]Se désabonner
+Back home[::->]Retour à l'index
+//************************************************************************
+//			SENDING
+//************************************************************************
+Gutuma[::->]Gutuma
+No method of mail transportation has been configured[::->]Aucune méthode de transport de courriel a été configurée
+Created SMTP connection (%:% Enc:% User:% Pass:%)[::->]Connexion SMTP créée ([%%]:[%%] Enc:[%%] User:[%%] Pass:[%%])
+Unable to initialize mailer. Check transport settings.[::->]Impossible d'initialiser la messagerie. Vérifiez les réglages de transport
+Unable to send message in demo mode[::->]Impossible d'envoyer un message en mode de démonstration
+Unable to send message due to connection error[::->]Impossible d'envoyer un message à cause d'une erreur de connexion
+//************************************************************************
+//			COMPOSE
+//************************************************************************
+Powered by Gutuma[::->]Propulsé par Gutuma
+from this newsletter.[::->]de cette newsletter.
+ Powered by[::->] Propulsé par
+Unable to attach '[::->]Impossible de joindre '
+Check permissions for directory <code>%</code>[::->]Vérifiez les permissions du répertoire <code>[%%]</code>
+Newsletters cannot be saved or sent in demo mode[::->]Les newsletters ne peuvent pas être sauvegardées en mode de démonstration
+Unable to save newsletter draft[::->]Impossible de sauvegardé la newsletter comme brouillon
+Locking recipient file (%)[::->]Verrouillage du fichier du destinataire ([%%])
+Unable to lock newsletter[::->]Impossible de verrouiller la newsletter
+Unlocking recipient file (%)[::->]Déverrouillage du fichier du destinataire ([%%])
+Unable to save newsletter recipient list[::->]Impossible de sauvegarder la liste des destinataires de la newsletter
+Unable to open newsletter recipient file[::->]Impossible d'ouvrir le fichier du destinataire de la newsletter
+Unable to lock newsletter recipient list[::->]Impossible de verrouiller la liste des destinataires de la newsletter
+Unable to deliver to:<br /><br />[::->]Impossible d'envoyer à :<br /><br />
+Message could not be sent to all recipients[::->]Le message n'a pas pu être envoyé à tous les destinataires
+Storing attachment [::->]Archivage de la pièce jointe 
+Unable to save uploaded file. Check permissions for directory <code>%</code>[::->]Impossible de sauvegarder le fichier téléchargé. Vérifiez les permissions du répertoire <code>[%%]</code>
+Unable to delete uploaded file. Check permissions for directory <code>%</code>[::->]Impossible de détruire le fichier téléchargé. Vérifiez les permissions du répertoire <code>[%%]</code>
+Unrecognized list name <i>%</i>[::->]Liste de noms <i>[%%]</i> inconnue
+Deleting newsletter files (%)[::->]Suppression du fichier de la newsletter ([%%])
+Unable to delete message attachment[::->]Impossible de supprimer le message joint
+Some newsletter files could not be deleted[::->]Certains fichiers de newsletter ne peuvent pas être supprimés
+Unable to open message file[::->]Impossible d'ouvrir le fichier de message
+Unable to read newsletter recipient file[::->]Impossible de lire le fichier destinataire de la newsletter
+Unable to open newsletter folder[::->]Impossible d'ouvrir le dossier des newsletters
+My Newsletters[::->]Mes newsletters
+Administrator[::->]Administrateur
+admin[::->]admin
+Settings cannot be changed in demo mode[::->]Les réglages ne peuvent pas être modifiés en mode de démonstration
+Username can only contain alphanumeric characters[::->]Le pseudonyme ne peut contenir que des caractères alphanumériques
+Password must be at least % characters long[::->]Le mot de passe doit avoir au moins [%%] caractères de long
+A valid administrator email must be at provided[::->]Un courriel administrateur valide doit être fourni
+Unable to create/open % file for writing[::->]Impossible de créer/ouvrir le fichier [%%] pour écriture
+Invalid email address[::->]Adresse email non valide
+//************************************************************************
+//			SWIFT
+//************************************************************************
+ confirmation[::->] : confirmation
+ notification[::->] : notification
+subscribed to[::->]abonné(e) aux
+unsubscribed from[::->]désabonné(e) des
+This is an automated message to confirm that you have been % the following lists:[::->]Ceci est un message automatique pour confirmer que vous vous êtes [%%] listes suivantes :
+To change your subscriptions visit: [::->]Pour changer votre abonnement, merci de vous rendre à : 
+Please do not reply to this message. Thank you.[::->]Merci de ne pas répondre à ce message.
+This is an automated message to notify you that % has been % the following lists:[::->]Ceci est un message automatique pour vous informer que [%%] s'est [%%] listes suivantes :
+You have been % lists: <i>%</i>[::->]Vous vous êtes [%%] listes : <i>[%%]</i>
+The connection failed to start.  An exception was thrown:<br />[::->]La connexion a échoué. Une erreur a été générée :<br />
+A MIME part failed to detach due to the error:<br />[::->]La partie MIME n&#039;a pas pu se détacher à cause d&#039;une erreur :<br />
+An attachment failed to detach due to the error:<br />[::->]Une pièce jointe n&#039;a pas pu se détacher suite à une erreur :<br />
+Swift failed to run the connection process:<br />[::->]Swift a échoué dans le processus de connexion :<br />
+Disconnect failed:<br />[::->]La déconnexion a échoué :<br />
+Command failed:<br />[::->]La commande a échoué :<br />
+SMTP authentication cannot be used with connection class '%'. Swift_Connection_SMTP is needed[::->]L'authentification SMTP ne peut pas être utilisée avec la classe de connexion '[%%]'. Swift_Connection_SMTP est nécessaire.
+Authentication failed:<br />[::->]L'authentification a échoué :<br />
+Unable to set the message charset:<br />[::->]Impossible de régler le charset du message :<br />
+A MIME part failed to attach:<br />[::->]La partie MIME n&#039;a pas pu être jointe :<br />
+An attachment failed to attach:<br />[::->]L'ajout de la pièce jointe a échoué :<br />
+There was a problem parsing or setting a header attribute:<br />[::->]Il y a eu un problème de transcription ou de réglage d&#039;un attribut d&#039;entête :<br />
+Sending failed:<br />[::->]L&#039;envoi a échoué :<br />
+//************************************************************************
+//			INSTALL
+//************************************************************************
+Update to Gutuma [::->]Mise à jour du module de newsletters 
+Install Gutuma [::->]Installation du module de newsletters 
+Congratulations! You can now login and begin sending newsletters. Don't forget to check the installation checklist on the home page for any further steps you need to take.[::->]Félicitations ! Vous pouvez dès à présent vous connecter et commencer à envoyer vos courriels. N'oubliez pas de vérifier les paramètres d'installation sur la page dédiée pour les prochaines étapes qui vous seront nécessaires.
+For security reasons, this install script has now been deleted from your server.[::->]Pour des raisons de sécurité, ce script d'installation va maintenant être supprimé de votre serveur.
+For security reasons, this install script (<code>install.php</code>) must be deleted from your server.[::->]Pour des raisons de sécurité, ce script d'installation (<code>install.php</code>) doit maintenant être supprimé de votre serveur.
+Login[::->]Connexion
+Finish[::->]Terminer
+Finished[::->]Terminé
+There are no major changes required for this update.[::->]Il n'y a pas de changement majeur nécessaire pour cet mise à jour.
+Install[::->]Installer
+The following is usually the name of your organization or company. It is used in messages not specific to one list[::->]Le champ suivant correspond habituellement au nom de votre structure ou de votre entreprise. Il est utilisé dans tous les messages et pas pour une liste en particulier
+Collective name[::->]Nom collectif
+Administrator username[::->]Identifiant de l'administrateur
+Administrator password[::->]Mot de passe de l'administrateur
+This address used as the From field of all sent messages. To minimize the chances of your messages being misidentified as spam, ensure that the email address is valid[::->]L'adresse suivante est utilisée dans le champ <i>Expéditeur</i> de tous les messages envoyés. Afin de minimiser les risques que votre message soit malencontreusement identifié comme un pourriel (spam), assurez vous que cette adresse soit valide.
+Administrator email[::->]Adresse de l'administrateur
+Add a new user[::->]Ajouter un nouvel utilisateur
+New user successfully saved.[::->]Nouvel utilisateur correctement enregistré
+<span style="color:red;">User already exists !</span>[::->]<span style="color:red;">Cet utilisateur est déjà enregistré !</span>
+Profile[::->]Profil
+Back to site[::->]Retour au site
+Ok[::->]Ok
+Theme <em>%</em> doesn't exists. You need to create it first ![::->]Le thème <em>[%%]</em> n'existe pas. Vous devez d'abord le créer !
+Quit admin session[::->]Quitter la session d'administration
+The following is the name of the application ("Newsletters" by default)[::->]Le champ suivant est le nom de l'application ("Newsletters" par défaut)
+Application name[::->]Nom de l'application
+This gadget requires a valid list[::->]Ce gadget nécessite une liste de diffusion valide</span>
+Please enter your email address[::->]Merci de renseigner votre adresse
+An error occured whilst requesting subscription[::->]Une erreur est survenue durant la demande d'inscription</span>
+Requesting...[::->]Demande...
+Back Home[::->]<span style="color:red;font-weight:bold">TRADUCTION MISS : "Back Home" for langage [fr]</span>

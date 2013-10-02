@@ -1,0 +1,190 @@
+/************************************************************************
+ * @project Gutuma Newsletter Managment
+ * @author Rowan Seymour
+ * @copyright This source is distributed under the GPL
+ * @file Default theme main stylesheet
+ * @modifications Cyril Maguire
+ */
+/* Gutama plugin package
+ * @version 1.6
+ * @date	01/10/2013
+ * @author	Cyril MAGUIRE
+*/
+body {
+	margin:0;
+	padding:0 0 0 200px; /* width sidebar */
+}
+span.yes {
+	font-weight: bold;
+	color: #009966;
+}
+
+span.no {
+	font-weight: bold;
+	color: #CC0000;	
+}
+
+.clearer {
+	clear: both;
+}
+
+/* -------------
+   Results table classes
+------------- */
+table {
+	width: 100%;
+}
+
+table.results tr td {
+	border-bottom: 1px dotted black;
+	padding: 5px;
+}
+
+table.results tr td.emptyresults {
+	padding: 10px;
+	font-style: italic;
+	text-align: center;
+}
+
+/* -------------
+   Messages
+------------- */
+#errormsg, #statusmsg {
+	text-align: center;
+}
+.warning {
+	margin: 10px 320px 10px 0;
+	padding: 10px 5px 10px 20px;
+	border: 1px solid #df8f8f;
+	font-size: 13px;
+	width:96%;
+	background-color: #ffcece;
+}
+.notification {
+	position:absolute;
+	top:-5px;
+	z-index:9999;
+	padding: 2px 15px 2px 15px;
+	border: 1px solid;
+	font-size: 13px;
+	font-weight:bold;
+	color:#000 !important;
+}
+.error {
+	background-color: #ffcfcf;
+	border-color: #df8f8f;
+}
+.success {
+	background-color: #fff1a8;
+	border-color: #e6db55;
+}
+
+div#sectionheader {
+	width: 100%;
+}
+
+ul#sectionmenu {
+	padding: 0;
+	margin: 20px 0 20px 0;
+	list-style-type: none;
+}
+
+ul#sectionmenu li {
+	display: inline;
+	padding-left: 20px;
+	line-height: 12px;
+}
+
+ul#sectionmenu li a {	
+	margin: 0 2px 0 2px;
+	background-color:#dedede;
+	border:1px solid #A8A9A8;
+	color:#555;
+	padding:2px 5px;
+	font-weight: normal;
+}
+
+ul#sectionmenu li a.current {	
+	font-weight: bold;
+}
+
+ul#sectionmenu li a:hover {
+	color:#000;
+	background-color: #bbb ;
+}
+
+div#sidebar {
+	position:absolute;
+	top:-8px;
+	left:-40px;
+	width: 240px; /* width sidebar */
+	height:100%;
+}
+div#sidebar ul li {
+	padding-top:5px;
+}
+/* -------------
+   Field set classes 
+------------- */
+
+div.formfieldset {
+}
+
+div.formfield {
+	width: 100%;
+	overflow: hidden;
+	padding: 10px 0 10px 0;	
+	border-bottom: 1px dotted black;
+}
+
+div.formfieldcomment {
+	margin-bottom: 10px;
+}
+
+div.formfielddivider {
+	clear: both;
+	height: 10px;
+}
+
+div.formfieldlabel {
+	float: left;
+	width: 50%;
+	font-weight: bold;
+	margin: 0;
+	padding: 0;
+}
+
+div.formfieldcontrols {
+	float: right;
+	clear: right;
+	width: 50%;
+	margin: 0;
+	padding: 0;
+}
+
+div.messagepreview,#msg_text {
+	height: 250px;
+	border: 1px solid black;
+	padding: 5px;
+	overflow: auto;
+}
+#msg_text {
+	color:#666;
+	font-family:Arial;
+}
+#msg_recips, #msg_subject {
+	width:350px;
+}
+
+#gadget_generate {
+	float:right;
+}
+#list_update,.pagercontrols, #install_submit, #save_settings {
+	float:right;
+}
+#admin_name, #admin_email, input.users {
+	background-color: #D6D6D6;
+	font-style: italic;
+	color: #434343;
+	cursor:default;
+}

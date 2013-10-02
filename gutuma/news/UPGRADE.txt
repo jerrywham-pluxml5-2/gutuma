@@ -1,0 +1,15 @@
+=====================================================================
+ UPGRADING INSTRUCTIONS FOR GUTUMA
+=====================================================================
+
+IMPORTANT: Before you upgrade it is strongly recommended that you
+backup your address lists by exporting them to CSV files.
+
+As of version 0.8, the Gutuma release does not contain a config.php
+file so you can simply overwrite your old installation, leaving your
+existing config.php file.
+
+If you are upgrading from version 0.6 or less then you will need to
+do a clean install and re-enter your settings. You can restore
+address lists by exporting the CSV files and re-importing into the
+new install.

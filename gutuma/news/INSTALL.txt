@@ -1,0 +1,14 @@
+=====================================================================
+ INSTALLATION INSTRUCTIONS FOR GUTUMA
+=====================================================================
+
+1. Upload this directory and all subdirectories to a directory on
+   your webserver. The top level folder does not have to be called
+   'gutuma'.
+2. Point your web browser to the URL where you have uploaded Gutuma,
+   and you will be redirected to the installation page.
+3. Follow the on screen instructions
+
+If you click on the 'Home' link, and look under 'Installation 
+checklist', it will tell you if you need to make any further
+changes.
