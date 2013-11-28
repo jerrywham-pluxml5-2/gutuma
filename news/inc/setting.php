@@ -24,6 +24,7 @@ class gu_config
 	 */
 	public static function get_version()
 	{
+		self::reload();
 		return self::$version;
 	}
 	
