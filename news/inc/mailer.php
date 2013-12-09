@@ -11,6 +11,7 @@
  * @date	01/10/2013
  * @author	Cyril MAGUIRE
 */
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 
 require_once "swift/Swift.php";
 require_once "swift/Swift/Connection/Multi.php";

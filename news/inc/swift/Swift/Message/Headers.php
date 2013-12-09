@@ -58,7 +58,7 @@ class Swift_Message_Headers
    * The language used in the headers (doesn't really matter much)
    * @var string
    */
-  protected $glanguage = "en-us";
+  protected $language = "fr-fr";
   /**
    * Cached, pre-built headers
    * @var string

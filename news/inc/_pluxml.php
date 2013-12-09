@@ -51,9 +51,9 @@ include(PLX_CORE.'lib/class.plx.admin.php');
 $plxMotor = plxMotor::getInstance();
 
 # Chargement des fichiers de langue en fonction du profil de l'utilisateur connecté
-$lang = (isset($_SESSION['lang']) && !empty($_SESSION['lang'])) ? $_SESSION['lang'] : $plxMotor->aConf['default_lang'];
+$lang = $plxMotor->aConf['default_lang'];
 $_SESSION['lang'] = $lang;
-$glang = (isset($_SESSION['glang']) && !empty($_SESSION['glang'])) ? $_SESSION['glang'] : $plxMotor->aConf['default_lang'];
+$glang = $plxMotor->aConf['default_lang'];
 $_SESSION['glang'] = $glang;
 # Chargement des fichiers de langue 
 loadLang(PLX_CORE.'lang/'.$lang.'/core.php');

@@ -172,7 +172,7 @@ function gu_success($msg)
  * Pass an empty string to $_SESSION['glang'] if you want to add new translations
  * Otherwise, new translation will not be taken into account until session die
  */
-//$_SESSION['glang'] = '';
+// $_SESSION['glang'] = '';
 
 /**
  * Convertis une cle de traduction en langage traduit
