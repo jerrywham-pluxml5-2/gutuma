@@ -224,7 +224,7 @@ class gu_config
 			elseif (is_numeric(self::$values[$key]))
 				fwrite($lh, "\$gu_config['".$key."'] = ".self::$values[$key].";\n");
 			else
-				fwrite($lh, "\$gu_config['".$key."'] = '".str_replace('\"','"',self::$values[$key])."';\n");
+				fwrite($lh, "\$gu_config['".$key."'] = '".str_replace(array('\"',"'"),array('"',"\'"),self::$values[$key])."';\n");
 		}
 		fclose($lh);
 		
@@ -232,7 +232,7 @@ class gu_config
 		// Version encodée (voir ligne 185)
 		file_put_contents(GUTUMA_CONFIG_FILE,"<?php /*\n".base64_encode($f)."\n*/  ?>");
 		// Version décodée (voir ligne 187)
-		/*file_put_contents(GUTUMA_CONFIG_FILE,"<?php \n".$f."\n?>");*/
+		/* file_put_contents(GUTUMA_CONFIG_FILE,"<?php \n".$f."\n?>");*/
 		return TRUE;
 	}
 	
