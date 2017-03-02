@@ -1,0 +1,16 @@
+Gutuma 4 PluXml
+
+##v.1.8.4.plx.5.3.1  02/03/2017##
+[+] certaines redir (complexes) doublé d'un méta refresh (pb de not found 404)
+[+] fixé lors de certaines opération (js), ne recharge pas la page (champs non mis a jour) (suppression liste,brouillon, ...)
+[+] fixé Liste des utilisateurs validés (affiche plusieurs fois (2) les utilisateurs) in settings (Only in default theme)
+[+] fixé swift 3 Stricts standards: Only variables should be assigned by reference [php 5.5.6](swift en version 3.3.2)
+[*]formulaire ajax (place holder(s)) & value undefined (after demande...) [résolu] !attention aux id
+
+
+todo :
+verifier si l'on change le(s) mot(s) de passe dans pluxml, si l'accés au plugin et tjrs valable
+
+Inclus swiftmailer-5.4.6 pour future integration http://swiftmailer.org
+
+

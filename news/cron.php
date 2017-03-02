@@ -23,12 +23,12 @@ gu_init(FALSE, FALSE);
 // Get all newsletters in the outbox
 $mailbox = gu_newsletter::get_mailbox();
 if ($mailbox == FALSE || !isset($mailbox['outbox']))
-	die(utf8_decode(t('Unable to access mailbox')));
+	die(t('Unable to access mailbox'));
 	
 // Create mailer
 $mailer = new gu_mailer();
 if (!$mailer->init())	
-	die(utf8_decode(t('Unable to initialize mailer')));
+	die(t('Unable to initialize mailer'));
 	
 // Start timer
 $start_time = time();

@@ -30,19 +30,20 @@ $plxMotor = plxMotor::getInstance();
 <link rel="stylesheet" type="text/css" href="<?php echo $plxMotor->urlRewrite(); ?>core/admin/theme/style.css" media="screen" />
 <link rel="stylesheet" type="text/css" href="themes/<?php echo gu_config::get('theme_name');?>/css/style.css" media="screen" />
 <link rel="icon" type="image/png" href="themes/<?php echo gu_config::get('theme_name'); ?>/favicon.png" />
+<link rel="stylesheet" type="text/css" href="themes/<?php echo gu_config::get('theme_name');?>/css/gutuma.css" media="screen" />
 <!--[if IE]>
 	<link rel="shortcut icon" type="image/x-icon" href="themes/<?php echo gu_config::get('theme_name'); ?>/favicon.ico" /> 
 <![endif]--> 
 <title><?php echo GUTUMA_TITLE; ?></title>
 </head>
 
-<body>
+<body<?php echo ($nomenu)?' class="subscribe"':'';?>>
 	<?php if (gu_is_demo()) { ?><div id="demobanner">DEMO MODE</div><?php } ?>
 
 	<?php if (!$nomenu) {
 	if (gu_session_is_valid()) { ?>
 	<?php include ('_menu.php');?>
-	<?php }else { ?>
+	<?php } else { ?>
 <div id="sidebar">
 <ul>
 	<li class="nav">
@@ -70,12 +71,12 @@ $plxMotor = plxMotor::getInstance();
 </ul>
 
 </div><!-- sidebar -->
-	<?php }} ?>
-	
+	<?php }} else { ?>
+	<div id="sidebar" style="display:none;"></div>
+<?php } ?>
 <div id="wrapper">
 
 	<div id="container">
 			
 		<div id="content">
-		<h1 id="sitename">Gutuma for Pluxml</h1>
-
+		<h1 id="sitename" title="<?php echo t('Gutuma');?> for Pluxml"><img id="imghead" src="themes/<?php echo gu_config::get('theme_name'); ?>/images/gutuma.png" /></h1>

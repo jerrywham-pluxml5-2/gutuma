@@ -19,7 +19,7 @@ define('GU_CONFIG_LANG', $glang);
 
 // Check for PHP5+
 if (version_compare(phpversion(), '5', '<'))
-	die(utf8_decode(t('Sorry - Gutuma requires at least PHP5. Please contact your hosting provider and ask them to upgrade.')));
+	die(t('Sorry - Gutuma requires at least PHP5. Please contact your hosting provider and ask them to upgrade.'));
 
 include_once 'setting.php';
 include_once 'misc.php';
@@ -29,11 +29,11 @@ include_once 'theme.php';
 
 
 // Constants 
-define('GUTUMA_VERSION_NUM', 1060300); // Version number w.x.y.z -> wwxxyyzz
-define('GUTUMA_VERSION_NAME', '1.6.3 BETA'); // Version friendly name
+define('GUTUMA_VERSION_NUM', 1060001); // Version number w.x.y.z -> wwxxyyzz
+define('GUTUMA_VERSION_NAME', '1.6'); // Version friendly name
 define('GUTUMA_DEMO_MODE', FALSE); // Demonstration mode
 define('GUTUMA_TITLE', t('Gutuma Newsletter Management')); // Application title of Gutuma
-define('GUTUMA_URL', 'http://www.gutuma.com'); // Homepage of Gutuma
+define('GUTUMA_URL', 'https://web.archive.org/web/20081228162738/http://ijuru.com/gutuma'); // Homepage of Gutuma
 define('GUTUMA_UPDATE_URL', 'http://gutuma.sourceforge.net/update.js.php?ver='.GUTUMA_VERSION_NUM);
 define('GUTUMA_ENCODING', 'UTF-8'); // Content encoding
 define('GUTUMA_CONFIG_FILE', $plxMotor->plxPlugins->aPlugins['gutuma']->listsDir.'/inc/config.php'); // Configuration file
@@ -46,8 +46,7 @@ define('GUTUMA_PAGE_SIZE', 10); // The number of items per page in lists of addr
 define('GUTUMA_MAX_ADDRESS_LEN', 320); // The max allowable length in characters of an email address
 define('GUTUMA_TINYMCE_COMPRESSION', FALSE); // Enables gzip compression of the TinyMCE scripts
 
-
-if(!defined('RPATH')){
+if(!defined('RPATH')){//semble inutilisé
 	if (class_exists('gu_config')){
 		gu_config::reload();
 		define('RPATH',str_replace('inc'.DIRECTORY_SEPARATOR.'gutuma.php','',__FILE__));

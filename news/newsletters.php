@@ -33,6 +33,7 @@ $newsletters = $mailbox[$box];
 
 gu_theme_start();
 
+//gu_theme_messages();
 ?>
 <script type="text/javascript">
 /* <![CDATA[ */

@@ -54,7 +54,7 @@ if(!empty($_POST)) {
 		}
 	}
 	$gu_config['users'] = serialize($Gut_users);
-	$GU_config = "\$gu_config_version = 1060300;\n";
+	$GU_config = "\$gu_config_version = 1060001;\n";
 	foreach ($gu_config as $key => $value) {
 		$GU_config .="\$gu_config['$key'] = ".($value===false ? "FALSE" : ($value === true ? "TRUE" : "'$value'")).";\n"; 
 	}
@@ -109,7 +109,7 @@ if($_SESSION['profil'] == PROFIL_ADMIN):
 	$num = 0;
 	if($plxAdmin->aUsers) {
 		foreach($plxAdmin->aUsers as $_userid => $_user)	{
-			if (!$_user['delete'] && $_user['profil'] < PROFIL_MODERATOR ) {
+			if (!$_user['delete'] && $_user['profil'] < PROFIL_MODERATOR) {
 
 				echo '<tr class="line-'.($num%2).'">
 				';
@@ -144,7 +144,7 @@ if($_SESSION['profil'] == PROFIL_ADMIN):
 				<?php
 					}
 				//Si l'utilisateur n'est pas le premier et que celui qui est connecté est administrateur
-				} else{
+				} else {
 
 					echo $aProfils[($_user['profil'] == null || $_user['profil'] == L_PROFIL_ADMIN)? L_PROFIL_ADMIN : $_user['profil']];
 					echo '</td><td>';
@@ -168,7 +168,7 @@ if($_SESSION['profil'] == PROFIL_ADMIN):
 						} else {//Statut des autres utilisateurs
 							echo '&nbsp;'.ucfirst($plxPlugin->getParam('user_'.$_userid));
 						}
-					}else {//Si l'utilisateur n'est pas activé
+					} else {//Si l'utilisateur n'est pas activé
 						if ($_user['profil'] == PROFIL_MANAGER && $plxPlugin->getParam('user_'.$_userid) == 'desactivé') {
 					?>
 

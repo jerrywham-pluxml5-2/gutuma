@@ -12,13 +12,11 @@
  * @author	Cyril MAGUIRE
 */
 
-
-
 include 'inc/gutuma.php';
 
 gu_init(FALSE);
 
-if (is_get_var('action') && get_get_var('action') == 'plxlogin') {
+if (is_get_var('action') && get_get_var('action') == 'plxlogin') {;
 	$name = is_post_var('n') ? get_post_var('n') : '';
 	$username = is_post_var('u') ? get_post_var('u') : '';
 	$password = is_post_var('p') ? get_post_var('p') : '';
@@ -37,7 +35,7 @@ if (is_get_var('action') && get_get_var('action') == 'plxlogin') {
 	if (plx_gu_session_authenticate($name,$username, $password, $remember, $user)) {
 		// Redirect to page that referred here - or to the home page
 		$redirect = is_get_var('ref') ? urldecode(get_get_var('ref')).(is_get_var('token') ? '?token='.get_get_var('token') : ''): absolute_url('index.php');
-		header('Location: '.$redirect);
+		header('Location: '.$redirect);echo '<meta HTTP-EQUIV="REFRESH" content="0; url='.$redirect.'">';
 		exit;
 	}
 	else {
@@ -52,7 +50,7 @@ if (is_get_var('action') && get_get_var('action') == 'plxlogin') {
 	if (gu_session_authenticate($username, $password, $remember)) {
 		// Redirect to page that referred here - or to the home page
 		$redirect = is_get_var('ref') ? urldecode(get_get_var('ref')) : absolute_url('index.php');
-		header('Location: '.$redirect);
+		header('Location: '.$redirect);echo '<meta HTTP-EQUIV="REFRESH" content="0; url='.$redirect.'">';
 		exit;
 	}
 	else
@@ -64,6 +62,8 @@ elseif (is_get_var('action') && get_get_var('action') == 'logout') {
 }
 
 gu_theme_start();
+
+//gu_theme_messages();
 ?>
 
 <script type="text/javascript">

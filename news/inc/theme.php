@@ -67,7 +67,7 @@ function gu_theme_pager($id, $baseurl, $start, $pagesize, $total)
  */
 function gu_theme_messages()
 {
-	echo '<p id="msg">';
+	echo '<span id="msg">';
 	if (isset($_SERVER['GU_ERROR_MSG'])) {
 		echo '<p id="errormsg" class="notification error">';
 		if (isset($_SERVER['GU_ERROR_EXTRA'])) {
@@ -85,10 +85,10 @@ function gu_theme_messages()
 		
 	if (isset($_SERVER['GU_STATUS_MSG'])) {
 		echo '<p id="statusmsg" class="notification success">'.$_SERVER['GU_STATUS_MSG'].'</p>';
-	}else {
+	} else {
 		echo '<p id="statusmsg" class="notification success" style="display:none;"></p>';
 	}
-	echo '</p>';
+	echo '</span>';
 }
 /**
  * Outputs a password control for the specified config setting

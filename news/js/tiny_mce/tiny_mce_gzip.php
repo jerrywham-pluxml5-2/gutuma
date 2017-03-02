@@ -3,7 +3,7 @@
  * $Id: tiny_mce_gzip.php 315 2007-10-25 14:03:43Z spocke $
  *
  * @author Moxiecode
- * @copyright Copyright ? 2005-2006, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright © 2005-2006, Moxiecode Systems AB, All rights reserved.
  *
  * This file compresses the TinyMCE JavaScript using GZip and
  * enables the browser to do two requests instead of one for each .js file.
@@ -15,7 +15,7 @@
 
 	// Get input
 	$plugins = explode(',', getParam("plugins", ""));
-	$glanguages = explode(',', getParam("languages", ""));
+	$languages = explode(',', getParam("languages", ""));
 	$themes = explode(',', getParam("themes", ""));
 	$diskCache = getParam("diskcache", "") == "true";
 	$isJS = getParam("js", "") == "true";
@@ -93,23 +93,23 @@
 	}
 
 	// Add core languages
-	foreach ($glanguages as $glang)
-		$content .= getFileContents("langs/" . $glang . ".js");
+	foreach ($languages as $lang)
+		$content .= getFileContents("langs/" . $lang . ".js");
 
 	// Add themes
 	foreach ($themes as $theme) {
 		$content .= getFileContents( "themes/" . $theme . "/editor_template" . $suffix . ".js");
 
-		foreach ($glanguages as $glang)
-			$content .= getFileContents("themes/" . $theme . "/langs/" . $glang . ".js");
+		foreach ($languages as $lang)
+			$content .= getFileContents("themes/" . $theme . "/langs/" . $lang . ".js");
 	}
 
 	// Add plugins
 	foreach ($plugins as $plugin) {
 		$content .= getFileContents("plugins/" . $plugin . "/editor_plugin" . $suffix . ".js");
 
-		foreach ($glanguages as $glang)
-			$content .= getFileContents("plugins/" . $plugin . "/langs/" . $glang . ".js");
+		foreach ($languages as $lang)
+			$content .= getFileContents("plugins/" . $plugin . "/langs/" . $lang . ".js");
 	}
 
 	// Add custom files

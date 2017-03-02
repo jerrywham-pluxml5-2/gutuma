@@ -88,7 +88,7 @@ $plxAdmin = plxAdmin::getInstance();
 			';
 		endif;
 		$menu_gutuma .= '
-			<li '. (str_ends($_SERVER['SCRIPT_NAME'], '/compose.php') ? 'class="menu active sub">' : 'class="menu sub">') .' <a href="compose.php">'.t('Newsletters').'</a></li>
+			<li '. (str_ends($_SERVER['SCRIPT_NAME'], '/compose.php') || (str_ends($_SERVER['SCRIPT_NAME'], '/newsletters.php')) ? 'class="menu active sub">' : 'class="menu sub">') .' <a href="compose.php">'.t('Newsletters').'</a></li>
 			<li '. (str_ends($_SERVER['SCRIPT_NAME'], '/lists.php') ? 'class="menu active sub">' : 'class="menu sub">') .'<a href="lists.php">'. t('Lists').'</a></li>
 			';
 		if ($_SESSION['profil'] == PROFIL_ADMIN) : 

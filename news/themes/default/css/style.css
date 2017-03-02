@@ -14,6 +14,14 @@ body {
 	margin:0;
 	padding:0 0 0 200px; /* width sidebar */
 }
+body.subscribe {
+	padding:0; /* no sidebar */
+	text-align: center;
+}
+#imghead{
+	border-radius: 3px;
+	width: 100%;
+	max-width: 340px;}
 span.yes {
 	font-weight: bold;
 	color: #009966;

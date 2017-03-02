@@ -3,7 +3,7 @@
  * @project Gutuma Newsletter Managment
  * @author Rowan Seymour
  * @copyright This source is distributed under the GPL
- * @file Default theme main stylesheet
+ * @file Javascript functions for generating integration gadgets - Default theme main stylesheet
  * @modifications Cyril Maguire
  */
 /* Gutama plugin package
@@ -17,7 +17,7 @@ include_once '../inc/gutuma.php';
 // Initialize Gutuma without validation or housekeeping
 gu_init(FALSE, FALSE, FALSE);
 
-header('Content-Type: application/x-javascript');
+//header('Content-Type: application/x-javascript');
 
 if (!is_get_var('noajax')) {
 ?>/** 
@@ -68,7 +68,7 @@ function gu_gadgets_create_basic_link(list_id, text)
 {
 	var sub_url = gu_gadgets_subcribe_url + ((list_id > 0) ? ("?list=" + list_id) : '');
 	
-	return '<a href="' + sub_url + '" id="suscribe-link">' + text + '</a>';
+	return '<a href="' + sub_url + '" class="subscribe-link" id="suscribe-link">' + text + '</a>';
 }
 
 /**
@@ -108,7 +108,7 @@ function gu_gadgets_create_ajax_link(list_id, text)
 	if (list_id == '' || list_id == 0)
 		return '<?php echo t('This gadget requires a valid list');?>';
 		
-	return '<a href="javascript:gu_gadgets_submit_ajax_link(\'' + list_id + '\')" id="suscribe-link">' + text + '</a>';
+	return '<a href="javascript:gu_gadgets_submit_ajax_link(\'' + list_id + '\')" class="subscribe-link" id="suscribe-link">' + text + '</a>';
 }
 
 /**
@@ -133,14 +133,14 @@ function gu_gadgets_create_ajax_form(list_id, btn_text, email_hint, prefix)
 	if (!gu_gadgets_formless)
 		html += '</form>';
 	if (email_hint != '')
-		html += '<script type="text/javascript">gu_gadgets_textfield_hint(document.getElementById("' + prefix + 'subscribe_address"), "' + email_hint + '");</script>';	
+		html += '<script type="text\/javascript">gu_gadgets_textfield_hint(document.getElementById("' + prefix + 'subscribe_address"), "' + email_hint + '");<\/script>';	//SyntaxError: unterminated string literal
 	return html;		
 }
 
 /**
  * Shortcut functions for outputting gadgets
  */
- 
+console.log('gadjetJs');
 function gu_gadgets_write_basic_link(list_id, text)
 {
 	document.write(gu_gadgets_create_basic_link(list_id, text));

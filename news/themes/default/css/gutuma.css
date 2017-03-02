@@ -1,0 +1,141 @@
+/************************************************************************
+ * @project Gutuma Newsletter Managment
+ * @author Rowan Seymour
+ * @copyright This source is distributed under the GPL
+ * @file Default theme main stylesheet
+ */
+
+code {
+	font-family: "Courier New", Courier, mono;
+	font-size: 12px;
+	line-height: 16px;
+}
+
+input {
+margin: 0px 2px;
+border: 1px solid #A8A9A8;
+padding: 2px 5px !important;
+}
+textarea {
+	background-color: #F8F8F8;
+	border-top: 1px solid #abadb3;
+	border-right: 1px solid #e3e9ef;
+	border-bottom: 1px solid #e3e9ef;	
+	border-left: 1px solid #e3e9ef;		
+	padding: 4px;
+	margin: 0px;
+	font-family: "Courier New", Courier, mono;	
+}
+
+hr {
+	border-top: 1px dotted black;
+	border-right: 0;
+	border-bottom: 0;	
+	border-left: 0;
+	height: 1px;
+	background-color: white;
+}
+
+#demobanner {
+	background-color: #f6f8c1;
+	border-bottom: 1px solid #e6ea75;
+	text-align: center;
+	font-weight: bold;
+	padding: 3px;
+}
+
+/* Sub menu */
+
+#sectionheader {
+	width: 100%;
+	overflow: hidden;
+}
+
+#sectionmenu li a {	
+	color: #489689;
+}
+
+#sectionmenu li a.current {	
+	color: #7dbcb1;
+}
+
+#sectionmenu li a:hover {
+	color: #bdfcf1;
+}
+
+/* Other objects */
+
+#content {
+	padding: 10px;
+	min-height: 300px;
+}
+
+#statusmsg {
+	padding: 10px;
+	background-color: #93BFB8;
+	top: 72px;
+	margin-bottom: 10px;
+	overflow: hidden;
+}
+
+#errormsg {
+	padding: 10px;
+	margin-bottom: 10px;
+	overflow: hidden;
+	width: auto;	
+}
+
+#debugmsg {
+	padding: 10px;
+	background-color: #FFFFCC;
+}
+
+div.menubar {
+	background-color: #d8eeea;
+	overflow: hidden;
+}
+
+div.messagepreview {
+	height: 250px;
+	border: 1px solid black;
+	padding: 5px;
+	overflow: auto;
+}
+
+/* Pager bar classes */
+
+div.pager {
+	background-color: white;
+	overflow: hidden;
+	width: 100%;
+}
+
+div.pagercontrols {
+	float: left;
+	width: 140px;
+	text-align: center;
+	margin-left: 270px;
+	padding: 10px 0px 10px 0px;
+}
+
+div.pagerinfo {
+	float: right;
+	padding: 10px 0px 10px 0px;
+}
+
+/* Results table classes */
+
+table {
+	width: 100%;
+}
+
+table.results tr td {
+	border-bottom: 1px dotted black;
+	padding: 5px;
+}
+
+table.results tr td.emptyresults {
+	padding: 10px;
+	font-style: italic;
+	text-align: center;
+}

@@ -51,8 +51,8 @@ include_once '_menu.php';?>
 			<div class="formfieldlabel"><?php echo t('Administrator name');?></div>
 			<div class="formfieldcontrols"><?php gu_theme_text_control('admin_name','readonly="readonly"'); ?></div>
 			<div class="formfielddivider"></div>
-			<div class="formfieldlabel"><?php echo t('Administrator email');?></div>
-			<div class="formfieldcontrols"><?php gu_theme_text_control('admin_email','readonly="readonly"'); ?></div>
+			<div class="formfieldlabel"><?php echo t('Administrator email');?> /!\</div>
+			<div class="formfieldcontrols"><?php gu_theme_text_control('admin_email'); ?></div>
 		</div>
 		<!--<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('Your login details');?></div>
@@ -72,11 +72,10 @@ include_once '_menu.php';?>
 			<div class="formfieldcomment"><?php echo t('List of valid users');?></div>
 		<?php $users = unserialize(str_replace('\"','"',gu_config::get('users')));
 		asort($users);
-		$noUser = true;
+		$noUser = true; $unified = null;
 		foreach ($users as $key => $value) :
-			if ($plxPlugin->getParam('user_'.$value['id']) == 'activé') : $noUser = false;?>
-
-			<div class="formfieldlabel"><?php echo t('Login of user').' '.$value['id'];?></div>
+			if ($plxPlugin->getParam('user_'.$value['id']) == 'activé'&&!isset($unified[$value['id']])) : $noUser = false; $unified[$value['id']]=true;?>
+			<div class="formfieldlabel"><?php echo t('Login of user').' '.$key.' ('.$value['profil'].') id: '.$value['id'];?></div>
 			<div class="formfieldcontrols"><input type="text" name="user_<?php echo $key; ?>" class="textfield users" value="<?php echo $value['login'];?>" readonly="readonly" style="width:95%;"/></div>	
 			<div class="formfielddivider"></div>	
 		

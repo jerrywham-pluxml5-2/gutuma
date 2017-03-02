@@ -424,13 +424,13 @@ class Swift_Message_Encoder
    * @param string The line ending
    * @return string
    */
-  public function rfc2047Encode($str, $charset="iso-8859-1", $glanguage="en-us", $chunk=76, $le="\r\n")
+  public function rfc2047Encode($str, $charset="iso-8859-1", $language="en-us", $chunk=76, $le="\r\n")
   {
-    $glang_spec = "";
+    $lang_spec = "";
     if (!$this->is7BitPrintable($str))
     {
-      $glang_spec = $charset . "'" . $glanguage . "'";
-      $str = $glang_spec . str_replace("+", "%20", urlencode($str));
+      $lang_spec = $charset . "'" . $language . "'";
+      $str = $lang_spec . str_replace("+", "%20", urlencode($str));
     }
     preg_match_all('~.{1,'.($chunk-6).'}([^%]{0,3})~', $str, $matches);
     if (count($matches[0])) return implode($le, $matches[0]);

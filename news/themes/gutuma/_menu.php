@@ -25,8 +25,8 @@ foreach($u as $k => $v) {
 		</div>	
 		<div id="mainmenu">
 			<?php if (gu_session_is_valid()) {?>
-			
 			<ul>
+				<li><a href="../../../core/admin/plugin.php?p=gutuma">Admin PluXml</a></li>
 			<?php if ($_SESSION['profil'] == PROFIL_ADMIN) :?> 
 			
 				<li><a href="index.php" <?php echo (str_ends($_SERVER['SCRIPT_NAME'], '/index.php') ? 'class="current"' : '') ?>><?php echo t('Home');?></a></li>

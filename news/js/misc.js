@@ -15,7 +15,7 @@ var gu_error_message = "";
  */
 function gu_check_email(e)
 {
-	ok = "1234567890qwertyuiop[]asdfghjklzxcvbnm.@-_QWERTYUIOPASDFGHJKLZXCVBNM";
+	ok = "1234567890qwertyuiop[]asdfghjklzxcvbnm.@-_QWERTYUIOPASDFGHJKLZXCVBNM&";
 	
 	for (i = 0; i < e.length; i++){
 		if (ok.indexOf(e.charAt(i)) < 0) { 
@@ -97,6 +97,11 @@ function gu_messages_clear()
 	gu_status_message = "";	
 }
 
+function gu_add_slashes(str)
+{
+	return str.replace(/\"/g, "\\\"");
+}
+
 /**
  * Displays the current status and error messages
  * @param delay The delay in milliseconds
@@ -104,9 +109,9 @@ function gu_messages_clear()
 function gu_messages_display(delay)
 {
 	if (gu_status_message != "") {
-		setTimeout('gu_element_set_inner_html("statusmsg", "' + gu_status_message + '")', delay);
+		setTimeout('gu_element_set_inner_html("statusmsg", "' + gu_add_slashes(gu_status_message) + '")', delay);
 			
-		if (gu_element_get_display("statusmsg") == "none"){
+		if (gu_element_get_display("statusmsg") == "none") {
 			setTimeout('gu_element_fade_in("statusmsg", 1000, "block")', delay);
 		}
 	}
@@ -119,7 +124,7 @@ function gu_messages_display(delay)
 			gu_element_set_display("errorextra", "none");
 		}
 		
-		setTimeout('gu_element_set_inner_html("errormsg", "' + gu_error_message + '")', delay);
+		setTimeout('gu_element_set_inner_html("errormsg", "' + gu_add_slashes(gu_error_message) + '")', delay);
 		
 		if (gu_element_get_display("errormsg") == "none")
 			setTimeout('gu_element_fade_in("errormsg", 1000, "block")', delay);

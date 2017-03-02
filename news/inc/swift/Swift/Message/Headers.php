@@ -188,15 +188,15 @@ class Swift_Message_Headers
     return (array_key_exists($lname, $this->lowerHeaders) && $this->lowerHeaders[$lname] !== null);
   }
   /**
-   * Set the language used in the headers to $glang (e.g. en-us, en-gb, sv etc)
+   * Set the language used in the headers to $lang (e.g. en-us, en-gb, sv etc)
    * @param string The language to use
    */
-  public function setLanguage($glang)
+  public function setLanguage($lang)
   {
-    $this->language = (string) $glang;
+    $this->language = (string) $lang;
   }
   /**
-   * Get the language used in the headers to $glang (e.g. en-us, en-gb, sv etc)
+   * Get the language used in the headers to $lang (e.g. en-us, en-gb, sv etc)
    * @return string
    */
   public function getLanguage()
