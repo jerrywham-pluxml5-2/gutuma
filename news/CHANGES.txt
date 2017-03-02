@@ -2,6 +2,15 @@
  CHANGE LOG FOR GUTUMA
 =====================================================================
 
+1.6 [01-OCT-2008]
+=====================================================================
+
+Bug fixes:
++ Fixed rejection of email addresses containing ampersands
++ Fixed unsaved warning (on compose page) not being shown when
+  recipients added using address book
++ Fixed update status message not being displayed
+
 1.6.3 [23-SEP-2013] (BETA)
 =====================================================================
 
@@ -103,6 +112,7 @@ TODO:
 
 1.1 [06-SEP-2008] (BETA)
 =====================================================================
+
 New features:
 + Revamped the Integration page to make it easier to generate
   different gadgets which can be generated dynamically through a
@@ -120,6 +130,7 @@ TODO:
 
 1.0 [03-SEP-2008] (RC1)
 =====================================================================
+
 Bug fixes:
 + Fixed PHP4 incompatibility issues with fgets and fgetss calls
 + Fixed PHP4 incompatibility issues with html_entity_decode
@@ -127,6 +138,7 @@ Bug fixes:
 
 1.0 [28-AUG-2008] (BETA)
 =====================================================================
+
 Known issues:
 + None
 
@@ -159,6 +171,7 @@ TODOS:
 
 0.7.6 [24-AUG-2008] (BETA)
 =====================================================================
+
 Known issues:
 + None
 
@@ -179,6 +192,7 @@ TODOS:
 
 0.7.5 [23-AUG-2008] (BETA)
 =====================================================================
+
 Known issues:
 + Compressor sometimes prevents TinyMCE working in Firefox
 
@@ -196,6 +210,7 @@ Bug fixes:
 
 0.7 [16-AUG-2008] (BETA)
 =====================================================================
+
 Known issues:
 + None
 
@@ -222,6 +237,7 @@ TODOS:
 
 0.6 [11-AUG-2008] (BETA)
 =====================================================================
+
 Known Issues:
 + None
 

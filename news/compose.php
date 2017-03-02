@@ -168,6 +168,8 @@ tinyMCE_GZ.init({
 			txtRecips.value += "; ";
 			
 		txtRecips.value += lstRecips.value;
+		
+		gu_set_modified(true);
 	}
 	
 	window.onbeforeunload = function (ev)

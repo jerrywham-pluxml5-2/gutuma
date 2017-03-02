@@ -40,6 +40,7 @@ elseif (is_post_var('new_address')) {
 }
 ?>
 
+<?php //gu_theme_messages(); ?>
 <script type="text/javascript">
 /* <![CDATA[ */
 	gu_status_message_delay = 1000;

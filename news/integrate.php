@@ -87,9 +87,11 @@ function create_text_control($name, $value)
 {
 	return '<input id="'.$name.'" name="'.$name.'" type="text" class="textfield" style="width: 95%" value="'.$value.'" />';
 }
-
+$_GET['noajax']=TRUE;
 ?>
-<script type="text/javascript" src="js/gadgets.js.php?noajax"></script>
+<script type="text/javascript"><?php include("js/gadgets.js.php"); ?></script><!-- <script type="text/javascript" src="js/gadgets.js.php?noajax"></script> error 404 ??? -->
+
+<?php //gu_theme_messages(); ?>
 
 <?php
 //Body

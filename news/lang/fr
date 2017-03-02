@@ -1,14 +1,14 @@
-//************************************************************************
-// * @project Gutuma Newsletter Managment
-// * @author Cyril MAGUIRE
-// * @copyright This source is distributed under the GPL
-// * @file Fr translatoin page
-// *
-// * Gutama plugin package
-// * @version 1.3
-// * @date	29/10/2012
-// * @author	Cyril MAGUIRE
-// *
+/************************************************************************
+ * @project Gutuma Newsletter Managment
+ * @author Cyril MAGUIRE
+ * @copyright This source is distributed under the GPL
+ * @file Fr translatoin page
+ *
+ * Gutama plugin package
+ * @version 1.6
+ * @date	01/10/2013
+ * @author	Cyril MAGUIRE
+ */
 Gutuma Newsletter Management[::->]Gestion des Newsletters
 Sorry - Gutuma requires at least PHP5. Please contact your hosting provider and ask them to upgrade.[::->]Désolé - Gutuma nécessite au moins PHP5. Merci de contacter votre hébergeur afin de lui demander une mise à niveau.
 Welcome [::->]Bienvenue 

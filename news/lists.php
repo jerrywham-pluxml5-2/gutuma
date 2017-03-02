@@ -40,7 +40,7 @@ if (isset($_FILES['import_file'])) {
 $lists = gu_list::get_all();
 
 ?>
-
+<?php //gu_theme_messages(); ?>
 <script type="text/javascript">
 /* <![CDATA[ */
 	function gu_list_menu(list_id)
@@ -80,7 +80,7 @@ $lists = gu_list::get_all();
 		var tbody = document.getElementById("liststable").tBodies[0]; 
 		var row = document.createElement("tr");
 		row.setAttribute("id", "row_" + list_id);
-		row.setAttribute("style", "display: none");
+		row.setAttribute("style", "display: table-row; opacity: 0;");
 		var cell1 = document.createElement("td");
 		cell1.innerHTML = name;
 		var cell2 = document.createElement("td");
@@ -96,7 +96,7 @@ $lists = gu_list::get_all();
 		row.appendChild(cell4); 
 		tbody.appendChild(row);
 		
-		gu_element_fade_in("row_" + list_id, 1000, "table-row");
+		gu_element_fade("row_" + list_id, 1000, 0, 100);///gu_element_fade_in("row_" + list_id, 1618, "table-row");//dispay & hide (when message hide) fix
 	}
 	function gu_list_delete(list_id)
 	{

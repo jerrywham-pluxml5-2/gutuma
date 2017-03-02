@@ -27,7 +27,8 @@ gu_init();
 
 $users = gu_config::getUsers();
 if (isset($users[$user_name])) {
-	header('location:'.str_replace('plugins/gutuma/news','core/admin',absolute_url('plugin.php?p=gutuma&rec=done&u='.$users[$user_name]['id'])));
+	$redirect = str_replace('plugins/gutuma/news','core/admin',absolute_url('plugin.php?p=gutuma&rec=done&u='.$users[$user_name]['id']));
+	header('location:'.$redirect);echo '<meta HTTP-EQUIV="REFRESH" content="0; url='.$redirect.'">';
 } 
 
 // Save settings

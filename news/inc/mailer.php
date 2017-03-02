@@ -104,7 +104,7 @@ class gu_mailer
 		}
 		
 		// Enable level 3 logging
-		$log =& Swift_LogContainer::getLog();
+		$log = Swift_LogContainer::getLog();//Strict standards: Only variables should be assigned by reference
 		$log->setLogLevel(3);
 	
 		return TRUE;
@@ -174,7 +174,7 @@ class gu_mailer
 		}
 			
 		if (gu_is_debugging()) {
-			$log =& Swift_LogContainer::getLog();
+			$log = Swift_LogContainer::getLog();//Strict standards: Only variables should be assigned by reference
 			
 			gu_debug('gu_mailer::send(...)<br />'.nl2br(htmlspecialchars($log->dump(true))).' => '.$num_sent);
 			$log->clear();
@@ -204,8 +204,8 @@ class gu_mailer
 			$html = $newsletter->get_html().'<hr /><p><a href="'.absolute_url('subscribe.php').'?addr='.$address.'">'.t('Unsubscribe').'</a> '.t('from this newsletter.').t(' Powered by').' <a href="'.GUTUMA_URL.'">'.t('Gutuma').'</a></p>';
 		}
 		else {
-			$text =& $newsletter->get_text();
-			$html =& $newsletter->get_html();		
+			$text = $newsletter->get_text();//Strict standards: Only variables should be assigned by reference
+			$html = $newsletter->get_html();//Strict standards: Only variables should be assigned by reference
 		}
 		
 		// Add text and html as separate MIME parts

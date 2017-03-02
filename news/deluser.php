@@ -25,5 +25,6 @@ if (isset($_GET['token'])) {
 gu_init();
 
 gu_config::delUser($name);
-header('location:'.str_replace('plugins/gutuma/news','core/admin',absolute_url('plugin.php?p=gutuma&del=done&u='.$id)));
+$redirect = str_replace('plugins/gutuma/news','core/admin',absolute_url('plugin.php?p=gutuma&del=done&u='.$id));
+header('location:'.$redirect);echo '<meta HTTP-EQUIV="REFRESH" content="0; url='.$redirect.'">';
 ?>
