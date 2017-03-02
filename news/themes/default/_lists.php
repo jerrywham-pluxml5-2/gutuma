@@ -50,9 +50,7 @@ if (count($lists) > 0) {
 		<div>
 			<?php echo t('Name');?> <input name="new_list_name" type="text" class="textfield" id="new_list_name" /> 
 			&nbsp;&nbsp;<?php echo t('Private');?> <input type="checkbox" id="new_list_private" name="new_list_private" />	
-		</div>
-		<div style="float:right;">
-			<input name="add_list" type="submit" id="add_list" value="<?php echo t('Add');?>" />
+			&nbsp;&nbsp;<input name="add_list" type="submit" id="add_list" value="<?php echo t('Add');?>" />
 		</div>	
 	</div>
 </form>
@@ -64,7 +62,6 @@ if (count($lists) > 0) {
 	<p><?php echo t('A new list can be created from a CSV file of addresses. The format of this file should be email addresses in the first column - other columns will be ignored.');?> </p>
 	<br/>
 	<div class="menubar">
-		<div><input name="import_file" type="file" id="import_file" /></div>
-		<div style="float:right;"><input name="import_submit" type="submit" id="import_submit" value="<?php echo t('Import');?>" /></div>
+		<div><input name="import_file" type="file" id="import_file" />&nbsp;&nbsp;<input name="import_submit" type="submit" id="import_submit" value="<?php echo t('Import');?>" /></div>
 	</div>
 </form>

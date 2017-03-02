@@ -55,40 +55,32 @@ if (!$generate) {
 	<div class="formfieldset">
 <?php
 	foreach ($gadget_params as $param) {
+		echo '<div class="formfield">';
 		switch ($param) {
 			case 'list':
-				echo '<div class="formfield">';
 				echo '  <div class="formfieldlabel">'.t('Address list').'</div>';
 				echo '  <div class="formfieldcontrols">'.create_list_control('gadget_list', $gadget_list, TRUE).'</div>';
-				echo '</div>';
 				break;
 			case 'text':
-				echo '<div class="formfield">';
 				echo '  <div class="formfieldlabel">'.t('Link text').'</div>';
 				echo '  <div class="formfieldcontrols">'.create_text_control('gadget_text', $gadget_text).'</div>';
-				echo '</div>';
 				break;
 			case 'btn_text':
-				echo '<div class="formfield">';
 				echo '  <div class="formfieldcomment">'.t('This can be left blank to create the gadget without a button').'</div>';
 				echo '  <div class="formfieldlabel">'.t('Button text').'</div>';
 				echo '  <div class="formfieldcontrols">'.create_text_control('gadget_btn_text', $gadget_btn_text).'</div>';
-				echo '</div>';
 				break;
 			case 'prefix':
-				echo '<div class="formfield">';
 				echo '  <div class="formfieldcomment">'.t('If two or more gadgets are going to be used on the same page, then they need to use unique prefixes').'</div>';
 				echo '  <div class="formfieldlabel">'.t('Control prefix').'</div>';
 				echo '  <div class="formfieldcontrols">'.create_text_control('gadget_prefix', $gadget_prefix).'</div>';
-				echo '</div>';
 				break;
 			case 'email_hint':
-				echo '<div class="formfield">';
 				echo '  <div class="formfieldlabel">'.t('Email hint').'</div>';
 				echo '  <div class="formfieldcontrols">'.create_text_control('gadget_email_hint', $gadget_email_hint).'</div>';
-				echo '</div>';
-				break;		
+				break;
 		}
+		echo '</div>';
 	}
 ?>
 	</div>
@@ -106,15 +98,15 @@ if (!$generate) {
 <form id="code_form" name="code_form" method="post" action="">
 	<h3><?php echo t('Script call (recommended)');?></h3>
 	<p><?php echo t('The following should be added to the HEAD section of your webpage');?><br/></p>
-	<p><input name="gadget_import" type="text" class="textfield" style="width: 99%" id="gadget_import" onclick="this.focus(); this.select();" value="<?php echo htmlspecialchars($script_import); ?>" /></p>
+	<p><input name="gadget_import" type="text" class="textfield" style="width: 99%" id="gadget_import" onclick="this.focus(); this.select();" value="<?php echo htmlspecialchars($script_import); ?>" readonly="readonly" /></p>
 	<p><?php echo t('This should be pasted to the place in your webpage where you want the gadget to appear');?><br/</p>
-	<p><input name="gadget_script" type="text" class="textfield" style="width: 99%" id="gadget_script" onclick="this.focus(); this.select();" value="<?php echo htmlspecialchars($script_write); ?>" /></p>
+	<p><input name="gadget_script" type="text" class="textfield" style="width: 99%" id="gadget_script" onclick="this.focus(); this.select();" value="<?php echo htmlspecialchars($script_write); ?>" readonly="readonly" /></p>
 	<h3><?php echo t('Actual HTML (advanced)');?> </h3>
 	<p><?php echo t('If you need to customize the gadget, you can copy and paste the actual HTML instead.');?></p>
 	<?php if ($gadget_requires_import) { ?>
 		<p><?php echo t('<strong>NOTE</strong> This gadget requires you to include <code>%</code> as above even if you use this HTML.',array('gadget.js.php'));?><br/</p>
 	<?php } ?>
-	<p><textarea name="gadget_html" id="gadget_html" rows="4" cols="30" style="width: 670px;" onclick="this.focus(); this.select();"></textarea></p>
+	<p><textarea name="gadget_html" id="gadget_html" rows="6" cols="30" style="width: 100%;" onclick="this.focus(); this.select();" readonly="readonly"></textarea></p>
 </form>
 <script type="text/javascript">document.getElementById('gadget_html').value = <?php echo $script_create; ?></script>
 <?php

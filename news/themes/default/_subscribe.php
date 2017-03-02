@@ -15,9 +15,6 @@
 $plxShow = plxShow::getInstance();
 ?>
 
-		</div>
-		<div id="content">
-
 <div style="text-align: center">
 
 <?php gu_theme_messages(); ?>
@@ -28,7 +25,7 @@ if (isset($list) && is_object($list))
 	echo '<h2>'.$list->get_name().'</h2><input type="hidden" id="subscribe_list" name="subscribe_list[]" value="'.$list->get_id().'" />';
 elseif (isset($lists)) {
 	echo '<h2>'.t('Newsletters').'</h2>';
-	echo '<table border="0" style="width: 300px; margin: auto" class="results" cellpadding="0" cellspacing="0">';
+	echo '<table border="0" style="max-width: 300px; margin: auto" class="results" cellpadding="0" cellspacing="0">';
 	foreach ($lists as $list) {
 		?>
 		<tr>
@@ -55,4 +52,4 @@ else
 </form>
 </div>
 <p>&nbsp;</p>
-<p style="text-align:center;"><a href="<?php  $plxShow->urlRewrite();?>"><?php echo t('Back home'); ?></a></p>
+<p><a href="<?php  $plxShow->urlRewrite();?>"><?php echo t('Back home'); ?></a></p>
