@@ -22,18 +22,20 @@ include_once '_menu.php';?>
 
 		<div class="formfield">
 			<div class="formfieldlabel"><?php echo t('Name');?></div>
-			<div class="formfieldcontrols"><input name="name" type="text" class="textfield" id="name" value="<?php echo $name ;?>" readonly="readonly"  /></div>
+			<div class="formfieldcontrols"><input name="name" type="text" class="textfield" id="name" value="<?php echo $user_name ;?>" readonly="readonly"  /></div>
 		</div>
 		<div class="formfield">
 			<div class="formfieldlabel"><?php echo t('Login');?></div>
-			<div class="formfieldcontrols"><input name="login" type="text" class="textfield" id="login" value="<?php echo $login ;?>" readonly="readonly"  /></div>
+			<div class="formfieldcontrols"><input name="login" type="text" class="textfield" id="login" value="<?php echo $user_login ;?>" readonly="readonly"  /></div>
 			<div class="formfielddivider"></div>
 			<div class="formfieldlabel"><?php echo t('Profile');?></div>
-			<div class="formfieldcontrols"><input name="userProfile" type="text" class="textfield" id="userProfile" value="<?php echo $userProfile ;?>" readonly="readonly"  /></div>
+			<div class="formfieldcontrols"><input name="userProfile" type="text" class="textfield" id="userProfile" value="<?php echo $user_userProfile ;?>" readonly="readonly"  /></div>
 			<div class="formfielddivider"></div>
-			<div class="formfieldcontrols"><input name="password" type="hidden" class="textfield" id="password" value="<?php echo $password ;?>" readonly="readonly"  /></div>
-			<input name="salt" type="hidden" id="salt" value="<?php echo base64_encode($salt) ;?>" readonly="readonly"  />
-			<input name="id" type="hidden" id="id" value="<?php echo $id ;?>" readonly="readonly"  />
+			<div class="formfieldcontrols"><input name="password" type="hidden" class="textfield" id="password" value="<?php echo $user_password ;?>" readonly="readonly"  /></div>
+			<input name="admin_password" type="hidden" id="admin_password" value="<?php echo $password ;?>" readonly="readonly"  />
+			<input name="admin_name" type="hidden" id="admin_name" value="<?php echo $username ;?>" readonly="readonly"  />
+			<input name="salt" type="hidden" id="salt" value="<?php echo base64_encode($user_salt) ;?>" readonly="readonly"  />
+			<input name="id" type="hidden" id="id" value="<?php echo $user_id ;?>" readonly="readonly"  />
 		</div>
 		<br/>	
 		<?php if (isset($ok)) :unset($ok);?>
