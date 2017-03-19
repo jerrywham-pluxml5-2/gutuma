@@ -70,5 +70,7 @@ $plxShow = plxShow::getInstance();
 
 if(isset($_SESSION['user']) AND !empty($_SESSION['user'])) {
 	$_profil = $plxMotor->aUsers[$_SESSION['user']];
+} else {# rediriger a l'authentification si non conncté a Pluxml
+	header('Location:../../../core/admin/auth.php?p=/caf/core/admin/plugin.php?p=gutuma');
+	exit();
 }
-?>
