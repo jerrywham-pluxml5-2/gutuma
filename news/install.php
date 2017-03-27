@@ -64,7 +64,7 @@ else
 gu_theme_start();
 
 // Output title
-echo '<h2>'.$title.'</h2>';
+echo '</div><div id="content"><h2>'.$title.'</h2>';
 
 gu_theme_messages(); 
 
