@@ -255,10 +255,10 @@ function getLang($glang=GU_CONFIG_LANG){
 			file_put_contents($path,'');
 		}
 		$langLines = file($path);
-	
+
 		$traductions = array();
 		foreach($langLines as $langLine){
-			if(trim($langLine)!='' && substr($langLine,0,2) != '//'){
+			if(strstr($langLine,'[::->]')){
 				list($key,$traduction) = explode('[::->]',$langLine);
 				$traductions[$key] = (substr($traduction,-1) == "\n")? substr($traduction,0,-1) : $traduction;
 			}
