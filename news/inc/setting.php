@@ -164,7 +164,7 @@ class gu_config
 		self::$values['msg_coll_name_on_multilist'] = FALSE;
 		self::$values['msg_append_signature'] = TRUE;
 		self::$values['msg_admin_copy'] = TRUE;
-		self::$values['theme_name'] = 'default';
+		self::$values['theme_name'] = 'gutuma';//default
 		self::$values['list_send_welcome'] = TRUE;
 		self::$values['list_send_goodbye'] = TRUE;
 		self::$values['list_subscribe_notify'] = TRUE;
