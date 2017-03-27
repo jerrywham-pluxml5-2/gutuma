@@ -18,7 +18,7 @@ define('GU_SESSION_SITES', 'valid_sites');
 define('GU_SESSION_SITE_KEY', absolute_url('index.php'));
 
 // Start the PHP session engine
-if ( !function_exists('\php_error\reportErrors') ) {
+if ( !isset($_SESSION) && !function_exists('\php_error\reportErrors') ) {
 	session_start();
 }
 /**
