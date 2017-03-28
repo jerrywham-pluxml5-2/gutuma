@@ -22,7 +22,7 @@ function gu_install($collective_name, $admin_username, $admin_password, $admin_e
 	//gu_config::set('admin_password', $admin_password);
 	//gu_config::set('admin_email', $admin_email);
 	gu_config::set('salt', $salt);
-		
+
 	return gu_config::save();
 }
 
@@ -79,7 +79,7 @@ if ($install_success) {
 	<p><?php echo t('For security reasons, this install script (<code>install.php</code>) must be deleted from your server.');?></p>
 <?php } ?>
 
-<p style="text-align: center"><a href="login.php"><?php echo t('Login');?></a></p>
+<p style="text-align: center"><a href="../../../core/admin/plugin.php?p=gutuma">Admin PluXml</a> - <s><a href="login.php"><?php echo t('Login');?></a></s></p>
 <?php
 } elseif ($update_mode) {
 ?>
