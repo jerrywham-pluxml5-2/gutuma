@@ -40,7 +40,7 @@ define('GUTUMA_CONFIG_FILE', $plxMotor->plxPlugins->aPlugins['gutuma']->listsDir
 define('GUTUMA_PASSWORD_MIN_LEN', 6); // Minimum password length
 define('GUTUMA_EMAIL', 'rowanseymour@users.sourceforge.net'); // Author email address
 define('GUTUMA_LISTS_DIR', $plxMotor->plxPlugins->aPlugins['gutuma']->listsDir); // Directory where lists are stored
-define('GUTUMA_TEMP_DIR', 'temp'); // Directory where temp message files are stored
+define('GUTUMA_TEMP_DIR', sys_get_temp_dir()); // Directory where temp message files are stored
 define('GUTUMA_TEMP_EXPIRY_AGE', 3*60*60); // The number of seconds from last access before subfolders/files are deleted from the temp directory
 define('GUTUMA_PAGE_SIZE', 10); // The number of items per page in lists of addresses
 define('GUTUMA_MAX_ADDRESS_LEN', 320); // The max allowable length in characters of an email address
