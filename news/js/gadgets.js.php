@@ -11,8 +11,7 @@
  * @date	01/10/2013
  * @author	Cyril MAGUIRE
 */
-
-include_once '../inc/gutuma.php';
+include_once str_replace('js/gadgets.js.php','',__FILE__).'/inc/gutuma.php';
 
 // Initialize Gutuma without validation or housekeeping
 gu_init(FALSE, FALSE, FALSE);
