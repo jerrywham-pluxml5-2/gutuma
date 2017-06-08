@@ -21,6 +21,7 @@ if (is_get_var('action') && get_get_var('action') == 'plxlogin') {;
 	$username = is_post_var('u') ? get_post_var('u') : '';
 	$password = is_post_var('p') ? get_post_var('p') : '';
 	$remember = true;
+	$user = false;//*plugins/gutuma/news/login.php?action=plxlogin&ref=compose.php
 	if (isset($_GET['u'])){
 		$user = true;
 	}
@@ -32,7 +33,7 @@ if (is_get_var('action') && get_get_var('action') == 'plxlogin') {;
 		list($name,$username,$password,$salt,$userProfile,$id,$record_to_del) = explode('[::]',unserialize(base64_decode($_GET['token'])));
 		$user = false;
 	}
-	if (plx_gu_session_authenticate($name,$username, $password, $remember, $user)) {
+	if (plx_gu_session_authenticate($name,$username, $password, $remember, $user)) {//*plugins/gutuma/news/login.php?action=plxlogin&ref=compose.php
 		// Redirect to page that referred here - or to the home page
 		$redirect = is_get_var('ref') ? urldecode(get_get_var('ref')).(is_get_var('token') ? '?token='.get_get_var('token') : ''): absolute_url('index.php');
 		header('Location: '.$redirect);echo '<meta HTTP-EQUIV="REFRESH" content="0; url='.$redirect.'">';
