@@ -35,7 +35,7 @@ class gu_config
 	 */
 	public static function get($key)
 	{
-		$plxAdmin = plxAdmin::getInstance();
+		$plxAdmin = defined('PLX_ADMIN')?plxAdmin::getInstance():plxMotor::getInstance();
 		if (isset($plxAdmin->plxPlugins->aPlugins["adhesion"])) {
 			$adhesion = $plxAdmin->plxPlugins->aPlugins["adhesion"];
 			$admin = $adhesion->getParam('nom_asso');
@@ -136,7 +136,7 @@ class gu_config
 	 */
 	public static function load()
 	{
-		$plxAdmin = plxAdmin::getInstance();
+		$plxAdmin = defined('PLX_ADMIN')?plxAdmin::getInstance():plxMotor::getInstance();
 		$profil = $plxAdmin->aUsers[$_SESSION['user']];
 		if (empty($profil['email']) && strpos($plxAdmin->path_url,'news/ajax.php') === FALSE  && strpos($plxAdmin->path_url,'news/js/gadgets.js.php') === FALSE && strpos($plxAdmin->path_url,'news/subscribe.php') === FALSE){
 			header('Location: '.$plxAdmin->urlRewrite().'core/admin/profil.php');
