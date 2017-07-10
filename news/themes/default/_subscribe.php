@@ -12,7 +12,7 @@
  * @author	Cyril MAGUIRE
 */
 
-$plxShow = plxShow::getInstance();
+$plxMotor = plxMotor::getInstance();
 ?>
 
 <div style="text-align: center">
@@ -52,4 +52,4 @@ else
 </form>
 </div>
 <p>&nbsp;</p>
-<p><a href="<?php  $plxShow->urlRewrite();?>"><?php echo t('Back home'); ?></a></p>
+<p><a href="<?php  $plxMotor->urlRewrite();?>"><?php echo t('Back home'); ?></a></p>

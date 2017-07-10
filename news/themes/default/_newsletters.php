@@ -11,17 +11,15 @@
  * @date	01/10/2013
  * @author	Cyril MAGUIRE
 */
-
 ?>
-
-<div id="sectionheader">
-	<h2><?php echo t('Newsletter');?> <?php echo $box; ?></h2>
-
-	<ul id="sectionmenu">
-		<li><a href="compose.php"><?php echo t('Compose');?></a></li>
-		<li><a href="newsletters.php?box=drafts" <?php echo ($box == 'drafts') ? 'class="current"' : '' ?>><?php echo t('Drafts');?> (<span id="mailbox_drafts_count"><?php echo count($mailbox['drafts']) ?></span>)</a></li>
-		<li><a href="newsletters.php?box=outbox" <?php echo ($box == 'outbox') ? 'class="current"' : '' ?>><?php echo t('Outbox');?> (<span id="mailbox_outbox_count"><?php echo count($mailbox['outbox']) ?></span>)</a></li>
-	</ul>
+<div id="sectionheader" class="inline-form action-bar">
+	<h2><?php echo t('Newsletter');?> <?php echo t(ucfirst($box)); ?></h2>
+	<br />
+	<p id="sectionmenu">
+		<a href="compose.php" class="button"><?php echo t('Compose');?></a></li>
+		<a href="newsletters.php?box=drafts" class="button<?php echo ($box == 'drafts') ? ' blue' : '' ?>"><?php echo t('Drafts');?> (<span id="mailbox_drafts_count"><?php echo count($mailbox['drafts']) ?></span>)</a>
+		<a href="newsletters.php?box=outbox" class="button<?php echo ($box == 'outbox') ? ' blue' : '' ?>"><?php echo t('Outbox');?> (<span id="mailbox_outbox_count"><?php echo count($mailbox['outbox']) ?></span>)</a>
+	</p>
 
 </div>
 <?php gu_theme_messages(); ?>

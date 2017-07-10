@@ -61,7 +61,13 @@ include_once '_menu.php';?>
 		<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('The following is the name of the folder which contains all the Theme\'s files (Becarefull to respect casse)');?></div>
 			<div class="formfieldlabel"><?php echo t('Name of the theme');?></div>
-			<div class="formfieldcontrols"><?php gu_theme_text_control('theme_name'); ?></div>	
+			<div class="formfieldcontrols"><?php
+				$thms = array();
+				$dir = dirname(__FILE__).'/../';
+				$thm_dir = array_diff(scandir($dir), array('..', '.'));
+				foreach($thm_dir AS $thm)
+					$thms[] = array($thm,$thm);
+				gu_theme_list_control('theme_name', $thms); ?></div>
 		</div>
 
 <?php } elseif ($section == 'transport') { ?>

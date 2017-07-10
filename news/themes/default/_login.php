@@ -19,7 +19,7 @@ gu_theme_messages();
 <p>&nbsp;</p>
 <div style="text-align: center">
 	<form name="login_form" method="post" action="login.php?action=login<?php echo (is_get_var('ref') ? ('&amp;ref='.urlencode(get_get_var('ref'))) : ''); ?>" onsubmit="return loginSubmit(this);">
-		<p><?php echo t('Username');?><br/><input name="u" type="text" class="textfield" id="u" value="<?php echo $name;?>" /><br/>
+		<p><?php echo t('Username');?><br/><input name="u" type="text" class="textfield" id="u" value="<?php echo @$name;?>" /><br/>
 		<?php echo t('Password');?><br/><input type="hidden" id="p" name="p" /><input name="dummy_p" type="password" class="textfield" id="dummy_p" />
 		</p>
 		<p>

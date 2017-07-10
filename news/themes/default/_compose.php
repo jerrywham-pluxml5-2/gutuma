@@ -13,42 +13,42 @@
 
 ?>
 
-<div id="sectionheader">
+<div id="sectionheader" class="inline-form action-bar">
 	<h2><?php echo $preview_mode ? t('Preview ') : t('Compose '); echo t('newsletter');?></h2>
-	
-	<ul id="sectionmenu">
-		<li><a href="compose.php" class="current"><?php echo t('Compose');?></a></li>
-		<li><a href="newsletters.php?box=drafts"><?php echo t('Drafts');?> (<?php echo count($mailbox['drafts']) ?>)</a></li>
-		<li><a href="newsletters.php?box=outbox"><?php echo t('Outbox');?> (<?php echo count($mailbox['outbox']) ?>)</a></li>
-	</ul>
+	<br />
+	<p id="sectionmenu">
+		<a href="compose.php" class="button blue"><?php echo t('Compose');?></a>
+		<a href="newsletters.php?box=drafts" class="button"><?php echo t('Drafts');?> (<?php echo count($mailbox['drafts']) ?>)</a>
+		<a href="newsletters.php?box=outbox" class="button"><?php echo t('Outbox');?> (<?php echo count($mailbox['outbox']) ?>)</a>
+	</p>
 
 </div>
 <?php
 if (count($lists) == 0)
 	gu_error(t("A address list must be created before a newsletter can be sent"));
 if (gu_config::get('admin_email') == '')
-	gu_error(t("A valid admin email must be specified before a newsletter can be sent"));	
+	gu_error(t("A valid admin email must be specified before a newsletter can be sent"));
 
 gu_theme_messages();
-		
+
 ?>
 <form enctype="multipart/form-data" id="send_form" name="send_form" method="post" action="compose.php<?php echo gu_is_debugging() ? '?DEBUG' : ''; ?>"><input type="hidden" id="msg_id" name="msg_id" value="<?php echo $newsletter->get_id(); ?>" /><input type="hidden" id="is_modified" name="is_modified" value="<?php echo $is_modified; ?>" />
-	
-	<div class="formfieldset" style="margin-top: 0px">
-		<div class="formfield" style="border-bottom: 0px">
-			<div class="formfieldlabel" style="width: 100px">&nbsp;</div>
-			<div class="formfieldcontrols" style="text-align: right; width: 580px"><?php echo t('Address book: ');?><select name="send_lists" id="send_lists">
+	<div class="formfieldset">
+		<div class="formfield">
+			<div class="formfieldlabel">
+				<select name="send_lists" id="send_lists">
 <?php
 	foreach($lists as $l) {
 		echo '<option value="'.$l->get_name().'">'.$l->get_name().' ('.$l->get_size().')</option>';
 	}
 ?>
-					</select>
-					<input name="send_add_recip" type="button" id="send_add_recip" value="<?php echo t('Add');?>" onclick="gu_add_recipient();" /></div>
-			<div class="formfielddivider"></div>
-			<div class="formfieldlabel"><?php echo t('To');?></div>
-    	<div class="formfieldcontrols"><input name="msg_recips" type="text" class="textfield" id="msg_recips" value="<?php echo $newsletter->get_recipients(); ?>" onchange="gu_set_modified(true)" /></div>
-			<div class="formfielddivider"></div>
+				</select>
+				<input name="send_add_recip" type="button" id="send_add_recip" value="<?php echo t('Add');?>" onclick="gu_add_recipient();" />
+			</div>
+			<div class="formfieldcontrols"><?php echo t('Address book: ');?>
+				<?php echo t('To');?>
+				<input name="msg_recips" type="text" class="textfield" id="msg_recips" value="<?php echo $newsletter->get_recipients(); ?>" onchange="gu_set_modified(true)" />
+			</div>
 			<div class="formfieldlabel"><?php echo t('Subject');?></div>
 			<div class="formfieldcontrols"><input name="msg_subject" type="text" class="textfield" id="msg_subject" value="<?php echo $newsletter->get_subject(); ?>" onchange="gu_set_modified(true)" /></div>
 		</div>

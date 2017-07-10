@@ -22,6 +22,4 @@
 		'L_SEE_ADMIN'           =>	'Voir avec un administrateur pour activer votre compte',
 		'L_ERR_EMAIL'           =>	'Veuillez renseigner une adresse email dans votre profil',
 		'L_INSTALL_FIRST'       => 'Module non installé'
-		
 	);
-?>

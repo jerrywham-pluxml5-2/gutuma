@@ -12,15 +12,21 @@
  * @author	Cyril MAGUIRE
 */
 
-?>
+if(!defined('PLX_ROOT')) exit; ?>
+		</section>
+</main>
 
-		<div class="clearer"></div>
+<?php //eval($plxAdmin->plxPlugins->callHook('AdminFootEndBody')) ?>
 
-		</div><!-- content -->
+<script>
+	setMsg();
+	mediasManager.construct({
+		windowName : "<?php echo L_MEDIAS_TITLE ?>",
+		racine:	"<?php echo plxUtils::getRacine() ?>",
+		urlManager: "core/admin/medias.php"
+	});
+</script>
 
-	</div><!-- container -->
-
-	</div><!-- wrapper -->
 	<?php
 	if (gu_is_debugging() && isset($_SERVER['GU_DEBUG_MSGS'])) {
 		echo '<div id="debugmsg"><p style="text-align: center"><b>Debug messages</b></p><hr />';

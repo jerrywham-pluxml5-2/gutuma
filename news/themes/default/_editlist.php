@@ -13,11 +13,12 @@
 */
 
 ?>
-
-<h2><?php echo t('Edit list');?></h2>
+<div id="sectionheader" class="inline-form action-bar">
+	<h2><?php echo t('Edit list');?></h2>
+</div>
 <?php gu_theme_messages(); ?>
 <form method="post" name="edit_form" id="edit_form" action="">
-	
+
 	<div class="formfieldset">
 		<div class="formfield">
 			<div class="formfieldlabel"><?php echo t('Name');?></div>

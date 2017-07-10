@@ -182,6 +182,7 @@ class gu_newsletter
 		$dir = $this->get_dir();
 		if (!file_exists($dir)) {
 			mkdir($dir);
+			touch($dir.'/index.html');
 			mkdir($dir.'/attachments');	
 		}
 			
@@ -283,19 +284,18 @@ class gu_newsletter
 			$this->release_lock();
 			return TRUE;
 		}
-		
+
 		// Open recipient list file			
 		$fh = @fopen($dir.'/'.RECIPIENTS_FILE, 'r+');
 		if ($fh == FALSE)
 			return gu_error(t('Unable to open newsletter recipient file'), ERROR_EXTRA);
 		if (!flock($fh, LOCK_EX))
-			return gu_error(t('Unable to lock newsletter recipient list'), ERROR_EXTRA);					
-				
+			return gu_error(t('Unable to lock newsletter recipient list'), ERROR_EXTRA);
 		fgets($fh); // Read file marker
 		$header = explode('|', fgets($fh)); // Read header
 		$remaining = $header[0];
 		$total = $header[1];
-		
+
 		// Start the timer - use the passed start time value if there was one
 		$start_time = isset($init_start_time) ? $init_start_time : time();
 				
@@ -485,7 +485,8 @@ class gu_newsletter
 		$res2 = @unlink($dir.'/'.MESSAGE_FILE);
 		$res3 = @unlink($dir.'/'.LOCK_FILE);
 		$res4 = !file_exists($dir.'/'.RECIPIENTS_FILE) || @unlink($dir.'/'.RECIPIENTS_FILE);
-		$res5 = @rmdir($dir);	
+		$res5 = @unlink($dir.'/index.html');
+		$res6 = @rmdir($dir);	
 		if (!($res1 && $res2 && $res3 && $res4 && $res5))
 			return gu_error(t('Some newsletter files could not be deleted'), ERROR_EXTRA);
 			
@@ -500,12 +501,11 @@ class gu_newsletter
 	 * @return mixed The newsletter if it was loaded successfully, else FALSE if an error occured
 	 */
 	public static function get($id)
-	{			
+	{
 		// Open message file
 		$h = @fopen(realpath(GUTUMA_TEMP_DIR.'/'.$id.'/'.MESSAGE_FILE), 'r');
 		if ($h == FALSE)
-			return gu_error(t("Unable to open message file"));
-	
+			return gu_error(t("Unable to open message file").' : '.GUTUMA_TEMP_DIR.'/'.$id.'/'.MESSAGE_FILE);
 		fgets($h); // Discard first line
 		$newsletter = new gu_newsletter();
 		$newsletter->id = $id;
@@ -553,8 +553,9 @@ class gu_newsletter
 		$newsletters = array();
 		
 		if ($dh = @opendir(realpath(GUTUMA_TEMP_DIR))) {
+		//~ if ($dh = @opendir(GUTUMA_TEMP_DIR)) {
 			while (($file = readdir($dh)) !== FALSE) {
-				if ($file == '.' || $file == '..' || $file[0] == '.')
+				if ($file == '.' || $file == '..' || $file == 'index.html' || $file[0] == '.')//[0] == . is 4 .htaccess
 					continue;
 					
 				if (($newsletter = self::get($file)) !== FALSE)				

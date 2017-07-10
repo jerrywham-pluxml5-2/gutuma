@@ -126,7 +126,6 @@ $lists = gu_list::get_all();
 	}
 /* ]]> */
 </script>
-
 <?php
 //Body
 include_once 'themes/'.gu_config::get('theme_name').'/_lists.php';

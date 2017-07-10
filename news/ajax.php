@@ -11,7 +11,8 @@
  * @date	01/10/2013
  * @author	Cyril MAGUIRE
 */
-
+header('Content-Type: application/x-javascript; charset=utf-8');
+//header('Content-Type: text/html; charset=utf-8');
 
 include_once 'inc/gutuma.php';
 include_once 'inc/subscription.php';

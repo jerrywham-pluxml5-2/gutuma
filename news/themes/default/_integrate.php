@@ -13,15 +13,13 @@
 */
 
 ?>
-
-<h2><?php echo t('Gadgets for other sites');?></h2>
-
-<?php gu_theme_messages(); ?>
-
-<p><?php echo t('Here you can generate gadgets for other websites so that people can easily find and subscribe to your newsletters.');?></p>
 <form id="gadgets_form" name="gadgets_form" method="post" action="">
-<?php
-if (!$generate) {
+	<div id="sectionheader" class="inline-form action-bar">
+		<h2><?php echo t('Gadgets for other sites');?></h2>
+		<p><?php echo t('Here you can generate gadgets for other websites so that people can easily find and subscribe to your newsletters.');?></p>
+	</div>
+<?php gu_theme_messages();
+	if (!$generate) {
 ?>
 	<!-- Because the gadgets are already inside a form, set formless to true, so that they don't get their own forms -->
 	<script type="text/javascript">gu_gadgets_formless = true;</script>
@@ -44,7 +42,7 @@ if (!$generate) {
 		</div>
 	</div>
 	<br/>
-	<div class="menubar">
+	<div class="menubar in-action-bar">
 		<input type="submit" id="gadget_generate" name="gadget_generate" value="<?php echo t('Next');?>" />
 	</div>
 </form>
@@ -84,13 +82,12 @@ if (!$generate) {
 	}
 ?>
 	</div>
-	<br/>
-	<div class="menubar">
+
+	<div class="menubar in-action-bar">
 		<input type="button" id="gadget_back" name="gadget_back" value="<?php echo t('Back');?>" onclick="this.form.submit()" />
 		<input type="submit" id="gadget_generate" name="gadget_generate" value="<?php echo t('Update');?>" /><input type="hidden" id="gadget_type" name="gadget_type" value="<?php echo $gadget_type; ?>" />
 	</div>
 </form>
-<p>&nbsp;</p>
 <h3><?php echo t('Preview');?></h3>
 <div style="text-align: center; padding: 10px; background-color: #E0FFE0">
 	<?php echo $script_write; ?>

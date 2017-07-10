@@ -262,7 +262,7 @@ function setMsge(id) {
 		else {
 			wndWidth = document.getElementsByTagName('body')[0].clientWidth;
 		}
-		xpos = Math.round(((wndWidth-objDiv.offsetWidth)/2)-objSidebar.offsetWidth);
+		xpos = Math.round(((wndWidth-objDiv.offsetWidth)/2));//-objSidebar.offsetWidth);
 		objDiv.style.left=xpos+'px';
 		fadeOut(id);
 	}

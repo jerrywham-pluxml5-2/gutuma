@@ -15,9 +15,13 @@
  * @date	23/09/2013
  * @author	Cyril MAGUIRE
 */
-
+//var_dump('gutuma _pluxml',$_SERVER);
 # Définition des constantes
-define('PLX_ROOT', $_SERVER['DOCUMENT_ROOT'].substr($_SERVER['SCRIPT_NAME'],0,strpos($_SERVER['SCRIPT_NAME'], 'plugins')));
+//~ define('PLX_ROOT', $_SERVER['DOCUMENT_ROOT'].substr($_SERVER['SCRIPT_NAME'],0,strpos($_SERVER['SCRIPT_NAME'], 'plugins')));#4symlink::bug if plug use PLX_ROOT IN ADmin (favicon)
+//~ define('PLX_ROOT', '../../');#Normal?bug: in plugins/gutuma/news/js/gadgets.js.php:::Warning: include(../../config.php): failed to open stream: No such file or directory in /var/www/0.src.blogs/plx_plugs_git/gutuma/news/inc/_pluxml.php on line 24
+//~ define('PLX_ROOT', '../../../../');#New [in test]:dac 4 'PHP_SELF' => string '/plugins/gutuma/news/js/gadgets.js.php' (length=38)
+$gdgt=strstr($_SERVER['PHP_SELF'],'gadgets.js.php')?'../':'';
+define('PLX_ROOT', $gdgt.'../../../');
 define('PLX_CORE', PLX_ROOT.'core/');
 include(PLX_ROOT.'config.php');
 include(PLX_CORE.'lib/config.php');
@@ -56,9 +60,8 @@ $_SESSION['lang'] = $_SESSION['glang'] = $lang;
 # Chargement des fichiers de langue
 loadLang(PLX_CORE.'lang/'.$lang.'/core.php');
 loadLang(PLX_CORE.'lang/'.$lang.'/admin.php');
-
-$plxMotor->prechauffage();
-$plxMotor->demarrage();
+$plxMotor->mode='gutuma';#origin //$plxMotor->prechauffage();#bug header 404 when ? is in uri (admin) el motor go to mode error, sino mode home ;-) [non blocant] semble être inutile e
+#$plxMotor->demarrage();#origin semble inutile ici
 
 # Creation de l'objet d'affichage
 $plxShow = plxShow::getInstance();

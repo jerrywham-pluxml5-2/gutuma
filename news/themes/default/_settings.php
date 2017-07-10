@@ -12,28 +12,33 @@
  * @author	Cyril MAGUIRE
 */
 
-$plxAdmin = plxAdmin::getInstance();
+$plxAdmin = plxAdmin::getInstance();//plxMotor::getInstance();
 $profil = $plxAdmin->aUsers[$_SESSION['user']];
 $plxPlugin = $plxShow->plxMotor->plxPlugins->getInstance('gutuma');
 
-include_once '_menu.php';?>
+//include_once '_menu.php';?>
+<form id="edit_form" name="edit_form" method="post" action="">
 
-<div id="sectionheader">
+<div id="sectionheader" class="inline-form action-bar">
 	<h2><?php echo $section_titles[$section]; ?></h2>
-	
-		<ul id="sectionmenu">
-			<li><a href="settings.php" <?php echo ($section == 'general') ? 'class="current"' : ''; ?>><?php echo t('General');?></a></li>
-			<li><a href="settings.php?section=transport" <?php echo ($section == 'transport') ? 'class="current"' : ''; ?>><?php echo t('Transport');?></a></li>
-			<li><a href="settings.php?section=messages" <?php echo ($section == 'messages') ? 'class="current"' : ''; ?>><?php echo t('Messages');?></a></li>
-		</ul>
+	<br />
+	<p id="sectionmenu">
+		<a href="settings.php" class="button<?php echo ($section == 'general') ? ' blue' : ''; ?>"><?php echo t('General');?></a>
+		<a href="settings.php?section=transport" class="button<?php echo ($section == 'transport') ? ' blue' : ''; ?>"><?php echo t('Transport');?></a>
+		<a href="settings.php?section=messages" class="button<?php echo ($section == 'messages') ? ' blue' : ''; ?>"><?php echo t('Messages');?></a>
+	</p>
+	<br />
+<?php if ($section == 'transport') { ?>	
+	<input name="test_settings" type="submit" id="test_settings" value="<?php echo t('Test');?>" />
+<?php } ?>	
+	<input name="save_settings" type="submit" id="save_settings" value="<?php echo t('Save');?>" />
 </div>
 
 <?php gu_theme_messages(); ?>
 
-<form id="edit_form" name="edit_form" method="post" action="">
-	
+
 	<div class="formfieldset">
-	
+
 <?php if ($section == 'general') { ?>
 
 		<div class="formfield">
@@ -65,7 +70,13 @@ include_once '_menu.php';?>
 		<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('The following is the name of the folder which contains all the Theme\'s files (Becarefull to respect casse)');?></div>
 			<div class="formfieldlabel"><?php echo t('Name of the theme');?></div>
-			<div class="formfieldcontrols"><?php gu_theme_text_control('theme_name'); ?></div>		
+			<div class="formfieldcontrols"><?php
+				$thms = array();
+				$dir = dirname(__FILE__).'/../';
+				$thm_dir = array_diff(scandir($dir), array('..', '.'));
+				foreach($thm_dir AS $thm)
+					$thms[] = array($thm,$thm);
+				gu_theme_list_control('theme_name', $thms); ?></div>
 		</div>
 
 		<div class="formfield">
@@ -84,10 +95,9 @@ include_once '_menu.php';?>
 
 		</div>
 		<?php if ($noUser) :?>
-
 			<div class="formfieldlabel"><?php echo t('No other user'); ?></div>
 		<?php endif; ?>
-		
+
 <?php } elseif ($section == 'transport') { ?>
 
 		<div class="formfield">
@@ -141,7 +151,7 @@ include_once '_menu.php';?>
 			<div class="formfieldcontrols"><?php gu_theme_bool_control('msg_coll_name_on_multilist'); ?></div>
 		</div>
 		<div class="formfield">
-			<div class="formfieldcomment"></div><?php echo t('A signature containing an unsubscribe link can be automatically appended to all sent newsletters');?></div>
+			<div class="formfieldcomment"><?php echo t('A signature containing an unsubscribe link can be automatically appended to all sent newsletters');?></div>
 			<div class="formfieldlabel"><?php echo t('Append unsubscribe link to sent newsletters');?></div>
 			<div class="formfieldcontrols"><?php gu_theme_bool_control('msg_append_signature'); ?></div>
 		</div>
@@ -168,13 +178,6 @@ include_once '_menu.php';?>
 	<div>
 		
 <?php } ?>
-	</div>
-	<br/>
-	<div class="menubar">
-<?php if ($section == 'transport') { ?>	
-		<input name="test_settings" type="submit" id="test_settings" value="<?php echo t('Test');?>" />
-<?php } ?>	
-		<input name="save_settings" type="submit" id="save_settings" value="<?php echo t('Save');?>" />
 	</div>
 </form>
 <p>&nbsp;</p>

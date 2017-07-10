@@ -4,18 +4,18 @@
  * @author Rowan Seymour
  * @copyright This source is distributed under the GPL
  * @file included outbox page
- * @modifications Cyril Maguire
+ * @modifications Cyril Maguire, Thomas I.
  */
 /* Gutama plugin package
  * @version 1.6
- * @date	01/10/2013
+ * @date	09/06/2017
  * @author	Cyril MAGUIRE
 */
 
 include_once '_menu.php';?>
 
 <div id="sectionheader">
-	<div style="float: left;"><h2><?php echo t('Newsletter');?> <?php echo $box; ?></h2></div>
+	<div style="float: left;"><h2><?php echo t('Newsletter');?>  <?php echo t(ucfirst($box)); ?></h2></div>
 	<div style="float: right;">
 		<ul id="sectionmenu">
 			<li><a href="compose.php"><?php echo t('Compose');?></a></li>

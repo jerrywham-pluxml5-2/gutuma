@@ -4,6 +4,41 @@
  * @copyright This source is distributed under the GPL
  * @file Default theme main stylesheet
  */
+/* 5.6 */
+.formfield{
+ margin: 2px;
+}
+div.formfield > div{
+ display: inline-block;
+ padding: 0.7rem;
+}
+div.formfield::after, .formfieldcomment, .formfielddivider{
+ content: " ";
+ display: block !important;
+ clear: both;
+}
+div.formfieldcomment{
+ font-size: small;
+}
+.yes{color: green;}
+.no{color: red;}
+
+div.menubar.in-action-bar.lists {
+ top: -2.7em;
+ overflow: hidden;
+}
+.section .action-bar {
+ /* z-index: -10 !important; */
+}
+@media (max-width: 767px) {
+	.in-action-bar {
+		z-index: unset;
+	}
+}
+.notification {
+	/* right: 1em; */
+
+}
 
 code {
 	font-family: "Courier New", Courier, mono;
@@ -12,9 +47,12 @@ code {
 }
 
 input {
-margin: 0px 2px;
+margin: 2px;
 border: 1px solid #A8A9A8;
 padding: 2px 5px !important;
+}
+[type="checkbox"], [type="radio"] {
+ /* float: left; */
 }
 textarea {
 	background-color: #F8F8F8;
@@ -91,7 +129,8 @@ hr {
 }
 
 div.menubar {
-	background-color: #d8eeea;
+	/*background-color: #d8eeea;*/
+	top: 9px;
 	overflow: hidden;
 }
 

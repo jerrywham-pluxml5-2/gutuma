@@ -39,8 +39,8 @@ define('GUTUMA_ENCODING', 'UTF-8'); // Content encoding
 define('GUTUMA_CONFIG_FILE', $plxMotor->plxPlugins->aPlugins['gutuma']->listsDir.'/inc/config.php'); // Configuration file
 define('GUTUMA_PASSWORD_MIN_LEN', 6); // Minimum password length
 define('GUTUMA_EMAIL', 'rowanseymour@users.sourceforge.net'); // Author email address
-define('GUTUMA_LISTS_DIR', $plxMotor->plxPlugins->aPlugins['gutuma']->listsDir); // Directory where lists are stored
-define('GUTUMA_TEMP_DIR', sys_get_temp_dir()); // Directory where temp message files are stored
+define('GUTUMA_LISTS_DIR', $plxMotor->plxPlugins->aPlugins['gutuma']->listsDir);// Directory where lists are stored
+define('GUTUMA_TEMP_DIR', GUTUMA_LISTS_DIR.'/tmp');#sys_get_temp_dir() // Directory where temp message files are stored
 define('GUTUMA_TEMP_EXPIRY_AGE', 3*60*60); // The number of seconds from last access before subfolders/files are deleted from the temp directory
 define('GUTUMA_PAGE_SIZE', 10); // The number of items per page in lists of addresses
 define('GUTUMA_MAX_ADDRESS_LEN', 320); // The max allowable length in characters of an email address
@@ -83,6 +83,13 @@ if (!is_dir(GUTUMA_LISTS_DIR.'/inc')) {
 	touch(GUTUMA_LISTS_DIR.'/inc/index.html');
 	touch(GUTUMA_LISTS_DIR.'/inc/.htaccess');
 	file_put_contents(GUTUMA_LISTS_DIR.'/inc/.htaccess', $htaccess);
+}
+// Make tempo directory
+if (!is_dir(GUTUMA_TEMP_DIR)) {
+	mkdir(GUTUMA_TEMP_DIR);
+	touch(GUTUMA_TEMP_DIR.'/index.html');
+	touch(GUTUMA_TEMP_DIR.'/.htaccess');
+	file_put_contents(GUTUMA_TEMP_DIR.'/.htaccess', $htaccess);
 }
 
 /**

@@ -39,7 +39,7 @@ else if (gu_latest_version_num < current_ver_num) {
 		<ul>
 			<li><code><?php echo GUTUMA_LISTS_DIR; ?></code> <?php echo t('directory is writable...');?> <?php echo is_writable(GUTUMA_LISTS_DIR) ? '<span class="yes">'.t('Yes').'</span>' : '<span class="no">'.t('No').'</span>'; ?></li>
 			<li><code><?php echo GUTUMA_TEMP_DIR; ?></code> <?php echo t('directory is writable...');?> <?php echo is_writable(GUTUMA_TEMP_DIR) ? '<span class="yes">'.t('Yes').'</span>' : '<span class="no">'.t('No').'</span>'; ?></li>	
-			<li><code><?php echo GUTUMA_CONFIG_FILE; ?></code> <?php echo t('is writable...');?> <?php echo is_writable('inc') ? '<span class="yes">'.t('Yes').'</span>' : '<span class="no">'.t('No').'</span>'; ?></li>
+			<li><code><?php echo GUTUMA_CONFIG_FILE; ?></code> <?php echo t('is writable...');?> <?php echo is_writable(GUTUMA_CONFIG_FILE) ? '<span class="yes">'.t('Yes').'</span>' : '<span class="no">'.t('No').'</span>'; ?></li>
 			<li><?php echo t('Admin email address has been set...');?> <?php echo (gu_config::get('admin_email') != '') ? '<span class="yes">'.t('Yes').'</span>' : '<span class="no">'.t('No').'</span>'; ?></li>	
 			<li><?php echo t('Admin password has been changed...');?> <?php echo (gu_config::get('admin_password') != 'admin') ? '<span class="yes">'.t('Yes').'</span>' : '<span class="no">'.t('No').'</span>'; ?></li>
 			<li><?php echo t('Install script');?> <code>install.php</code> <?php echo t('deleted...');?> <?php echo (!file_exists('install.php')) ? '<span class="yes">'.t('Yes').'</span>' : '<span class="no">'.t('No').'</span>'; ?></li>	
