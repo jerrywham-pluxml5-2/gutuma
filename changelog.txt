@@ -6,7 +6,7 @@ Evol: swiftmailer-5.4.6 pour future integration http://swiftmailer.org
 
 ##v.1.8.4.plx.5.6a  10/07/2017##
 [+] admin theme 'default' adapté pour PluXml 5.6
-[+] admin choix du thème par selecteur
+[+] admin choix des thèmes par selecteur listant les dossiers présent (gutuma & default)
 [+] dossier temporaire déplacé du système vers data/gutuma/tmp (brouillons d'infolettres)
 [+] fin de lignes optim 2 unix with dos2unix (thx BaZooKa07)
 Fix admin header 404 + mode erreur si ? dans url ou sinon en mode home : suppression des appels au préchauffage() et au démarrage()
