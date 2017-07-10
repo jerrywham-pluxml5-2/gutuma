@@ -60,15 +60,16 @@ $_SESSION['lang'] = $_SESSION['glang'] = $lang;
 # Chargement des fichiers de langue
 loadLang(PLX_CORE.'lang/'.$lang.'/core.php');
 loadLang(PLX_CORE.'lang/'.$lang.'/admin.php');
-$plxMotor->mode='gutuma';#origin //$plxMotor->prechauffage();#bug header 404 when ? is in uri (admin) el motor go to mode error, sino mode home ;-) [non blocant] semble être inutile e
-#$plxMotor->demarrage();#origin semble inutile ici
+$plxMotor->mode='gutuma';
+//$plxMotor->prechauffage();##origin //bug header 404 when ? is in uri (admin) el motor go to mode error, sino mode home ;-) [non blocant] semble être inutile
+$plxMotor->demarrage();#origin semble inutile ici
 
 # Creation de l'objet d'affichage
 $plxShow = plxShow::getInstance();
 
-if(isset($_SESSION['user']) AND !empty($_SESSION['user'])) {
-	$_profil = $plxMotor->aUsers[$_SESSION['user']];
-} else {# rediriger a l'authentification si non conncté a Pluxml
-	header('Location:../../../core/admin/auth.php?p=plugin.php?p=gutuma');
+if(isset($_SESSION['user']) AND !empty($_SESSION['user'])) { 
+	$_profil = $plxMotor->aUsers[$_SESSION['user']];// _profil ONLY CALLED IN INSTALL.PHP
+}elseif(strpos($plxMotor->path_url,'news/ajax.php') === FALSE  && strpos($plxMotor->path_url,'news/js/gadgets.js.php') === FALSE && strpos($plxMotor->path_url,'news/subscribe.php') === FALSE){//gestion des abonnements (publics)
+	header('Location:'.PLX_CORE.'admin/auth.php?p=plugin.php?p=gutuma');
 	exit();
 }

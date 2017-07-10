@@ -137,9 +137,10 @@ class gu_config
 	public static function load()
 	{
 		$plxAdmin = defined('PLX_ADMIN')?plxAdmin::getInstance():plxMotor::getInstance();
-		$profil = $plxAdmin->aUsers[$_SESSION['user']];
+		$profil = $plxAdmin->aUsers['001'];#$profil = $plxAdmin->aUsers[$_SESSION['user']];
+#var_dump('inc setting gutu',$profil,$_SESSION['user'],PLX_CORE,$plxAdmin->plxPlugins->aPlugins['gutuma']);
 		if (empty($profil['email']) && strpos($plxAdmin->path_url,'news/ajax.php') === FALSE  && strpos($plxAdmin->path_url,'news/js/gadgets.js.php') === FALSE && strpos($plxAdmin->path_url,'news/subscribe.php') === FALSE){
-			header('Location: '.$plxAdmin->urlRewrite().'core/admin/profil.php');
+			header('Location: '.PLX_CORE.'admin/profil.php');
 			exit;
 		}
 		// Set defaults
