@@ -1,35 +1,16 @@
 Gutuma 4 PluXml
 Todo:
 eval($plxAdmin->plxPlugins->callHook('AdminTopMenus'));
-
-todo :
 verif: si l'on change le(s) mot(s) de passe dans pluxml, si l'accés au plugin et tjrs valable
-
 Evol: swiftmailer-5.4.6 pour future integration http://swiftmailer.org
-fin de lignes
+
 ##v.1.8.4.plx.5.6a  10/07/2017##
 [+] admin theme 'default' adapté pour PluXml 5.6
 [+] admin choix du thème par selecteur
 [+] dossier temporaire déplacé du système vers data/gutuma/tmp (brouillons d'infolettres)
-[+] optim 
+[+] fin de lignes optim 2 unix with dos2unix (thx BaZooKa07)
 Fix admin header 404 + mode erreur si ? dans url ou sinon en mode home : suppression des appels au préchauffage() et au démarrage()
 Fix verif config modifiable (themes/*/_index.php) 'inc' to GUTUMA_CONFIG_FILE
-
-fixé par plxMotor::getinstance() mais reste incompatible dans une langue autre que defaut
-( ! ) Notice: Constant PLX_MYMULTILINGUE already defined in /var/www/0.src.blogs/plx_plugs_git/plxMyMultiLingue/plxMyMultiLingue.php on line 86
-Call Stack
-#	Time	Memory	Function	Location
-1	0.0002	231192	{main}( )	../compose.php:0
-2	0.0469	1515280	gu_init( )	../compose.php:19
-3	0.0469	1516096	gu_config::load( )	../gutuma.php:97
-4	0.0469	1516176	plxAdmin::getInstance( )	../setting.php:139
-5	0.0469	1517368	plxAdmin->__construct( )	../class.plx.admin.php:24
-6	0.0470	1517368	plxMotor->__construct( )	../class.plx.admin.php:37
-7	0.0478	1527944	plxPlugins->loadPlugins( )	../class.plx.motor.php:94
-8	0.0480	1560168	plxPlugins->getInstance( )	../class.plx.plugins.php:74
-9	0.0481	1560576	plxMyMultiLingue->__construct( )	../class.plx.plugins.php:42
-10	0.0487	1579288	define ( )	../plxMyMultiLingue.php:86
-
 
 ##v.1.8.4.plx.5.3.1  02/03/2017##
 [+] certaines redir (complexes) doublé d'un méta refresh (pb de not found 404)
@@ -37,8 +18,3 @@ Call Stack
 [+] fixé Liste des utilisateurs validés (affiche plusieurs fois (2) les utilisateurs) in settings (Only in default theme)
 [+] fixé swift 3 Stricts standards: Only variables should be assigned by reference [php 5.5.6](swift en version 3.3.2)
 [*]formulaire ajax (place holder(s)) & value undefined (after demande...) [résolu] !attention aux id
-
-
-
-
-
