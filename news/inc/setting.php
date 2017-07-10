@@ -5,9 +5,8 @@
  * @copyright This source is distributed under the GPL
  * @file Settings functions
  * @modifications Cyril Maguire
- */
- /*
-/* Gutama plugin package
+ *
+ * Gutama plugin package
  * @version 1.6
  * @date	01/10/2013
  * @author	Cyril MAGUIRE
@@ -17,7 +16,7 @@ class gu_config
 {
 	private static $version;
 	private static $values;
-	
+
 	/**
 	 * Gets the version that last stored the config values
 	 * @return mixed The version number
@@ -27,7 +26,7 @@ class gu_config
 		self::reload();
 		return self::$version;
 	}
-	
+
 	/**
 	 * Gets the value of the specified setting
 	 * @param string $key The setting name 
@@ -53,7 +52,7 @@ class gu_config
 		}
 		return self::$values[$key];
 	}
-	
+
 	/**
 	 * Gets all the settings of users except the admin user
 	 * @return array The setting of users
@@ -62,7 +61,7 @@ class gu_config
 	{
 		return unserialize(str_replace('\"','"',self::get('users')));
 	}
-	
+
 	/**
 	 * Sets the value of the specified setting
 	 * @param string $key The setting name 
@@ -72,7 +71,7 @@ class gu_config
 	{
 		self::$values[$key] = $value;
 	}
-	
+
 	/**
 	 * Sets the value of users except admin user
 	 * @param numeric $id The id of user in pluxml
@@ -94,7 +93,7 @@ class gu_config
 		);
 		self::$values['users'] = serialize($users);
 	}
-	
+
 	/**
 	 * Delete a user
 	 * @param string $name The name of user
@@ -106,31 +105,27 @@ class gu_config
 		self::$values['users'] = serialize($users);
 		self::save();
 	}
-	
+
 	/**
 	 * Reloads settings
 	 */
 	public static function reload() {
-		// Check if a config exists
+// Check if a config exists
 		if (!file_exists(GUTUMA_CONFIG_FILE))
 			return FALSE;
-			
-		// Read file values and copy to static members
+// Read file values and copy to static members
 		$gu_config = array();
-		//include GUTUMA_CONFIG_FILE;
-		
-		// Version encodée (voir ligne 232)
+//include GUTUMA_CONFIG_FILE;
+// Version encodée (voir ligne 232)
 		eval(base64_decode(substr(file_get_contents(GUTUMA_CONFIG_FILE),9,-5)));
-		// Version décodée (voir ligne 234)
-		//eval(substr(file_get_contents(GUTUMA_CONFIG_FILE),7,-4));
-		
+// Version décodée (voir ligne 234)
+//eval(substr(file_get_contents(GUTUMA_CONFIG_FILE),7,-4));
 		self::$version = $gu_config_version;
 		foreach (array_keys($gu_config) as $keys)
 			self::$values[$keys] = $gu_config[$keys];
-			
 		return TRUE;
 	}
-	
+
 	/**
 	 * Loads settings - default values are overridden by user's config file if it exists
 	 */
@@ -143,7 +138,7 @@ class gu_config
 			header('Location: '.PLX_CORE.'admin/profil.php');
 			exit;
 		}
-		// Set defaults
+// Set defaults
 		self::$values	= array();
 		self::$values['application_name'] = t('Newsletters');
 		self::$values['collective_name'] = t('My Newsletters');
@@ -173,28 +168,24 @@ class gu_config
 		self::$values['salt'] = $profil['salt'];
 		self::$values['ROOT']= RPATH;
 		self::$values['users']= serialize (array());
-		
-		
+
 		// Check if a config exists
 		if (!file_exists(GUTUMA_CONFIG_FILE))
 			return FALSE;
-			
-		// Read file values and copy to static members
+// Read file values and copy to static members
 		$gu_config = array();
-		//include GUTUMA_CONFIG_FILE;
-		
-		// Version encodée (voir ligne 232)
+//include GUTUMA_CONFIG_FILE;
+// Version encodée (voir ligne 225)
 		eval(base64_decode(substr(file_get_contents(GUTUMA_CONFIG_FILE),9,-5)));
-		// Version décodée (voir ligne 234)
-		//eval(substr(file_get_contents(GUTUMA_CONFIG_FILE),7,-4));
-		
+// Version décodée (voir ligne 227)
+//eval(substr(file_get_contents(GUTUMA_CONFIG_FILE),7,-4));
 		self::$version = $gu_config_version;
 		foreach (array_keys($gu_config) as $keys)
 			self::$values[$keys] = $gu_config[$keys];
-		
+
 		return TRUE;
 	}
-	
+
 	/**
 	 * Saves the current settings values by writing them to the config.php file
 	 * @return bool TRUE if operation was successful, else FALSE
@@ -203,7 +194,7 @@ class gu_config
 	{
 		if (gu_is_demo())
 			return gu_error(t('Settings cannot be changed in demo mode'));
-		
+
 		// Data checks
 		if (preg_match('[^A-Za-z0-9]', self::$values['admin_username']))
 			return gu_error(t('Username can only contain alphanumeric characters'));
@@ -212,31 +203,30 @@ class gu_config
 		if (!check_email(self::$values['admin_email']))
 			return gu_error(t('A valid administrator email must be at provided'));
 		if (!is_dir(RPATH.'themes/'.self::$values['theme_name']))
-			return gu_error(t("Theme <em>%</em> doesn't exists. You need to create it first !",array(self::$values['theme_name']) ) );	
-		
+			return gu_error(t("Theme <em>%</em> doesn't exists. You need to create it first !",array(self::$values['theme_name']) ) );
+
 		$lh = @fopen(GUTUMA_CONFIG_FILE, 'w');
 		if ($lh == FALSE)
 			return gu_error(t("Unable to create/open % file for writing",array(GUTUMA_CONFIG_FILE)));
-		
+
 		fwrite($lh, "\$gu_config_version = ".GUTUMA_VERSION_NUM.";\n");
 		foreach (array_keys(self::$values) as $key) {
 			if (is_bool(self::$values[$key]))
-				fwrite($lh, "\$gu_config['".$key."'] = ".(self::$values[$key] ? 'TRUE' : 'FALSE').";\n");		
+				fwrite($lh, "\$gu_config['".$key."'] = ".(self::$values[$key] ? 'TRUE' : 'FALSE').";\n");
 			elseif (is_numeric(self::$values[$key]))
 				fwrite($lh, "\$gu_config['".$key."'] = ".self::$values[$key].";\n");
 			else
 				fwrite($lh, "\$gu_config['".$key."'] = '".str_replace(array('\"',"'"),array('"',"\'"),self::$values[$key])."';\n");
 		}
 		fclose($lh);
-		
 		$f = file_get_contents(GUTUMA_CONFIG_FILE);
-		// Version encodée (voir ligne 185)
+// Version encodée (voir ligne 180)
 		file_put_contents(GUTUMA_CONFIG_FILE,"<?php /*\n".base64_encode($f)."\n*/  ?>");
-		// Version décodée (voir ligne 187)
-		/* file_put_contents(GUTUMA_CONFIG_FILE,"<?php \n".$f."\n?>");*/
+// Version décodée (voir ligne 182)
+		/*file_put_contents(GUTUMA_CONFIG_FILE,"<?php \n".$f."\n?>");*/
 		return TRUE;
 	}
-	
+
 	/**
 	 * Méthode qui retourne une chaine de caractères au hasard
 	 *
@@ -245,7 +235,7 @@ class gu_config
 	 * @author	Florent MONTHEL et Stephane F
 	 **/
 	public static function plx_charAleatoire($taille='10') {
-	
+
 		$string = '';
 		$chaine = 'abcdefghijklmnpqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		mt_srand((float)microtime()*1000000);

@@ -34,8 +34,8 @@ class gutuma extends plxPlugin {
 	 * @author	Stephane F, Cyril MAGUIRE
 	 **/
 	public function AdminTopBottom() {
-		
-			$string = 'if(empty($plxAdmin->aUsers[$_SESSION["user"]]["email"])) {
+
+			$string = 'if(empty($plxAdmin->aUsers["001"]["email"])) {
 				echo "<p class=\"warning\">Plugin Gutuma<br />'.$this->getLang("L_ERR_EMAIL").'</p>";
 				plxMsg::Display();
 			}';

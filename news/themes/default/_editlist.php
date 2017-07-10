@@ -31,7 +31,7 @@
     </div>
 	</div>
 	<br/>
-	<div class="menubar">
+	<div class="menubar in-action-bar">
 		<input name="list_back" type="button" id="list_back" value="<?php echo t('Back');?>" onclick="location.href='lists.php'" />
 		<input name="list_update" type="submit" id="list_update" value="<?php echo t('Save');?>" />
 		<input name="num_addresses" type="hidden" id="num_addresses" value="<?php echo $list->get_size(); ?>" />

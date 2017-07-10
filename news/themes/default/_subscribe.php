@@ -52,4 +52,4 @@ else
 </form>
 </div>
 <p>&nbsp;</p>
-<p><a href="<?php  $plxMotor->urlRewrite();?>"><?php echo t('Back home'); ?></a></p>
+<p><a href="<?php echo PLX_ROOT; ?>"><?php echo t('Back home'); ?></a></p>
