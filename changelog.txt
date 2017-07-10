@@ -3,8 +3,12 @@ Todo:
 eval($plxAdmin->plxPlugins->callHook('AdminTopMenus'));
 verif: si l'on change le(s) mot(s) de passe dans pluxml, si l'accés au plugin et tjrs valable
 Evol: swiftmailer-5.4.6 pour future integration http://swiftmailer.org
+& si theme default -> use statc mode & display (site theme au lieu de celuis d'admin) + theme gutume affiche le lien retoure a l'admin du plugin!BAD!
 
-retour a l'accueil (_subscribe)[fait]PLX_ROOT & si theme default -> use statc mode & display (site theme au lieu de celuis d'admin) + theme gutume affiche le lien retoure a l'admin du plugin!BAD!
+##v.1.8.4.plx.5.6b  10/07/2017##
+Fix retour a l'accueil (default/_subscribe) PLX_ROOT
+Fix souscrption si guest user : fichiers ajax, js et subscribe inaxessible car redirigé a la cnx admin :/
+Un peu de néttoyage
 
 ##v.1.8.4.plx.5.6a  10/07/2017##
 [+] admin theme 'default' adapté pour PluXml 5.6
