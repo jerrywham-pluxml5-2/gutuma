@@ -10,7 +10,7 @@
 # See http://www.gnu.org/licenses/gpl.html
 #
 # ------------------- END LICENSE BLOCK -------------------
-/* Gutama plugin package
+/* Gutama plugin package (from core/admin/prepend.php)
  *  @version 1.4
  * @date	23/09/2013
  * @author	Cyril MAGUIRE
@@ -20,15 +20,31 @@
 //~ define('PLX_ROOT', $_SERVER['DOCUMENT_ROOT'].substr($_SERVER['SCRIPT_NAME'],0,strpos($_SERVER['SCRIPT_NAME'], 'plugins')));#4symlink::bug if plug use PLX_ROOT IN ADmin (favicon)
 //~ define('PLX_ROOT', '../../');#Normal?bug: in plugins/gutuma/news/js/gadgets.js.php:::Warning: include(../../config.php): failed to open stream: No such file or directory in /var/www/0.src.blogs/plx_plugs_git/gutuma/news/inc/_pluxml.php on line 24
 //~ define('PLX_ROOT', '../../../../');#New [in test]:dac 4 'PHP_SELF' => string '/plugins/gutuma/news/js/gadgets.js.php' (length=38)
-$gdgt=strstr($_SERVER['PHP_SELF'],'gadgets.js.php')?'../':'';
-define('PLX_ROOT', $gdgt.'../../../');
+//~ ini_set("allow_url_fopen", true);
+//~ ini_set("allow_url_include", true);
+
+$gu_real_path = str_replace('plugins/gutuma/news/inc/_pluxml.php','',__FILE__);
+$gu_call_path = str_replace($_SERVER['PHP_SELF'],'',$_SERVER['SCRIPT_FILENAME']);// v1
+//~ $gu_call_path = $_SERVER['SERVER_NAME'];// v1
+/////////////    https://duckduckgo.com/?t=lm&q=PHP+SOLVE+FOLDER+SYMLINK&ia=qa
+$output = array();
+exec('pwd', $output);
+define('__LINK__', $output[0].substr(__FILE__, strpos(__FILE__, DIRECTORY_SEPARATOR)));
+
+#var_dump($output,__LINK__,'oldddddddddddddssssssssss',$gu_real_path == $gu_call_path ,$gu_real_path,$gu_call_path);
+//~ $gdgt=strstr($_SERVER['PHP_SELF'],'gadgets.js.php')?'../':'';
+$gdgt=strstr($_SERVER['PHP_SELF'],'gadgets.js.php')?'':'';
+define('PLX_GROOT', $gdgt.'../../../');//yep in plugins local folder  //~ define('PLX_ROOT', str_replace($_SERVER['PHP_SELF'],'',$_SERVER['SCRIPT_FILENAME']).'/'.$gdgt/*.'../../../'*/);
+define('PLX_GORE', PLX_GROOT.'core/');
+define('PLX_ROOT', $gu_call_path.'/'.$gdgt/*.'../../../'*/);//
 define('PLX_CORE', PLX_ROOT.'core/');
+//~ define('PLX_CORE', $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].'/core/');
+
 include(PLX_ROOT.'config.php');
 include(PLX_CORE.'lib/config.php');
-define('PLX_CONF', PLX_ROOT.'data/configuration/parametres.xml');
 
 # On verifie que PluXml est installé
-if(!file_exists(PLX_CONF)) {
+if(!file_exists(path('XMLFILE_PARAMETERS'))) {
 	header('Location: '.PLX_ROOT.'install.php');
 	exit;
 }
@@ -36,23 +52,44 @@ if(!file_exists(PLX_CONF)) {
 # On démarre la session
 session_start();
 
+$session_domain = dirname(__FILE__);
+/*
+if(!defined('PLX_AUTHPAGE') OR PLX_AUTHPAGE !== true){ # si on est pas sur la page de login
+	# Test sur le domaine et sur l'identification
+	if((isset($_SESSION['domain']) AND $_SESSION['domain']!=$session_domain) OR (!isset($_SESSION['user']) OR $_SESSION['user']=='')){
+		header('Location: auth.php?p='.htmlentities($_SERVER['REQUEST_URI']));
+		exit;
+	}
+}
+*/
 # On inclut les librairies nécessaires
-include(PLX_CORE.'lib/class.plx.date.php');
-include(PLX_CORE.'lib/class.plx.glob.php');
-include(PLX_CORE.'lib/class.plx.utils.php');
+include_once(PLX_CORE.'lib/class.plx.date.php');
+include_once(PLX_CORE.'lib/class.plx.glob.php');
+include_once(PLX_CORE.'lib/class.plx.utils.php');
+include_once(PLX_CORE.'lib/class.plx.msg.php');
+include_once(PLX_CORE.'lib/class.plx.record.php');
+include_once(PLX_CORE.'lib/class.plx.motor.php');
+include_once(PLX_CORE.'lib/class.plx.admin.php');
+include_once(PLX_CORE.'lib/class.plx.encrypt.php');
+include_once(PLX_CORE.'lib/class.plx.medias.php');
+include_once(PLX_CORE.'lib/class.plx.plugins.php');
+include_once(PLX_CORE.'lib/class.plx.token.php');
+
 include(PLX_CORE.'lib/class.plx.capcha.php');
 include(PLX_CORE.'lib/class.plx.erreur.php');
-include(PLX_CORE.'lib/class.plx.record.php');
-include(PLX_CORE.'lib/class.plx.motor.php');
 include(PLX_CORE.'lib/class.plx.feed.php');
 include(PLX_CORE.'lib/class.plx.show.php');
-include(PLX_CORE.'lib/class.plx.encrypt.php');
-include(PLX_CORE.'lib/class.plx.plugins.php');
-
-include(PLX_CORE.'lib/class.plx.admin.php');
-
 # Creation de l'objet principal et lancement du traitement
 $plxMotor = plxMotor::getInstance();
+//~ $plxMotor = new plxMotor(path('XMLFILE_PARAMETERS'));
+//echo readlink(PLX_ROOT.'plugins/gutuma/');
+
+
+
+
+#var_dump('_pluxml PLX_CORE $plxMotor',$_SERVER['PHP_SELF'],$_SERVER['SCRIPT_FILENAME'],__FILE__,PLX_CORE,$_SERVER,$plxMotor);echo file_get_contents(path('XMLFILE_PARAMETERS'));exit;
+
+
 
 # Chargement des fichiers de langue en fonction du profil de l'utilisateur connecté
 $lang = $glang = $plxMotor->aConf['default_lang'];
@@ -67,9 +104,11 @@ $plxMotor->demarrage();#origin semble inutile ici
 # Creation de l'objet d'affichage
 $plxShow = plxShow::getInstance();
 
-if(isset($_SESSION['user']) AND !empty($_SESSION['user'])) { 
+if(isset($_SESSION['user']) AND !empty($_SESSION['user'])) {
 	$_profil = $plxMotor->aUsers[$_SESSION['user']];// _profil ONLY CALLED IN INSTALL.PHP
+	$plxMotor->mode='gutumadmin';
+
 }elseif(strpos($plxMotor->path_url,'news/ajax.php') === FALSE  && strpos($plxMotor->path_url,'news/js/gadgets.js.php') === FALSE && strpos($plxMotor->path_url,'news/subscribe.php') === FALSE){//gestion des abonnements (publics)
-	header('Location:'.PLX_CORE.'admin/auth.php?p=plugin.php?p=gutuma');
+	header('Location:'.PLX_GORE.'admin/auth.php?p=plugin.php?p=gutuma');
 	exit();
 }

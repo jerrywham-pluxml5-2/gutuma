@@ -1,9 +1,20 @@
 Gutuma 4 PluXml
 Todo:
+gestion des tableaux / datatablejs (vanilla)
+bug si on supprime toutes les adresses (faire en sorte de recharger la page "editlist" (js) 
+bug affichage: lors du choix du menu "informations" (index.php) le menu article de plux est actif (en plus de celuis d'info)
 eval($plxAdmin->plxPlugins->callHook('AdminTopMenus'));
 verif: si l'on change le(s) mot(s) de passe dans pluxml, si l'accés au plugin et tjrs valable
 Evol: swiftmailer-5.4.6 pour future integration http://swiftmailer.org
-& si theme default -> use statc mode & display (site theme au lieu de celuis d'admin) + theme gutume affiche le lien retoure a l'admin du plugin!BAD!
+& si theme default -> use statc mode & display (site theme au lieu de celuis d'admin) + theme gutume affiche le lien retour a l'admin du plugin!BAD!
+
+##v.1.8.4.plx.5.6b2  16/08/2017##
+[+] import csv array_unique + option: separated by ; or ,
+[+] retouche+coloré du theme admin 'default' (PluXml 5.6)
+Fix editlist pagination (fnctn interne) & Navi Améloré (0 addrs ds list [event js])
+Fix si le dossier du plugin est un lien symbolique (symlink)
+Fix doubles quotes in html attributes created with js
+Fix cacher le menu admin si non auth
 
 ##v.1.8.4.plx.5.6b  10/07/2017##
 Fix retour a l'accueil (default/_subscribe) PLX_ROOT

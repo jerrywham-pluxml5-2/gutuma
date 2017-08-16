@@ -5,12 +5,29 @@
  * @file Default theme main stylesheet
  */
 /* 5.6 */
+button, input, select, textarea {
+ width: inherit;
+}
 .formfield{
  margin: 2px;
 }
 div.formfield > div{
  display: inline-block;
- padding: 0.7rem;
+ padding: 1%;
+ width: 100%;
+ min-width: 18%;
+ max-width: 72%;
+}
+div.formfield.messages > div{/* unused 4 the moment */
+ min-width: 66%;
+ max-width: 72%;
+}
+div.formfield > div > select{
+ min-width: 18%;
+ max-width: 66%;
+}
+div.formfield > div.formfieldlabel{
+ max-width: 27%;
 }
 div.formfield::after, .formfieldcomment, .formfielddivider{
  content: " ";
@@ -22,7 +39,10 @@ div.formfieldcomment{
 }
 .yes{color: green;}
 .no{color: red;}
-
+div.formfieldfoat{
+ margin-bottom: 1em;
+ background-color: rgba(207, 207, 207, 0.207);
+}
 div.menubar.in-action-bar.lists {
  top: -2.7em;
  overflow: hidden;
@@ -30,30 +50,23 @@ div.menubar.in-action-bar.lists {
 .section .action-bar {
  /* z-index: -10 !important; */
 }
-@media (max-width: 767px) {
-	.in-action-bar {
-		z-index: unset;
-	}
-}
-.notification {
-	/* right: 1em; */
-
-}
 
 code {
 	font-family: "Courier New", Courier, mono;
 	font-size: 12px;
 	line-height: 16px;
 }
-
+/*
 input {
 margin: 2px;
 border: 1px solid #A8A9A8;
 padding: 2px 5px !important;
 }
+*/
 [type="checkbox"], [type="radio"] {
  /* float: left; */
 }
+
 textarea {
 	background-color: #F8F8F8;
 	border-top: 1px solid #abadb3;
@@ -81,24 +94,36 @@ hr {
 	font-weight: bold;
 	padding: 3px;
 }
-
+.section .action-bar h2 {
+	font-size: 2.5rem;
+	margin-top: -0.1618rem;
+	margin-bottom: 0.1618rem;
+}
 /* Sub menu */
 
 #sectionheader {
 	width: 100%;
 	overflow: hidden;
 }
-
-#sectionmenu li a {	
+#sectionmenu{
+ line-height: 2;
+}
+/*
+#sectionmenu a {	
 	color: #489689;
 }
-
-#sectionmenu li a.current {	
+*/
+#sectionmenu a.current {	
 	color: #7dbcb1;
 }
 
-#sectionmenu li a:hover {
+#sectionmenu a:hover {
 	color: #bdfcf1;
+}
+
+#sectionmenu > input {
+	margin-top:0.618em;
+	margin-bottom:0;
 }
 
 /* Other objects */
@@ -108,10 +133,16 @@ hr {
 	min-height: 300px;
 }
 
+.notification {
+	position: fixed;
+	right: 0;
+	left: 0;
+	top: 72px;
+}
+
 #statusmsg {
 	padding: 10px;
 	background-color: #93BFB8;
-	top: 72px;
 	margin-bottom: 10px;
 	overflow: hidden;
 }
@@ -129,9 +160,12 @@ hr {
 }
 
 div.menubar {
-	/*background-color: #d8eeea;*/
-	top: 9px;
+	background-color: #d8eeea;
 	overflow: hidden;
+}
+div.menubar.in-action-bar {
+	margin-top: 7.2rem;
+	background-color: transparent;
 }
 
 div.messagepreview {
@@ -144,16 +178,17 @@ div.messagepreview {
 /* Pager bar classes */
 
 div.pager {
-	background-color: white;
+	background-color: rgba(207, 207, 207, 0.207);
 	overflow: hidden;
 	width: 100%;
+	/* max-width: 963px; */
 }
 
 div.pagercontrols {
 	float: left;
 	width: 140px;
 	text-align: center;
-	margin-left: 270px;
+	/* margin-left: 270px; */
 	padding: 10px 0px 10px 0px;
 }
 
@@ -177,4 +212,33 @@ table.results tr td.emptyresults {
 	padding: 10px;
 	font-style: italic;
 	text-align: center;
+}
+.should-cut-off {/*
+ max-width: 92%;
+ overflow: hidden;
+ white-space: nowrap;
+ display: inline-block;
+ text-overflow: ellipsis; */
+}
+.cell-off{
+ max-width: 100%;
+}
+.cell-off b{
+ min-width: 100px;
+ text-align: right;
+ padding-right: 1rem;
+ display: inline-block;
+}
+@media (max-width: 767px) {
+	.in-action-bar {
+		z-index: unset;
+		text-align: center;
+	}
+}
+
+@media (max-width: 639px) {
+ div.formfield > div{
+  min-width: 48%;
+  max-width: 98%;
+ }
 }

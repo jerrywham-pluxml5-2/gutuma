@@ -23,7 +23,7 @@ if (isset($_FILES['import_file'])) {
 	$name = remove_ext(basename($_FILES['import_file']['name']));
 	if ($_FILES['import_file']['type'] == 'text/csv'){
 		$csv = $_FILES['import_file']['tmp_name'];
-		if ($list = gu_list::import_csv($name, $csv)) {
+		if ($list = gu_list::import_csv($name, $csv, @$_POST['sep'])) {
 			if ($list->update())
 				gu_success(t('List <b><i>%</i></b> imported from CSV file',array($name)));
 		}

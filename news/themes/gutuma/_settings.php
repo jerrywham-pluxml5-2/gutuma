@@ -98,7 +98,7 @@ include_once '_menu.php';?>
 		</div>
 		<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('You may experience problems with sending to large address lists with PHP <code>mail()</code>');?></div>
-			<div class="formfieldlabel"><?php echo t('Use PHP mai');?>l</div>
+			<div class="formfieldlabel"><?php echo t('Use PHP mail');?></div>
 			<div class="formfieldcontrols"><?php gu_theme_bool_control('use_phpmail'); ?></div>
 		</div>
 		<div class="formfield">

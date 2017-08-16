@@ -11,28 +11,28 @@
  * @date	01/10/2013
  * @author	Cyril MAGUIRE
 */
-//~ include_once str_replace('js/gadgets.js.php','',__FILE__).'/inc/gutuma.php';
-include_once '../inc/gutuma.php';
+include_once str_replace('js/gadgets.js.php','',__FILE__).'/inc/gutuma.php';
+//~ include_once '../inc/gutuma.php';
 
 // Initialize Gutuma without validation or housekeeping
 gu_init(FALSE, FALSE, FALSE);
 
-header('Content-Type: application/x-javascript');
+//header('Content-Type: application/x-javascript');
 
 if (!is_get_var('noajax')) {
-?>/** 
+?>/**
  * This file is a server-side merge of tw-sack.js and gadgets.js.php
- * 
+ *
  * ------------------------------ tw-sack.js -------------------------------
  */
- 
+
 <?php echo file_get_contents('tw-sack.js'); ?>
 
-/** 
+/**
  * ----------------------------- gadgets.js.php ------------------------------
  */
 <?php } ?>
- 
+
 var gu_gadgets_formless = false;
 var gu_gadgets_subcribe_url = "<?php echo absolute_url('../subscribe.php') ?>";
 var gu_gadgets_ajax_url = "<?php echo absolute_url('../ajax.php'); ?>";
@@ -41,10 +41,9 @@ var gu_gadgets_ajax_proxy = "";
 /**
  * The callback for errors from the AJAX interface
  */
-function gu_ajax_on_error(msg)
-{
+function gu_ajax_on_error(msg){
 	msg = msg.replace(/<(?:.|\s)*?>/g, "");
-	
+
 	alert(msg);
 }
 
@@ -53,22 +52,20 @@ function gu_ajax_on_error(msg)
  * to be set as the destination for AJAX requests
  * @param url The url of the proxy script which must be on this domain
  */
-function gu_gadgets_set_ajax_proxy(url)
-{
+function gu_gadgets_set_ajax_proxy(url){
 	gu_gadgets_ajax_proxy = url;
 }
 
 /**
  * Creates a basic subscribe link to the subscribe page
  * @param list_id The ID of a list (optional)
- * @param text The text of the link 
- * @return The gadget HTML 
+ * @param text The text of the link
+ * @return The gadget HTML
  */
-function gu_gadgets_create_basic_link(list_id, text)
-{
+function gu_gadgets_create_basic_link(list_id, text){
 	var sub_url = gu_gadgets_subcribe_url + ((list_id > 0) ? ("?list=" + list_id) : '');
-	
-	return '<a href="' + sub_url + '" class="subscribe-link" id="suscribe-link">' + text + '</a>';
+	console.log('basic_link',text.replace('&quot;','"'));
+	return '<a href="' + sub_url + '" class="subscribe-link" id="suscribe-link">' + text.replace(/&quot;/g,'"') + '</a>';
 }
 
 /**
@@ -76,22 +73,22 @@ function gu_gadgets_create_basic_link(list_id, text)
  * @param list_id The ID of a list (optional)
  * @param btn_text The submit button label (optional)
  * @param prefix The prefix applied to all IDs of elements
- * @return The gadget HTML  
+ * @return The gadget HTML
  */
-function gu_gadgets_create_basic_form(list_id, btn_text, prefix)
-{
+function gu_gadgets_create_basic_form(list_id, btn_text, prefix){
+		console.log('basic_form',btn_text);
 	var html = '';
 	if (!gu_gadgets_formless)
 		html += '<form name="' + prefix + 'subscribe_form" id="' + prefix + 'subscribe_form" method="post" action="' + gu_gadgets_subcribe_url + '">';
-	
+
 	html += '<input name="' + prefix + 'subscribe_address" id="' + prefix + 'subscribe_address" type="text" />';
 	html += '<input name="' + prefix + 'subscribe_list" id="' + prefix + 'subscribe_list" type="hidden" value="' + list_id + '" />';
-	
+
 	if (btn_text != '')
-		html += '<input name="' + prefix + 'subscribe_submit" id="' + prefix + 'subscribe_submit" type="submit" value="' + btn_text + '"/>';
+		html += '<input name="' + prefix + 'subscribe_submit" id="' + prefix + 'subscribe_submit" type="submit" value="' + btn_text.replace(/"/g,"&quot;") + '"/>';
 	else
-		html += '<input name="' + prefix + 'subscribe_submit" id="' + prefix + 'subscribe_submit" type="hidden" value="" />';	
-	
+		html += '<input name="' + prefix + 'subscribe_submit" id="' + prefix + 'subscribe_submit" type="hidden" value="" />';
+
 	if (!gu_gadgets_formless)
 		html += '</form>';
 	return html;
@@ -100,29 +97,27 @@ function gu_gadgets_create_basic_form(list_id, btn_text, prefix)
 /**
  * Creates a link which uses AJAX to submit a subscription
  * @param list_id The ID of a list
- * @param text The text of the link 
+ * @param text The text of the link
  * @return The gadget HTML
  */
-function gu_gadgets_create_ajax_link(list_id, text)
-{
+function gu_gadgets_create_ajax_link(list_id, text){
 	if (list_id == '' || list_id == 0)
 		return '<?php echo t('This gadget requires a valid list');?>';
-		
-	return '<a href="javascript:gu_gadgets_submit_ajax_link(\'' + list_id + '\')" class="subscribe-link" id="suscribe-link">' + text + '</a>';
+	console.log('ajax_link',text);
+	return '<a href="javascript:gu_gadgets_submit_ajax_link(\'' + list_id + '\')" class="subscribe-link" id="suscribe-link">' + text.replace(/&quot;/g,'"') + '</a>';
 }
 
 /**
  * Creates a subscribe form which uses an inline AJAX submission
  * @param list_id The ID of a list
  * @param btn_text The submit button label (optional)
- * @param prefix The prefix applied to all IDs of elements 
+ * @param prefix The prefix applied to all IDs of elements
  * @return The gadget HTML
  */
-function gu_gadgets_create_ajax_form(list_id, btn_text, email_hint, prefix)
-{
+function gu_gadgets_create_ajax_form(list_id, btn_text, email_hint, prefix){
 	if (list_id == '' || list_id == 0)
 		return '<?php echo t('This gadget requires a valid list');?>';
-
+	console.log('ajax_form',btn_text);
 	var html = '';
 	if (!gu_gadgets_formless)
 		html += '<form name="' + prefix + 'subscribe_form" id="' + prefix + 'subscribe_form" method="get" action="" onsubmit="gu_gadgets_submit_ajax_form(this, \'' + prefix + '\'); return false;">';
@@ -133,34 +128,27 @@ function gu_gadgets_create_ajax_form(list_id, btn_text, email_hint, prefix)
 	if (!gu_gadgets_formless)
 		html += '</form>';
 	if (email_hint != '')
-		html += '<script type="text\/javascript">gu_gadgets_textfield_hint(document.getElementById("' + prefix + 'subscribe_address"), "' + email_hint + '");<\/script>';	//SyntaxError: unterminated string literal
-	return html;		
+		html += '<script type="text\/javascript">gu_gadgets_textfield_hint(document.getElementById("' + prefix + 'subscribe_address"), "' + email_hint.replace(/&quot;/g,'\\"') + '");<\/script>';	//SyntaxError: unterminated string literal
+	return html;
 }
 
 /**
  * Shortcut functions for outputting gadgets
  */
-console.log('gadjetJs');
-function gu_gadgets_write_basic_link(list_id, text)
-{
+
+function gu_gadgets_write_basic_link(list_id, text){
 	document.write(gu_gadgets_create_basic_link(list_id, text));
 }
-
-function gu_gadgets_write_basic_form(list_id, btn_text, prefix)
-{
+function gu_gadgets_write_basic_form(list_id, btn_text, prefix){
 	document.write(gu_gadgets_create_basic_form(list_id, btn_text, prefix));
 }
 
-function gu_gadgets_write_ajax_link(list_id, text)
-{
+function gu_gadgets_write_ajax_link(list_id, text){
 	document.write(gu_gadgets_create_ajax_link(list_id, text));
 }
-
-function gu_gadgets_write_ajax_form(list_id, btn_text, email_hint, prefix)
-{
+function gu_gadgets_write_ajax_form(list_id, btn_text, email_hint, prefix){
 	document.write(gu_gadgets_create_ajax_form(list_id, btn_text, email_hint, prefix));
 }
-
 
 /**
  * Adds a hint value to the specified text field, i.e., when the box doesn't have focus it displays

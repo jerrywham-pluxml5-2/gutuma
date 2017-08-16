@@ -15,7 +15,7 @@
 ?>
 <div id="sectionheader" class="inline-form action-bar">
 	<h2><?php echo t('Home');?></h2>
-	<p><?php echo t('Welcome to Gutuma - an easy to use, yet feature rich newsletter management tool, geared towards web designers and people out in the field.');?></p>
+	<p id="sectionmenu"><?php echo t('Welcome to Gutuma - an easy to use, yet feature rich newsletter management tool, geared towards web designers and people out in the field.');?></p>
 </div>
 <?php gu_theme_messages(); ?>
 

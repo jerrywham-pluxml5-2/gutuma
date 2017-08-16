@@ -52,13 +52,13 @@ function gu_session_authenticate($username = NULL, $password = NULL, $remember =
 		if (gu_session_check_credentials($_COOKIE['username'], $_COOKIE['password'])) {
 			gu_session_set_valid(TRUE);
 			return TRUE;
-		}	
-  }
-	
+		}
+	}
+
 	gu_session_set_valid(FALSE);
 	return FALSE;
 }
- 
+
 /**
  * Checks the specified username and password against the stored admin credentials
  * @param string $username The username
@@ -115,20 +115,18 @@ function plx_gu_session_authenticate($name = FALSE, $username = NULL, $password 
  * @return bool TRUE if username and password match stored admin credentials
  */
 function plx_gu_session_check_credentials($name, $username, $password,$user = FALSE)
-{
+{//var_dump('gutuma/news/inc/session.php plx_gu_session_check_credentials',$name, $username,gu_config::get('admin_username'), $password,gu_config::get('admin_password'),$user);
 	if ($user == FALSE){
 		return ($username == gu_config::get('admin_username')) && ($password == gu_config::get('admin_password'));
 	}else {
-		$users = gu_config::getUsers();
+		$users = gu_config::getUsers();//var_dump('users ',$users);
 		if (isset($users[$name])) {
 			return (($username == $users[$name]['login']) && ($password == $users[$name]['password']));
 		} else {
 			return FALSE;
 		}
 	}
-	
 }
-
 
 /**
  * Stores or removes the valid session flag for this site
@@ -150,7 +148,7 @@ function gu_session_set_valid($valid)
 		// Clear the username/password cookies
 		setcookie('username', '', 1);
 		setcookie('password', '', 1);
-	}	
+	}
 }
 
 /**
@@ -161,5 +159,3 @@ function gu_session_is_valid()
 {
 	return isset($_SESSION[GU_SESSION_SITES][GU_SESSION_SITE_KEY]);
 }
- 
-?>

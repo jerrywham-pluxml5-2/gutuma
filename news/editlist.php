@@ -12,7 +12,6 @@
  * @author	Cyril MAGUIRE
 */
 
-
 include_once 'inc/gutuma.php';
 
 gu_init();
@@ -40,65 +39,74 @@ elseif (is_post_var('new_address')) {
 }
 ?>
 
-<?php //gu_theme_messages(); ?>
 <script type="text/javascript">
 /* <![CDATA[ */
 	gu_status_message_delay = 1000;
-	
-	function filter_addresses(form)
-	{
+
+	function filter_addresses(form){
 		var filter = form.filter_list_name.value;
-		
-		window.location = "editlist.php?list=" + <?php echo $list->get_id(); ?> + (filter != "" ? ("&filter=" + filter) : "");	
+		window.location = "editlist.php?list=" + <?php echo $list->get_id(); ?> + (filter != "" ? ("&filter=" + filter) : "");
 	}
-	
-	function reset_filter(form)
-	{
+
+	function reset_filter(form){
 		form.filter_list_name.value = "";
 		filter_addresses(form);
 	}
-	
-	function check_add(form)
-	{
+
+	function check_add(form){
 		if (form.new_address.value == "" || !gu_check_email(form.new_address.value)) {
 			alert("<?php echo t('You must enter a valid email address');?>");
 			return false;
 		}
 		return true;
 	}
-	
-	function gu_remove_address(address, address_id)
-	{
+
+	function gu_remove_address(address, address_id){
 		if (confirm("<?php echo t('Are you sure you want to remove this address?');?>")) {
 			gu_messages_clear();
-			
-			var mysack = new sack("<?php echo absolute_url('ajax.php'); ?>");    
+
+			var mysack = new sack("<?php echo absolute_url('ajax.php'); ?>");
 			mysack.execute = 1;
 			mysack.method = "POST";
 			mysack.setVar("action", "remove_address");
-			mysack.setVar("list", <?php echo $list_id; ?>);			
+			mysack.setVar("list", <?php echo $list_id; ?>);
 			mysack.setVar("address", address);
-			mysack.setVar("address_id", address_id);			
+			mysack.setVar("address_id", address_id);
 			mysack.onError = function() { gu_error("<?php echo t('An error occured whilst making AJAX request');?>"); gu_messages_display(0); };
 			mysack.onCompletion = function() { gu_messages_display(1000); }
 			mysack.runAJAX();
 		}
 	}
-	
-	function gu_ajax_on_remove_address(address_id, msg)
-	{
+
+	function gu_ajax_on_remove_address(address_id, msg){
 		gu_element_set_background("row_" + address_id, "#FFDDDD");
 		gu_element_fade_out("row_" + address_id, 1000);
-		
+
 		var old_size = parseInt(document.edit_form.num_addresses.value);
 		var new_size = old_size - 1;
+		var old_size_filter = parseInt(document.getElementById("pager_addresses_total").innerHTML);
+		var new_size_filter = old_size_filter - 1;
+		var pg_start = parseInt(document.getElementById("pager_addresses_start").innerHTML);
+		var old_pg_size = parseInt(document.getElementById("pager_addresses_end").innerHTML);
+		var new_pg_size = old_pg_size - 1;
 		document.edit_form.num_addresses.value = new_size;
-		document.getElementById("pager_addresses_end").innerHTML = new_size % <?php echo GUTUMA_PAGE_SIZE; ?>;
-		document.getElementById("pager_addresses_total").innerHTML = new_size;
-		
-		if (new_size == 0) {
+		//~ document.getElementById("pager_addresses_end").innerHTML = new_size % <?php echo GUTUMA_PAGE_SIZE; ?>;
+		document.getElementById("pager_addresses_end").innerHTML = new_pg_size;
+		document.getElementById("pager_addresses_total").innerHTML = new_size_filter;
+		document.edit_form.num_addresses.value = new_size;
+		if (new_size == 0 || new_size_filter == 0) {
 			setTimeout('gu_element_set_display("pager_addresses", "none")', 1000);
 			setTimeout('gu_element_set_display("row_empty", "table-row")', 1000);
+		}else
+		if (new_pg_size < pg_start){
+			if(document.getElementById("pager_addresses_prev")){
+				setTimeout('window.location=document.getElementById("pager_addresses_prev").href', 1000);
+				return false;
+			}
+			if(new_pg_size == 0 && new_size_filter > 0){
+				setTimeout('window.location.reload()', 1000);
+				return false;
+			}
 		}
 	}
 /* ]]> */

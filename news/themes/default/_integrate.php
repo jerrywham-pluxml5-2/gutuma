@@ -11,44 +11,43 @@
  * @date	01/10/2013
  * @author	Cyril MAGUIRE
 */
-
+gu_theme_messages();
 ?>
 <form id="gadgets_form" name="gadgets_form" method="post" action="">
 	<div id="sectionheader" class="inline-form action-bar">
 		<h2><?php echo t('Gadgets for other sites');?></h2>
-		<p><?php echo t('Here you can generate gadgets for other websites so that people can easily find and subscribe to your newsletters.');?></p>
-	</div>
-<?php gu_theme_messages();
-	if (!$generate) {
-?>
+		<p id="sectionmenu"><sup><sub><?php echo t('Here you can generate gadgets for other websites so that people can easily find and subscribe to your newsletters.');?></sub></sup><br />
+<?php if (!$generate) { ?>
+		<input type="submit" id="gadget_generate" name="gadget_generate" value="<?php echo t('Next');?>" />
+		</p><!-- sectionmenu -->
+	</div><!-- sectionheader -->
 	<!-- Because the gadgets are already inside a form, set formless to true, so that they don't get their own forms -->
 	<script type="text/javascript">gu_gadgets_formless = true;</script>
 	<div class="formfieldset">
 		<div class="formfield">
-			<div class="formfieldlabel"><input type="radio" name="gadget_type" value="basic_link" checked="checked" /> <?php echo t('Basic subscribe link');?></div>
+			<div class="formfieldlabel"><input type="radio" name="gadget_type" value="basic_link" checked="checked" /> <?php echo t('Basic subscribe link');?>:</div>
 			<div class="formfieldcontrols"><script type="text/javascript">gu_gadgets_write_basic_link(<?php echo $example_list_id; ?>, '<?php echo t('Subscribe to my newsletter!');?>');</script></div>
 		</div>
 		<div class="formfield">
-			<div class="formfieldlabel"><input type="radio" name="gadget_type" value="basic_form" /> <?php echo t('Basic subscribe form');?></div>
+			<div class="formfieldlabel"><input type="radio" name="gadget_type" value="basic_form" /> <?php echo t('Basic subscribe form');?>:</div>
 			<div class="formfieldcontrols"><script type="text/javascript">gu_gadgets_write_basic_form(<?php echo $example_list_id; ?>, '<?php echo t('Subscribe');?>', 'bf_');</script></div>
 		</div>
 		<div class="formfield">
-			<div class="formfieldlabel"><input type="radio" name="gadget_type" value="ajax_link" /> <?php echo t('AJAX subscribe link');?></div>
+			<div class="formfieldlabel"><input type="radio" name="gadget_type" value="ajax_link" /> <?php echo t('AJAX subscribe link');?>:</div>
 			<div class="formfieldcontrols"><script type="text/javascript">gu_gadgets_write_ajax_link(<?php echo $example_list_id; ?>, '<?php echo t('Subscribe to my newsletter!');?>');</script></div>
 		</div>
 		<div class="formfield">
-			<div class="formfieldlabel"><input type="radio" name="gadget_type" value="ajax_form" /> <?php echo t('AJAX subscribe form');?></div>
+			<div class="formfieldlabel"><input type="radio" name="gadget_type" value="ajax_form" /> <?php echo t('AJAX subscribe form');?>:</div>
 			<div class="formfieldcontrols"><script type="text/javascript">gu_gadgets_write_ajax_form(<?php echo $example_list_id; ?>, '<?php echo t('Subscribe');?>', '<?php echo t('Your email');?>', 'af_');</script></div>
 		</div>
 	</div>
-	<br/>
-	<div class="menubar in-action-bar">
-		<input type="submit" id="gadget_generate" name="gadget_generate" value="<?php echo t('Next');?>" />
-	</div>
 </form>
-<p>&nbsp;</p>
 
-<?php } else { ?>
+<?php } else {// generated ?>
+		<input type="button" id="gadget_back" name="gadget_back" value="<?php echo t('Back');?>" onclick="this.form.submit()" />
+		<input type="submit" id="gadget_generate" name="gadget_generate" value="<?php echo t('Update');?>" /><input type="hidden" id="gadget_type" name="gadget_type" value="<?php echo $gadget_type; ?>" />
+		</p><!-- sectionmenu -->
+	</div><!-- sectionheader -->
 
 	<div class="formfieldset">
 <?php
@@ -82,11 +81,6 @@
 	}
 ?>
 	</div>
-
-	<div class="menubar in-action-bar">
-		<input type="button" id="gadget_back" name="gadget_back" value="<?php echo t('Back');?>" onclick="this.form.submit()" />
-		<input type="submit" id="gadget_generate" name="gadget_generate" value="<?php echo t('Update');?>" /><input type="hidden" id="gadget_type" name="gadget_type" value="<?php echo $gadget_type; ?>" />
-	</div>
 </form>
 <h3><?php echo t('Preview');?></h3>
 <div style="text-align: center; padding: 10px; background-color: #E0FFE0">
@@ -94,9 +88,9 @@
 </div>
 <form id="code_form" name="code_form" method="post" action="">
 	<h3><?php echo t('Script call (recommended)');?></h3>
-	<p><?php echo t('The following should be added to the HEAD section of your webpage');?><br/></p>
+	<p><?php echo t('The following should be added to the HEAD section of your webpage');?><br /></p>
 	<p><input name="gadget_import" type="text" class="textfield" style="width: 99%" id="gadget_import" onclick="this.focus(); this.select();" value="<?php echo htmlspecialchars($script_import); ?>" readonly="readonly" /></p>
-	<p><?php echo t('This should be pasted to the place in your webpage where you want the gadget to appear');?><br/</p>
+	<p><?php echo t('This should be pasted to the place in your webpage where you want the gadget to appear');?><br /></p>
 	<p><input name="gadget_script" type="text" class="textfield" style="width: 99%" id="gadget_script" onclick="this.focus(); this.select();" value="<?php echo htmlspecialchars($script_write); ?>" readonly="readonly" /></p>
 	<h3><?php echo t('Actual HTML (advanced)');?> </h3>
 	<p><?php echo t('If you need to customize the gadget, you can copy and paste the actual HTML instead.');?></p>
@@ -107,5 +101,5 @@
 </form>
 <script type="text/javascript">document.getElementById('gadget_html').value = <?php echo $script_create; ?></script>
 <?php
-}
+}// fi generate
 ?>

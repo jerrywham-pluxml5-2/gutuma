@@ -89,6 +89,9 @@ Newsletter deleted[::->]Infolettre supprimée
 Address <b><i>%</i></b> already in the list[::->]L'adresse <b><i>[%%]</i></b> est déjà dans la liste
 Addresses cannot be more than % characters[::->]Une adresse ne peut pas avoir plus de [%%] caractères
 Lists can have a maximum of % addresses in demo mode[::->]Les listes peuvent contenir un maximum de [%%] adresses en mode de démonstration
+Separate by [::->]Séparé par 
+Comma (,)[::->], (Virgule)
+Semicolon (;)[::->]; (Point virgule)
 //************************************************************************
 //			EDITLIST
 //************************************************************************
@@ -114,14 +117,14 @@ Preview [::->]Aperçu de
 Compose [::->]Écrire 
 newsletter[::->]une infolettre
 Drafts[::->]Brouillons
-Outbox[::->]Boîte d'envois
+Outbox[::->]Boîte&nbsp;d'envois
 A address list must be created before a newsletter can be sent[::->]Une liste d'adresses doit être créée avant de pouvoir envoyer une infolettre
 A valid admin email must be specified before a newsletter can be sent[::->]Un courriel d'administration doit être renseigné avant de pouvoir envoyer une infolettre
 Save[::->]Enregistrer
 Edit[::->]Modifier
 Preview[::->]Aperçu
 Send[::->]Envoyer
-Address book: [::->]Carnet d'adresses 
+Address book[::->]Carnet d'adresses
 Add[::->]Ajouter
 To[::->]Destinataire
 Subject[::->]Sujet
@@ -147,7 +150,7 @@ Showing <span id="%_start">%</span> to <span id="%_end">%</span> of <span id="%_
 More[::->]Plus
 Less[::->]Moins
 Subscribe to my newsletter[::->]S'abonner à l'infolettre
-Subscribe to my newsletter![::->]S\'abonner à l'infolettre !
+Subscribe to my newsletter![::->]S\'abonner à l\'infolettre !
 Subscribe[::->]S'inscrire
 Your email[::->]Votre adresse courriel
 All[::->]Toutes
@@ -236,7 +239,7 @@ SMTP password[::->]Mot de passe SMTP
 If Sendmail is available on your server you can enable it here[::->]Si Sendmail est disponible sur votre serveur, vous pouvez l'activer d'ici
 Use Sendmail[::->]Utiliser Sendmail
 You may experience problems with sending to large address lists with PHP <code>mail()</code>[::->]Vous pouvez rencontrer des problèmes avec des listes d'adresses longues en utilisant PHP <code>mail()</code>
-Use PHP mai[::->]Utiliser PHP mail
+Use PHP mail[::->]Utiliser PHP mail
 Some SMTP servers have restrictions on the number of emails that can be sent per connection so you can limit the number of messages sent in a single batch. You can also set a time limit on batch sends to avoid timeouts.[::->]Certains serveur SMTP ayant des restrictions quant au nombre de courriels pouvant être envoyés par connection, vous pouvez limiter le nombre de messages envoyés dans un seul lot. Vous pouvez aussi paramétrer le temps limite d'envoi des lots afin d'éviter les déconnexions.
 Max batch size[::->]Taille de lot maximale
  emails[::->] courriels

@@ -34,34 +34,34 @@ $example_list_id = (count($lists) > 0) ? $lists[0]->get_id() : 0;
 
 if ($generate) {
 	$gadget_list = is_post_var('gadget_list') ? get_post_var('gadget_list') : $example_list_id;
-	
+
 	switch ($gadget_type) {
 		case 'basic_link':
-			$gadget_text = is_post_var('gadget_text') ? get_post_var('gadget_text') : t('Subscribe to my newsletter');
+			$gadget_text = is_post_var('gadget_text') ? str_replace('"','&quot;',get_post_var('gadget_text')) : t('Subscribe to my newsletter');
 			$script_create = 'gu_gadgets_create_basic_link('.$gadget_list.', "'.$gadget_text.'")';
 			$script_write = '<script type="text/javascript">gu_gadgets_write_basic_link('.$gadget_list.', "'.$gadget_text.'")</script>';
 			$gadget_params = array('list', 'text');
 			$gadget_requires_import = FALSE;
 			break;
 		case 'basic_form':
-			$gadget_btn_text = is_post_var('gadget_btn_text') ? get_post_var('gadget_btn_text') : t('Subscribe');
-			$gadget_prefix = is_post_var('gadget_prefix') ? get_post_var('gadget_prefix') : 'gu_';			
+			$gadget_btn_text = is_post_var('gadget_btn_text') ? str_replace('"','&quot;',get_post_var('gadget_btn_text')) : t('Subscribe');
+			$gadget_prefix = is_post_var('gadget_prefix') ? get_post_var('gadget_prefix') : 'gu_';
 			$script_create = 'gu_gadgets_create_basic_form('.$gadget_list.', "'.$gadget_btn_text.'", "'.$gadget_prefix.'")';
 			$script_write = '<script type="text/javascript">gu_gadgets_write_basic_form('.$gadget_list.', "'.$gadget_btn_text.'", "'.$gadget_prefix.'")</script>';
 			$gadget_params = array('list', 'btn_text', 'prefix');
 			$gadget_requires_import = FALSE;
 			break;
 		case 'ajax_link':
-			$gadget_text = is_post_var('gadget_text') ? get_post_var('gadget_text') : t('Subscribe to my newsletter');
+			$gadget_text = is_post_var('gadget_text') ? str_replace('"','&quot;',get_post_var('gadget_text')) : t('Subscribe to my newsletter');
 			$script_create = 'gu_gadgets_create_ajax_link('.$gadget_list.', "'.$gadget_text.'")';
 			$script_write = '<script type="text/javascript">gu_gadgets_write_ajax_link('.$gadget_list.', "'.$gadget_text.'")</script>';
 			$gadget_params = array('list', 'text');
-			$gadget_requires_import = TRUE;	
+			$gadget_requires_import = TRUE;
 			break;
 		case 'ajax_form':
-			$gadget_btn_text = is_post_var('gadget_btn_text') ? get_post_var('gadget_btn_text') : t('Subscribe');
-			$gadget_email_hint = is_post_var('gadget_email_hint') ? get_post_var('gadget_email_hint') : t('Your email');
-			$gadget_prefix = is_post_var('gadget_prefix') ? get_post_var('gadget_prefix') : 'gu_';	
+			$gadget_btn_text = is_post_var('gadget_btn_text') ? str_replace('"','&quot;',get_post_var('gadget_btn_text')) : t('Subscribe');
+			$gadget_email_hint = is_post_var('gadget_email_hint') ? str_replace('"','&quot;',get_post_var('gadget_email_hint')) : t('Your email');
+			$gadget_prefix = is_post_var('gadget_prefix') ? get_post_var('gadget_prefix') : 'gu_';
 			$script_create = 'gu_gadgets_create_ajax_form('.$gadget_list.', "'.$gadget_btn_text.'", "'.$gadget_email_hint.'", "'.$gadget_prefix.'")';
 			$script_write = '<script type="text/javascript">gu_gadgets_write_ajax_form('.$gadget_list.', "'.$gadget_btn_text.'", "'.$gadget_email_hint.'", "'.$gadget_prefix.'")</script>';
 			$gadget_params = array('list', 'btn_text', 'email_hint', 'prefix');
@@ -85,7 +85,7 @@ function create_list_control($name, $value, $all_option)
 
 function create_text_control($name, $value)
 {
-	return '<input id="'.$name.'" name="'.$name.'" type="text" class="textfield" style="width: 95%" value="'.$value.'" />';
+	return '<input id="'.$name.'" name="'.$name.'" type="text" class="textfield" style="width: 95%" value="'.str_replace('"','&quot;',$value).'" />';
 }
 $_GET['noajax']=TRUE;
 ?>

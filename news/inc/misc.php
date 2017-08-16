@@ -111,9 +111,10 @@ function check_email($address)
 	// Reject blank addresses and invalid characters
 	if ($address == '' || preg_match('[^0-9a-zA-Z_@\.\[\]\-]', $address))
 		return FALSE;
-		
+
 	// Allow only one @, which can't be the first character
-	return ((strpos($address, '@') > 0) && (substr_count($address, '@') == 1));
+	// return ((strpos($address, '@') > 0) && (substr_count($address, '@') == 1));
+	return filter_var($address, FILTER_VALIDATE_EMAIL);
 }
 
 /**
