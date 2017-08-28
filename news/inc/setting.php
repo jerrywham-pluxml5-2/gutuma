@@ -137,7 +137,7 @@ class gu_config
 		//~ $plxAdmin = $GLOBALS['plxMotor'];//$GLOBALS[defined('PLX_ADMIN')?'plxAdmin':'plxMotor'];
 		$profil = $plxAdmin->aUsers['001'];//default 4 1st install
 		if (empty($profil['email']) && strpos($plxAdmin->path_url,'news/ajax.php') === FALSE  && strpos($plxAdmin->path_url,'news/js/gadgets.js.php') === FALSE && strpos($plxAdmin->path_url,'news/subscribe.php') === FALSE){
-			header('Location: '.PLX_CORE.'admin/profil.php');
+			header('Location: '.PLX_MORE.'admin/profil.php');
 			exit;
 		}
 // Set defaults
