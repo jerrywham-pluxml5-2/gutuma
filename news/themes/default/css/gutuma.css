@@ -151,7 +151,8 @@ hr {
 	padding: 10px;
 	margin-bottom: 10px;
 	overflow: hidden;
-	width: auto;	
+	width: auto;
+	top: 0;
 }
 
 #debugmsg {
