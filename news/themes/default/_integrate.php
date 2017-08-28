@@ -18,7 +18,7 @@ gu_theme_messages();
 		<h2><?php echo t('Gadgets for other sites');?></h2>
 		<p id="sectionmenu"><sup><sub><?php echo t('Here you can generate gadgets for other websites so that people can easily find and subscribe to your newsletters.');?></sub></sup><br />
 <?php if (!$generate) { ?>
-		<input type="submit" id="gadget_generate" name="gadget_generate" value="<?php echo t('Next');?>" />
+		<input type="submit" id="gadget_generate" class="green" name="gadget_generate" value="<?php echo t('Next');?>" />
 		</p><!-- sectionmenu -->
 	</div><!-- sectionheader -->
 	<!-- Because the gadgets are already inside a form, set formless to true, so that they don't get their own forms -->
@@ -44,8 +44,8 @@ gu_theme_messages();
 </form>
 
 <?php } else {// generated ?>
-		<input type="button" id="gadget_back" name="gadget_back" value="<?php echo t('Back');?>" onclick="this.form.submit()" />
-		<input type="submit" id="gadget_generate" name="gadget_generate" value="<?php echo t('Update');?>" /><input type="hidden" id="gadget_type" name="gadget_type" value="<?php echo $gadget_type; ?>" />
+		<input type="button" id="gadget_back" class="blue" name="gadget_back" value="<?php echo t('Back');?>" onclick="this.form.submit()" />
+		<input type="submit" id="gadget_generate" class="green" name="gadget_generate" value="<?php echo t('Update');?>" /><input type="hidden" id="gadget_type" name="gadget_type" value="<?php echo $gadget_type; ?>" />
 		</p><!-- sectionmenu -->
 	</div><!-- sectionheader -->
 

@@ -6,7 +6,48 @@ bug affichage: lors du choix du menu "informations" (index.php) le menu article 
 eval($plxAdmin->plxPlugins->callHook('AdminTopMenus'));
 verif: si l'on change le(s) mot(s) de passe dans pluxml, si l'accés au plugin et tjrs valable
 Evol: swiftmailer-5.4.6 pour future integration http://swiftmailer.org
-& si theme default -> use statc mode & display (site theme au lieu de celuis d'admin) + theme gutume affiche le lien retour a l'admin du plugin!BAD!
+& si theme default -> use statc mode & display (site theme au lieu de celuis d'admin) ou add gutuma logo (top left|center) 
+
+todo subscribe.php: theme gutuma affiche le lien retour a l'admin du plugin!BAD! (lien retour a l'index:god:)
+
+
+##v.1.8.4.plx.5.6b3.local  27/08/2017##
+[+] Fix theme gutuma (si PluXml non installé, retour
+[+] retouche+coloré du theme admin 'default' (PluXml 5.6)
+a la recherche de var_dump:
+grep -nHIirF -- var_dump (dans le dossier : gutuma)
+./admin.php:27:$ok_config = FALSE;#var_dump('gutuma/admin.php',$plxPlugin->listsDir.'/inc/config.php');
+./news/inc/setting.ok.php:136:#var_dump('inc setting gutu',$profil,$_SESSION['user'],PLX_CORE,$plxAdmin->plxPlugins->aPlugins['gutuma']);
+./news/inc/_pluxml.php:18://var_dump('gutuma _pluxml',$_SERVER);
+./news/inc/_pluxml.php:34:#var_dump($output,__LINK__,'oldddddddddddddssssssssss',$gu_real_path == $gu_call_path ,$gu_real_path,$gu_call_path);
+./news/inc/_pluxml.php:90:#var_dump('_pluxml PLX_CORE $plxMotor',$_SERVER['PHP_SELF'],$_SERVER['SCRIPT_FILENAME'],__FILE__,PLX_CORE,$_SERVER,$plxMotor);echo file_get_contents(path('XMLFILE_PARAMETERS'));exit;
+./news/inc/theme.php:47:	//var_dump(($total % $pagesize),(($start + $pagesize) < $total),$last_pg,$start,$total,$pagesize);
+./news/inc/session.php:118:{//var_dump('gutuma/news/inc/session.php plx_gu_session_check_credentials',$name, $username,gu_config::get('admin_username'), $password,gu_config::get('admin_password'),$user);
+./news/inc/session.php:122:		$users = gu_config::getUsers();//var_dump('users ',$users);
+./news/inc/setting.php:136:  #var_dump($GLOBALS);
+Search completed with 9 matches.
+
+a la recherche de console.log:
+grep -nHIirF -- console.log (dans le dossier : gutuma)
+./changelog.txt:12:##v.1.8.4.plx.5.6b3  27/08/2017## todo: a la recherche d'un console.log (& var_dump)
+./news/js/gadgets.js.php:68://	console.log('basic_link url , text',gu_gadgets_subcribe_url,text.replace('&quot;','"'));
+./news/js/gadgets.js.php:80://		console.log('basic_form',btn_text);
+./news/js/gadgets.js.php:107://	console.log('ajax_link',text);
+./news/js/gadgets.js.php:121://	console.log('ajax_form',btn_text);
+./news/js/tiny_mce/tiny_mce_src.js:9708:							//console.log(dom.getOuterHTML(n), dom.getAttrib(n, an.nodeName));
+Search completed with 6 matches.
+
+news/integrate.php (4 Lien classique)
+Bug: Lien classique mauvaise url de retour a l'index (accueil) ::: ex: http://www.formationselixir.com.dev/plugins/gutuma/news/subscribe.php?list=1499556454
+Fix: PLX_ROOT 2 PLX_GROOT in _subscribe.php (in default theme) no return link in gutuma theme?
+
+Bug: Lien classique envoie au mauvais endroit (manque nesw/ ds l'url) [admin]
+Fix: gadget.js.php (in test)
+//~ var gu_gadgets_subcribe_url = "<?php echo absolute_url('../subscribe.php') ?>";
+var gu_gadgets_subcribe_url = "<?php echo absolute_url('subscribe.php') ?>";
+
+
+
 
 ##v.1.8.4.plx.5.6b2  16/08/2017##
 [+] import csv array_unique + option: separated by ; or ,

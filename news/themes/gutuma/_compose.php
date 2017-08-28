@@ -45,7 +45,7 @@ gu_theme_messages();
 	<div class="formfieldset" style="margin-top: 0px">
 		<div class="formfield" style="border-bottom: 0px">
 			<div class="formfieldlabel" style="width: 100px">&nbsp;</div>
-			<div class="formfieldcontrols" style="text-align: right; width: 580px"><?php echo t('Address book: ');?><select name="send_lists" id="send_lists">
+			<div class="formfieldcontrols" style="text-align: right; width: 580px"><?php echo t('Address book');?>:<select name="send_lists" id="send_lists">
 <?php
 	foreach($lists as $l) {
 		echo '<option value="'.$l->get_name().'">'.$l->get_name().' ('.$l->get_size().')</option>';
@@ -54,10 +54,10 @@ gu_theme_messages();
 					</select>
 					<input name="send_add_recip" type="button" id="send_add_recip" value="<?php echo t('Add');?>" onclick="gu_add_recipient();" /></div>
 			<div class="formfielddivider"></div>
-			<div class="formfieldlabel" style="width: 100px"><?php echo t('To');?></div>
+			<div class="formfieldlabel" style="width: 100px"><?php echo t('To');?>:</div>
     	<div class="formfieldcontrols" style="width: 580px"><input name="msg_recips" type="text" class="textfield" id="msg_recips" style="width: 99%" value="<?php echo $newsletter->get_recipients(); ?>" onchange="gu_set_modified(true)" /></div>
 			<div class="formfielddivider"></div>
-			<div class="formfieldlabel" style="width: 100px"><?php echo t('Subject');?></div>
+			<div class="formfieldlabel" style="width: 100px"><?php echo t('Subject');?>:</div>
 			<div class="formfieldcontrols" style="width: 580px"><input name="msg_subject" type="text" class="textfield" id="msg_subject" style="width: 99%" value="<?php echo $newsletter->get_subject(); ?>" onchange="gu_set_modified(true)" /></div>
 		</div>
 	</div>

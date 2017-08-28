@@ -34,7 +34,8 @@ if (!is_get_var('noajax')) {
 <?php } ?>
 
 var gu_gadgets_formless = false;
-var gu_gadgets_subcribe_url = "<?php echo absolute_url('../subscribe.php') ?>";
+//~ var gu_gadgets_subcribe_url = "<?php echo absolute_url('../subscribe.php') ?>";
+var gu_gadgets_subcribe_url = "<?php echo absolute_url('subscribe.php') ?>";
 var gu_gadgets_ajax_url = "<?php echo absolute_url('../ajax.php'); ?>";
 var gu_gadgets_ajax_proxy = "";
 
@@ -64,7 +65,7 @@ function gu_gadgets_set_ajax_proxy(url){
  */
 function gu_gadgets_create_basic_link(list_id, text){
 	var sub_url = gu_gadgets_subcribe_url + ((list_id > 0) ? ("?list=" + list_id) : '');
-	console.log('basic_link',text.replace('&quot;','"'));
+//	console.log('basic_link url , text',gu_gadgets_subcribe_url,text.replace('&quot;','"'));
 	return '<a href="' + sub_url + '" class="subscribe-link" id="suscribe-link">' + text.replace(/&quot;/g,'"') + '</a>';
 }
 
@@ -76,7 +77,7 @@ function gu_gadgets_create_basic_link(list_id, text){
  * @return The gadget HTML
  */
 function gu_gadgets_create_basic_form(list_id, btn_text, prefix){
-		console.log('basic_form',btn_text);
+//		console.log('basic_form',btn_text);
 	var html = '';
 	if (!gu_gadgets_formless)
 		html += '<form name="' + prefix + 'subscribe_form" id="' + prefix + 'subscribe_form" method="post" action="' + gu_gadgets_subcribe_url + '">';
@@ -103,7 +104,7 @@ function gu_gadgets_create_basic_form(list_id, btn_text, prefix){
 function gu_gadgets_create_ajax_link(list_id, text){
 	if (list_id == '' || list_id == 0)
 		return '<?php echo t('This gadget requires a valid list');?>';
-	console.log('ajax_link',text);
+//	console.log('ajax_link',text);
 	return '<a href="javascript:gu_gadgets_submit_ajax_link(\'' + list_id + '\')" class="subscribe-link" id="suscribe-link">' + text.replace(/&quot;/g,'"') + '</a>';
 }
 
@@ -117,7 +118,7 @@ function gu_gadgets_create_ajax_link(list_id, text){
 function gu_gadgets_create_ajax_form(list_id, btn_text, email_hint, prefix){
 	if (list_id == '' || list_id == 0)
 		return '<?php echo t('This gadget requires a valid list');?>';
-	console.log('ajax_form',btn_text);
+//	console.log('ajax_form',btn_text);
 	var html = '';
 	if (!gu_gadgets_formless)
 		html += '<form name="' + prefix + 'subscribe_form" id="' + prefix + 'subscribe_form" method="get" action="" onsubmit="gu_gadgets_submit_ajax_form(this, \'' + prefix + '\'); return false;">';

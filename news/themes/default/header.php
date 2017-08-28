@@ -33,21 +33,21 @@ if(isset($_GET["del"]) AND $_GET["del"]=="install") {
 	<link rel="stylesheet" type="text/css" href="<?php echo PLX_GORE ?>admin/theme/plucss.css?ver=<?php echo PLX_VERSION ?>" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<?php echo PLX_GORE ?>admin/theme/theme.css?ver=<?php echo PLX_VERSION ?>" media="screen" />
 	<link rel="icon" href="<?php echo PLX_GORE ?>admin/theme/images/favicon.png" />
-	<?php if(is_file($plxAdmin->urlRewrite().$plxAdmin->aConf['custom_admincss_file'])) echo '<link rel="stylesheet" type="text/css" href="'.$plxAdmin->urlRewrite().$plxAdmin->aConf['custom_admincss_file'].'" media="screen" />'."\n" ?>
+	<?php if(is_file($plxAdmin->urlRewrite().$plxAdmin->aConf['custom_admincss_file'])) echo '	<link rel="stylesheet" type="text/css" href="'.$plxAdmin->urlRewrite().$plxAdmin->aConf['custom_admincss_file'].'" media="screen" />'."\n" ?>
 	<?php
 	if(file_exists($plxAdmin->urlRewrite().$plxAdmin->aConf['racine_plugins'].'admin.css'))
-		echo '<link rel="stylesheet" type="text/css" href="'.$plxAdmin->urlRewrite().$plxAdmin->aConf['racine_plugins'].'admin.css" media="screen" />'."\n";
+		echo '	<link rel="stylesheet" type="text/css" href="'.$plxAdmin->urlRewrite().$plxAdmin->aConf['racine_plugins'].'admin.css" media="screen" />'."\n";
 	?>
 	<script src="<?php echo PLX_GORE ?>lib/functions.js?ver=<?php echo PLX_VERSION ?>"></script>
 	<script src="<?php echo PLX_GORE ?>lib/visual.js?ver=<?php echo PLX_VERSION ?>"></script>
 	<script src="<?php echo PLX_GORE ?>lib/mediasManager.js?ver=<?php echo PLX_VERSION ?>"></script>
 	<script defer src="<?php echo PLX_GORE ?>lib/multifiles.js?ver=<?php echo PLX_VERSION ?>"></script>
-	<?php eval($plxAdmin->plxPlugins->callHook('AdminTopEndHead')) ?>
 	<link rel="stylesheet" type="text/css" href="themes/<?php echo gu_config::get('theme_name');?>/css/gutuma.css" media="screen" />
 	<script type="text/javascript" src="js/misc.js"></script>
 	<script type="text/javascript" src="js/tw-sack.js"></script>
 	<script type="text/javascript" src="js/md5.js"></script>
 	<script type="text/javascript" src="js/sha1.js"></script>
+	<?php eval($plxAdmin->plxPlugins->callHook('AdminTopEndHead')) ?>
 </head>
 
 <body id="<?php echo basename($_SERVER['SCRIPT_NAME'], ".php") ?>"<?php echo ($nomenu)?' class="subscribe"':'';?>>

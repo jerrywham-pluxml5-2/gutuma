@@ -8,13 +8,14 @@
  */
 /* Gutama plugin package
  * @version 1.6
- * @date	01/10/2013
+ * @date	09/07/2017
  * @author	Cyril MAGUIRE
 */
 
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+if(!defined('PLX_ROOT')) exit;
+$plxAdmin = @plxAdmin::getInstance();
+?><!DOCTYPE html>
+<html lang="<?php echo $plxAdmin->aConf['default_lang'] ?>">
 <head>
 <meta http-equiv="content-type" content="text/html;charset=<?php echo GUTUMA_ENCODING; ?>" />
 <meta name="robots" content="none"> 
@@ -35,5 +36,3 @@
 	<div id="page">
 		<div id="header">
 			<div id="headertitle"><h1><?php echo t('Gutuma');?></h1></div>
-			
-		

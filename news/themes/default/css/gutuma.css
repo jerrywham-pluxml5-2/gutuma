@@ -6,7 +6,7 @@
  */
 /* 5.6 */
 button, input, select, textarea {
- width: inherit;
+/* width: inherit; */
 }
 .formfield{
  margin: 2px;
@@ -221,6 +221,7 @@ table.results tr td.emptyresults {
  text-overflow: ellipsis; */
 }
 .cell-off{
+ min-width: 100%;
  max-width: 100%;
 }
 .cell-off b{

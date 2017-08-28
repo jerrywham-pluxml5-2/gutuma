@@ -57,14 +57,16 @@ $plxPlugin = $plxShow->plxMotor->plxPlugins->getInstance('gutuma');
 			<div class="formfieldlabel"><?php echo t('Administrator email');?>:</div>
 			<div class="formfieldcontrols"><?php gu_theme_text_control('admin_email'); ?></div>
 		</div>
-		<!--<div class="formfield">
+<!--
+		<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('Your login details');?>:</div>
 			<div class="formfieldlabel"><?php echo t('Administrator username');?>:</div>
 			<div class="formfieldcontrols"><?php gu_theme_text_control('admin_username'); ?></div>
 			<div class="formfielddivider"></div>
 			<div class="formfieldlabel"><?php echo t('Change administrator password');?>:</div>
 			<div class="formfieldcontrols"><input type="password" id="admin_password" name="admin_password" class="textfield" size="12" /> <?php echo t('Retype');?> <input type="password" id="admin_password_retype" name="admin_password_retype" class="textfield" size="12" /></div>
-		</div>-->
+		</div>
+-->
 		<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('The following is the name of the folder which contains all the Theme\'s files (Becarefull to respect casse)');?></div>
 			<div class="formfieldlabel"><?php echo t('Name of the theme');?>:</div>

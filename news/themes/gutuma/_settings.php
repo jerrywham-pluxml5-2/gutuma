@@ -29,9 +29,7 @@ include_once '_menu.php';?>
 		<input name="save_settings" type="submit" id="save_settings" value="<?php echo t('Save');?>" />
 	</div>
 	<div class="formfieldset">
-	
 <?php if ($section == 'general') { ?>
-
 		<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('The following is the name of the application ("Newsletters" by default)');?></div>
 			<div class="formfieldlabel"><?php echo t('Application name');?></div>
@@ -50,14 +48,16 @@ include_once '_menu.php';?>
 			<div class="formfieldlabel"><?php echo t('Administrator email');?></div>
 			<div class="formfieldcontrols"><?php gu_theme_text_control('admin_email'); ?></div>
 		</div>
-		<!--<div class="formfield">
+<!--
+		<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('Your login details');?></div>
 			<div class="formfieldlabel"><?php echo t('Administrator username');?></div>
 			<div class="formfieldcontrols"><?php gu_theme_text_control('admin_username'); ?></div>
 			<div class="formfielddivider"></div>
 			<div class="formfieldlabel"><?php echo t('Change administrator password');?></div>
 			<div class="formfieldcontrols"><input type="password" id="admin_password" name="admin_password" class="textfield" size="12" /> <?php echo t('Retype');?> <input type="password" id="admin_password_retype" name="admin_password_retype" class="textfield" size="12" /></div>
-		</div>-->
+		</div>
+-->
 		<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('The following is the name of the folder which contains all the Theme\'s files (Becarefull to respect casse)');?></div>
 			<div class="formfieldlabel"><?php echo t('Name of the theme');?></div>
@@ -69,9 +69,7 @@ include_once '_menu.php';?>
 					$thms[] = array($thm,$thm);
 				gu_theme_list_control('theme_name', $thms); ?></div>
 		</div>
-
 <?php } elseif ($section == 'transport') { ?>
-
 		<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('Gutuma will first try to use an SMTP server to send messages. If that fails, <code>Sendmail</code> may be tried followed by PHP <code>mail()</code>');?></div>
 			<div class="formfieldlabel"><?php echo t('Use SMTP');?></div>
@@ -107,11 +105,9 @@ include_once '_menu.php';?>
 			<div class="formfieldcontrols"><?php gu_theme_int_control('batch_max_size'); ?><?php echo t(' emails');?></div>
 			<div class="formfielddivider"></div>
 			<div class="formfieldlabel"><?php echo t('Batch time limit');?></div>
-			<div class="formfieldcontrols"><?php gu_theme_int_control('batch_time_limit'); ?> <?php echo t('seconds');?></div>						
+			<div class="formfieldcontrols"><?php gu_theme_int_control('batch_time_limit'); ?> <?php echo t('seconds');?></div>
 		</div>
-		
 <?php } elseif ($section == 'messages') { ?>
-
 		<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('List names can be automatically added to the subject of sent newsletters, e.g. <code>[List] Subject</code>');?></div>
 			<div class="formfieldlabel"><?php echo t('Prefix list name on subjects');?></div>
@@ -148,7 +144,6 @@ include_once '_menu.php';?>
 			<div class="formfieldcontrols"><?php gu_theme_bool_control('list_unsubscribe_notify'); ?></div>
 		</div>
 	<div>
-		
 <?php } ?>
 	</div>
 </form>

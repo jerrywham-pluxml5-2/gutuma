@@ -248,7 +248,7 @@ seconds[::->]secondes
 List names can be automatically added to the subject of sent newsletters, e.g. <code>[List] Subject</code>[::->]Le nom des listes peut être automatiquement ajouté au sujet des infolettres envoyées, par exemple <code>[List] Subject</code>
 Prefix list name on subjects[::->]Préfixe du nom de liste dans le sujet
 If a newsletter is sent to more than one list, and a person is subscribed to more than one of those lists, the name of the list that occurs first in the <i>To</i> field will be used as the subject prefix. You can override this however, and use the collective name instead for all newsletters sent to more than one list[::->]Si une infolettre est envoyée à plus d'une liste, et qu'une personne soit inscrite dans plus d'une de ces listes, le nom de la liste qui apparait en premier dans le champ <i>Destinataires</i> sera utilisé comme préfixe de sujet. Vous pouvez malgré tout effacer ce comportement et utiliser un nom collectif à la place pour toutes les infolettres envoyées à plus d'une liste
-Use collective name for multi-list subjects[::->]Utiliser un nom collectif pour les sujets des listes multiples 
+Use collective name for multi-list subjects[::->]Utiliser un nom collectif pour les sujets des listes multiples
 A signature containing an unsubscribe link can be automatically appended to all sent newsletters[::->]Une signature contenant un lien de désinscription peut être automatiquement ajouté pour toutes les infolettres envoyées
 Append unsubscribe link to sent newsletters[::->]Ajouter un lien de désinscription aux infolettres envoyées
 Send copy of sent newsletters to Administrator[::->]Envoyer une copie des infolettres envoyées à l'administrateur
@@ -265,7 +265,7 @@ You must enter a valid email address[::->]Vous devez saisir une adresse de courr
 Newsletters[::->]Infolettres
 Your email address[::->]Votre adresse de courriel
 Unsubscribe[::->]Se désabonner
-Back home[::->]Retour à l'index
+Back home[::->]Retour à l'accueil
 //************************************************************************
 //			SENDING
 //************************************************************************
