@@ -15,16 +15,14 @@
 /**
  * Outputs the start of the site-wide theme
  */
-function gu_theme_start($nomenu = FALSE)
-{
+function gu_theme_start($nomenu = FALSE){
 	include RPATH.'themes/'.gu_config::get('theme_name').'/header.php';
 }
 
 /**
  * Outputs the end of the site-wide theme
  */
-function gu_theme_end()
-{
+function gu_theme_end(){
 	include RPATH.'themes/'.gu_config::get('theme_name').'/footer.php';
 }
 
@@ -36,15 +34,13 @@ function gu_theme_end()
  * @param int $pagesize The number of items per page
  * @param $total The total number of items
  */
-function gu_theme_pager($id, $baseurl, $start, $pagesize, $total)
-{
+function gu_theme_pager($id, $baseurl, $start, $pagesize, $total){
 	//gu_debug('gu_pager_create("'.$id.'", "'.$baseurl.'", '.$start.', '.$pagesize.', '.$total.')');
 ?>
 	<div class="pager" id="<?php echo $id; ?>" style="display: <?php echo ($total > 0) ? 'block' : 'none'; ?>">
 		<div class="pagercontrols">
 <?php
 	$last_pg = (0==($total % $pagesize))?$pagesize:($total % $pagesize);
-	//var_dump(($total % $pagesize),(($start + $pagesize) < $total),$last_pg,$start,$total,$pagesize);
 	echo ($start > 0) ? ("<a href=\"".$baseurl."&amp;start=0\">&lt;&lt;</a>") : "&lt;&lt;";
 	echo "&nbsp;&nbsp;";
 	echo ($start > 0) ? ("<a id=\"".$id."_prev\" href=\"".$baseurl."&amp;start=".max(0, $start - $pagesize)."\">&lt;</a>&nbsp;&nbsp;") : "&lt;";
@@ -59,31 +55,28 @@ function gu_theme_pager($id, $baseurl, $start, $pagesize, $total)
 	echo t('Showing <span id="%_start">%</span> to <span id="%_end">%</span> of <span id="%_total">%</span>',array($id,($start + 1),$id,min(($start + $pagesize), $total),$id,$total));	
 ?>
 		</div>
-	</div>	
+	</div>
 <?php
 }
-
 /**
  * Outputs any messages set by gu_error or gu_success
  */
 function gu_theme_messages(){
 	echo '<span id="msg">';
-	if (isset($_SERVER['GU_ERROR_MSG'])) {
+	if (isset($_SERVER['GU_ERROR_MSG'])){
 		echo '<p id="errormsg" class="notification error">';
-		if (isset($_SERVER['GU_ERROR_EXTRA'])) {
+		if (isset($_SERVER['GU_ERROR_EXTRA'])){
 			echo '  '.$_SERVER['GU_ERROR_MSG'];
 			echo '  <div id="errormore"><a onclick="gu_messages_toggle_error_extra()" href="#">'.t('More').'</a></div>';
 			echo '  <div id="errorless" style="display: none"><a onclick="gu_messages_toggle_error_extra()" href="#">'.t('Less').'</a></div>';
 			echo '  <div id="errorextra" style="display: none;">'.$_SERVER['GU_ERROR_EXTRA'].'</div>';
-
 		}
 		else
 			echo $_SERVER['GU_ERROR_MSG'].'</p>';
 	}else {
 		echo '<p id="errormsg" class="notification error" style="display:none;"></p>';
 	}
-		
-	if (isset($_SERVER['GU_STATUS_MSG'])) {
+	if (isset($_SERVER['GU_STATUS_MSG'])){
 		echo '<p id="statusmsg" class="notification success">'.$_SERVER['GU_STATUS_MSG'].'</p>';
 	} else {
 		echo '<p id="statusmsg" class="notification success" style="display:none;"></p>';
@@ -106,7 +99,6 @@ function gu_theme_text_control($setting_name,$option=false){
 	$val = is_post_var($setting_name) ? get_post_var($setting_name) : gu_config::get($setting_name);
 	echo '<input id="'.$setting_name.'" name="'.$setting_name.'" type="text" class="textfield" style="width: 95%" value="'.$val.'" '.$option.'/>';
 }
-
 /**
  * Outputs a checkbox (boolean) control for the specified config setting
  * @param string $setting_name The config setting name
@@ -115,7 +107,6 @@ function gu_theme_bool_control($setting_name){
 	$val = is_post_var($setting_name) ? TRUE : gu_config::get($setting_name);
 	echo '<input id="'.$setting_name.'" name="'.$setting_name.'" type="checkbox" value="1" '.($val ? 'checked="checked"' : '').' />';
 }
-
 /**
  * Outputs a textbox (integer only) control for the specified config setting
  * @param string $setting_name The config setting name
@@ -125,7 +116,6 @@ function gu_theme_int_control($setting_name, $max_chars = 10){
 	$val = is_post_var($setting_name) ? get_post_var($setting_name) : gu_config::get($setting_name);
 	echo '<input id="'.$setting_name.'" name="'.$setting_name.'" type="text" class="textfield" style="width: 70px" maxlength="'.$max_chars.'" onkeypress="return gu_is_numeric_key(event);" value="'.$val.'" />';
 }
-
 /**
  * Outputs a dropdown list control for the specified config setting
  * @param string $setting_name The config setting name
