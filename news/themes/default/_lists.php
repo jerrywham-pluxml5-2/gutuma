@@ -23,12 +23,12 @@
 		</p>
 	</form>
 </div>
+<?php gu_theme_messages(); ?>
 <div class="formfieldset">
 	<div class="formfield">
 		<div class="formfieldcomment"><?php echo t('If the list is marked as private then people cannot subscribe to it, and it will not be listed on the default subscribe page');?></div>
 	</div>
 </div>
-<?php gu_theme_messages(); ?>
 <h5><?php echo t('These are the lists which have already been created.');?></h5>
 <form method="post" name="lists_form" id="lists_form" action=""><input name="num_lists" type="hidden" id="num_lists" value="<?php echo count($lists); ?>" />
 <div class="scrollable-table">
@@ -44,7 +44,7 @@ if (count($lists) > 0) {
 ?>
 		<tr id="row_<?php echo $list->get_id(); ?>">
 			<td><script type="text/javascript">document.write(gu_list_menu(<?php echo $list->get_id(); ?>))</script></td>
-			<td class="sml-text-right"><?php echo $list->is_private() ? t('Yes') : t('No'); ?></td>
+			<td class="sml-text-center"><?php echo $list->is_private() ? t('Yes') : t('No'); ?></td>
 			<td class="cell-off"><b>(<?php echo $list->get_size(); ?>)</b><span class="should-cut-off"><?php echo $list->get_name(); ?></span></td>
 		</tr>
 <?php

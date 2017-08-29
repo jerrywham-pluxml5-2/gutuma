@@ -32,7 +32,7 @@ if (count($lists) > 0) {
 	foreach($lists as $list) {
 ?>
 		<tr id="row_<?php echo $list->get_id(); ?>">
-			<td><?php echo $list->get_name(); ?></td>
+			<td class="name" title="<?php echo $list->get_name(); ?>"><?php echo $list->get_name(); ?></td>
 			<td><?php echo $list->get_size(); ?></td>
 			<td><?php echo $list->is_private() ? t('Yes') : t('No'); ?></td>
 			<td style="text-align: right"><script type="text/javascript">document.write(gu_list_menu(<?php echo $list->get_id(); ?>))</script></td>

@@ -4,214 +4,177 @@
  * @copyright This source is distributed under the GPL
  * @file Default theme main stylesheet
  * @modifications Cyril Maguire
- */
-/* Gutama plugin package
+ *
+ * Gutama plugin package
  * @version 1.6
  * @date	01/10/2013
  * @author	Cyril MAGUIRE
 */
-
- 
-* {
+*{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	line-height: 16px;
 }
-
-body {
+body{
 	background-color: #cde8e3;
 	text-align: center;
 	padding: 0px;
 	margin: 0px;
 }
-
-p {
+p{
 	margin: 10px 0px 10px 0px;
 }
-
-h2 {
+h2{
 	font-size: 16px;
 	margin: 10px 0px 16px 0px;
 }
-
-h3 {
+h3{
 	font-size: 14px;
 }
-
-a {
+a{
 	color: #467dc0;
 	text-decoration: none;
 	border-bottom: 1px dotted #467dc0;
 }
-
-a.imglink {
+a.imglink{
 	border: none;
 }
-
-code {
+code{
 	font-family: "Courier New", Courier, mono;
 }
-
-img {
+img{
 	border: none;
 }
-
-form {
+form{
 	margin: 0px;
 	padding: 0px;
 }
-
-input.textfield {
+input.textfield{
 	background-color: #F8F8F8;
 	border-top: 1px solid #abadb3;
 	border-right: 1px solid #e3e9ef;
-	border-bottom: 1px solid #e3e9ef;	
+	border-bottom: 1px solid #e3e9ef;
 	border-left: 1px solid #e3e9ef;
 	padding: 2px;
-	margin: 0px;	
+	margin: 0px;
 }
-
-textarea {
+textarea{
 	background-color: #F8F8F8;
 	border-top: 1px solid #abadb3;
 	border-right: 1px solid #e3e9ef;
-	border-bottom: 1px solid #e3e9ef;	
-	border-left: 1px solid #e3e9ef;		
+	border-bottom: 1px solid #e3e9ef;
+	border-left: 1px solid #e3e9ef;
 	padding: 4px;
 	margin: 0px;
-	font-family: "Courier New", Courier, mono;	
+	font-family: "Courier New", Courier, mono;
 }
-
-hr {
+hr{
 	border-top: 1px dotted black;
 	border-right: 0;
-	border-bottom: 0;	
+	border-bottom: 0;
 	border-left: 0;
 	height: 1px;
 	background-color: white;
-	/*margin: 10px 0px 10px 0px;*/
+	margin: 5px 0px;
 }
-
-div#demobanner {
+div#demobanner{
 	background-color: #f6f8c1;
 	border-bottom: 1px solid #e6ea75;
 	text-align: center;
 	font-weight: bold;
 	padding: 3px;
 }
-
-div#page {
+div#page{
 	background-color: #FFFFFF;
 	text-align: left;
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 20px;
-	margin-bottom: 20px; 
+	margin-bottom: 20px;
 	width: 700px;
 }
-
-div#header {
+div#header{
 	height: 70px;
 	background-image: url(../images/header_bg.jpg);
 }
-
-div#headertitle {
+div#headertitle{
 	float: left;
 }
-
-div#headertitle h1 {
+div#headertitle h1{
 	margin: 0px;
 	padding: 0px;
 	text-indent: -10000px;
 }
-
-div#headerwelcome {
+div#headerwelcome{
 	float: right;
 	font-size: 10px;
 	color: white;
 	margin: 10px;
 	text-align: right;
 }
-
-div#headerwelcome a {
+div#headerwelcome a{
 	font-size: 10px;
 	color: #AADDFF;
 }
-
 /* Main menu */
-
-div#mainmenu {
+div#mainmenu{
 	height: 30px;
 	background-image: url(../images/menu_bg.jpg);
 }
-
-div#mainmenu ul {
+div#mainmenu ul{
 	padding: 6px 10px 0px 0px;
 	margin: 0px;
 	list-style-type: none;
 	text-align: right;
 }
-
-div#mainmenu ul li {
+div#mainmenu ul li{
 	display: inline;
 	padding-left: 20px;
 	font-weight: bold;
 }
-
-div#mainmenu ul li a {	
+div#mainmenu ul li a{	
 	color: #AADDFF;
 	border: none;
 }
-
-div#mainmenu ul li a.current {	
+div#mainmenu ul li a.current{	
 	color: #FFFFFF;
 }
-
-div#mainmenu ul li a:hover {
+div#mainmenu ul li a:hover{
 	color: #FFFFFF;
 }
-
 /* Sub menu */
-
-div#sectionheader {
+div#sectionheader{
 	width: 100%;
 	overflow: hidden;
 }
-
-ul#sectionmenu {
+ul#sectionmenu{
 	padding: 0px;
 	margin: 0px;
 	list-style-type: none;
 }
-
-ul#sectionmenu li {
+ul#sectionmenu li{
 	display: inline;
 	padding-left: 20px;
 	font-weight: bold;
 	line-height: 12px;
 }
-
-ul#sectionmenu li a {	
+ul#sectionmenu li a{	
 	color: #489689;
 	border: none;
 }
-
-ul#sectionmenu li a.current {	
+ul#sectionmenu li a.current{	
 	color: #7dbcb1;
 }
-
-ul#sectionmenu li a:hover {
+ul#sectionmenu li a:hover{
 	color: #7dbcb1;
 }
-
 /* Other objects */
 
-div#content {
+div#content{
 	padding: 10px;
 	min-height: 300px;
 }
-
-div#footer {
+div#footer{
 	text-align: center;
 	font-size: 10px;
 	color: white;
@@ -220,42 +183,35 @@ div#footer {
 	height: 50px;
 	background-image: url(../images/footer_bg.jpg);
 }
-
-div#footer a {
+div#footer a{
 	font-size: 10px;
 	color: #AADDFF;
 }
-
-span.yes {
+span.yes{
 	font-weight: bold;
 	color: #009966;
 }
-
-span.no {
+span.no{
 	font-weight: bold;
-	color: #CC0000;	
+	color: #CC0000;
 }
-
-div#statusmsg {
+div#statusmsg{
 	padding: 10px;
 	background-color: #F0F0FF;
 	margin-bottom: 10px;
 }
-
-div#errormsg {
+div#errormsg{
 	padding: 10px;
 	background-color: #FFF0F0;
 	margin-bottom: 10px;
 	overflow: hidden;
-	width: auto;	
+	width: auto;
 }
-
-div#debugmsg {
+div#debugmsg{
 	padding: 10px;
 	background-color: #FFFFCC;
 }
-
-div.menubar {
+div.menubar{
 	background-color: #d8eeea;
 	padding: 5px;
 	text-align: right;
@@ -263,85 +219,97 @@ div.menubar {
 	overflow: hidden;
 	width: auto;
 }
-
-div.messagepreview {
+div.messagepreview{
 	height: 250px;
 	border: 1px solid black;
 	padding: 5px;
 	overflow: auto;
 }
-
 /* Pager bar classes */
-
-div.pager {
+div.pager{
 	background-color: white;
 	overflow: hidden;
 	width: 100%;
 }
-
-div.pagercontrols {
+div.pagercontrols{
 	float: left;
 	width: 140px;
 	text-align: center;
 	margin-left: 270px;
 	padding: 10px 0px 10px 0px;
 }
-
-div.pagerinfo {
+div.pagerinfo{
 	float: right;
 	padding: 10px 0px 10px 0px;
 }
-
+/* Messages */
+.notification{
+	width: 660px;
+	padding: 10px;
+	overflow: hidden;
+	position: absolute;
+	margin-bottom: 10px;
+}
+#statusmsg{
+	background-color: #93BFB8;
+}
+#errormsg{
+	background-color: #ffcfcf;
+	border-color: #df8f8f;
+}
+#debugmsg{
+	padding: 10px;
+	background-color: #FFFFCC;
+}
 /* Results table classes */
 
-table {
+table{
 	width: 100%;
 }
-
-table.results tr td {
+table.results tr td{
 	border-bottom: 1px dotted black;
 	padding: 5px;
 }
-
-table.results tr td.emptyresults {
+table.results tr td.emptyresults{
 	padding: 10px;
 	font-style: italic;
 	text-align: center;
 }
-
-/* Field set classes */
-
-div.formfieldset {
+.name{
+	text-overflow: ellipsis;
+	max-width: 400px;
+	width: 60%;
+	overflow: hidden;
+	white-space: nowrap;
 }
-
-div.formfield {
+/* Field set classes */
+div.formfieldset{}
+div.formfield{
 	width: 100%;
 	overflow: hidden;
-	padding: 10px 0px 10px 0px;	
+	padding: 10px 0px 10px 0px;
 	border-bottom: 1px dotted black;
 }
-
-div.formfieldcomment {
+div.formfieldcomment{
 	margin-bottom: 10px;
 }
-
-div.formfielddivider {
+div.formfielddivider{
 	clear: both;
 	height: 10px;
 }
-
-div.formfieldlabel {
+div.formfieldlabel{
 	float: left;
-	width: 50%;
+	width: 34%;
 	font-weight: bold;
 	margin: 0px;
 	padding: 0px;
 }
-
-div.formfieldcontrols {
+div.formfieldcontrols{
 	float: right;
 	clear: right;
-	width: 50%;
+	width: 66%;
 	margin: 0px;
 	padding: 0px;
 }
+div.formfieldlabel.messages{width: 90%;}
+div.formfieldcontrols.messages{width: 10%;}

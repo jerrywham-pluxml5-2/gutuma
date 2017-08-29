@@ -11,7 +11,6 @@
  * @date	09/07/2017
  * @author	Cyril MAGUIRE
 */
-
 if(!defined('PLX_ROOT')) exit;
 $plxAdmin = @plxAdmin::getInstance();
 if(isset($_GET["del"]) AND $_GET["del"]=="install") {
@@ -37,17 +36,21 @@ if(isset($_GET["del"]) AND $_GET["del"]=="install") {
 	<?php
 	if(file_exists($plxAdmin->urlRewrite().$plxAdmin->aConf['racine_plugins'].'admin.css'))
 		echo '	<link rel="stylesheet" type="text/css" href="'.$plxAdmin->urlRewrite().$plxAdmin->aConf['racine_plugins'].'admin.css" media="screen" />'."\n";
+	if(gu_session_is_valid()){//only valid user
 	?>
+<!--
 	<script src="<?php echo PLX_CORE ?>lib/functions.js?ver=<?php echo PLX_VERSION ?>"></script>
 	<script src="<?php echo PLX_CORE ?>lib/visual.js?ver=<?php echo PLX_VERSION ?>"></script>
 	<script src="<?php echo PLX_CORE ?>lib/mediasManager.js?ver=<?php echo PLX_VERSION ?>"></script>
 	<script defer src="<?php echo PLX_CORE ?>lib/multifiles.js?ver=<?php echo PLX_VERSION ?>"></script>
+-->
+	<?php eval($plxAdmin->plxPlugins->callHook('AdminTopEndHead')) ?>
+	<?php } ?>
 	<link rel="stylesheet" type="text/css" href="themes/<?php echo gu_config::get('theme_name');?>/css/gutuma.css" media="screen" />
 	<script type="text/javascript" src="js/misc.js"></script>
 	<script type="text/javascript" src="js/tw-sack.js"></script>
 	<script type="text/javascript" src="js/md5.js"></script>
 	<script type="text/javascript" src="js/sha1.js"></script>
-	<?php eval($plxAdmin->plxPlugins->callHook('AdminTopEndHead')) ?>
 </head>
 
 <body id="<?php echo basename($_SERVER['SCRIPT_NAME'], ".php") ?>"<?php echo ($nomenu)?' class="subscribe"':'';?>>
@@ -174,4 +177,4 @@ if(isset($_GET["del"]) AND $_GET["del"]=="install") {
 		//plxMsg::Display();
 		?>
 
-		<?php eval($plxAdmin->plxPlugins->callHook('AdminTopBottom')) ?>
+		<?php if(!$nomenu) eval($plxAdmin->plxPlugins->callHook('AdminTopBottom')) ?>

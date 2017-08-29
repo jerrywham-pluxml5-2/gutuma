@@ -32,18 +32,20 @@ function gu_subscription_process($address, &$list_ids, $subscribe){
 	$fail_list_names = array();
 	foreach ($list_ids as $list_id){// For each list we need to load it with all addresses
 		$list = gu_list::get($list_id, TRUE);
-		if ($list->is_private())// Don't allow subscriptions to private lists)
-			$res = FALSE;
-		else {
-			if ($subscribe)
-				$res = $list->add($address, TRUE);
+		if($list){//!= false (object)
+			if ($list->is_private())// Don't allow subscriptions to private lists)
+				$res = FALSE;
+			else {
+				if ($subscribe)
+					$res = $list->add($address, TRUE);
+				else
+					$res = $list->remove($address, TRUE);
+			}
+			if ($res)
+				$succ_list_names[] = $list->get_name();
 			else
-				$res = $list->remove($address, TRUE);
+				$fail_list_names[] = $list->get_name();
 		}
-		if ($res)
-			$succ_list_names[] = $list->get_name();
-		else
-			$fail_list_names[] = $list->get_name();
 	}
 // Check if there were any successful
 	if (count($succ_list_names) < 1)

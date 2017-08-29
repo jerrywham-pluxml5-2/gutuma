@@ -138,5 +138,5 @@ foreach($u as $k => $v) {
 				?>
 			</ul>
 		</nav>
-		<sub class="text-center"><sup><i><?php echo gu_config::get('application_name');?> <?php echo t('Powered by Gutuma');?></i></sup></sub>
+		<sup><i><?php echo gu_config::get('application_name');?> <?php echo t('Powered by Gutuma');?></i></sup>
 	</aside>

@@ -86,7 +86,7 @@ $plxPlugin = $plxShow->plxMotor->plxPlugins->getInstance('gutuma');
 		$noUser = true; $unified = null;
 		foreach ($users as $key => $value) :
 			if ($plxPlugin->getParam('user_'.$value['id']) == 'activé'&&!isset($unified[$value['id']])) : $noUser = false; $unified[$value['id']]=true;?>
-			<div class="formfieldlabel"><?php echo t('Login of user').' '.$key.' ('.$value['profil'].') id: '.$value['id'];?>:</div>
+			<div class="formfieldlabel"><?php echo t('Login of user').' '.$key.'<br />Id:&nbsp;'.$value['id'].' ('.$value['profil'].')';?>:</div>
 			<div class="formfieldcontrols"><input type="text" name="user_<?php echo $key; ?>" class="textfield users" value="<?php echo $value['login'];?>" readonly="readonly" style="width:95%;"/></div>	
 			<div class="formfielddivider"></div>
 
@@ -142,40 +142,40 @@ $plxPlugin = $plxShow->plxMotor->plxPlugins->getInstance('gutuma');
 
 <?php } elseif ($section == 'messages') { ?>
 
-		<div class="formfield">
+		<div class="formfield messages">
 			<div class="formfieldcomment"><?php echo t('List names can be automatically added to the subject of sent newsletters, e.g. <code>[List] Subject</code>');?></div>
-			<div class="formfieldlabel"><?php echo t('Prefix list name on subjects');?>:</div>
 			<div class="formfieldcontrols"><?php gu_theme_bool_control('msg_prefix_subject'); ?></div>
+			<div class="formfieldlabel"><?php echo t('Prefix list name on subjects');?></div>
 		</div>
-		<div class="formfield">
+		<div class="formfield messages">
 			<div class="formfieldcomment"><?php echo t('If a newsletter is sent to more than one list, and a person is subscribed to more than one of those lists, the name of the list that occurs first in the <i>To</i> field will be used as the subject prefix. You can override this however, and use the collective name instead for all newsletters sent to more than one list');?></div>
-			<div class="formfieldlabel"><?php echo t('Use collective name for multi-list subjects');?>:</div>
 			<div class="formfieldcontrols"><?php gu_theme_bool_control('msg_coll_name_on_multilist'); ?></div>
+			<div class="formfieldlabel"><?php echo t('Use collective name for multi-list subjects');?></div>
 		</div>
-		<div class="formfield">
+		<div class="formfield messages">
 			<div class="formfieldcomment"><?php echo t('A signature containing an unsubscribe link can be automatically appended to all sent newsletters');?></div>
-			<div class="formfieldlabel"><?php echo t('Append unsubscribe link to sent newsletters');?>:</div>
 			<div class="formfieldcontrols"><?php gu_theme_bool_control('msg_append_signature'); ?></div>
+			<div class="formfieldlabel"><?php echo t('Append unsubscribe link to sent newsletters');?></div>
 		</div>
-		<div class="formfield">
-			<div class="formfieldlabel"><?php echo t('Send copy of sent newsletters to Administrator');?>:</div>
+		<div class="formfield messages">
 			<div class="formfieldcontrols"><?php gu_theme_bool_control('msg_admin_copy'); ?></div>
+			<div class="formfieldlabel"><?php echo t('Send copy of sent newsletters to Administrator');?></div>
 		</div>
-		<div class="formfield">
+		<div class="formfield messages">
 			<div class="formfieldcomment"><?php echo t('Subscriber confirmations');?></div>
-			<div class="formfieldlabel"><?php echo t('Send welcome message to new subscribers');?>:</div>
 			<div class="formfieldcontrols"><?php gu_theme_bool_control('list_send_welcome'); ?></div>
+			<div class="formfieldlabel"><?php echo t('Send welcome message to new subscribers');?></div>
 			<div class="formfielddivider"></div>
-			<div class="formfieldlabel"><?php echo t('Send goodbye message to unsubscribers');?>:</div>
 			<div class="formfieldcontrols"><?php gu_theme_bool_control('list_send_goodbye'); ?></div>
+			<div class="formfieldlabel"><?php echo t('Send goodbye message to unsubscribers');?></div>
 		</div>
-		<div class="formfield">
+		<div class="formfield messages">
 			<div class="formfieldcomment"><?php echo t('Administrator notifications');?></div>
-			<div class="formfieldlabel"><?php echo t('Notify of new subscribes');?>:</div>
 			<div class="formfieldcontrols"><?php gu_theme_bool_control('list_subscribe_notify'); ?></div>
+			<div class="formfieldlabel"><?php echo t('Notify of new subscribes');?>:</div>
 			<div class="formfielddivider"></div>
-			<div class="formfieldlabel"><?php echo t('Notify of unsubscribes');?>:</div>
 			<div class="formfieldcontrols"><?php gu_theme_bool_control('list_unsubscribe_notify'); ?></div>
+			<div class="formfieldlabel"><?php echo t('Notify of unsubscribes');?>:</div>
 		</div>
 	<div>
 

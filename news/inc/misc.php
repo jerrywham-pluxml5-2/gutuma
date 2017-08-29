@@ -181,7 +181,7 @@ function html_to_text(&$html){
 	$text = str_replace(array('</p>', '</h1>', '</h2>', '</h3>', '</ol>', '</ul>', '<br />'), "\n", $text);
 	$text = str_replace("<li>", "* ", $text);
 	$text = str_replace("<hr />", "-------------------------------------------\n", $text);
-// Convert entitiessuch as &nbsp; to real characters
+// Convert entities such as &nbsp; to real characters
 	$text = html_entity_decode($text, ENT_QUOTES, GUTUMA_ENCODING);
 // Strip all but links and images
 	$text = strip_tags($text, '<a>');

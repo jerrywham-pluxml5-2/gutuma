@@ -5,22 +5,24 @@
  * @file Default theme main stylesheet
  */
 /* 5.6 */
-button, input, select, textarea {
-/* width: inherit; */
-}
 .formfield{
  margin: 2px;
+ border-bottom: 1px dotted #000;
 }
 div.formfield > div{
  display: inline-block;
- padding: 1%;
+ padding: 0.44rem;
  width: 100%;
  min-width: 18%;
  max-width: 72%;
 }
-div.formfield.messages > div{/* unused 4 the moment */
+div.formfield.messages > div.formfieldlabel{
  min-width: 66%;
  max-width: 72%;
+}
+div.formfield.messages > div.formfieldcontrols{
+ min-width: 20px;
+ max-width: 20px;
 }
 div.formfield > div > select{
  min-width: 18%;
@@ -36,6 +38,7 @@ div.formfield::after, .formfieldcomment, .formfielddivider{
 }
 div.formfieldcomment{
  font-size: small;
+ margin-bottom: 10px;
 }
 .yes{color: green;}
 .no{color: red;}
@@ -43,187 +46,140 @@ div.formfieldfoat{
  margin-bottom: 1em;
  background-color: rgba(207, 207, 207, 0.207);
 }
-div.menubar.in-action-bar.lists {
+div.menubar.in-action-bar.lists{
  top: -2.7em;
  overflow: hidden;
 }
-.section .action-bar {
- /* z-index: -10 !important; */
-}
-
-code {
+code{
 	font-family: "Courier New", Courier, mono;
 	font-size: 12px;
 	line-height: 16px;
 }
-/*
-input {
-margin: 2px;
-border: 1px solid #A8A9A8;
-padding: 2px 5px !important;
-}
-*/
-[type="checkbox"], [type="radio"] {
- /* float: left; */
-}
-
-textarea {
+textarea{
 	background-color: #F8F8F8;
 	border-top: 1px solid #abadb3;
 	border-right: 1px solid #e3e9ef;
-	border-bottom: 1px solid #e3e9ef;	
-	border-left: 1px solid #e3e9ef;		
+	border-bottom: 1px solid #e3e9ef;
+	border-left: 1px solid #e3e9ef;
 	padding: 4px;
 	margin: 0px;
-	font-family: "Courier New", Courier, mono;	
+	font-family: "Courier New", Courier, mono;
 }
-
-hr {
+hr{
 	border-top: 1px dotted black;
 	border-right: 0;
-	border-bottom: 0;	
+	border-bottom: 0;
 	border-left: 0;
 	height: 1px;
 	background-color: white;
 }
-
-#demobanner {
+#demobanner{
 	background-color: #f6f8c1;
 	border-bottom: 1px solid #e6ea75;
 	text-align: center;
 	font-weight: bold;
 	padding: 3px;
 }
-.section .action-bar h2 {
+.section .action-bar h2{
 	font-size: 2.5rem;
 	margin-top: -0.1618rem;
 	margin-bottom: 0.1618rem;
 }
 /* Sub menu */
-
-#sectionheader {
+#sectionheader{
 	width: 100%;
 	overflow: hidden;
 }
 #sectionmenu{
  line-height: 2;
 }
-/*
-#sectionmenu a {	
-	color: #489689;
-}
-*/
-#sectionmenu a.current {	
+#sectionmenu a.current{
 	color: #7dbcb1;
 }
-
-#sectionmenu a:hover {
+#sectionmenu a:hover{
 	color: #bdfcf1;
 }
-
-#sectionmenu > input {
+#sectionmenu > input{
 	margin-top:0.618em;
 	margin-bottom:0;
 }
-
 /* Other objects */
-
-#content {
+#content{
 	padding: 10px;
 	min-height: 300px;
 }
-
-.notification {
-	position: fixed;
-	right: 0;
-	left: 0;
-	top: 72px;
-}
-
-#statusmsg {
+.notification{
+	top: 0.1rem;
+	right: 1rem;
 	padding: 10px;
+	max-width: 80%;
+	overflow: hidden;
+	position: absolute;
+	margin-bottom: 10px;
+}
+#statusmsg{
 	background-color: #93BFB8;
-	margin-bottom: 10px;
-	overflow: hidden;
+	position: fixed;
 }
-
-#errormsg {
-	padding: 10px;
-	margin-bottom: 10px;
-	overflow: hidden;
-	width: auto;
-	top: 0;
-}
-
-#debugmsg {
+#errormsg{}
+#debugmsg{
 	padding: 10px;
 	background-color: #FFFFCC;
 }
-
-div.menubar {
+div.menubar{
 	background-color: #d8eeea;
 	overflow: hidden;
 }
-div.menubar.in-action-bar {
+div.menubar.in-action-bar{
 	margin-top: 7.2rem;
 	background-color: transparent;
 }
-
-div.messagepreview {
+div.messagepreview{
 	height: 250px;
 	border: 1px solid black;
 	padding: 5px;
 	overflow: auto;
 }
-
 /* Pager bar classes */
-
-div.pager {
+div.pager{
 	background-color: rgba(207, 207, 207, 0.207);
 	overflow: hidden;
 	width: 100%;
-	/* max-width: 963px; */
 }
-
-div.pagercontrols {
+div.pagercontrols{
 	float: left;
 	width: 140px;
 	text-align: center;
-	/* margin-left: 270px; */
 	padding: 10px 0px 10px 0px;
 }
-
-div.pagerinfo {
+div.pagerinfo{
 	float: right;
 	padding: 10px 0px 10px 0px;
 }
-
 /* Results table classes */
-
-table {
+table{
 	width: 100%;
 }
-
-table.results tr td {
+table.results tr td{
 	border-bottom: 1px dotted black;
 	padding: 5px;
 }
-
-table.results tr td.emptyresults {
+table.results tr td.emptyresults{
 	padding: 10px;
 	font-style: italic;
 	text-align: center;
 }
-.should-cut-off {/*
+.should-cut-off{
  max-width: 92%;
  overflow: hidden;
  white-space: nowrap;
- display: inline-block;
- text-overflow: ellipsis; */
+ text-overflow: ellipsis;
+}
+.subscribe .should-cut-off{
+ max-width: 320px;
 }
 .cell-off{
- min-width: 100%;
- max-width: 100%;
+ min-width: 80%;
 }
 .cell-off b{
  min-width: 100px;
@@ -231,14 +187,17 @@ table.results tr td.emptyresults {
  padding-right: 1rem;
  display: inline-block;
 }
-@media (max-width: 767px) {
-	.in-action-bar {
+@media (max-width: 767px){
+	.in-action-bar{
 		z-index: unset;
 		text-align: center;
 	}
+	.imglink img{
+		width:27px;
+		height:27px;
+	}
 }
-
-@media (max-width: 639px) {
+@media (max-width: 639px){
  div.formfield > div{
   min-width: 48%;
   max-width: 98%;

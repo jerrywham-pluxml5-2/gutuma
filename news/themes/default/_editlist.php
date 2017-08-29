@@ -5,13 +5,12 @@
  * @copyright This source is distributed under the GPL
  * @file included editlist page
  * @modifications Cyril Maguire
- */
-/* Gutama plugin package
+ *
+ * Gutama plugin package
  * @version 1.6
  * @date	01/10/2013
  * @author	Cyril MAGUIRE
 */
-
 ?>
 <div id="sectionheader" class="inline-form action-bar">
 	<h2><?php echo t('Edit list');?></h2>
@@ -61,7 +60,7 @@ if ($list->get_size() > 0) {
 	foreach ($selection as $address) {
 ?>
 	<tr id="row_<?php echo ++$address_id; ?>">
-		<td><a href="javascript:gu_remove_address('<?php echo $address; ?>', <?php echo $address_id; ?>)" class="imglink" title="<?php echo t('Delete');?>"><img src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_delete.png" /></a></td>
+		<td style="width:36px;"><a href="javascript:gu_remove_address('<?php echo $address; ?>', <?php echo $address_id; ?>)" class="imglink" title="<?php echo t('Delete');?>"><img src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_delete.png" /></a></td>
 		<td><?php echo $address; ?></td>
 	</tr>
 <?php
