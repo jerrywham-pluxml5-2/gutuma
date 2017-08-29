@@ -37,7 +37,7 @@ if(!empty($_POST)){
 	$Gut_users = unserialize($gu_config['users']);
 	foreach($_POST['user'] as $id => $activation){
 		if ($activation == 'activé'){
-			$Gut_users[$plxAdmin->aUsers[$id]['login']] = array(
+			$Gut_users[$plxAdmin->aUsers[$id]['name']] = array(
 				'id'=>$id,
 				'login'=>$plxAdmin->aUsers[$id]['login'],
 				'password'=>$plxAdmin->aUsers[$id]['password'],
