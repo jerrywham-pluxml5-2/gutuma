@@ -106,6 +106,34 @@ if($_SESSION['profil'] == PROFIL_ADMIN)://Si l'utilisateur est administrateur
 						echo $aProfils[($_user['profil'] == null || $_user['profil'] == L_PROFIL_ADMIN) ? L_PROFIL_ADMIN : $_user['profil']];
 						echo '</td>
 			<td>123';
+					} else {//Si le module n'est pas installé
+?>				<a href="<?php echo PLX_PLUGINS; ?>gutuma/news/install.php" style="color:red;"><?php echo $plxPlugin->getLang('L_GUTUMA_INSTALL');?></a><!-- <a class="help" title="Vérifiez avant de lancer l'installation que le dossier plugins/gutuma/temp existe et que les droits en écriture (chmod) de ce dossier et de ceux du dossier plugins/gutuma/inc sont à 777">&nbsp;</a> --><?php
+					}
+				} else {//Si l'utilisateur n'est pas le premier et que celui qui est connecté est administrateur
+					echo $aProfils[($_user['profil'] == null || $_user['profil'] == L_PROFIL_ADMIN) ? L_PROFIL_ADMIN : $_user['profil']];
+					echo '</td><td>222';
+					if ($ok_config){// Si le module est activé
+						if ($plxPlugin->getParam('user_'.$_userid) == 'activé'){//Si l'utilisateur est activé
+							if ($_userid == $_SESSION['user']){//Si l'utilisateur connecté correspond à cet utilisateur
+								echo '&nbsp;Activé'; $plxPlugin->lang('L_ACTIVE');
+							} else {//Statut des autres utilisateurs
+								//~ echo '&nbsp;222222'.ucfirst($plxPlugin->getParam('user_'.$_userid));
+								echo '&nbsp;';$plxPlugin->lang('L_'.ucfirst($plxPlugin->getParam('user_'.$_userid)));
+							}
+						} else {//Si l'utilisateur n'est pas activé
+							if ($plxPlugin->getParam('user_'.$_userid) == 'activé' || $_userid == '001'){
+								echo '&nbsp;'; $plxPlugin->lang('L_ACTIVE');
+							}
+							echo '&nbsp;999';$plxPlugin->lang('L_'.ucfirst($plxPlugin->getParam('user_'.$_userid)));
+						}//fi else Si l'utilisateur n'est pas activé
+					}// fi le module est (dé)activé
+				}//Fi Si l'utilisateur est le premier et que celui qui est connecté est administrateur (& else) Si l'utilisateur n'est pas le premier et que celui qui est connecté est administrateur
+				echo '</td>';
+				echo '<td>5555';
+    
+				#if($_userid=='001' && $_userid == $_SESSION['user']){//Si l'utilisateur est le premier et que celui qui est connecté est administrateur
+					if ($ok_config === TRUE){//Le fichier de config existe donc le module a été installé
+						if ($_userid == $_SESSION['user']){//Si l'utilisateur connecté correspond à cet utilisateur
 ?>
 		<form name="login_form" method="post" action="<?php echo PLX_PLUGINS; ?>gutuma/news/login.php?action=plxlogin&amp;ref=compose.php">
 			<?php echo plxToken::getTokenPostMethod() ?>
@@ -113,43 +141,20 @@ if($_SESSION['profil'] == PROFIL_ADMIN)://Si l'utilisateur est administrateur
 			<input name="n" type="hidden" class="textfield" id="n" value="<?php echo $gu_config['admin_name'];?>" />
 			<input name="u" type="hidden" class="textfield" id="u" value="<?php echo $gu_config['admin_username'];?>" />
 			<input name="p" type="hidden" class="textfield" id="p" value="<?php echo $gu_config['admin_password'];?>"/>
+<?php if($_userid=='001' && $_userid == $_SESSION['user']){//Si l'utilisateur est le premier et que celui qui est connecté est administrateur ?>
 			<input name="pr" type="hidden" class="textfield" id="pr" value="<?php echo $aProfils[0]?>"/>
+<?php } ?>
 			<input name="login_submit" class="green" type="submit" id="login_submit" value="<?php echo $plxPlugin->getLang('L_WRITE_NEWS');?>1111" />
 		</form>
 <?php
-					} else {//Si le module n'est pas installé
+						}
+					} else {//Si le gutuma n'est pas installé
+						if($_userid=='001' && $_userid == $_SESSION['user']){//Si l'utilisateur est le premier et que celui qui est connecté est administrateur
 ?>				<a href="<?php echo PLX_PLUGINS; ?>gutuma/news/install.php" style="color:red;"><?php echo $plxPlugin->getLang('L_GUTUMA_INSTALL');?></a><!-- <a class="help" title="Vérifiez avant de lancer l'installation que le dossier plugins/gutuma/temp existe et que les droits en écriture (chmod) de ce dossier et de ceux du dossier plugins/gutuma/inc sont à 777">&nbsp;</a> --><?php
-					}
-				} else {//Si l'utilisateur n'est pas le premier et que celui qui est connecté est administrateur
-					echo $aProfils[($_user['profil'] == null || $_user['profil'] == L_PROFIL_ADMIN) ? L_PROFIL_ADMIN : $_user['profil']];
-					echo '</td><td>222';
-					if ($ok_config) :// Si le module est activé
-						if ($plxPlugin->getParam('user_'.$_userid) == 'activé'){//Si l'utilisateur est activé
-							if ($_userid == $_SESSION['user']){//Si l'utilisateur connecté correspond à cet utilisateur
-?>
-		<form name="login_form" method="post" action="<?php echo PLX_PLUGINS; ?>gutuma/news/login.php?action=plxlogin&amp;u=true&amp;ref=compose.php">
-			<?php echo plxToken::getTokenPostMethod() ?>
-			<input name="n" type="hidden" class="textfield" id="n" value="<?php echo plxUtils::strCheck($_user['name']);?>" />
-			<input name="u" type="hidden" class="textfield" id="u" value="<?php echo plxUtils::strCheck($_user['login']);?>" />
-			<input name="p" type="hidden" class="textfield" id="p" value="<?php echo plxUtils::strCheck($_user['password'])?>"/>
-			<input name="login_submit" class="green" type="submit" id="login_submit" value="<?php echo $plxPlugin->getLang('L_WRITE_NEWS');?>2222" />
-		</form>
-<?php
-							} else {//Statut des autres utilisateurs
-								echo '&nbsp;222222'.ucfirst($plxPlugin->getParam('user_'.$_userid));
-							}
-						} else {//Si l'utilisateur n'est pas activé
-							if ($plxPlugin->getParam('user_'.$_userid) == 'activé' || $_userid == '001'){
-								echo '&nbsp;Activé3333333333';
-							}
-							echo '&nbsp;22222222'.ucfirst($plxPlugin->getParam('user_'.$_userid));
-						}//fi else Si l'utilisateur n'est pas activé
-					} else {// Si le module est déactivé
+						} else {// 
 ?>					<em><?php echo $plxPlugin->getLang('L_INSTALL_FIRST'); ?></em><?php
-					}// fi le module est (dé)activé
-				}//Fi Si l'utilisateur est le premier et que celui qui est connecté est administrateur (& else) Si l'utilisateur n'est pas le premier et que celui qui est connecté est administrateur
-				echo '</td>';
-				echo '<td>5555';
+						}// fi le module est (dé)activé
+					}
 				if(($_SESSION['profil']==PROFIL_ADMIN && $_userid != '0001')
 				&& ($plxPlugin->getParam('user_'.$_userid) == 'activé' && $_userid != $_SESSION['user'])){
 ?>	

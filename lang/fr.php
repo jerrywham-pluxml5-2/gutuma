@@ -16,6 +16,8 @@
 		'L_CONFIG_USERS_ACTION' =>	'Action',
 		'L_WRITE_NEWS'          =>	'Accéder au module de newsletter',
 		'L_ACTIVATE_USER'       =>	'Activer l\'utilisateur',
+		'L_Activé'              =>	'Activé',
+		'L_Desactivé'           =>	'Désactivé',
 		'L_NOT_APPLICABLE'      =>	'Non applicable',
 		'L_DEL_USER'            =>	'Désactiver l\'utilisateur',
 		'L_DESCRIPTION'         =>	'Permet de gérer les utilisateurs ayant la possibilité de poster des newsletters (les administrateurs ou les gestionnaires).',
