@@ -12,7 +12,8 @@ todo subscribe.php: theme gutuma affiche le lien retour a l'admin du plugin!BAD!
 
 
 ##v.1.8.4.plx.5.6b3.local  27/08/2017##
-[+] Fix theme gutuma (si PluXml non installé, retour
+[+] option import csv list: ignorer la première ligne du fichier
+Fix theme gutuma (si PluXml non installé, retour
 [+] retouche+coloré du theme admin 'default' (PluXml 5.6)
 a la recherche de var_dump:
 grep -nHIirF -- var_dump (dans le dossier : gutuma)

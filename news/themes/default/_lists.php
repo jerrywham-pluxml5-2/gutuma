@@ -44,7 +44,7 @@ if (count($lists) > 0) {
 ?>
 		<tr id="row_<?php echo $list->get_id(); ?>">
 			<td><script type="text/javascript">document.write(gu_list_menu(<?php echo $list->get_id(); ?>))</script></td>
-			<td><?php echo $list->is_private() ? t('Yes') : t('No'); ?></td>
+			<td class="sml-text-right"><?php echo $list->is_private() ? t('Yes') : t('No'); ?></td>
 			<td class="cell-off"><b>(<?php echo $list->get_size(); ?>)</b><span class="should-cut-off"><?php echo $list->get_name(); ?></span></td>
 		</tr>
 <?php
@@ -66,7 +66,8 @@ if (count($lists) > 0) {
 <form enctype="multipart/form-data" method="post" name="import_form" id="import_form" action="lists.php">
 	<div class="menubar">
 		<div><input name="import_file" type="file" id="import_file" /><br /><br />
-		<?php echo t('Separate by '); gu_theme_list_control('sep', array(array(';',t('Semicolon (;)')),array(',',t('Comma (,)'))),';') ?>&nbsp;&nbsp;<input name="import_submit" type="submit" id="import_submit" class="green" value="<?php echo t('Import');?>" />
+			<?php echo t('Separate by').'&nbsp;'; gu_theme_list_control('sep', array(array(';',t('Semicolon (;)')),array(',',t('Comma (,)'))),';') ?> &amp;
+			<?php echo t('Ingnore first line');?>&nbsp;<input type="checkbox" id="first" name="first" /> &nbsp;<input name="import_submit" type="submit" id="import_submit" class="green" value="<?php echo t('Import');?>" />
 		</div>
 	</div>
 </form>

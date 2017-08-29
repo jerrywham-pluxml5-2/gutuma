@@ -21,22 +21,22 @@ include_once '_menu.php';?>
 <p><?php echo t('These are the lists which have already been created.');?> </p>
 <form method="post" name="lists_form" id="lists_form" action=""><input name="num_lists" type="hidden" id="num_lists" value="<?php echo count($lists); ?>" />
 	<table border="0" cellspacing="0" cellpadding="0" class="results" id="liststable">
-    <tr>
-      <td><strong><?php echo t('Name');?></strong></td>
-      <td><strong><?php echo t('Addresses');?></strong></td>
-	  	<td><strong><?php echo t('Private');?></strong></td>    
-      <td>&nbsp;</td>
-    </tr>
+		<tr>
+			<td><strong><?php echo t('Name');?></strong></td>
+			<td><strong><?php echo t('Addresses');?></strong></td>
+			<td><strong><?php echo t('Private');?></strong></td>
+			<td>&nbsp;</td>
+		</tr>
 <?php
 if (count($lists) > 0) {
 	foreach($lists as $list) {
 ?>
-    <tr id="row_<?php echo $list->get_id(); ?>">
-      <td><?php echo $list->get_name(); ?></td>
-      <td><?php echo $list->get_size(); ?></td>
-      <td><?php echo $list->is_private() ? t('Yes') : t('No'); ?></td>	  	  
-      <td style="text-align: right"><script type="text/javascript">document.write(gu_list_menu(<?php echo $list->get_id(); ?>))</script></td>
-    </tr>
+		<tr id="row_<?php echo $list->get_id(); ?>">
+			<td><?php echo $list->get_name(); ?></td>
+			<td><?php echo $list->get_size(); ?></td>
+			<td><?php echo $list->is_private() ? t('Yes') : t('No'); ?></td>
+			<td style="text-align: right"><script type="text/javascript">document.write(gu_list_menu(<?php echo $list->get_id(); ?>))</script></td>
+		</tr>
 <?php
 	}
 }
@@ -62,6 +62,12 @@ if (count($lists) > 0) {
 	<p><?php echo t('A new list can be created from a CSV file of addresses. The format of this file should be email addresses in the first column - other columns will be ignored.');?> </p>
 	<div class="menubar">
 		<div style="float: left"><input name="import_file" type="file" id="import_file" /></div>
-		<div style="float: right"><input name="import_submit" type="submit" id="import_submit" value="<?php echo t('Import');?>" /></div>
+		<div style="clear: both;text-align: left;">
+			<?php echo t('Separate by').'&nbsp;'; gu_theme_list_control('sep', array(array(';',t('Semicolon (;)')),array(',',t('Comma (,)'))),';') ?> &amp;
+			<?php echo t('Ingnore first line');?>&nbsp;<input type="checkbox" id="first" name="first" />
+			<div style="float: right">
+				<input name="import_submit" type="submit" id="import_submit" value="<?php echo t('Import');?>" />
+			</div>
+		</div>
 	</div>
 </form>

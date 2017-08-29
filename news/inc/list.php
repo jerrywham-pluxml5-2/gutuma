@@ -247,7 +247,7 @@ class gu_list{
 	 * @param string $path The path of the CSV file
 	 * @return mixed The new list if it was successfully created, else FALSE
 	 */
-	public static function import_csv($name, $path, $sep = ','){
+	public static function import_csv($name, $path, $sep = ',', $first = 0){
 		$csv = @fopen($path, 'r');
 		if ($csv == FALSE)
 			return gu_error(t("Unable to open CSV file for reading"));
@@ -259,6 +259,8 @@ class gu_list{
 				$addresses[] = $address;
 		}
 		fclose($csv);
+		if (!empty($first) && isset($addresses[0]))
+			unset($addresses[0]);
 		$addresses = array_unique($addresses);
 		natcasesort($addresses);// Sort addresses alphabetically	
 		return gu_list::create($name, FALSE, $addresses);

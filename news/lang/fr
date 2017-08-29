@@ -89,7 +89,8 @@ Newsletter deleted[::->]Infolettre supprimée
 Address <b><i>%</i></b> already in the list[::->]L'adresse <b><i>[%%]</i></b> est déjà dans la liste
 Addresses cannot be more than % characters[::->]Une adresse ne peut pas avoir plus de [%%] caractères
 Lists can have a maximum of % addresses in demo mode[::->]Les listes peuvent contenir un maximum de [%%] adresses en mode de démonstration
-Separate by [::->]Séparé par 
+Ingnore first line[::->]Ignorer la première ligne
+Separate by[::->]Séparé par
 Comma (,)[::->], (Virgule)
 Semicolon (;)[::->]; (Point virgule)
 //************************************************************************
