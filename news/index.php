@@ -22,7 +22,6 @@ if ($_SESSION['profil'] != PROFIL_ADMIN){
 }
 gu_init();
 gu_theme_start();
-
 // Calculate some stats
 $lists = gu_list::get_all();
 $total_addresses = 0;
@@ -30,9 +29,5 @@ foreach ($lists as $list) {
 	$total_addresses += $list->get_size();
 }
 $mailbox = gu_newsletter::get_mailbox();
-
-//Body
-include_once 'themes/'.gu_config::get('theme_name').'/_index.php';
-
+include_once 'themes/'.gu_config::get('theme_name').'/_index.php';//Body
 gu_theme_end();
-?>

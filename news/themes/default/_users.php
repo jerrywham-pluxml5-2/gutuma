@@ -5,21 +5,17 @@
  * @copyright This source is distributed under the GPL
  * @file included settings page
  * @modifications Cyril Maguire
- */
-/* Gutama plugin package
+ *
+ * Gutama plugin package
  * @version 1.6
  * @date	01/10/2013
  * @author	Cyril MAGUIRE
-*/
-
+*/exit;
 ?>
 <h1><?php echo t('Add a new user');?></h1>
-
 <?php gu_theme_messages();?>
-
 <form id="edit_form" name="edit_form" method="post" action="<?php echo absolute_url('users.php');?>?token=<?php echo $_GET['token'];?>">
 	<div class="formfieldset">
-
 		<div class="formfield">
 			<div class="formfieldlabel"><?php echo t('Name');?></div>
 			<div class="formfieldcontrols"><input name="name" type="text" class="textfield" id="name" value="<?php echo $user_name ;?>" readonly="readonly"  /></div>
@@ -37,15 +33,11 @@
 			<input name="salt" type="hidden" id="salt" value="<?php echo base64_encode($user_salt) ;?>" readonly="readonly"  />
 			<input name="id" type="hidden" id="id" value="<?php echo $user_id ;?>" readonly="readonly"  />
 		</div>
-		<br/>	
+		<br/>
 		<?php if (isset($ok)) :unset($ok);?>
-		
 			<input name="" type="submit" id="save_settings" value="<?php echo t('Back');?>" />
 		<?php else :?>
-		
 			<input name="save_settings" type="submit" id="save_settings" value="<?php echo t('Save');?>" />
 		<?php endif;?>
-		
 	</div>
 </form>
-<p>&nbsp;</p>

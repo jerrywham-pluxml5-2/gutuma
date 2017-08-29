@@ -12,7 +12,7 @@
  * @author	Cyril MAGUIRE
 */
 $plxMotor = plxMotor::getInstance();
-?><p><a href="<?php echo PLX_ROOT; ?>"><?php echo t('Back home'); ?></a></p>
+?>
 <div style="text-align: center">
 <?php gu_theme_messages(); ?>
 <form action="" name="subscribe_form" method="post" onsubmit="return checkSubmit(this);">
@@ -44,3 +44,4 @@ else
 	</p>
 </form>
 </div>
+<p><a href="<?php echo PLX_ROOT; ?>"><?php echo t('Back home'); ?></a></p>
