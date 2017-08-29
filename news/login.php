@@ -54,8 +54,7 @@ if (is_get_var('action') && get_get_var('action') == 'plxlogin'){
 		gu_error(t('Incorrect username or password'));
 }
 elseif (is_get_var('action') && get_get_var('action') == 'logout'){
-	// Invalidate session flag
-	gu_session_set_valid(FALSE);
+	gu_session_set_valid(FALSE);// Invalidate session flag
 }
 gu_theme_start();
 //gu_theme_messages();
