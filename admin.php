@@ -62,7 +62,7 @@ if(!empty($_POST)){
 		header('Location:'.PLX_PLUGINS.'gutuma/news/login.php?action=plxlogin&ref=deluser.php&token='.base64_encode(serialize($gu_config['admin_name'].'[::]'.$gu_config['admin_username'].'[::]'.$gu_config['admin_password'].'[::]'.plxUtils::charAleatoire(1).$gu_config['salt'].plxUtils::charAleatoire(2).'[::]'.$aProfils[0].'[::]'.$_userid.'[::]'.$_POST['rtd'])));
 		exit();
 	}
-}
+}//fi !empty($_POST)
 if(isset($_GET['u']) && isset($_GET['rec']) && !empty($_GET['u']) && $_GET['rec'] == 'done'){
 	$plxPlugin->setParam('user_'.$_GET['u'],'activé', 'cdata');
 	$plxPlugin->saveParams();
@@ -109,7 +109,7 @@ if($_SESSION['profil'] == PROFIL_ADMIN)://Si l'utilisateur est administrateur
 						$plxPlugin->lang('L_'.ucfirst($plxPlugin->getParam('user_'.$_userid)));//on affiche son état
 					}//fi else Si l'utilisateur n'est pas activé
 					echo '</td>'.PHP_EOL.'			<td>'.PHP_EOL;
-					if ($_userid == $_SESSION['user']){//Si l'utilisateur connecté correspond à cet utilisateur
+					if ($_userid == $_SESSION['user'] && ($_userid == '001' || $plxPlugin->getParam('user_'.$_userid) == 'activé')){//Si l'utilisateur connecté correspond à cet utilisateur
 ?>
 				<form name="login_form" method="post" action="<?php echo PLX_PLUGINS; ?>gutuma/news/login.php?action=plxlogin&amp;ref=compose.php">
 					<?php echo plxToken::getTokenPostMethod().PHP_EOL; ?>
@@ -148,7 +148,7 @@ if($_SESSION['profil'] == PROFIL_ADMIN)://Si l'utilisateur est administrateur
 				</form>
 <?php
 				} else//fi ($_SESSION['profil']==PROFIL_ADMIN && $_userid != '0001') && ($plxPlugin->getParam('user_'.$_userid) == 'activé' && $_userid != $_SESSION['user'])
-				if(($_user['profil'] == PROFIL_MANAGER && $plxPlugin->getParam('user_'.$_userid) == 'desactivé')
+				if(($_user['profil'] < PROFIL_MODERATOR && $plxPlugin->getParam('user_'.$_userid) == 'desactivé')
 				 ||($plxPlugin->getParam('user_'.$_userid) != 'activé' && $_userid != '001'))
 				{
 ?>
@@ -211,8 +211,7 @@ elseif ($_SESSION['profil'] == PROFIL_MANAGER) ://Si l'utilisateur est gestionna
 					echo '</td>'.PHP_EOL.'		</tr>'.PHP_EOL;
 			}
 		}
-		# On récupère le dernier identifiant
-		$a = array_keys($plxAdmin->aUsers);
+		$a = array_keys($plxAdmin->aUsers);// On récupère le dernier identifiant
 		rsort($a);
 	} else {
 		$a['0'] = 0;
