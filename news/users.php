@@ -17,7 +17,7 @@ if (isset($_GET['token'])){
 	list($user_name,$user_login,$user_password,$user_salt,$user_userProfile,$user_id) = explode('[::]',unserialize(base64_decode($new_record)));
 	$user_salt = substr($user_salt, 1,-2);
 } else {
-	header('Location:./index.php');
+	header('Location:./index.php');exit;
 }
 gu_init();
 $users = gu_config::getUsers();

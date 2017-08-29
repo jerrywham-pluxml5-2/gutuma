@@ -178,8 +178,7 @@ if($_SESSION['profil'] == PROFIL_ADMIN)://Si l'utilisateur est administrateur
 	$new_userid = str_pad($a['0']+1, 3, "0", STR_PAD_LEFT);
 ////Fi Si l'utilisateur est administrateur
 elseif ($_SESSION['profil'] == PROFIL_MANAGER) ://Si l'utilisateur est gestionnaire il ne voit que son compte
-	# Initialisation de l'ordre
-	$num = 0;
+	$num = 0;// Initialisation de l'ordre
 	if($plxAdmin->aUsers){
 		foreach($plxAdmin->aUsers as $_userid => $_user){
 			if (!$_user['delete'] && $_SESSION['user'] == $_userid){
