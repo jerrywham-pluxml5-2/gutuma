@@ -58,7 +58,7 @@
 		</div>
 -->
 		<div class="formfield">
-			<div class="formfieldcomment"><?php echo t('The following is the name of the folder which contains all the Theme\'s files (Becarefull to respect casse)');?></div>
+			<div class="formfieldcomment"><?php echo t('The following selector list is for choose one of all Theme\'s available in subfolders of Gutuma.');?></div>
 			<div class="formfieldlabel"><?php echo t('Name of the theme');?>:</div>
 			<div class="formfieldcontrols"><?php
 				$thms = array();

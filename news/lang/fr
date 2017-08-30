@@ -226,7 +226,7 @@ Your login details[::->]Vos identifiants de connexion
 Administrator username[::->]Pseudonyme de l'administrateur
 Change administrator password[::->]Modifier le mot de passe administrateur
 Retype[::->]Confirmer
-The following is the name of the folder which contains all the Theme's files (Becarefull to respect casse)[::->]Le champ suivant est le nom du dossier qui contient les fichiers du thème (attention de respecter la casse !)
+The following selector list is for choose one of all Theme's available in subfolders of Gutuma.[::->]Le selecteur suivant permet de choisir le thème graphique utilisé par Gutuma. Liste les dossiers de /news/themes/.
 Name of the theme[::->]Nom du thème
 Gutuma will first try to use an SMTP server to send messages. If that fails, <code>Sendmail</code> may be tried followed by PHP <code>mail()</code>[::->]Gutuma essaiera d'utiliser en premier le serveur SMTP pour envoyer les messages. S'il échoue, <code>Sendmail</code> sera utilisé ensuite, puis la fonction PHP <code>mail()</code>.
 Use SMTP[::->]Utiliser SMTP
