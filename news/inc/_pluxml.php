@@ -71,8 +71,9 @@ include_once(PLX_MORE.'lib/class.plx.feed.php');
 include_once(PLX_MORE.'lib/class.plx.show.php');
 # Creation de l'objet principal et lancement du traitement
 $plxMotor = plxMotor::getInstance();
-# Chargement des fichiers de langue en fonction du profil de l'utilisateur connecté
 $lang = $glang = $plxMotor->aConf['default_lang'];
+# Chargement des fichiers de langue en fonction du profil de l'utilisateur connecté
+if(isset($_SESSION['user'])) $lang = $glang = $plxMotor->aUsers[$_SESSION['user']]['lang'];
 $_SESSION['lang'] = $_SESSION['glang'] = $lang;
 # Chargement des fichiers de langue
 loadLang(PLX_MORE.'lang/'.$lang.'/core.php');
