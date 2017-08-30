@@ -191,7 +191,7 @@ table.results tr td.emptyresults{
  min-width: 80%;
 }
 .cell-off b{
- min-width: 100px;
+ min-width: 11rem;
  text-align: right;
  padding-right: 1rem;
  display: inline-block;

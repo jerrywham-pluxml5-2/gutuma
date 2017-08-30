@@ -131,7 +131,7 @@ To[::->]Destinataire
 Subject[::->]Sujet
 Below is the plain text version that will also be sent so that users with non-HTML email clients can receive this newsletter. You can edit this before the email is sent.[::->]Ci-dessous, la version textuelle qui sera également envoyée afin que les utilisateurs d'un client de messagerie ne prenant pas en charge le langage HTML puissent recevoir cette infolettre. Vous pouvez la modifier avant que le courriel ne soit envoyé.
 Attach[::->]Joindre
-Compose[::->]Écrire
+Compose[::->]Composer
 Remove[::->]Retirer
 Unable to access mailbox[::->]Impossible d'accéder à la boite d'envois
 Unable to initialize mailer[::->]Impossible d'initialiser la messagerie

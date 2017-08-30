@@ -6,28 +6,25 @@ bug affichage: lors du choix du menu "informations" (index.php) le menu article 
 eval($plxAdmin->plxPlugins->callHook('AdminTopMenus'));
 verif: si l'on change le(s) mot(s) de passe dans pluxml, si l'accés au plugin et tjrs valable
 Evol: swiftmailer-5.4.6 pour future integration http://swiftmailer.org
-& si theme default -> use statc mode & display (site theme au lieu de celuis d'admin) ou add gutuma logo (top left|center) 
+& si theme default -> use statc mode & display (site theme au lieu de celuis d'admin) ou add gutuma logo (top left|center)
 
-todo subscribe.php: theme gutuma affiche le lien retour a l'admin du plugin!BAD! (lien retour a l'index:god:)
-
-
-##v.1.8.4.plx.5.6b3  29/08/2017##
+##v.1.8.4.plx.5.6b3  30/08/2017##
+[+] Langue anglaise ajouté [todo: help]
+[+] Aide en français actualisé
+Fix Supp. des var de langue déja présente dans le coeur de PluXml
+Fix Charger la langue de gutuma en fonction de celle de l'utilisateur
 [+] admin.php: inside-bar, lang, scrolable table & Manager Auto connect
-Fix perte de la redirection quant l' admin active un utilisateur (login 2 name user 4 var créate (admin.php)
-[+] admin.php simplifié (code, algo) more user friendly
-[+] option import csv list: ignorer la première ligne du fichier
+Fix subscribe.php: theme gutuma affiche le lien retour a l'admin du plugin, lien retour a l'accueil
+Fix Perte de la redirection quant l' admin active un utilisateur (login 2 name user 4 var créate (admin.php)
+[+] Codes révisé et optimisé pour plus de performances (parseless, chasse au au espaces superflus)
+[+] admin.php simplifié (code & algo) more user friendly
+[+] Option import csv list: ignorer la première ligne du fichier
 Fix theme gutuma (si PluXml non installé, retour)
 [+] retouche+coloré du theme admin 'default' (PluXml 5.6)
 
-news/integrate.php (4 Lien classique)
-Bug: Lien classique mauvaise url de retour a l'index (accueil) ::: ex: http://www.formationselixir.com.dev/plugins/gutuma/news/subscribe.php?list=1499556454
-Fix: PLX_ROOT 2 PLX_GROOT in _subscribe.php (in default theme) no return link in gutuma theme?
-
-Bug: Lien classique envoie au mauvais endroit (manque nesw/ ds l'url) [admin]
-Fix: gadget.js.php (in test)
-//~ var gu_gadgets_subcribe_url = "<?php echo absolute_url('../subscribe.php') ?>";
-var gu_gadgets_subcribe_url = "<?php echo absolute_url('subscribe.php') ?>";
-
+news/integrate.php (Lien classique)
+ Fix: PLX_ROOT 2 PLX_GROOT in _subscribe.php (theme default) no return link in gutuma theme? ::: Bug: Lien classique mauvaise url de retour a l'index (accueil)
+ Fix: gadget.js.php ::: Bug: Lien classique envoie au mauvais endroit (manque news/ ds l'url) [admin]
 
 ##v.1.8.4.plx.5.6b2  16/08/2017##
 [+] import csv array_unique + option: separated by ; or ,

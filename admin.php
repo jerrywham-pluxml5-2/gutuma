@@ -77,7 +77,7 @@ if(isset($_GET['u']) && isset($_GET['del']) && !empty($_GET['u']) && $_GET['del'
 }
 ?>
 <h2 id="gTitle"><?php echo L_CONFIG_USERS_TITLE; ?></h2>
-<p id="gDesc"><?php echo $plxPlugin->getLang('L_DESCRIPTION');?></p>
+<p id="gDesc"><?php echo $plxPlugin->getLang('L_DESCRIPTION'.$_SESSION['profil']);?></p>
 <script type="text/javascript">//surcharge du titre dans l'admin
  var title = document.getElementById('gTitle');
  var desc = document.getElementById('gDesc');
@@ -92,8 +92,8 @@ if(isset($_GET['u']) && isset($_GET['del']) && !empty($_GET['u']) && $_GET['del'
 			<th><?php echo L_PROFIL_USER ?></th>
 			<th><?php echo L_PROFIL_LOGIN ?></th>
 			<th><?php echo L_PROFIL ?></th>
-			<th><?php echo L_ARTICLE_STATUS?></th>
-			<th><?php echo L_CONFIG_USERS_ACTION ;?></th>
+			<th><?php echo L_ARTICLE_STATUS ?></th>
+			<th><?php echo L_CONFIG_USERS_ACTION ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -169,8 +169,8 @@ if($_SESSION['profil'] == PROFIL_ADMIN)://Si l'utilisateur est administrateur
 				} else {//Si le gutuma n'est pas installé
 					echo '</td>'.PHP_EOL.'			<td>'.PHP_EOL;
 					if($_userid=='001' && $_userid == $_SESSION['user']){//Si l'utilisateur est le premier et que celui qui est connecté est administrateur
-?>			<a href="<?php echo PLX_PLUGINS; ?>gutuma/news/install.php" style="color:red;"><?php echo $plxPlugin->getLang('L_GUTUMA_INSTALL');?></a><!-- <a class="help" title="Vérifiez avant de lancer l'installation que le dossier plugins/gutuma/temp existe et que les droits en écriture (chmod) de ce dossier et de ceux du dossier plugins/gutuma/inc sont à 777">&nbsp;</a> --><?php
-					} else {// 
+?>			<a class="button green" href="<?php echo PLX_PLUGINS; ?>gutuma/news/install.php" style="color:yellow;"><?php echo $plxPlugin->getLang('L_GUTUMA_INSTALL');?></a><?php
+					} else {
 ?>				<em><?php echo $plxPlugin->getLang('L_INSTALL_FIRST'); ?></em><?php
 					}
 				}// fi le module est (dé)activé

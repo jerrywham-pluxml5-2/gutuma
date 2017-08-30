@@ -73,7 +73,7 @@ $lists = gu_list::get_all();
 		cell4.innerHTML = name;
 		if('default' == '<?php echo gu_config::get('theme_name');?>'){
 			cell3.innerHTML = '<b>(0)</b><span class="should-cut-off">'+cell4.innerHTML+'</span>';
-			cell2.setAttribute("class", "sml-text-right");
+			cell2.setAttribute("class", "sml-text-center");
 			cell3.setAttribute("class", "cell-off");
 //			row.appendChild(cell1+cell2+cell3);// TypeError: Argument 1 of Node.appendChild is not an object. :/
 			row.appendChild(cell1);
