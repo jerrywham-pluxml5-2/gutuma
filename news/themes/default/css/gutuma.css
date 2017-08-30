@@ -109,19 +109,19 @@ hr{
 	min-height: 300px;
 }
 .notification{
-	top: 0.1rem;
+	top: 1rem;
+	left: 1rem;
 	right: 1rem;
-	padding: 10px;
+	padding: 1rem;
 	max-width: 80%;
 	overflow: hidden;
-	position: absolute;
-	margin-bottom: 10px;
 }
 #statusmsg{
 	background-color: #93BFB8;
-	position: fixed;
 }
-#errormsg{}
+#errormsg{
+	top: 6.6rem;
+}
 #debugmsg{
 	padding: 10px;
 	background-color: #FFFFCC;
