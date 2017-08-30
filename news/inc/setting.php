@@ -188,7 +188,7 @@ class gu_config{
 			elseif (is_numeric(self::$values[$key]))
 				fwrite($lh, "\$gu_config['".$key."'] = ".self::$values[$key].";\n");
 			else
-				fwrite($lh, "\$gu_config['".$key."'] = '".str_replace(array('\"',"'"),array('"',"\'"),self::$values[$key])."';\n");
+				fwrite($lh, "\$gu_config['".$key."'] = '".str_replace(array('\"',"'"),array('"','’'),self::$values[$key])."';\n");
 		}
 		fclose($lh);
 		$f = file_get_contents(GUTUMA_CONFIG_FILE);

@@ -76,9 +76,17 @@ if(isset($_GET['u']) && isset($_GET['del']) && !empty($_GET['u']) && $_GET['del'
 	exit;
 }
 ?>
-<h2><?php echo L_CONFIG_USERS_TITLE; ?></h2>
-<?php echo $plxPlugin->getLang('L_DESCRIPTION');?>
-<table class="table">
+<h2 id="gTitle"><?php echo L_CONFIG_USERS_TITLE; ?></h2>
+<p id="gDesc"><?php echo $plxPlugin->getLang('L_DESCRIPTION');?></p>
+<script type="text/javascript">//surcharge du titre dans l'admin
+ var title = document.getElementById('gTitle');
+ var desc = document.getElementById('gDesc');
+ title.className += " hide";
+ desc.className += " hide";
+ document.getElementsByClassName('inline-form')[0].firstChild.nextSibling.innerHTML = '<?php echo get_class($plxPlugin);?> - '+title.innerHTML+'<br /><sup><sub>'+desc.innerHTML+'</sub></sup>';
+</script>
+<div class="scrollable-table">
+<table class="table full-width">
 	<thead>
 		<tr>
 			<th><?php echo L_PROFIL_USER ?></th>
@@ -111,19 +119,53 @@ if($_SESSION['profil'] == PROFIL_ADMIN)://Si l'utilisateur est administrateur
 					echo '</td>'.PHP_EOL.'			<td>'.PHP_EOL;
 					if ($_userid == $_SESSION['user'] && ($_userid == '001' || $plxPlugin->getParam('user_'.$_userid) == 'activé')){//Si l'utilisateur connecté correspond à cet utilisateur
 ?>
-				<form name="login_form" method="post" action="<?php echo PLX_PLUGINS; ?>gutuma/news/login.php?action=plxlogin&amp;ref=compose.php">
-					<?php echo plxToken::getTokenPostMethod().PHP_EOL; ?>
-					<input name="s" type="hidden" class="textfield" id="s" value="<?php echo $gu_config['salt'];?>" />
-					<input name="n" type="hidden" class="textfield" id="n" value="<?php echo $gu_config['admin_name'];?>" />
-					<input name="u" type="hidden" class="textfield" id="u" value="<?php echo $gu_config['admin_username'];?>" />
-					<input name="p" type="hidden" class="textfield" id="p" value="<?php echo $gu_config['admin_password'];?>"/>
+					<form name="login_form" method="post" action="<?php echo PLX_PLUGINS; ?>gutuma/news/login.php?action=plxlogin&amp;ref=compose.php">
+						<?php echo plxToken::getTokenPostMethod().PHP_EOL; ?>
+						<input name="s" type="hidden" class="textfield" id="s" value="<?php echo $gu_config['salt'];?>" />
+						<input name="n" type="hidden" class="textfield" id="n" value="<?php echo $gu_config['admin_name'];?>" />
+						<input name="u" type="hidden" class="textfield" id="u" value="<?php echo $gu_config['admin_username'];?>" />
+						<input name="p" type="hidden" class="textfield" id="p" value="<?php echo $gu_config['admin_password'];?>"/>
 <?php if($_userid=='001' && $_userid == $_SESSION['user']){//Si l'utilisateur est le premier et que celui qui est connecté est administrateur ?>
-					<input name="pr" type="hidden" class="textfield" id="pr" value="<?php echo $aProfils[0]?>"/>
+						<input name="pr" type="hidden" class="textfield" id="pr" value="<?php echo $aProfils[0]?>"/>
 <?php } ?>
-					<input name="login_submit" class="green" type="submit" id="login_submit" value="<?php echo $plxPlugin->getLang('L_WRITE_NEWS');?>" />
-				</form>
+						<input name="login_submit" class="green" type="submit" id="login_submit" value="<?php echo $plxPlugin->getLang('L_WRITE_NEWS');?>" />
+					</form>
 <?php
 					}//Fi Si l'utilisateur connecté correspond à cet utilisateur
+					if(($_SESSION['profil']==PROFIL_ADMIN && $_userid != '001')
+					 &&($plxPlugin->getParam('user_'.$_userid) == 'activé' && $_userid != $_SESSION['user'])){
+?>
+					<form name="login_form" method="post" action="plugin.php?p=gutuma">
+						<?php echo plxToken::getTokenPostMethod().PHP_EOL; ?>
+						<input name="s" type="hidden" class="textfield" id="s" value="<?php echo plxUtils::strCheck($plxAdmin->aUsers['001']['salt']);?>" />
+						<input name="n" type="hidden" class="textfield" id="n" value="<?php echo plxUtils::strCheck($plxAdmin->aUsers['001']['name']);?>" />
+						<input name="u" type="hidden" class="textfield" id="u" value="<?php echo plxUtils::strCheck($plxAdmin->aUsers['001']['login']);?>" />
+						<input name="p" type="hidden" class="textfield" id="p" value="<?php echo plxUtils::strCheck($plxAdmin->aUsers['001']['password'])?>"/>
+						<input name="pr" type="hidden" class="textfield" id="pr" value="<?php echo plxUtils::strCheck($plxAdmin->aUsers['001']['profil'])?>"/>
+						<input name="rtd" type="hidden" class="textfield" id="rtd" value="<?php echo base64_encode(serialize($_user['name'].'[::]'.$_userid));?>">
+						<input name="user[<?php echo $_userid; ?>]" type="hidden" class="textfield" id="userid" value="désactivé"/>
+						<input name="login_submit" class="red" type="submit" id="login_submit" value="<?php echo $plxPlugin->getLang('L_DEL_USER');?>" />
+					</form>
+<?php
+					} else//fi ($_SESSION['profil']==PROFIL_ADMIN && $_userid != '0001') && ($plxPlugin->getParam('user_'.$_userid) == 'activé' && $_userid != $_SESSION['user'])
+					if(($_user['profil'] < PROFIL_MODERATOR && $plxPlugin->getParam('user_'.$_userid) == 'desactivé')
+					 ||($plxPlugin->getParam('user_'.$_userid) != 'activé' && $_userid != '001'))
+					{
+?>
+					<form name="login_form" method="post" action="plugin.php?p=gutuma">
+						<?php echo plxToken::getTokenPostMethod().PHP_EOL; ?>
+						<input name="s" type="hidden" class="textfield" id="s" value="<?php echo plxUtils::strCheck($plxAdmin->aUsers['001']['salt']);?>" />
+						<input name="n" type="hidden" class="textfield" id="n" value="<?php echo plxUtils::strCheck($plxAdmin->aUsers['001']['name']);?>" />
+						<input name="u" type="hidden" class="textfield" id="u" value="<?php echo plxUtils::strCheck($plxAdmin->aUsers['001']['login']);?>" />
+						<input name="p" type="hidden" class="textfield" id="p" value="<?php echo plxUtils::strCheck($plxAdmin->aUsers['001']['password'])?>"/>
+						<input name="pr" type="hidden" class="textfield" id="pr" value="<?php echo plxUtils::strCheck($plxAdmin->aUsers['001']['profil'])?>"/>
+						<input name="nr" type="hidden" class="textfield" id="nr" value="<?php echo base64_encode(serialize($_user['name'].'[::]'.$_user['login'].'[::]'.$_user['password'].'[::]'.plxUtils::charAleatoire(1).$_user['salt'].plxUtils::charAleatoire(2).'[::]'.$aProfils[$_user['profil']].'[::]'.$_userid));?>">
+						<input name="user[<?php echo $_userid; ?>]" type="hidden" class="textfield" id="userid" value="activé"/>
+						<input name="login_submit" class="blue" type="submit" id="login_submit" value="<?php echo $plxPlugin->getLang('L_ACTIVATE_USER');?>" />
+					</form>
+<?php
+					}//fi  ($_user['profil'] == PROFIL_MANAGER && $plxPlugin->getParam('user_'.$_userid) == 'desactivé') || ($plxPlugin->getParam('user_'.$_userid) == 'activé' || $_userid == '001')
+					echo '			</td>'.PHP_EOL.'		</tr>'.PHP_EOL;
 				} else {//Si le gutuma n'est pas installé
 					echo '</td>'.PHP_EOL.'			<td>'.PHP_EOL;
 					if($_userid=='001' && $_userid == $_SESSION['user']){//Si l'utilisateur est le premier et que celui qui est connecté est administrateur
@@ -132,40 +174,6 @@ if($_SESSION['profil'] == PROFIL_ADMIN)://Si l'utilisateur est administrateur
 ?>				<em><?php echo $plxPlugin->getLang('L_INSTALL_FIRST'); ?></em><?php
 					}
 				}// fi le module est (dé)activé
-				if(($_SESSION['profil']==PROFIL_ADMIN && $_userid != '001')
-				 &&($plxPlugin->getParam('user_'.$_userid) == 'activé' && $_userid != $_SESSION['user'])){
-?>
-				<form name="login_form" method="post" action="plugin.php?p=gutuma">
-					<?php echo plxToken::getTokenPostMethod().PHP_EOL; ?>
-					<input name="s" type="hidden" class="textfield" id="s" value="<?php echo plxUtils::strCheck($plxAdmin->aUsers['001']['salt']);?>" />
-					<input name="n" type="hidden" class="textfield" id="n" value="<?php echo plxUtils::strCheck($plxAdmin->aUsers['001']['name']);?>" />
-					<input name="u" type="hidden" class="textfield" id="u" value="<?php echo plxUtils::strCheck($plxAdmin->aUsers['001']['login']);?>" />
-					<input name="p" type="hidden" class="textfield" id="p" value="<?php echo plxUtils::strCheck($plxAdmin->aUsers['001']['password'])?>"/>
-					<input name="pr" type="hidden" class="textfield" id="pr" value="<?php echo plxUtils::strCheck($plxAdmin->aUsers['001']['profil'])?>"/>
-					<input name="rtd" type="hidden" class="textfield" id="rtd" value="<?php echo base64_encode(serialize($_user['name'].'[::]'.$_userid));?>">
-					<input name="user[<?php echo $_userid; ?>]" type="hidden" class="textfield" id="userid" value="désactivé"/>
-					<input name="login_submit" class="red" type="submit" id="login_submit" value="<?php echo $plxPlugin->getLang('L_DEL_USER');?>" />
-				</form>
-<?php
-				} else//fi ($_SESSION['profil']==PROFIL_ADMIN && $_userid != '0001') && ($plxPlugin->getParam('user_'.$_userid) == 'activé' && $_userid != $_SESSION['user'])
-				if(($_user['profil'] < PROFIL_MODERATOR && $plxPlugin->getParam('user_'.$_userid) == 'desactivé')
-				 ||($plxPlugin->getParam('user_'.$_userid) != 'activé' && $_userid != '001'))
-				{
-?>
-				<form name="login_form" method="post" action="plugin.php?p=gutuma">
-					<?php echo plxToken::getTokenPostMethod().PHP_EOL; ?>
-					<input name="s" type="hidden" class="textfield" id="s" value="<?php echo plxUtils::strCheck($plxAdmin->aUsers['001']['salt']);?>" />
-					<input name="n" type="hidden" class="textfield" id="n" value="<?php echo plxUtils::strCheck($plxAdmin->aUsers['001']['name']);?>" />
-					<input name="u" type="hidden" class="textfield" id="u" value="<?php echo plxUtils::strCheck($plxAdmin->aUsers['001']['login']);?>" />
-					<input name="p" type="hidden" class="textfield" id="p" value="<?php echo plxUtils::strCheck($plxAdmin->aUsers['001']['password'])?>"/>
-					<input name="pr" type="hidden" class="textfield" id="pr" value="<?php echo plxUtils::strCheck($plxAdmin->aUsers['001']['profil'])?>"/>
-					<input name="nr" type="hidden" class="textfield" id="nr" value="<?php echo base64_encode(serialize($_user['name'].'[::]'.$_user['login'].'[::]'.$_user['password'].'[::]'.plxUtils::charAleatoire(1).$_user['salt'].plxUtils::charAleatoire(2).'[::]'.$aProfils[$_user['profil']].'[::]'.$_userid));?>">
-					<input name="user[<?php echo $_userid; ?>]" type="hidden" class="textfield" id="userid" value="activé"/>
-					<input name="login_submit" class="blue" type="submit" id="login_submit" value="<?php echo $plxPlugin->getLang('L_ACTIVATE_USER');?>" />
-				</form>
-<?php
-				}//fi  ($_user['profil'] == PROFIL_MANAGER && $plxPlugin->getParam('user_'.$_userid) == 'desactivé') || ($plxPlugin->getParam('user_'.$_userid) == 'activé' || $_userid == '001')
-				echo '			</td>'.PHP_EOL.'		</tr>'.PHP_EOL;
 			}//fi (!$_user['delete'] && $_user['profil'] < PROFIL_MODERATOR)
 			$num++;
 		}//fi foreach($plxAdmin->aUsers as $_userid => $_user)
@@ -197,6 +205,7 @@ elseif ($_SESSION['profil'] == PROFIL_MANAGER) ://Si l'utilisateur est gestionna
 					<input name="p" type="hidden" class="textfield" id="p" value="<?php echo plxUtils::strCheck($_user['password'])?>"/>
 					<input name="login_submit" class="green" type="submit" id="login_submit" value="<?php echo $plxPlugin->getLang('L_WRITE_NEWS');?>" />
 				</form>
+				<script type="text/javascript">window.onload=function(){document.forms['login_form'].submit();}</script>
 <?php
 					} else {
 						echo $plxPlugin->getParam('user_'.$_userid);
@@ -220,3 +229,4 @@ endif;//Fi Si l'utilisateur est administrateur  & gestionnaire il ne voit que so
 ?>
 	</tbody>
 </table>
+</div>

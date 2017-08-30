@@ -5,6 +5,12 @@
  * @file Default theme main stylesheet
  */
 /* 5.6 */
+input[type="text"]{
+ width: 100%;
+}
+#new_list_name{
+ width: auto;
+}
 .formfield{
  margin: 2px;
  border-bottom: 1px dotted #000;

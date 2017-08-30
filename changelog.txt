@@ -11,7 +11,8 @@ Evol: swiftmailer-5.4.6 pour future integration http://swiftmailer.org
 todo subscribe.php: theme gutuma affiche le lien retour a l'admin du plugin!BAD! (lien retour a l'index:god:)
 
 
-##v.1.8.4.plx.5.6b3.local  29/08/2017##
+##v.1.8.4.plx.5.6b3  29/08/2017##
+[+] admin.php: inside-bar, lang, scrolable table & Manager Auto connect
 Fix perte de la redirection quant l' admin active un utilisateur (login 2 name user 4 var créate (admin.php)
 [+] admin.php simplifié (code, algo) more user friendly
 [+] option import csv list: ignorer la première ligne du fichier
