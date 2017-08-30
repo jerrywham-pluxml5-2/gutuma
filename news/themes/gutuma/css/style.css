@@ -247,8 +247,12 @@ div.pagerinfo{
 	width: 660px;
 	padding: 10px;
 	overflow: hidden;
-	position: absolute;
 	margin-bottom: 10px;
+}
+#msg{
+	position: absolute;
+	text-align: center;
+	top: 120px;
 }
 #statusmsg{
 	background-color: #93BFB8;

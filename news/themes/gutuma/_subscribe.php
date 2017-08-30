@@ -14,8 +14,8 @@
 ?>
 		</div>
 		<div id="content">
-			<div style="text-align: center">
 			<?php gu_theme_messages(); ?>
+			<div style="text-align: center">
 				<form action="" name="subscribe_form" method="post" onsubmit="return checkSubmit(this);">
 <?php
 				if (isset($list) && is_object($list))
