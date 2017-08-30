@@ -5,20 +5,14 @@
  * @copyright This source is distributed under the GPL
  * @file included settings page
  * @modifications Cyril Maguire
- */
-/* Gutama plugin package
+ *
+ * Gutama plugin package
  * @version 1.6
  * @date	01/10/2013
  * @author	Cyril MAGUIRE
 */
-
-$plxAdmin = plxAdmin::getInstance();//plxMotor::getInstance();
-$profil = $plxAdmin->aUsers[$_SESSION['user']];
-$plxPlugin = $plxShow->plxMotor->plxPlugins->getInstance('gutuma');
-
-//include_once '_menu.php';?>
+?>
 <form id="edit_form" name="edit_form" method="post" action="">
-
 <div id="sectionheader" class="inline-form action-bar">
 	<h2><?php echo $section_titles[$section]; ?></h2>
 	<p id="sectionmenu">
@@ -26,19 +20,15 @@ $plxPlugin = $plxShow->plxMotor->plxPlugins->getInstance('gutuma');
 		<a href="settings.php?section=transport" class="button<?php echo ($section == 'transport') ? ' blue' : ''; ?>"><?php echo t('Transport');?></a>
 		<a href="settings.php?section=messages" class="button<?php echo ($section == 'messages') ? ' blue' : ''; ?>"><?php echo t('Messages');?></a>
 		<br />
-<?php if ($section == 'transport') { ?>
+<?php if ($section == 'transport'){ ?>
 		<input name="test_settings" type="submit" id="test_settings" class="orange" value="<?php echo t('Test');?>" />
 <?php } ?>
 		<input name="save_settings" type="submit" id="save_settings" class="green" value="<?php echo t('Save');?>" />
 	</p>
 </div>
-
 <?php gu_theme_messages(); ?>
-
 	<div class="formfieldset">
-
-<?php if ($section == 'general') { ?>
-
+<?php if ($section == 'general'){ ?>
 		<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('The following is the name of the application ("Newsletters" by default)');?></div>
 			<div class="formfieldlabel"><?php echo t('Application name');?>:</div>
@@ -78,28 +68,30 @@ $plxPlugin = $plxShow->plxMotor->plxPlugins->getInstance('gutuma');
 					$thms[] = array($thm,$thm);
 				gu_theme_list_control('theme_name', $thms); ?></div>
 		</div>
-
 		<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('List of valid users');?></div>
-		<?php $users = unserialize(str_replace('\"','"',gu_config::get('users')));
+<?php
+		$users = unserialize(str_replace('\"','"',gu_config::get('users')));
 		asort($users);
-		$noUser = true; $unified = null;
+		$noUser = true;
+		$unified = null;
 		foreach ($users as $key => $value) :
-			if ($plxPlugin->getParam('user_'.$value['id']) == 'activé'&&!isset($unified[$value['id']])) : $noUser = false; $unified[$value['id']]=true;?>
+			if ($plxPlugin->getParam('user_'.$value['id']) == 'activé'&&!isset($unified[$value['id']])) : 
+				$noUser = false;
+				$unified[$value['id']]=true;
+?>
 			<div class="formfieldlabel"><?php echo t('Login of user').' '.$key.'<br />Id:&nbsp;'.$value['id'].' ('.$value['profil'].')';?>:</div>
 			<div class="formfieldcontrols"><input type="text" name="user_<?php echo $key; ?>" class="textfield users" value="<?php echo $value['login'];?>" readonly="readonly" style="width:95%;"/></div>	
 			<div class="formfielddivider"></div>
-
-		<?php endif;
-		endforeach;?>
-
+<?php 
+			endif;
+		endforeach;
+?>
 		</div>
-		<?php if ($noUser) :?>
+<?php if ($noUser) :?>
 			<div class="formfieldlabel"><?php echo t('No other user'); ?></div>
-		<?php endif; ?>
-
+<?php endif; ?>
 <?php } elseif ($section == 'transport') { ?>
-
 		<div class="formfield transport">
 			<div class="formfieldcomment"><?php echo t('Gutuma will first try to use an SMTP server to send messages. If that fails, <code>Sendmail</code> may be tried followed by PHP <code>mail()</code>');?></div>
 			<div class="formfieldlabel"><?php echo t('Use SMTP');?>:</div>
@@ -139,9 +131,7 @@ $plxPlugin = $plxShow->plxMotor->plxPlugins->getInstance('gutuma');
 			<div class="formfieldlabel"><?php echo t('Batch time limit');?>:</div>
 			<div class="formfieldcontrols"><?php gu_theme_int_control('batch_time_limit'); ?> <?php echo t('seconds');?></div>
 		</div>
-
 <?php } elseif ($section == 'messages') { ?>
-
 		<div class="formfield messages">
 			<div class="formfieldcomment"><?php echo t('List names can be automatically added to the subject of sent newsletters, e.g. <code>[List] Subject</code>');?></div>
 			<div class="formfieldcontrols"><?php gu_theme_bool_control('msg_prefix_subject'); ?></div>
@@ -178,7 +168,6 @@ $plxPlugin = $plxShow->plxMotor->plxPlugins->getInstance('gutuma');
 			<div class="formfieldlabel"><?php echo t('Notify of unsubscribes');?>:</div>
 		</div>
 	<div>
-
 <?php } ?>
 	</div>
 </form>

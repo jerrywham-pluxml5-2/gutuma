@@ -69,6 +69,29 @@ include_once '_menu.php';?>
 					$thms[] = array($thm,$thm);
 				gu_theme_list_control('theme_name', $thms); ?></div>
 		</div>
+		<div class="formfield">
+			<div class="formfieldcomment"><?php echo t('List of valid users');?></div>
+<?php
+		$users = unserialize(str_replace('\"','"',gu_config::get('users')));
+		asort($users);
+		$noUser = true;
+		$unified = null;
+		foreach ($users as $key => $value) :
+			if ($plxPlugin->getParam('user_'.$value['id']) == 'activé'&&!isset($unified[$value['id']])) : 
+				$noUser = false;
+				$unified[$value['id']]=true;
+?>
+			<div class="formfieldlabel"><?php echo t('Login of user').' '.$key.'<br />Id:&nbsp;'.$value['id'].' ('.$value['profil'].')';?>:</div>
+			<div class="formfieldcontrols"><input type="text" name="user_<?php echo $key; ?>" class="textfield users" value="<?php echo $value['login'];?>" readonly="readonly" style="width:95%;"/></div>	
+			<div class="formfielddivider"></div>
+<?php 
+			endif;
+		endforeach;
+?>
+		</div>
+<?php if ($noUser) :?>
+			<div class="formfieldlabel"><?php echo t('No other user'); ?></div>
+<?php endif; ?>
 <?php } elseif ($section == 'transport') { ?>
 		<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('Gutuma will first try to use an SMTP server to send messages. If that fails, <code>Sendmail</code> may be tried followed by PHP <code>mail()</code>');?></div>
