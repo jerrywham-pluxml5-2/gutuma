@@ -5,8 +5,8 @@
  * @copyright This source is distributed under the GPL
  * @file included integration page
  * @modifications Cyril Maguire
- */
-/* Gutama plugin package
+ *
+ * Gutama plugin package
  * @version 1.6
  * @date	01/10/2013
  * @author	Cyril MAGUIRE
@@ -42,16 +42,14 @@ gu_theme_messages();
 		</div>
 	</div>
 </form>
-
 <?php } else {// generated ?>
 		<input type="button" id="gadget_back" class="blue" name="gadget_back" value="<?php echo t('Back');?>" onclick="this.form.submit()" />
 		<input type="submit" id="gadget_generate" class="green" name="gadget_generate" value="<?php echo t('Update');?>" /><input type="hidden" id="gadget_type" name="gadget_type" value="<?php echo $gadget_type; ?>" />
 		</p><!-- sectionmenu -->
 	</div><!-- sectionheader -->
-
 	<div class="formfieldset">
 <?php
-	foreach ($gadget_params as $param) {
+	foreach ($gadget_params as $param){
 		echo '<div class="formfield">';
 		switch ($param) {
 			case 'list':
@@ -102,4 +100,3 @@ gu_theme_messages();
 <script type="text/javascript">document.getElementById('gadget_html').value = <?php echo $script_create; ?></script>
 <?php
 }// fi generate
-?>
