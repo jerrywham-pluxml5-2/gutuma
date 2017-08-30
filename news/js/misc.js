@@ -194,6 +194,6 @@ function gu_element_fade(id, duration, start, end){
 }
 function setMsge(id){
 	if(document.getElementById(id)){
-		setTimeout("gu_element_fade_out('" + id + "', 1618)",1618);//fadeOut(id);
+		setTimeout("gu_element_fade_out('" + id + "', 1618)",3236);//fadeOut(id);
 	}
 }
