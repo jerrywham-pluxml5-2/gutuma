@@ -5,11 +5,14 @@
  * @file Default theme main stylesheet
  */
 /* 5.6 */
-input[type="text"]{
+.button{
+ white-space: nowrap;
+}
+#send_form input[type="text"], #send_form #msg_text{
  width: 100%;
 }
-#new_list_name{
- width: auto;
+#list_name,#new_list_name{
+ width: 55.5%;
 }
 .formfield{
  margin: 2px;

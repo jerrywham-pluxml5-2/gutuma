@@ -5,24 +5,22 @@
  * @copyright This source is distributed under the GPL
  * @file included outbox page
  * @modifications Cyril Maguire
- */
-/* Gutama plugin package
+ *
+ * Gutama plugin package
  * @version 1.6
  * @date	01/10/2013
  * @author	Cyril MAGUIRE
 */
 ?>
 <div id="sectionheader" class="inline-form action-bar">
-	<h2><?php echo t('Newsletter');?> <?php echo t(ucfirst($box)); ?></h2>
+	<h2><?php echo t('Newsletters');?> (<?php echo t(ucfirst($box)); ?>)</h2>
 	<p id="sectionmenu">
 		<a href="compose.php" class="button"><?php echo t('Compose');?></a></li>
 		<a href="newsletters.php?box=drafts" class="button<?php echo ($box == 'drafts') ? ' blue' : '' ?>"><?php echo t('Drafts');?> (<span id="mailbox_drafts_count"><?php echo count($mailbox['drafts']) ?></span>)</a>
 		<a href="newsletters.php?box=outbox" class="button<?php echo ($box == 'outbox') ? ' blue' : '' ?>"><?php echo t('Outbox');?> (<span id="mailbox_outbox_count"><?php echo count($mailbox['outbox']) ?></span>)</a>
 	</p>
-
 </div>
 <?php gu_theme_messages(); ?>
-
 <?php if ($box == 'drafts') { ?>
 <p><?php echo t('These are the newsletters which have not yet been sent.');?> </p>
 <?php } elseif ($box == 'outbox') { ?>
