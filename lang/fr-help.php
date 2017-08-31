@@ -62,3 +62,5 @@ Seuls les administrateurs et les gestionnaires peuvent utiliser le plugin.</p>
 <h3>Gadgets</h3>
 <p>Pour permettre aux lecteurs du site de s'abonner aux newsletters, des codes javascripts sont à placer sur la partie publique du site, dans le code source. Différentes possibilités sont offertes : affichage de liens, de bouton ou de champ de formulaire.</p>
 <p>Pour mettre en page ces codes d'abonnement, des index css sont disponibles :  #suscribe-link pour les liens basiques et ajax, et #gu_subscribe_form pour les formulaires.</p>
+<h3>Service Après Téléchargement</h3>
+<p>Une idée, un comment on fait, un caillou dans les roues, Allez voir sur le <a href="http://forum.pluxml.org/viewtopic.php?id=3358">fil officiel du forum PluXml</a></p>
