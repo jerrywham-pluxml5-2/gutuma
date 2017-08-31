@@ -1,51 +1,40 @@
 Gutuma 4 PluXml
-Todo:
-gestion des tableaux / datatablejs (vanilla)
-bug si on supprime toutes les adresses (faire en sorte de recharger la page "editlist" (js) 
-bug affichage: lors du choix du menu "informations" (index.php) le menu article de plux est actif (en plus de celuis d'info)
+Todo: gestion des tableaux par un datatablejs (vanilla) !?
+bug: affichage: lors du choix du menu "informations" (index.php) le menu article de plux est actif (en plus de celuis d'info)
 eval($plxAdmin->plxPlugins->callHook('AdminTopMenus'));
-verif: si l'on change le(s) mot(s) de passe dans pluxml, si l'accés au plugin et tjrs valable
+verifé: si l'on change le(s) mot(s) de passe dans pluxml, si l'accés au plugin et tjrs valable : a priori oui
 Evol: swiftmailer-5.4.6 pour future integration http://swiftmailer.org
-& si theme default -> use statc mode & display (site theme au lieu de celuis d'admin) ou add gutuma logo (top left|center)
+& si theme default -> use static mode & display (site theme au lieu de celuis d'admin) ou add gutuma logo (top left|center) [une iframe]
 
-##v.1.8.4.plx.5.6b3  30/08/2017##
-[+] Langue anglaise ajouté [todo: help]
-[+] Aide en français actualisé
-Fix Supp. des var de langue déja présente dans le coeur de PluXml
-Fix Charger la langue de gutuma en fonction de celle de l'utilisateur
-[+] admin.php: inside-bar, lang, scrolable table & Manager Auto connect
-Fix subscribe.php: theme gutuma affiche le lien retour a l'admin du plugin, lien retour a l'accueil
-Fix Perte de la redirection quant l' admin active un utilisateur (login 2 name user 4 var créate (admin.php)
-[+] Codes révisé et optimisé pour plus de performances (parseless, chasse au au espaces superflus)
-[+] admin.php simplifié (code & algo) more user friendly
-[+] Option import csv list: ignorer la première ligne du fichier
-Fix theme gutuma (si PluXml non installé, retour)
-[+] retouche+coloré du theme admin 'default' (PluXml 5.6)
-
-news/integrate.php (Lien classique)
- Fix: PLX_ROOT 2 PLX_GROOT in _subscribe.php (theme default) no return link in gutuma theme? ::: Bug: Lien classique mauvaise url de retour a l'index (accueil)
+##v.1.8.4.plx.5.6  30/08/2017##
+[+] Admin theme 'default' + adapté a PluXml 5.6 & + coloré + responsive (mobile 1st strategie)
+[+] Admin Manager Auto connect ::: Les gestionnaires accedent a l'interface pour composer une infolettre en javascript
+[+] Admin choix des thèmes par selecteur listant les dossiers présent (gutuma & default)
+[+] admin Langue anglaise ajouté [todo: help]
+[+] admin.php simplifié (code & algo) more dev&user friendly
+[+] Français actualisé pour Admin, Aide et Gutuma (news)
+[+] Listes et config déplacé du plugin vers data/gutuma/
+[+] Dossier temporaire déplacé du système vers data/gutuma/tmp (projets d'infolettres)
+[+] Fins de lignes optim 4 unix with dos2unix (thx BaZooKa07)
+[+] Codes révisé et optimisé pour plus de performances (server parseless do more, chasse au au espaces superflus)
+[+] Options d'import de liste en csv: ignorer la première ligne du fichier, selecteur de séparateur (; ou ,) + adresses dédoublonnées par array_unique
+[+] editlist pagination & Navi Améloré (0 addrs ds list [js gu_ajax_on_remove_address()]) (recharger"editlist" meme page ou précédente si derniere page)
+ FixOf: si toutes les adresses de la page supprimés on reste là planté là
+[+] Peut être un dossier symbolique : ajout dans inc/_pluxml.php de PLX_GROOT, PLX_MORE & __FILE__ ::: duckduckgo.com/?t=lm&q=PHP+SOLVE+FOLDER+SYMLINK&ia=qa
+ FixOf: Si le dossier du plugin est un lien symbolique erreur de chargement des librairies & de la config de PluXml (If plugin is in Symlink folder)
+Fix Lien classique mauvaise url de retour a l'accueil news/(integrate & subscibe).php (Lien classique)
  Fix: gadget.js.php ::: Bug: Lien classique envoie au mauvais endroit (manque news/ ds l'url) [admin]
-
-##v.1.8.4.plx.5.6b2  16/08/2017##
-[+] import csv array_unique + option: separated by ; or ,
-[+] retouche+coloré du theme admin 'default' (PluXml 5.6)
-Fix editlist pagination (fnctn interne) & Navi Améloré (0 addrs ds list [event js])
-Fix si le dossier du plugin est un lien symbolique (symlink)
+Fix Variables de langues déja présentes dans le coeur de PluXml (Supprimées)
+Fix Charger la langue de gutuma en fonction de celle de l'utilisateur
+Fix Si apostrophes dans variable texte === config crashé ::: change in texts vars (') simple quote &#39; to Right single quotation mark &#146; &rsquo; (’)
+Fix Theme gutuma subscribe.php: affiche le lien retour a l'admin du plugin (lien retour a l'accueil maintenant si non connecté a PluXml)
+Fix Aucune redirection si un admin active un utilisateur ::: "login" 2 "name" user 4 var créate token in /admin.php & post 2 news/users.php
+Fix Theme gutuma (si PluXml non installé, retour)
 Fix doubles quotes in html attributes created with js
-Fix cacher le menu admin si non auth
-
-##v.1.8.4.plx.5.6b  10/07/2017##
-Fix retour a l'accueil (default/_subscribe) PLX_ROOT
-Fix souscrption si guest user : fichiers ajax, js et subscribe inaxessible car redirigé a la cnx admin :/
-Un peu de néttoyage
-
-##v.1.8.4.plx.5.6a  10/07/2017##
-[+] admin theme 'default' adapté pour PluXml 5.6
-[+] admin choix des thèmes par selecteur listant les dossiers présent (gutuma & default)
-[+] dossier temporaire déplacé du système vers data/gutuma/tmp (brouillons d'infolettres)
-[+] fin de lignes optim 2 unix with dos2unix (thx BaZooKa07)
-Fix admin header 404 + mode erreur si ? dans url ou sinon en mode home : suppression des appels au préchauffage() et au démarrage()
-Fix verif config modifiable (themes/*/_index.php) 'inc' to GUTUMA_CONFIG_FILE
+Fix Cacher le menu admin si non auth
+Fix Souscrption si guest user : fichiers ajax, js et subscribe inaxessible car redirigé a la cnx admin :/
+Fix Admin header 404 + mode erreur si ? dans url ou sinon en mode home : suppression des appels au préchauffage() et au démarrage()
+Fix Verif config modifiable (themes/*/_index.php) 'inc' to GUTUMA_CONFIG_FILE
 
 ##v.1.8.4.plx.5.3.1  02/03/2017##
 [+] certaines redir (complexes) doublé d'un méta refresh (pb de not found 404)
