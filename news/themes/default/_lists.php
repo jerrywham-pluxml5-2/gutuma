@@ -35,7 +35,7 @@
 	<table border="0" cellspacing="0" cellpadding="0" class="table full-width results" id="liststable">
 		<tr>
 			<td>&nbsp;</td>
-			<td><strong><?php echo t('Private');?></strong></td>
+			<td class="sml-text-center"><strong><?php echo t('Private');?></strong></td>
 			<td class="cell-off"><strong><b>(<?php echo t('Addresses');?>)</b><span><?php echo t('Name');?></span></strong></td>
 		</tr>
 <?php
