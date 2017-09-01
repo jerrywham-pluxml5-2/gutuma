@@ -11,24 +11,23 @@
 #
 # ------------------- END LICENSE BLOCK -------------------
 /* Gutama plugin package (from core/admin/prepend.php)
- * @version 1.4
- * @date	23/09/2013
- * @author	Cyril MAGUIRE
+ * @version 1.8.4
+ * @date	01/09/2017
+ * @author	Cyril MAGUIRE, Thomas I.
 */
-
 # Définition des constantes
-$output = array();exec('pwd', $output);define('__LINK__', $output[0].substr(__FILE__, strpos(__FILE__, DIRECTORY_SEPARATOR)));//in gadget.js.php
+define('__GDS__', DIRECTORY_SEPARATOR);//Gutuma Dir. Sep. 4 nux|dow
 $gdgt='';
 if(strstr($_SERVER['PHP_SELF'],'gadgets.js.php')){//4 gadget call
-	$gdgt='../';
+	$gdgt='..'.__GDS__;
 	header('Content-Type: application/x-javascript');
 }
-define('PLX_ROOT',$gdgt.'../../../');
-define('PLX_CORE', PLX_ROOT.'core/');
-define('PLX_GROOT', str_replace($_SERVER['PHP_SELF'],'',$_SERVER['SCRIPT_FILENAME']).'/');//gu_call_path :) duckduckgo.com/?t=lm&q=PHP+SOLVE+FOLDER+SYMLINK&ia=qa ::: 4 memory : $gu_real_path = str_replace('plugins/gutuma/news/inc/_pluxml.php','',__FILE__);
-define('PLX_MORE', PLX_GROOT.'core/');
+define('PLX_ROOT',$gdgt.'..'.__GDS__.'..'.__GDS__.'..'.__GDS__);
+define('PLX_CORE', PLX_ROOT.'core'.__GDS__);
+define('PLX_GROOT', isset($_SERVER['DOCUMENT_ROOT'])?$_SERVER['DOCUMENT_ROOT'].__GDS__:PLX_ROOT);// GROOT 4 SYMLINK CASE ONLY
+define('PLX_MORE', PLX_GROOT.'core'.__GDS__);
 include(PLX_GROOT.'config.php');
-include(PLX_MORE.'lib/config.php');
+include(PLX_MORE.'lib'.__GDS__.'config.php');
 # On verifie que PluXml est installé
 if(!file_exists(path('XMLFILE_PARAMETERS'))) {
 	header('Location: '.PLX_ROOT.'install.php');

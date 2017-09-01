@@ -6,33 +6,39 @@ verifé: si l'on change le(s) mot(s) de passe dans pluxml, si l'accés au plugin
 Evol: swiftmailer-5.4.6 pour future integration http://swiftmailer.org
 & si theme default -> use static mode & display (site theme au lieu de celuis d'admin) ou add gutuma logo (top left|center) [une iframe]
 
+
+Fixs _pluxml.php crash a l'install du module ::: http://forum.pluxml.org/viewtopic.php?pid=55297#p55297
+:::: Mauvais chemin racine (1ere idée pour dossier symbolique corrigé)
+:::: Serveur autre que Tux
+:::: exec interdit en safe_mode (PHP) (Par defaut ds WAMP) && __LINK__ supprimé (inutilisé)
+
 ##v.1.8.4.plx.5.6  30/08/2017##
-[+] Admin theme 'default' + adapté a PluXml 5.6 & + coloré + responsive (mobile 1st strategie)
-[+] Admin Manager Auto connect ::: Les gestionnaires accedent a l'interface pour composer une infolettre en javascript
-[+] Admin choix des thèmes par selecteur listant les dossiers présent (gutuma & default)
+[+] Admin thème 'default' + adapté a PluXml 5.6 & + coloré + responsive (stratégie mobile 1st)
+[+] Admin Manager Auto connect ::: Les gestionnaires accèdent a l'interface pour composer une infolettre en JavaScript
+[+] Admin choix des thèmes par sélecteur listant les dossiers présent (gutuma & default)
 [+] admin Langue anglaise ajouté [todo: help]
 [+] admin.php simplifié (code & algo) more dev&user friendly
 [+] Français actualisé pour Admin, Aide et Gutuma (news)
 [+] Listes et config déplacé du plugin vers data/gutuma/
 [+] Dossier temporaire déplacé du système vers data/gutuma/tmp (projets d'infolettres)
 [+] Fins de lignes optim 4 unix with dos2unix (thx BaZooKa07)
-[+] Codes révisé et optimisé pour plus de performances (server parseless do more, chasse au au espaces superflus)
+[+] Codes révisé et optimisé pour plus de performances (server parseless do more, chasse aux espaces superflus)
 [+] Options d'import de liste en csv: ignorer la première ligne du fichier, selecteur de séparateur (; ou ,) + adresses dédoublonnées par array_unique
-[+] editlist pagination & Navi Améloré (0 addrs ds list [js gu_ajax_on_remove_address()]) (recharger"editlist" meme page ou précédente si derniere page)
+[+] editlist pagination & Navi Amélioré (0 addrs ds list [js gu_ajax_on_remove_address()]) (recharger"editlist" même page ou précédente si dernière page)
  FixOf: si toutes les adresses de la page supprimés on reste là planté là
 [+] Peut être un dossier symbolique : ajout dans inc/_pluxml.php de PLX_GROOT, PLX_MORE & __FILE__ ::: duckduckgo.com/?t=lm&q=PHP+SOLVE+FOLDER+SYMLINK&ia=qa
  FixOf: Si le dossier du plugin est un lien symbolique erreur de chargement des librairies & de la config de PluXml (If plugin is in Symlink folder)
 Fix Lien classique mauvaise url de retour a l'accueil news/(integrate & subscibe).php (Lien classique)
  Fix: gadget.js.php ::: Bug: Lien classique envoie au mauvais endroit (manque news/ ds l'url) [admin]
-Fix Variables de langues déja présentes dans le coeur de PluXml (Supprimées)
+Fix Variables de langues déjà présentes dans le cœur de PluXml (Supprimées)
 Fix Charger la langue de gutuma en fonction de celle de l'utilisateur
 Fix Si apostrophes dans variable texte === config crashé ::: change in texts vars (') simple quote &#39; to Right single quotation mark &#146; &rsquo; (’)
-Fix Theme gutuma subscribe.php: affiche le lien retour a l'admin du plugin (lien retour a l'accueil maintenant si non connecté a PluXml)
-Fix Aucune redirection si un admin active un utilisateur ::: "login" 2 "name" user 4 var créate token in /admin.php & post 2 news/users.php
-Fix Theme gutuma (si PluXml non installé, retour)
-Fix doubles quotes in html attributes created with js
+Fix Thème gutuma subscribe.php: affiche le lien retour a l'admin du plugin (lien retour a l'accueil maintenant si non connecté a PluXml)
+Fix Aucune redirection si un admin active un utilisateur ::: "login" 2 "name" user 4 var create token in /admin.php & post 2 news/users.php
+Fix Thème gutuma (si PluXml non installé, retour)
+Fix Doubles quotes in html attributes created with js
 Fix Cacher le menu admin si non auth
-Fix Souscrption si guest user : fichiers ajax, js et subscribe inaxessible car redirigé a la cnx admin :/
+Fix Souscription si guest user : fichiers ajax, js et subscribe inaccessibles car redirigé a la cnx admin :/
 Fix Admin header 404 + mode erreur si ? dans url ou sinon en mode home : suppression des appels au préchauffage() et au démarrage()
 Fix Verif config modifiable (themes/*/_index.php) 'inc' to GUTUMA_CONFIG_FILE
 

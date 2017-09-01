@@ -5,13 +5,13 @@
  * @copyright This source is distributed under the GPL
  * @file Javascript functions for generating integration gadgets - Default theme main stylesheet
  * @modifications Cyril Maguire
- */
-/* Gutama plugin package
- * @version 1.6
- * @date	01/10/2013
- * @author	Cyril MAGUIRE
+ * 
+ * Gutama plugin package
+ * @version 1.8.4
+ * @date	01/09/2017
+ * @author	Cyril MAGUIRE, Thomas I.
 */
-include_once str_replace('js/gadgets.js.php','',__FILE__).'/inc/gutuma.php';//__LINK__ is defined in _pluxml.php 4 gutuma symlinked folder ::: origin is : include_once '../inc/gutuma.php';
+include_once str_replace('js/gadgets.js.php','',__FILE__).'/inc/gutuma.php';//_if gutuma symlinked folder ::: origin is : include_once '../inc/gutuma.php';
 gu_init(FALSE, FALSE, FALSE);// Initialize Gutuma without validation or housekeeping
 if (!is_get_var('noajax')){
 ?>/**
