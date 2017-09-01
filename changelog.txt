@@ -6,6 +6,9 @@ verifé: si l'on change le(s) mot(s) de passe dans pluxml, si l'accés au plugin
 Evol: swiftmailer-5.4.6 pour future integration http://swiftmailer.org
 & si theme default -> use static mode & display (site theme au lieu de celuis d'admin) ou add gutuma logo (top left|center) [une iframe]
 
+##v.1.8.4.P56  01/09/2017##
+[+] tinyMCE en v4.6.6 + la langue de l'éditeur est celle de l'utilisateur + plugins activé
+[+] jsHash mis a jours en 2.2 ::: http://pajhome.org.uk/crypt/md5/scripts.html
 [+] js minifiés avec jscompress.com et utlisés
 Fixs _pluxml.php crash a l'install du module ::: http://forum.pluxml.org/viewtopic.php?pid=55297#p55297
 :::: Mauvais chemin racine (1ere idée pour dossier symbolique corrigé)

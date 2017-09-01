@@ -3,6 +3,8 @@
 Le theme "default" reproduits le menu de pluxml 5.6 afin d'intégrer le menu principal de Gutuma
 Il est possible de régler le theme original "gutuma" (chercher dans le menu Réglages)
 
+- Mise a jour de TinyMCE avec la derniere version 4.6.6
+- Le Theme par Defaut est adapté a PluXml 5.6
 - Mise a jour de [Gutuma](https://web.archive.org/web/20141221193606/http://www.gutuma.com/) avec la derniere version [1.6.s du 01-OCT-2008](https://sourceforge.net/projects/gutuma/files/) retouché est nomé 1.8.4
 
 #### Pour les PluXml inferieurs a la 5.6:
