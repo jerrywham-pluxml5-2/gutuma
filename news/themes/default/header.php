@@ -47,10 +47,10 @@ if(isset($_GET["del"]) AND $_GET["del"]=="install") {
 	<?php eval($plxAdmin->plxPlugins->callHook('AdminTopEndHead')) ?>
 	<?php } ?>
 	<link rel="stylesheet" type="text/css" href="themes/<?php echo gu_config::get('theme_name');?>/css/gutuma.css" media="screen" />
-	<script type="text/javascript" src="js/misc.js"></script>
-	<script type="text/javascript" src="js/tw-sack.js"></script>
-	<script type="text/javascript" src="js/md5.js"></script>
-	<script type="text/javascript" src="js/sha1.js"></script>
+	<script type="text/javascript" src="js/misc.min.js"></script>
+	<script type="text/javascript" src="js/tw-sack.min.js"></script>
+	<script type="text/javascript" src="js/md5.min.js"></script>
+	<script type="text/javascript" src="js/sha1.min.js"></script>
 </head>
 
 <body id="<?php echo basename($_SERVER['SCRIPT_NAME'], ".php") ?>"<?php echo ($nomenu)?' class="subscribe"':'';?>>

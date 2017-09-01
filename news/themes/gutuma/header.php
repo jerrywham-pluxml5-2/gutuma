@@ -17,11 +17,11 @@ $plxAdmin = @plxAdmin::getInstance();
 <html lang="<?php echo $plxAdmin->aConf['default_lang'] ?>">
 <head>
 <meta http-equiv="content-type" content="text/html;charset=<?php echo GUTUMA_ENCODING; ?>" />
-<meta name="robots" content="none"> 
-<script type="text/javascript" src="js/misc.js"></script>
-<script type="text/javascript" src="js/tw-sack.js"></script>
-<script type="text/javascript" src="js/md5.js"></script>
-<script type="text/javascript" src="js/sha1.js"></script>
+<meta name="robots" content="none">
+<script type="text/javascript" src="js/misc.min.js"></script>
+<script type="text/javascript" src="js/tw-sack.min.js"></script>
+<script type="text/javascript" src="js/md5.min.js"></script>
+<script type="text/javascript" src="js/sha1.min.js"></script>
 <link href="themes/<?php echo gu_config::get('theme_name'); ?>/css/style.css" rel="stylesheet" type="text/css" />
 <link rel="icon" type="image/png" href="themes/<?php echo gu_config::get('theme_name'); ?>/favicon.png" />
 <!--[if IE]>

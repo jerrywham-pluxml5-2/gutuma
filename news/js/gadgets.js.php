@@ -14,17 +14,10 @@
 include_once str_replace('js/gadgets.js.php','',__FILE__).'/inc/gutuma.php';//_if gutuma symlinked folder ::: origin is : include_once '../inc/gutuma.php';
 gu_init(FALSE, FALSE, FALSE);// Initialize Gutuma without validation or housekeeping
 if (!is_get_var('noajax')){
-?>/**
- * This file is a server-side merge of tw-sack.js and gadgets.js.php
- *
- * ------------------------------ tw-sack.js -------------------------------
- */
-
-<?php echo file_get_contents('tw-sack.js'); ?>
-/**
- * ----------------------------- gadgets.js.php ------------------------------
- */
-<?php } ?>
+//This file is a server-side merge of tw-sack.js and gadgets.js.php
+echo file_get_contents('tw-sack.min.js');
+}
+?>
 var gu_gadgets_formless = false;
 var gu_gadgets_subcribe_url = "<?php echo absolute_url($gdgt.'subscribe.php') ?>";
 var gu_gadgets_ajax_url = "<?php echo absolute_url($gdgt.'ajax.php'); ?>";
