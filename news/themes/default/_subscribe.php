@@ -44,4 +44,4 @@ else
 	</p>
 </form>
 </div>
-<p><a href="<?php echo PLX_ROOT; ?>"><?php echo t('Back home'); ?></a></p>
+<p><a href="<?php echo PLX_GROOT; ?>"><?php echo t('Back home'); ?></a></p>

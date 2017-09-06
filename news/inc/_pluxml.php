@@ -17,17 +17,30 @@
 */
 # Définition des constantes
 define('__GDS__', DIRECTORY_SEPARATOR);//Gutuma Dir. Sep. 4 nux|dow
+$gu_sub = explode('plugins',$_SERVER['DOCUMENT_ROOT'].$_SERVER['PHP_SELF']);
+$gu_sub = str_replace($_SERVER['DOCUMENT_ROOT'].__GDS__,'',$gu_sub[0]);//4 found subdir where plx is
 $gdgt='';
 if(strstr($_SERVER['PHP_SELF'],'gadgets.js.php')){//4 gadget call
 	$gdgt='..'.__GDS__;
 	header('Content-Type: application/x-javascript');
 }
-define('PLX_ROOT',$gdgt.'..'.__GDS__.'..'.__GDS__.'..'.__GDS__);
+#define('PLX_ROOT',$gdgt.'..'.__GDS__.'..'.__GDS__.'..'.__GDS__);
+#var_dump(strstr(realpath(PLX_ROOT.'index.php'),$_SERVER['DOCUMENT_ROOT']));//false == symlink (maybe)
+//where is good conf if gutuma link is in an other PluXml
+//~ var_dump(realpath($_SERVER['DOCUMENT_ROOT'].'index.php'));//false == PluXml not in root folder (maybe)
+define('PLX_ROOT',isset($_SERVER['DOCUMENT_ROOT'])?$_SERVER['DOCUMENT_ROOT'].__GDS__.$gu_sub:$gdgt.'..'.__GDS__.'..'.__GDS__.'..'.__GDS__);
 define('PLX_CORE', PLX_ROOT.'core'.__GDS__);
-define('PLX_GROOT', isset($_SERVER['DOCUMENT_ROOT'])?$_SERVER['DOCUMENT_ROOT'].__GDS__:PLX_ROOT);// GROOT 4 SYMLINK CASE ONLY
+define('PLX_GROOT', $gdgt.'..'.__GDS__.'..'.__GDS__.'..'.__GDS__);// GROOT 4 SYMBIOLINK
 define('PLX_MORE', PLX_GROOT.'core'.__GDS__);
-include(PLX_GROOT.'config.php');
-include(PLX_MORE.'lib'.__GDS__.'config.php');
+
+//PLX_ROOT détermine le chemin des parms de plx XMLFILE_PARAMETERS //var_dump($_SERVER);exit;
+//~ str_replace('js/gadgets.js.php','',__FILE__).'/inc/gutuma.php';//IN gadgets
+//~ $gu = 'plugins'.__GDS__.'gutuma'.__GDS__;//.'index.php';
+//~ ECHO realpath(PLX_GROOT.'config.php');
+//~ ECHO realpath(PLX_MORE.'lib'.__GDS__.'config.php');//exit;
+
+include(PLX_ROOT.'config.php');
+include(PLX_CORE.'lib'.__GDS__.'config.php');
 # On verifie que PluXml est installé
 if(!file_exists(path('XMLFILE_PARAMETERS'))) {
 	header('Location: '.PLX_ROOT.'install.php');
@@ -41,28 +54,28 @@ $session_domain = dirname(__FILE__);
 #if(!defined('PLX_AUTHPAGE') OR PLX_AUTHPAGE !== true){ # si on est pas sur la page de login
 #	# Test sur le domaine et sur l'identification
 #	if((isset($_SESSION['domain']) AND $_SESSION['domain']!=$session_domain) OR (!isset($_SESSION['user']) OR $_SESSION['user']=='')){
-#		header('Location: '.PLX_CORE.'admin/auth.php?p='.htmlentities($_SERVER['REQUEST_URI']));//add '.PLX_CORE.'admin/ 4 good page url but p query param is'nt recognized after redirected
+#		header('Location: '.PLX_MORE.'admin/auth.php?p='.htmlentities($_SERVER['REQUEST_URI']));//add '.PLX_CORE.'admin/ 4 good page url but p query param is'nt recognized after redirected
 #		exit;
 #	}
 #}
 
 # On inclut les librairies nécessaires
-include_once(PLX_MORE.'lib/class.plx.date.php');
-include_once(PLX_MORE.'lib/class.plx.glob.php');
-include_once(PLX_MORE.'lib/class.plx.utils.php');
-include_once(PLX_MORE.'lib/class.plx.msg.php');
-include_once(PLX_MORE.'lib/class.plx.record.php');
-include_once(PLX_MORE.'lib/class.plx.motor.php');
-include_once(PLX_MORE.'lib/class.plx.admin.php');
-include_once(PLX_MORE.'lib/class.plx.encrypt.php');
-include_once(PLX_MORE.'lib/class.plx.medias.php');
-include_once(PLX_MORE.'lib/class.plx.plugins.php');
-include_once(PLX_MORE.'lib/class.plx.token.php');
+include_once(PLX_CORE.'lib/class.plx.date.php');
+include_once(PLX_CORE.'lib/class.plx.glob.php');
+include_once(PLX_CORE.'lib/class.plx.utils.php');
+include_once(PLX_CORE.'lib/class.plx.msg.php');
+include_once(PLX_CORE.'lib/class.plx.record.php');
+include_once(PLX_CORE.'lib/class.plx.motor.php');
+include_once(PLX_CORE.'lib/class.plx.admin.php');
+include_once(PLX_CORE.'lib/class.plx.encrypt.php');
+include_once(PLX_CORE.'lib/class.plx.medias.php');
+include_once(PLX_CORE.'lib/class.plx.plugins.php');
+include_once(PLX_CORE.'lib/class.plx.token.php');
 
-include_once(PLX_MORE.'lib/class.plx.capcha.php');
-include_once(PLX_MORE.'lib/class.plx.erreur.php');
-include_once(PLX_MORE.'lib/class.plx.feed.php');
-include_once(PLX_MORE.'lib/class.plx.show.php');
+include_once(PLX_CORE.'lib/class.plx.capcha.php');
+include_once(PLX_CORE.'lib/class.plx.erreur.php');
+include_once(PLX_CORE.'lib/class.plx.feed.php');
+include_once(PLX_CORE.'lib/class.plx.show.php');
 # Creation de l'objet principal et lancement du traitement
 $plxMotor = plxMotor::getInstance();
 $lang = $glang = $plxMotor->aConf['default_lang'];
@@ -70,18 +83,18 @@ $lang = $glang = $plxMotor->aConf['default_lang'];
 if(isset($_SESSION['user'])) $lang = $glang = $plxMotor->aUsers[$_SESSION['user']]['lang'];
 $_SESSION['lang'] = $_SESSION['glang'] = $lang;
 # Chargement des fichiers de langue
-loadLang(PLX_MORE.'lang/'.$lang.'/core.php');
-loadLang(PLX_MORE.'lang/'.$lang.'/admin.php');
+loadLang(PLX_CORE.'lang/'.$lang.'/core.php');
+loadLang(PLX_CORE.'lang/'.$lang.'/admin.php');
 $plxMotor->mode='gutuma';//4 future ::: & solved bug header 404 in demarrage & prechauffage funct() but in reality is'nt util here (more perf ;-)
 #$plxMotor->prechauffage();#origin //bug header 404 when ? is in uri (admin) el motor go to mode error, sin mode home ;-) [non blocant] semble être inutile
 #$plxMotor->demarrage();#origin semble inutile de l'appeler maintenant (maybe not: intest)
 # Creation de l'objet d'affichage
-$plxShow = plxShow::getInstance();
+$plxShow = plxShow::getInstance();//var_dump('_pluxml: ',path('XMLFILE_PARAMETERS'),$plxMotor,$plxShow);exit;
 if(isset($_SESSION['user']) AND !empty($_SESSION['user'])) {
 	$_profil = $plxMotor->aUsers[$_SESSION['user']];// _profil ONLY CALLED IN INSTALL.PHP
 	$plxMotor->mode='gutumadmin';
 }//grant access 4 public php files subscript mode ::: other redirect (if not connected in PluXml backend)
 elseif(strpos($plxMotor->path_url,'news/ajax.php') === FALSE  && strpos($plxMotor->path_url,'news/js/gadgets.js.php') === FALSE && strpos($plxMotor->path_url,'news/subscribe.php') === FALSE){//gestion des abonnements (publics)
-	header('Location:'.PLX_CORE.'admin/auth.php?p=plugin.php?p=gutuma');
+	header('Location:'.PLX_MORE.'admin/auth.php?p=plugin.php?p=gutuma');
 	exit();
 }

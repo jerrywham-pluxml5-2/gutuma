@@ -29,10 +29,10 @@ define('GUTUMA_TITLE', t('Gutuma Newsletter Management')); // Application title 
 define('GUTUMA_URL', 'https://web.archive.org/web/20081228162738/http://ijuru.com/gutuma'); // Homepage of Gutuma
 define('GUTUMA_UPDATE_URL', 'http://gutuma.sourceforge.net/update.js.php?ver='.GUTUMA_VERSION_NUM);
 define('GUTUMA_ENCODING', 'UTF-8'); // Content encoding
-define('GUTUMA_CONFIG_FILE', $plxMotor->plxPlugins->aPlugins['gutuma']->listsDir.'/inc/config.php'); // Configuration file
 define('GUTUMA_PASSWORD_MIN_LEN', 6); // Minimum password length
 define('GUTUMA_EMAIL', 'rowanseymour@users.sourceforge.net'); // Author email address
 define('GUTUMA_LISTS_DIR', $plxMotor->plxPlugins->aPlugins['gutuma']->listsDir);// Directory where lists are stored
+define('GUTUMA_CONFIG_FILE', GUTUMA_LISTS_DIR.'/inc/config.php'); // Configuration file
 define('GUTUMA_TEMP_DIR', GUTUMA_LISTS_DIR.'/tmp');#sys_get_temp_dir() // Directory where temp message files are stored
 define('GUTUMA_TEMP_EXPIRY_AGE', 3*60*60); // The number of seconds from last access before subfolders/files are deleted from the temp directory
 define('GUTUMA_PAGE_SIZE', 10); // The number of items per page in lists of addresses
