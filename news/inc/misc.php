@@ -173,12 +173,19 @@ function html_to_text(&$html){
 	// we can't assume that about the formatting of the HTML, so we start by
 	// removing all new lines
 	$text = str_replace(array("\r\n", "\n"), '', $html);
+// table to paragraph
+	$text = str_replace('<table', "<div", $text);
+	$text = str_replace('</table>', "</div>", $text);
+	$text = str_replace('<tr', "<p", $text);
+	$text = str_replace('</tr>', "</p>", $text);
+	$text = str_replace('<td', " <span", $text);
+	$text = str_replace('</td>', "</span> ", $text);
 // Start-tag beginnings that deserve a new line
 	$text = str_replace('<p', "\n<p", $text);
 	$text = str_replace('<h', "\n<h", $text);
 	$text = str_replace('<li', "\n<li", $text);
 // End-tags that deserve a new line
-	$text = str_replace(array('</p>', '</h1>', '</h2>', '</h3>', '</ol>', '</ul>', '<br />'), "\n", $text);
+	$text = str_replace(array('</p>', '</h1>', '</h2>', '</h3>', '</h4>', '</h5>', '</h6>', '</ol>', '</ul>', '<br />'), "\n", $text);
 	$text = str_replace("<li>", "* ", $text);
 	$text = str_replace("<hr />", "-------------------------------------------\n", $text);
 // Convert entities such as &nbsp; to real characters
@@ -186,10 +193,14 @@ function html_to_text(&$html){
 // Strip all but links and images
 	$text = strip_tags($text, '<a>');
 // Replace <a href="http://...">http://...</a> with http://... (or https)
-	$pattern = "/<[aH] .*?[hH][rR][eE][fF]=\"(.*?)\".*?>https?:\/\/(.*?)<\/[aA]>/";
+	$pattern = "/<[aA] .*?[hH][rR][eE][fF]=\"(.*?)\".*?>https?:\/\/(.*?)<\/[aA]>/";
 	$text = preg_replace($pattern, "$1", $text);
 // Replace <a href="http://...">text</a> with text (http://...)
-	$pattern = "/<[aH] .*?[hH][rR][eE][fF]=\"(.*?)\".*?>(.*?)<\/[aA]>/";
+	$pattern = "/<[aA] .*?[hH][rR][eE][fF]=\"(.*?)\".*?>(.*?)<\/[aA]>/";
 	$text = preg_replace($pattern, "$2 ($1)", $text);
+// Replace <a ...>text</a> with text
+	$pattern = "/<[aA] .*?>(.*?)<\/[aA]>/";
+	$text = preg_replace($pattern, "$1", $text);
+	$text = trim($text);
 	return wordwrap($text, 70);
 }
