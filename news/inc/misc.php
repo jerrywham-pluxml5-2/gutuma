@@ -36,7 +36,7 @@ function str_ends($haystack, $needle){
  * @return string The limited string
  */
 function str_limit($str, $max){
-	return (strlen($str) > $max) ? (substr($str, 0, $max - 3).'...') : $str;
+	return (strlen($str) > $max) ? (substr($str, 0, $max).'…') : $str;
 }
 /**
  * Masks a string such as a password

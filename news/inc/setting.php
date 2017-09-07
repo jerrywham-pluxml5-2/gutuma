@@ -102,8 +102,8 @@ class gu_config{
 // Read file values and copy to static members
 		$gu_config = array();
 //include GUTUMA_CONFIG_FILE;
-		eval(base64_decode(substr(file_get_contents(GUTUMA_CONFIG_FILE),9,-5)));// Version encodée (voir ligne 195)
-//eval(substr(file_get_contents(GUTUMA_CONFIG_FILE),7,-4));// Version décodée (voir ligne 196)
+		eval(base64_decode(substr(file_get_contents(GUTUMA_CONFIG_FILE),9,-5)));// Version encodée (voir ligne 193)
+//eval(substr(file_get_contents(GUTUMA_CONFIG_FILE),7,-4));// Version décodée (voir ligne 194)
 		self::$version = $gu_config_version;
 		foreach (array_keys($gu_config) as $keys)
 			self::$values[$keys] = $gu_config[$keys];
@@ -141,7 +141,9 @@ class gu_config{
 		self::$values['msg_coll_name_on_multilist'] = FALSE;
 		self::$values['msg_append_signature'] = TRUE;
 		self::$values['msg_admin_copy'] = TRUE;
-		self::$values['theme_name'] = 'default';//gutuma
+		self::$values['spell_check'] = 'browser';// browser, no
+		self::$values['tiny_tools'] = 'tools';//tools, menu, all (tools & menu), no (dont use tiny?)
+		self::$values['theme_name'] = 'default';//gutuma (original theme)
 		self::$values['list_send_welcome'] = TRUE;
 		self::$values['list_send_goodbye'] = TRUE;
 		self::$values['list_subscribe_notify'] = TRUE;
@@ -149,14 +151,13 @@ class gu_config{
 		self::$values['salt'] = $profil['salt'];
 		self::$values['ROOT']= RPATH;
 		self::$values['users']= serialize (array());
-// Check if a config exists
-		if (!file_exists(GUTUMA_CONFIG_FILE))
+		if (!file_exists(GUTUMA_CONFIG_FILE))// Check if a config exists
 			return FALSE;
 // Read file values and copy to static members
 		$gu_config = array();
 //include GUTUMA_CONFIG_FILE;
-		eval(base64_decode(substr(file_get_contents(GUTUMA_CONFIG_FILE),9,-5)));// Version encodée (voir ligne 105 & 195)
-//eval(substr(file_get_contents(GUTUMA_CONFIG_FILE),7,-4));// Version décodée (voir ligne 106 & 196)
+		eval(base64_decode(substr(file_get_contents(GUTUMA_CONFIG_FILE),9,-5)));// Version encodée (voir ligne 105 & 193)
+//eval(substr(file_get_contents(GUTUMA_CONFIG_FILE),7,-4));// Version décodée (voir ligne 106 & 194)
 		self::$version = $gu_config_version;
 		foreach (array_keys($gu_config) as $keys)
 			self::$values[$keys] = $gu_config[$keys];
@@ -178,22 +179,19 @@ class gu_config{
 			return gu_error(t('A valid administrator email must be at provided'));
 		if (!is_dir(RPATH.'themes/'.self::$values['theme_name']))
 			return gu_error(t("Theme <em>%</em> doesn't exists. You need to create it first !",array(self::$values['theme_name']) ) );
-		$lh = @fopen(GUTUMA_CONFIG_FILE, 'w');
-		if ($lh == FALSE)
+		if (!touch(GUTUMA_CONFIG_FILE))//$lh = @fopen(GUTUMA_CONFIG_FILE, 'w'); if ($lh == FALSE)fclose($lh);
 			return gu_error(t("Unable to create/open % file for writing",array(GUTUMA_CONFIG_FILE)));
-		fwrite($lh, "\$gu_config_version = ".GUTUMA_VERSION_NUM.";\n");
+		$f = "\$gu_config_version = ".GUTUMA_VERSION_NUM.";\n";
 		foreach (array_keys(self::$values) as $key){
 			if (is_bool(self::$values[$key]))
-				fwrite($lh, "\$gu_config['".$key."'] = ".(self::$values[$key] ? 'TRUE' : 'FALSE').";\n");
+				$f .= "\$gu_config['".$key."'] = ".(self::$values[$key] ? 'TRUE' : 'FALSE').";\n";
 			elseif (is_numeric(self::$values[$key]))
-				fwrite($lh, "\$gu_config['".$key."'] = ".self::$values[$key].";\n");
+				$f .= "\$gu_config['".$key."'] = ".self::$values[$key].";\n";
 			else
-				fwrite($lh, "\$gu_config['".$key."'] = '".str_replace(array('\"',"'"),array('"','’'),self::$values[$key])."';\n");
+				$f .= "\$gu_config['".$key."'] = '".str_replace(array('\"',"'"),array('"','’'),self::$values[$key])."';\n";
 		}
-		fclose($lh);
-		$f = file_get_contents(GUTUMA_CONFIG_FILE);
-		file_put_contents(GUTUMA_CONFIG_FILE,"<?php /*\n".base64_encode($f)."\n*/  ?>");// Version encodée (voir ligne 158)
-/*file_put_contents(GUTUMA_CONFIG_FILE,"<?php \n".$f."\n?>");*/ // Version décodée (voir ligne 159)
+		file_put_contents(GUTUMA_CONFIG_FILE,"<?php /*\n".base64_encode($f)."\n*/  ?>");// Version encodée (voir ligne 159)
+/*file_put_contents(GUTUMA_CONFIG_FILE,"<?php \n".$f."\n?>");*/ // Version décodée (voir ligne 160)
 		return TRUE;
 	}
 	/**

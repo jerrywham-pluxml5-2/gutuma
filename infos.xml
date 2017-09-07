@@ -2,8 +2,8 @@
 <document>
   <title><![CDATA[Gutuma]]></title>
   <author><![CDATA[Cyril MAGUIRE, Thomas I.]]></author>
-  <version>v.1.8.4.P56</version>
-  <date>01/09/2017</date>
+  <version>1.8.5.plx.5.6</version>
+  <date>2017.09.02.07</date><!-- AAAA.JJ.MM.HH -->
   <site>http://www.ecyseo.net</site>
   <description><![CDATA[Intégration à Pluxml de l'application Gutuma permettant de gérer des newsletters]]></description>
 </document>

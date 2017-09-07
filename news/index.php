@@ -5,17 +5,14 @@
  * @copyright This source is distributed under the GPL
  * @file The home page
  * @modifications Cyril Maguire
- */
-/* Gutama plugin package
+ *
+ * Gutama plugin package
  * @version 1.6
  * @date	01/10/2013
  * @author	Cyril MAGUIRE
 */
-
-
 include_once 'inc/gutuma.php';
 include_once 'inc/newsletter.php';
-
 if ($_SESSION['profil'] != PROFIL_ADMIN){
 	header('Location:compose.php');
 	exit();

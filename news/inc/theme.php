@@ -41,13 +41,13 @@ function gu_theme_pager($id, $baseurl, $start, $pagesize, $total){
 		<div class="pagercontrols">
 <?php
 	$last_pg = (0==($total % $pagesize))?$pagesize:($total % $pagesize);
-	echo ($start > 0) ? ("<a href=\"".$baseurl."&amp;start=0\">&lt;&lt;</a>") : "&lt;&lt;";
-	echo "&nbsp;&nbsp;";
-	echo ($start > 0) ? ("<a id=\"".$id."_prev\" href=\"".$baseurl."&amp;start=".max(0, $start - $pagesize)."\">&lt;</a>&nbsp;&nbsp;") : "&lt;";
-	echo "&nbsp;&nbsp;";
-	echo (($start + $pagesize) < $total) ? ("<a href=\"".$baseurl."&amp;start=".min($start + $pagesize, $total)."\">&gt;</a>&nbsp;&nbsp;") : "&gt;";
-	echo "&nbsp;&nbsp;";
-	echo (($start + $pagesize) < $total) ? ("<a href=\"".$baseurl."&amp;start=".($total - $last_pg)."\">&gt;&gt;</a>") : "&gt;&gt;";
+	echo ($start > 0) ? ('<a href="'.$baseurl.'&amp;start=0#'.$id.'">&lt;&lt;</a>') : '&lt;&lt;';
+	echo '&nbsp;&nbsp;';
+	echo ($start > 0) ? ('<a id="'.$id.'_prev" href="'.$baseurl.'&amp;start='.max(0, $start - $pagesize).'#'.$id.'">&lt;</a>&nbsp;&nbsp;') : '&lt;';
+	echo '&nbsp;&nbsp;';
+	echo (($start + $pagesize) < $total) ? ('<a href="'.$baseurl.'&amp;start='.min($start + $pagesize, $total).'#'.$id.'">&gt;</a>&nbsp;&nbsp;') : '&gt;';
+	echo '&nbsp;&nbsp;';
+	echo (($start + $pagesize) < $total) ? ('<a href="'.$baseurl.'&amp;start='.($total - $last_pg).'#'.$id.'">&gt;&gt;</a>') : '&gt;&gt;';
 ?>
 		</div>
 		<div class="pagerinfo">

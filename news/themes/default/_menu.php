@@ -59,7 +59,7 @@ foreach($u as $k => $v) {
 					$userId = ($_SESSION['profil'] < PROFIL_WRITER ? '[0-9]{3}' : $_SESSION['user']);
 					$nbartsmod = $plxAdmin->nbArticles('all', $userId, '_');
 					$arts_mod = $nbartsmod>0 ? '<span class="badge" onclick="window.location=\''.$plxAdmin->urlRewrite().'core/admin/index.php?sel=mod&amp;page=1\';return false;">'.$nbartsmod.'</span>':'';
-					$menus[] = plxUtils::formatMenu(L_MENU_ARTICLES, $plxAdmin->urlRewrite().'core/admin/index.php?page=1', L_MENU_ARTICLES_TITLE, false, false,$arts_mod);
+					$menus[] = plxUtils::formatMenu(L_MENU_ARTICLES, $plxAdmin->urlRewrite().'core/admin/index.php?page=1', L_MENU_ARTICLES_TITLE, false, false,$arts_mod,'',false);// Fix articles : no highlight Plux/index.php menu is active (white) when admin consult info page (news/index.php) in gutuma menu
 
 					if(isset($_GET['a'])) # edition article
 						$menus[] = plxUtils::formatMenu(L_MENU_NEW_ARTICLES_TITLE, $plxAdmin->urlRewrite().'core/admin/article.php', L_MENU_NEW_ARTICLES, false, false, '', false);
@@ -124,7 +124,7 @@ foreach($u as $k => $v) {
 										$menus[] = $menu;
 								} else {
 									if ($plugName == 'gutuma')
-										$menus[] = '<li class="menu"><a href="'.$plxAdmin->racine.'core/admin/plugin.php?p=gutuma" title="'.gu_config::get('application_name').'">Gutuma</a></li>'.$menu_gutuma;
+										$menus[] = '<li class="menu in_gutuma"><a href="'.$plxAdmin->racine.'core/admin/plugin.php?p=gutuma" title="'.gu_config::get('application_name').'">Gutuma</a></li>'.$menu_gutuma;
 									else
 										$menus[] = plxUtils::formatMenu(plxUtils::strCheck($plugInstance->getInfo('title')), $plxAdmin->urlRewrite().'core/admin/plugin.php?p='.$plugName, plxUtils::strCheck($plugInstance->getInfo('title')));
 								}

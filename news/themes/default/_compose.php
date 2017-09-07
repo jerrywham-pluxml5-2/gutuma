@@ -31,10 +31,19 @@ gu_theme_messages();
 
 ?>
 <form enctype="multipart/form-data" id="send_form" name="send_form" method="post" action="compose.php<?php echo gu_is_debugging() ? '?DEBUG' : ''; ?>"><input type="hidden" id="msg_id" name="msg_id" value="<?php echo $newsletter->get_id(); ?>" /><input type="hidden" id="is_modified" name="is_modified" value="<?php echo $is_modified; ?>" />
+	<div class="menubar in-action-bar section sml-12 med-9 med-offset-3 lrg-10 lrg-offset-2">
+		<input class="green" name="save_submit" type="submit" id="save_submit" value="<?php echo t('Save');?>" onclick="gu_cancel_unsaved_warning();" />
+<?php if ($preview_mode) { ?>
+		<input class="blue" name="edit_submit" type="submit" id="edit_submit" value="<?php echo t('Edit');?>" onclick="gu_cancel_unsaved_warning();" />
+<?php } else { ?>
+		<input class="blue" name="preview_submit" type="submit" id="preview_submit" value="<?php echo t('Preview');?>" onclick="gu_cancel_unsaved_warning();" />
+<?php } ?>
+		<input class="orange" name="send_submit" type="submit" id="send_submit" value="<?php echo t('Send');?>" onclick="gu_cancel_unsaved_warning(); return gu_presend_check();" />
+	</div>
 	<div class="formfieldset">
 		<div class="formfield">
 			<div class="formfieldlabel"><?php echo t('Address book');?>:</div>
-			<div class="formfieldcontrols">
+			<div class="formfieldcontrols show">
 				<select name="send_lists" id="send_lists">
 <?php
 	foreach($lists as $l) {
@@ -52,18 +61,9 @@ gu_theme_messages();
 			<div class="formfieldcontrols"><input name="msg_subject" type="text" class="textfield" id="msg_subject" value="<?php echo $newsletter->get_subject(); ?>" onchange="gu_set_modified(true)" /></div>
 		</div>
 	</div>
-<?php if ($preview_mode) { ?>
-	<div class="messagepreview"><?php echo $newsletter->get_html(); ?></div><input name="msg_html" id="msg_html" type="hidden" value="<?php echo htmlentities($newsletter->get_html()); ?>" />
-	<br/>
-	<p><?php echo t('Below is the plain text version that will also be sent so that users with non-HTML email clients can receive this newsletter. You can edit this before the email is sent.');?></p>
-	<br/>
-	<textarea name="msg_text" id="msg_text" rows="7" cols="30" onchange="gu_set_modified(true)"><?php echo $newsletter->get_text(); ?></textarea>
-<?php } else { ?>
-	<textarea name="msg_html" id="msg_html" style="width: 100%; height: 300px" rows="7" cols="30" onchange="gu_set_modified(true)"><?php echo $newsletter->get_html(); ?></textarea>
-<?php } ?>
-	<div class="menubar" style="margin-top: 10px">
-		<div style="float: left"><input name="attach_file" type="file" id="attach_file" />&nbsp;<input name="attach_submit" type="submit" id="attach_submit" class="green" value="<?php echo t('Attach');?>" onclick="gu_cancel_unsaved_warning();" /></div>
-		<div style="float: right">
+	<div class="menubar" style="margin-top: 10px; padding-bottom: 3px;">
+		<div class="float-left"><input name="attach_file" type="file" id="attach_file" />&nbsp;<input name="attach_submit" type="submit" id="attach_submit" class="green" value="<?php echo t('Attach');?>" onclick="gu_cancel_unsaved_warning();" /></div>
+		<div class="float-right">
 <?php
 	if (count($attachments) > 0) {
 		echo '<select id="msg_attachments" name="msg_attachments">';
@@ -72,20 +72,20 @@ gu_theme_messages();
 			$sizeKB = round($attachment['size'] / 1024.0, 2);
 			echo '<option value="'.$attachment['name'].'">'.$name.' ('.$sizeKB.' KB)</option>';
 		}
-		echo '</select> <input name="remove_submit" type="submit" id="remove_submit" value="'.t('Remove').'" onclick="gu_cancel_unsaved_warning();" />';
+		echo '</select> <input class="red" name="remove_submit" type="submit" id="remove_submit" value="'.t('Remove').'" onclick="gu_cancel_unsaved_warning();" />';
 	}
 ?>
 		</div>
 	</div>
 	<div class="clearer"></div>
 	<br/>
-	<div class="menubar in-action-bar section sml-12 med-9 med-offset-3 lrg-10 lrg-offset-2">
-		<input class="green" name="save_submit" type="submit" id="save_submit" value="<?php echo t('Save');?>" onclick="gu_cancel_unsaved_warning();" />
 <?php if ($preview_mode) { ?>
-		<input class="blue" name="edit_submit" type="submit" id="edit_submit" value="<?php echo t('Edit');?>" onclick="gu_cancel_unsaved_warning();" />
+	<div class="messagepreview"><?php echo $newsletter->get_html(); ?></div><input name="msg_html" id="msg_html" type="hidden" value="<?php echo htmlentities($newsletter->get_html()); ?>" />
+	<br/>
+	<p><?php echo t('Below is the plain text version that will also be sent so that users with non-HTML email clients can receive this newsletter. You can edit this before the email is sent.');?></p>
+	<br/>
+	<textarea name="msg_text" id="msg_text" rows="20" cols="13" onchange="gu_set_modified(true)"><?php echo $newsletter->get_text(); ?></textarea>
 <?php } else { ?>
-		<input class="blue" name="preview_submit" type="submit" id="preview_submit" value="<?php echo t('Preview');?>" onclick="gu_cancel_unsaved_warning();" />
+	<textarea name="msg_html" id="msg_html" style="width: 100%; height: 360px" rows="20" cols="30" onchange="gu_set_modified(true)"><?php echo $newsletter->get_html(); ?></textarea>
 <?php } ?>
-		<input class="orange" name="send_submit" type="submit" id="send_submit" value="<?php echo t('Send');?>" onclick="gu_cancel_unsaved_warning(); return gu_presend_check();" />
-	</div>
 </form>

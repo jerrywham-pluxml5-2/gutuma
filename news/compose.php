@@ -77,41 +77,81 @@ elseif (is_post_var('save_submit')){
 $mailbox = gu_newsletter::get_mailbox();// Get all newsletters as mailbox
 $attachments = $newsletter->get_attachments();// Get list of attachments
 if (!$preview_mode){
+
+$tiny_opt = '';
+$spell_opt = '';
+$tiny_tools = gu_config::get('tiny_tools');
+$spell_check = gu_config::get('spell_check');
+if ($tiny_tools != 'no'){//tinyMCE
+	if ($spell_check != 'no'){//spellcheck
+		$spell_opt = "		browser_spellcheck: true,".PHP_EOL;//false by default
+	}
+//toolslist 'save anchor autolink charmap code codesample colorpicker contextmenu emoticons fullpage fullscreen help hr image imagetools insertdatetime link lists media nonbreaking noneditable pagebreak paste print searchreplace spellchecker tabfocus table template textcolor textpattern toc visualblocks visualchars wordcount';//ok
+	$mce_plug = 'save anchor autolink charmap code codesample colorpicker emoticons fullscreen help hr image imagetools insertdatetime link lists media nonbreaking noneditable pagebreak paste print searchreplace tabfocus table template textcolor textpattern toc visualblocks visualchars wordcount';//ok
+	$mce_too1 = 'fullscreen | save | insert | undo redo';#1
+	$mce_too1.= ' | cut copy paste | pastetext | searchreplace';#1 pasteword (old?)
+	$mce_too1.= ' | visualblocks | charmap | emoticons';#1 cleanup (old?)
+	$mce_too1.= ' | image | media';#1 iespell (old?)
+	$mce_too1.= ' | link unlink | anchor';#1
+	$mce_too1.= ' | forecolor backcolor';#1 colorpicker?
+	$mce_too1.= ' | blockquote hr';#1
+	$mce_too2 = 'bold italic underline strikethrough';#2
+	$mce_too2.= ' | alignleft alignright';#2 miss : justifyleft justifycenter justifyright justifyfull?
+	$mce_too2.= ' | aligncenter alignjustify';#2
+	$mce_too2.= ' | sub sup';#2
+	$mce_too2.= ' | outdent indent | bullist numlist';
+	$mce_too3 = 'formatselect fontselect fontsizeselect';#3
+	$mce_too3.= ' | code | print | help';#3 miss emoticons
+	switch ($tiny_tools){
+		case 'menu':
+			$tiny_opt = "		toolbar: false,".PHP_EOL;//false by default
+			break;
+		case 'tools':
+			$tiny_opt .= "		menubar:false,".PHP_EOL;
+		case 'all':
+			$tiny_opt .= "
+		toolbar: '".$mce_too1." | ".$mce_too2." | ".$mce_too3."',".PHP_EOL;//v4 emulated of old dvanced theme
+	}
 ?>
-<script type="text/javascript" src="js/tinymce/tinymce.min.js"></script>
-<script type="text/javascript">
+<script type='text/javascript' src='js/tinymce/tinymce.min.js?v466'></script>
+<script type='text/javascript'>
 	tinyMCE.init({// General options
 		mode : 'textareas',
+//~ 		selector: 'textarea',// work
 		skin: 'lightgray',
-		theme : 'modern',//
-		language : '<?php echo $_SESSION['lang'] ?>',
-		relative_urls : false,
-		remove_script_host : false,
-		plugins : 'anchor autolink charmap code codesample colorpicker contextmenu emoticons fullpage fullscreen help hr image imagetools insertdatetime link lists media nonbreaking noneditable pagebreak paste print searchreplace spellchecker tabfocus table template textcolor textpattern toc visualblocks visualchars wordcount',//ok
-/*
-		// Theme options advanced (old tiny.2x) v4 of advanced theme exist ?
-		theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,cut,copy,paste,pastetext,pasteword,|,formatselect,fontselect,fontsizeselect",
-		theme_advanced_buttons2 : "bullist,numlist,|,outdent,indent,blockquote,hr,|,sub,sup,|,link,unlink,anchor,image,charmap,emotions,iespell,media,|,forecolor,backcolor,|,undo,redo,cleanup,code,print,help",
+		theme: 'modern',
+		language: '<?php echo $_SESSION['lang'] ?>',
+		relative_urls: false,
+		remove_script_host: false,
+		plugins : '<?php echo $mce_plug ?>',<?php echo $tiny_opt.$spell_opt ?>
+		// Example word content CSS (should be your site CSS) this one removes paragraph margins
+		content_css : 'themes/gutuma/editor.css',
+		save_onsavecallback: function () { document.getElementById('save_submit').click(); },//Fix : on save normal event call window.onbeforeunload & launch alert
+		setup: function(ed){ ed.on('change',function(e){ gu_set_modified(true); }); }
+	});
+</script>
+<?php
+}
+##js init 4 memory
+//		toolbar1: '".$mce_too1."',
+//		toolbar2: '".$mce_too2."',
+//		 Drop lists for link/image/media (old opt ?)
+//		external_link_list_url : 'lists/link_list.js',
+//		external_image_list_url : 'lists/image_list.js',
+//		media_external_list_url : 'lists/media_list.js',
+/* advanced theme options (old tiny.2x) 
+		theme_advanced_buttons1 : 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,cut,copy,paste,pastetext,pasteword,|,formatselect,fontselect,fontsizeselect',
+		theme_advanced_buttons2 : 'bullist,numlist,|,outdent,indent,blockquote,hr,|,sub,sup,|,link,unlink,anchor,image,charmap,emotions,iespell,media,|,forecolor,backcolor,|,undo,redo,cleanup,code,print,help',
 		theme_advanced_buttons3 : null,
 		theme_advanced_buttons4 : null,
-		theme_advanced_toolbar_location : "top",
-		theme_advanced_toolbar_align : "left",
-		theme_advanced_statusbar_location : "bottom",
+		theme_advanced_toolbar_location : 'top',
+		theme_advanced_toolbar_align : 'left',
+		theme_advanced_statusbar_location : 'bottom',
 		theme_advanced_resizing : true,
 		theme_advanced_resizing_max_width : 680,
 */
-		// Drop lists for link/image/media
-		//external_link_list_url : "lists/link_list.js",
-		//external_image_list_url : "lists/image_list.js",
-		//media_external_list_url : "lists/media_list.js",
-
-		// Example word content CSS (should be your site CSS) this one removes paragraph margins
-		//content_css : "themes/default/editor.css",
-
-		setup : function(ed){ ed.on('change',function(e){ gu_set_modified(true); }); }
-	});
-</script>
-<?php } ?>
+}//fi !$preview_mode
+?>
 <script type="text/javascript">
 /* <![CDATA[ */
 	var is_post_back = false;
@@ -131,10 +171,9 @@ if (!$preview_mode){
 	}
 	window.onbeforeunload = function (ev){
 		var is_modified = document.getElementById('is_modified').value;
-		
 		if (!is_post_back && is_modified)
 			return "<?php echo t('Your message has not been sent or saved, and will be lost if you leave this page.');?>";
-	}	
+	}
 	function gu_cancel_unsaved_warning(){
 		is_post_back = true;
 	}

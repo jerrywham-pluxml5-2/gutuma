@@ -47,7 +47,8 @@ if(!empty($_POST)){
 		}
 	}
 	$gu_config['users'] = serialize($Gut_users);
-	$GU_config = "\$gu_config_version = 1060001;\n";
+	$plxPlugin->v();#populate $plxPlugin->release (& code)
+	$GU_config = "\$gu_config_version = $plxPlugin->release;\n";
 	foreach ($gu_config as $key => $value){
 		$GU_config .="\$gu_config['$key'] = ".($value===false ? "FALSE" : ($value === true ? "TRUE" : "'$value'")).";\n";
 	}

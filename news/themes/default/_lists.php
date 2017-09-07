@@ -26,7 +26,7 @@
 <?php gu_theme_messages(); ?>
 <div class="formfieldset">
 	<div class="formfield">
-		<div class="formfieldcomment"><?php echo t('If the list is marked as private then people cannot subscribe to it, and it will not be listed on the default subscribe page');?></div>
+		<div class="formfieldcomment"><?php echo t('If the list is marked as private then people cannot subscribe to it, and it will not be listed on the default subscribe page.');?></div>
 	</div>
 </div>
 <h5><?php echo t('These are the lists which have already been created.');?></h5>
@@ -67,7 +67,7 @@ if (count($lists) > 0) {
 	<div class="menubar">
 		<div><input name="import_file" type="file" id="import_file" /><br /><br />
 			<?php echo t('Separate by').'&nbsp;'; gu_theme_list_control('sep', array(array(';',t('Semicolon (;)')),array(',',t('Comma (,)'))),';') ?> &amp;
-			<?php echo t('Ingnore first line');?>&nbsp;<input type="checkbox" id="first" name="first" /> &nbsp;<input name="import_submit" type="submit" id="import_submit" class="green" value="<?php echo t('Import');?>" />
+			<?php echo t('Ingnore first line');?>&nbsp;<input type="checkbox" id="first" name="first" checked="" /> &nbsp;<input name="import_submit" type="submit" id="import_submit" class="green" value="<?php echo t('Import');?>" />
 		</div>
 	</div>
 </form>

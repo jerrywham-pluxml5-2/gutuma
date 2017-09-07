@@ -11,33 +11,33 @@
  * @date	01/10/2013
  * @author	Cyril MAGUIRE
 */
-include_once ('_pluxml.php');// Inclusion des librairies de plxuml
+include_once ('_pluxml.php');#Inclusion des librairies de plxuml
 define('GU_CONFIG_LANG', $glang);
-// Check for PHP5+
-if (version_compare(phpversion(), '5', '<'))
+if (version_compare(phpversion(), '5', '<'))#Check for PHP5+
 	die(t('Sorry - Gutuma requires at least PHP5. Please contact your hosting provider and ask them to upgrade.'));
 include_once 'setting.php';
 include_once 'misc.php';
 include_once 'session.php';
 include_once 'list.php';
 include_once 'theme.php';
-// Constants 
-define('GUTUMA_VERSION_NUM', 1060001); // Version number w.x.y.z -> wwxxyyzz
-define('GUTUMA_VERSION_NAME', '1.6'); // Version friendly name
-define('GUTUMA_DEMO_MODE', FALSE); // Demonstration mode
-define('GUTUMA_TITLE', t('Gutuma Newsletter Management')); // Application title of Gutuma
-define('GUTUMA_URL', 'https://web.archive.org/web/20081228162738/http://ijuru.com/gutuma'); // Homepage of Gutuma
-define('GUTUMA_UPDATE_URL', 'http://gutuma.sourceforge.net/update.js.php?ver='.GUTUMA_VERSION_NUM);
-define('GUTUMA_ENCODING', 'UTF-8'); // Content encoding
-define('GUTUMA_PASSWORD_MIN_LEN', 6); // Minimum password length
-define('GUTUMA_EMAIL', 'rowanseymour@users.sourceforge.net'); // Author email address
-define('GUTUMA_LISTS_DIR', $plxMotor->plxPlugins->aPlugins['gutuma']->listsDir);// Directory where lists are stored
-define('GUTUMA_CONFIG_FILE', GUTUMA_LISTS_DIR.'/inc/config.php'); // Configuration file
-define('GUTUMA_TEMP_DIR', GUTUMA_LISTS_DIR.'/tmp');#sys_get_temp_dir() // Directory where temp message files are stored
-define('GUTUMA_TEMP_EXPIRY_AGE', 3*60*60); // The number of seconds from last access before subfolders/files are deleted from the temp directory
-define('GUTUMA_PAGE_SIZE', 10); // The number of items per page in lists of addresses
-define('GUTUMA_MAX_ADDRESS_LEN', 320); // The max allowable length in characters of an email address
-define('GUTUMA_TINYMCE_COMPRESSION', FALSE); // Enables gzip compression of the TinyMCE scripts
+#Constants
+$plxMotor->plxPlugins->aPlugins['gutuma']->v();
+define('GUTUMA_VERSION_NUM', $plxMotor->plxPlugins->aPlugins['gutuma']->release);#time YYMMDDHH
+define('GUTUMA_VERSION_NAME', $plxMotor->plxPlugins->aPlugins['gutuma']->code);#friendly name
+define('GUTUMA_DEMO_MODE', FALSE);#Demonstration mode
+define('GUTUMA_TITLE', t('Gutuma Newsletter Management'));#Application title of Gutuma
+define('GUTUMA_URL', 'https://web.archive.org/web/20081228162738/http://ijuru.com/gutuma');#Homepage of Gutuma
+define('GUTUMA_UPDATE_URL', 'https://raw.githubusercontent.com/jerrywham-pluxml5-2/gutuma/master/news/up_git.js?ver='.GUTUMA_VERSION_NUM);
+define('GUTUMA_ENCODING', 'UTF-8');#Content encoding
+define('GUTUMA_PASSWORD_MIN_LEN', 6);#Minimum password length
+define('GUTUMA_EMAIL', 'rowanseymour@users.sourceforge.net');#Author email address
+define('GUTUMA_LISTS_DIR', $plxMotor->plxPlugins->aPlugins['gutuma']->listsDir);#Directory where lists are stored
+define('GUTUMA_CONFIG_FILE', GUTUMA_LISTS_DIR.'/inc/config.php');#Configuration file
+define('GUTUMA_TEMP_DIR', GUTUMA_LISTS_DIR.'/tmp');#sys_get_temp_dir()#Directory where temp message files are stored
+define('GUTUMA_TEMP_EXPIRY_AGE', 3*60*60);#The number of seconds from last access before subfolders/files are deleted from the temp directory
+define('GUTUMA_PAGE_SIZE', 10);#The number of items per page in lists of addresses
+define('GUTUMA_MAX_ADDRESS_LEN', 320);#The max allowable length in characters of an email address
+define('GUTUMA_TINYMCE_COMPRESSION', FALSE);#Enables gzip compression of the TinyMCE scripts
 if(!defined('RPATH')){//semble inutilisé
 	if (class_exists('gu_config')){
 		gu_config::reload();
@@ -47,10 +47,10 @@ if(!defined('RPATH')){//semble inutilisé
 		exit();
 	}
 }
-// Demo mode restrictions
-define('GUTUMA_DEMO_MAX_LIST_SIZE', 100); // Maximum number of addresses per list
-define('GUTUMA_DEMO_MAX_NUM_LISTS', 10); // Maximum number of lists
-// Apparently IIS5 servers don't populate PHP_SELF
+#Demo mode restrictions
+define('GUTUMA_DEMO_MAX_LIST_SIZE', 100);#Maximum number of addresses per list
+define('GUTUMA_DEMO_MAX_NUM_LISTS', 10);#Maximum number of lists
+#Apparently IIS5 servers don't populate PHP_SELF
 $_SERVER['PHP_SELF'] = (isset($_SERVER['PHP_SELF'])) ? $_SERVER['PHP_SELF'] : $_SERVER['SCRIPT_NAME'];
 $htaccess = "Allow from none\n";
 $htaccess .= "Deny from all\n";
@@ -59,19 +59,19 @@ $htaccess .= "order allow,deny\n";
 $htaccess .= "deny from all\n";
 $htaccess .= "</Files>\n";
 $htaccess .= "Options -Indexes\n";
-if (!is_dir(GUTUMA_LISTS_DIR)){// Make lists directory
+if (!is_dir(GUTUMA_LISTS_DIR)){#Make lists directory
 	mkdir(GUTUMA_LISTS_DIR);
 	touch(GUTUMA_LISTS_DIR.'index.html');
 	touch(GUTUMA_LISTS_DIR.'/.htaccess');
 	file_put_contents(GUTUMA_LISTS_DIR.'/.htaccess', $htaccess);
 }
-if (!is_dir(GUTUMA_LISTS_DIR.'/inc')){// Make config directory
+if (!is_dir(GUTUMA_LISTS_DIR.'/inc')){#Make config directory
 	mkdir(GUTUMA_LISTS_DIR.'/inc');
 	touch(GUTUMA_LISTS_DIR.'/inc/index.html');
 	touch(GUTUMA_LISTS_DIR.'/inc/.htaccess');
 	file_put_contents(GUTUMA_LISTS_DIR.'/inc/.htaccess', $htaccess);
 }
-if (!is_dir(GUTUMA_TEMP_DIR)){// Make tempo directory
+if (!is_dir(GUTUMA_TEMP_DIR)){#Make tempo directory
 	mkdir(GUTUMA_TEMP_DIR);
 	touch(GUTUMA_TEMP_DIR.'/index.html');
 	touch(GUTUMA_TEMP_DIR.'/.htaccess');
@@ -83,8 +83,8 @@ if (!is_dir(GUTUMA_TEMP_DIR)){// Make tempo directory
  * @param bool $install_redirect TRUE if we should redirect when install/update required
  */
 function gu_init($validate_session = TRUE, $install_redirect = TRUE){
-// If settings couldn't be loaded we need to run the install script or if settings could be
-// loaded but version number is less than the built version number, we need to update
+#If settings couldn't be loaded we need to run the install script or if settings could be
+#loaded but version number is less than the built version number, we need to update
 	if (!gu_config::load() || gu_config::get_version() < GUTUMA_VERSION_NUM){
 		if ($install_redirect){
 			header('Location: '.absolute_url('install.php'));
@@ -93,7 +93,7 @@ function gu_init($validate_session = TRUE, $install_redirect = TRUE){
 	}
 	if ($validate_session){
 		if (!gu_session_authenticate()){
-			// If we don't have a stored valid session, redirect to the login page
+			#If we don't have a stored valid session, redirect to the login page
 			header('Location: '.absolute_url('login.php').'?ref='.urlencode(absolute_url()));
 			exit;
 		}
@@ -147,7 +147,7 @@ function gu_success($msg){
  * Pass an empty string to $_SESSION['glang'] if you want to add new translations
  * Otherwise, new translation will not be taken into account until session die
  */
-// $_SESSION['glang'] = '';
+#$_SESSION['glang'] = '';
 
 /**
  * Convertis une cle de traduction en langage traduit

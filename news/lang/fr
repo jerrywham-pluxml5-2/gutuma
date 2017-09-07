@@ -125,7 +125,7 @@ Save[::->]Enregistrer
 Edit[::->]Modifier
 Preview[::->]Aperçu
 Send[::->]Envoyer
-Address book[::->]Carnet d'adresses
+Address book[::->]Listes
 Add[::->]Ajouter
 To[::->]Destinataire
 Subject[::->]Sujet
@@ -141,7 +141,7 @@ Address <b><i>%</i></b> added to list[::->]L'adresse <b><i>[%%]</i></b> a été 
 You must enter a valid email address[::->]Vous devez entrer une adresse de courriel valide
 Are you sure you want to remove this address?[::->]Êtes vous sûr de vouloir supprimer cette adresse ?
 Back[::->]Retour
-If the list is marked as private then people cannot subscribe to it, and it will not be listed on the default subscribe page[::->]Si la liste est qualifiée de privée alors le public ne pourra pas s'y abonner et elle ne sera pas listée par défaut sur la page de souscription
+If the list is marked as private then people cannot subscribe to it, and it will not be listed on the default subscribe page.[::->]Si la liste est qualifiée de privée alors il sera impossible au public de s'y abonner et elle sera occulté de la page de souscription globale.
 Subscribers[::->]Abonnés
 Search[::->]Rechercher
 Clear[::->]Effacer
@@ -226,7 +226,17 @@ Your login details[::->]Vos identifiants de connexion
 Administrator username[::->]Pseudonyme de l'administrateur
 Change administrator password[::->]Modifier le mot de passe administrateur
 Retype[::->]Confirmer
-The following selector list is for choose one of all Theme's available in subfolders of Gutuma.[::->]Le selecteur suivant permet de choisir le thème graphique utilisé par Gutuma. Liste les dossiers de /news/themes/.
+Menu and toolbar[::->]Menu et Barre d'outils
+Only toolbar[::->]Barre d'outils seule
+Only menu[::->]Menu seul
+Editor Off[::->]Éditeur inactif
+Provided by the web browser[::->]Fourni par le navigateur web
+Off[::->]Inactif
+The following selector choose text editor comportement when compose a newsletter.[::->]Le selecteur suivant permet de choisir le comportement de l'éditeur de texte lorsque de l'écriture d'une infolettre.
+Text editor[::->]Éditeur de texte
+The following selector choose spell checker comportement.[::->]Le selecteur suivant permet de choisir le comportement du Correcteur orthographique.
+Spell check[::->]Correcteur orthographique
+The following selector list is for choose one of all Theme's available in subfolders of Gutuma.[::->]Le selecteur suivant permet de choisir le thème graphique utilisé par Gutuma. Liste les dossiers de /news/themes/*
 Name of the theme[::->]Nom du thème
 Gutuma will first try to use an SMTP server to send messages. If that fails, <code>Sendmail</code> may be tried followed by PHP <code>mail()</code>[::->]Gutuma essaiera d'utiliser en premier le serveur SMTP pour envoyer les messages. S'il échoue, <code>Sendmail</code> sera utilisé ensuite, puis la fonction PHP <code>mail()</code>.
 Use SMTP[::->]Utiliser SMTP
@@ -235,7 +245,7 @@ SMTP server[::->]Serveur SMTP
 SMTP port[::->]Port SMTP
 Encryption[::->]Mode de cryptage
 None[::->]Aucun
-SMTP username<[::->]Pseudonyme SMTP
+SMTP username[::->]Pseudonyme SMTP
 SMTP password[::->]Mot de passe SMTP
 If Sendmail is available on your server you can enable it here[::->]Si Sendmail est disponible sur votre serveur, vous pouvez l'activer d'ici
 Use Sendmail[::->]Utiliser Sendmail
@@ -343,7 +353,7 @@ Sending failed:<br />[::->]L&#039;envoi a échoué :<br />
 //************************************************************************
 Update to Gutuma [::->]Mise à jour du module d'infolettres Gutuma 
 Install Gutuma [::->]Installation du module d'infolettres Gutuma
-Congratulations! You can now login and begin sending newsletters. Don't forget to check the installation checklist on the home page for any further steps you need to take.[::->]Félicitations ! Vous pouvez dès à présent vous connecter et commencer à envoyer vos courriels. N'oubliez pas de vérifier les paramètres d'installation sur la page dédiée pour les prochaines étapes qui vous seront nécessaires.
+Congratulations! You can now sending newsletters. Don't forget to check the installation checklist on the home page for any further steps you need to take.[::->]Félicitations ! Vous pouvez dès à présent commencer à envoyer vos courriels, veuillez vérifier les réglages de l'installation sur la page dédiée sont les prochaines étapes qui vous seront nécessaires.
 For security reasons, this install script has now been deleted from your server.[::->]Pour des raisons de sécurité, ce script d'installation va maintenant être supprimé de votre serveur.
 For security reasons, this install script (<code>install.php</code>) must be deleted from your server.[::->]Pour des raisons de sécurité, ce script d'installation (<code>install.php</code>) doit maintenant être supprimé de votre serveur.
 Login[::->]Connexion

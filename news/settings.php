@@ -17,10 +17,7 @@ if ($_SESSION['profil'] != PROFIL_ADMIN){
 	header('Location:compose.php');
 	exit();
 }
-$plxAdmin = plxAdmin::getInstance();//plxMotor::getInstance();
-$profil = $plxAdmin->aUsers[$_SESSION['user']];
-$plxPlugin = $plxShow->plxMotor->plxPlugins->getInstance('gutuma');
-
+$plxPlugin = $plxMotor->plxPlugins->getInstance('gutuma');
 gu_init();
 $section = is_get_var('section') ? get_get_var('section') : 'general';
 $section_titles['general'] = t("General settings");
@@ -32,6 +29,8 @@ if (is_post_var('save_settings')){// Save settings
 		gu_config::set('application_name', get_post_var('application_name'));
 		gu_config::set('admin_name', get_post_var('admin_name'));
 		gu_config::set('admin_email', get_post_var('admin_email'));
+		gu_config::set('spell_check', get_post_var('spell_check'));
+		gu_config::set('tiny_tools', get_post_var('tiny_tools'));
 		gu_config::set('theme_name', get_post_var('theme_name'));
 /*
 		gu_config::set('admin_username', get_post_var('admin_username'));

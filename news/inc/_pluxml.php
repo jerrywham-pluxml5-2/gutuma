@@ -17,27 +17,19 @@
 */
 # Définition des constantes
 define('__GDS__', DIRECTORY_SEPARATOR);//Gutuma Dir. Sep. 4 nux|dow
-$gu_sub = explode('plugins',$_SERVER['DOCUMENT_ROOT'].$_SERVER['PHP_SELF']);
-$gu_sub = str_replace($_SERVER['DOCUMENT_ROOT'].__GDS__,'',$gu_sub[0]);//4 found subdir where plx is
 $gdgt='';
 if(strstr($_SERVER['PHP_SELF'],'gadgets.js.php')){//4 gadget call
 	$gdgt='..'.__GDS__;
 	header('Content-Type: application/x-javascript');
 }
-#define('PLX_ROOT',$gdgt.'..'.__GDS__.'..'.__GDS__.'..'.__GDS__);
-#var_dump(strstr(realpath(PLX_ROOT.'index.php'),$_SERVER['DOCUMENT_ROOT']));//false == symlink (maybe)
-//where is good conf if gutuma link is in an other PluXml
-//~ var_dump(realpath($_SERVER['DOCUMENT_ROOT'].'index.php'));//false == PluXml not in root folder (maybe)
-define('PLX_ROOT',isset($_SERVER['DOCUMENT_ROOT'])?$_SERVER['DOCUMENT_ROOT'].__GDS__.$gu_sub:$gdgt.'..'.__GDS__.'..'.__GDS__.'..'.__GDS__);
-define('PLX_CORE', PLX_ROOT.'core'.__GDS__);
 define('PLX_GROOT', $gdgt.'..'.__GDS__.'..'.__GDS__.'..'.__GDS__);// GROOT 4 SYMBIOLINK
 define('PLX_MORE', PLX_GROOT.'core'.__GDS__);
-
-//PLX_ROOT détermine le chemin des parms de plx XMLFILE_PARAMETERS //var_dump($_SERVER);exit;
-//~ str_replace('js/gadgets.js.php','',__FILE__).'/inc/gutuma.php';//IN gadgets
-//~ $gu = 'plugins'.__GDS__.'gutuma'.__GDS__;//.'index.php';
-//~ ECHO realpath(PLX_GROOT.'config.php');
-//~ ECHO realpath(PLX_MORE.'lib'.__GDS__.'config.php');//exit;
+//PLX_ROOT détermine le chemin des params de XMLFILE_PARAMETERS * uncomment this 3 lines (below) if gutuma is symlinked in an other PluXml (I use it 4 my dev Thom@s)
+#$gu_sub = explode('plugins',$_SERVER['DOCUMENT_ROOT'].$_SERVER['PHP_SELF']);
+#$gu_sub = str_replace($_SERVER['DOCUMENT_ROOT'].__GDS__,'',$gu_sub[0]);//4 found subdir where plx is
+#define('PLX_ROOT',$_SERVER['DOCUMENT_ROOT'].__GDS__.$gu_sub);// OR PLX_GROOT
+define('PLX_ROOT', PLX_GROOT);# Normal config, gutuma is in plugins folder 4 real * comment this line if gutuma is symlinked & in an other PluXml
+define('PLX_CORE', PLX_ROOT.'core'.__GDS__);
 
 include(PLX_ROOT.'config.php');
 include(PLX_CORE.'lib'.__GDS__.'config.php');

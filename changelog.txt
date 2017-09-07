@@ -1,15 +1,27 @@
 Gutuma 4 PluXml
 Todo: gestion des tableaux par un datatablejs (vanilla) !?
-bug: affichage: lors du choix du menu "informations" (index.php) le menu article de plux est actif (en plus de celuis d'info)
 eval($plxAdmin->plxPlugins->callHook('AdminTopMenus'));
 verifé: si l'on change le(s) mot(s) de passe dans pluxml, si l'accés au plugin et tjrs valable : a priori oui
 Evol: swiftmailer-5.4.6 pour future integration http://swiftmailer.org
 & si theme default -> use static mode & display (site theme au lieu de celuis d'admin) ou add gutuma logo (top left|center) [une iframe]
 
+##v.1.8.5.plx.5.6  02/09/2017##
+[+] Thèmes & langues retouchés + d'autres subtilités
+[+] Canal de mise a jour officiel lié au dépôt github ::: https://raw.githubusercontent.com/jerrywham-pluxml5-2/gutuma/master/news/up_git.js ::: origine v1.6 => http://gutuma.sourceforge.net/update.js.php
+[+] Convertisseur html_to_text peaufiné
+[+] Arrive direct sur la liste des courriels lorsque l'on change de page (Ajout d'une ancre aux liens << < > >>)
+[+] Paramètres TinyMCE: Désactivé, Barre d'outils (défaut), Menu ou Les 2 ensemble
+[+] Paramètres TinyMCE: Correcteur orthographique du navigateur (activé par défaut)
+Fix: affichage: lors du choix du menu "informations" (index.php) le menu article de plux est actif (en plus de celui d'info) ::: option highlight du lien désactivé (merci PluXml)
+Fix² _pluxml.php crash a l'install du module ::: http://forum.pluxml.org/viewtopic.php?pid=55327#p55327
+:::: Mauvais chemin racine si PluXml est dans un sous dossier
+:::: Mauvaise config de PluXml & gutuma chargé si le dossier du plugin est symbolique (par Exemple, est en réalité dans un autre PluXml) voir l'aide pour faire les modifs nécessaires au fichier news/inc/_pluxml.php ;-)
+
 ##v.1.8.4.P56  01/09/2017##
 [+] tinyMCE en v4.6.6 + la langue de l'éditeur est celle de l'utilisateur + plugins activé
 [+] jsHash mis a jours en 2.2 ::: http://pajhome.org.uk/crypt/md5/scripts.html
 [+] js minifiés avec jscompress.com et utlisés
+Fix Le fichier de config est écrit en clair un bref instant sur le serveur pendant la sauvegarde des paramétres (core)
 Fixs _pluxml.php crash a l'install du module ::: http://forum.pluxml.org/viewtopic.php?pid=55297#p55297
 :::: Mauvais chemin racine (1ere idée pour dossier symbolique corrigé)
 :::: Serveur autre que Tux

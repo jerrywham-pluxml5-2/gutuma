@@ -27,21 +27,21 @@
 <?php gu_theme_messages(); ?>
 <div class="formfieldset">
 	<div class="formfield">
-		<div class="formfieldcomment"><?php echo t('If the list is marked as private then people cannot subscribe to it, and it will not be listed on the default subscribe page');?></div>
+		<div class="formfieldcomment"><?php echo t('If the list is marked as private then people cannot subscribe to it, and it will not be listed on the default subscribe page.');?></div>
 	</div>
 </div>
 <h3><?php echo t('Subscribers');?></h3>
 <div class="pager">
-	<div style="float: right" class="formfieldfoat">
+	<div style="" class="formfieldfloat float-right">
 		<form method="get" name="filter_form" id="filter_form" action="" onsubmit="filter_addresses(this); return false;">
 			<input name="filter_list_name" type="text" class="textfield" id="filter_list_name" value="<?php echo $filter; ?>" placeholder="<?php echo t('Search');?>" />
-			<input id="filter_submit" name="filter_submit" type="submit" class="blue" value="<?php echo t('Search');?>" />&nbsp;<input id="filter_clear" name="filter_clear" type="button" class="red" value="<?php echo t('Clear');?>" onclick="reset_filter(this.form);" />
+			<input id="filter_submit" name="filter_submit" type="submit" class="blue" value="<?php echo t('Search');?>" /><?php if (!empty($filter)){?>&nbsp;<input id="filter_clear" name="filter_clear" type="button" class="red" value="<?php echo t('Clear');?>" onclick="reset_filter(this.form);" /><?php } ?>
 		</form>
 	</div>
-	<div style="float: left" class="formfieldfoat">
+	<div style="" class="formfieldfloat float-left">
 		<form method="post" name="add_form" id="add_form" action="" onsubmit="return check_add(this);">
 			<input name="new_address" type="text" class="textfield" id="new_address" placeholder="<?php echo t('Add');?>: mail@exemple.com" />
-			<input name="add_address" type="submit" id="add_address" class="green" value="<?php echo t('Add');?>" />		
+			<input name="add_address" type="submit" id="add_address" class="green" value="<?php echo t('Add');?>" />
 		</form>
 	</div>
 </div>

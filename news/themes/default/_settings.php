@@ -58,6 +58,16 @@
 		</div>
 -->
 		<div class="formfield">
+			<div class="formfieldcomment"><?php echo t('The following selector choose text editor comportement when compose a newsletter.');?></div>
+			<div class="formfieldlabel" title="tinyMCE"><?php echo t('Text editor');?>:</div>
+			<div class="formfieldcontrols"><?php gu_theme_list_control('tiny_tools', array(array('all',t('Menu and toolbar')) , array('tools',t('Only toolbar')) , array('menu',t('Only menu')) , array('no',t('Editor Off')))); ?></div>
+		</div>
+		<div class="formfield">
+			<div class="formfieldcomment"><?php echo t('The following selector choose spell checker comportement.');?></div>
+			<div class="formfieldlabel"><?php echo t('Spell check');?>:</div>
+			<div class="formfieldcontrols"><?php gu_theme_list_control('spell_check', array(array('browser',t('Provided by the web browser')) , array('no',t('Off')))); ?></div>
+		</div>
+		<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('The following selector list is for choose one of all Theme\'s available in subfolders of Gutuma.');?></div>
 			<div class="formfieldlabel"><?php echo t('Name of the theme');?>:</div>
 			<div class="formfieldcontrols"><?php
@@ -107,7 +117,7 @@
 			<div class="formfieldlabel"><?php echo t('Encryption');?>:</div>
 			<div class="formfieldcontrols"><?php gu_theme_list_control('smtp_encryption', array(array('', t('None')), array('SSL', 'SSL'), array('TLS', 'TLS'))); ?></div>
 			<div class="formfielddivider"></div>
-			<div class="formfieldlabel"><?php echo t('SMTP username<');?>:</div>
+			<div class="formfieldlabel"><?php echo t('SMTP username');?>:</div>
 			<div class="formfieldcontrols"><?php gu_theme_text_control('smtp_username'); ?></div>
 			<div class="formfielddivider"></div>
 			<div class="formfieldlabel"><?php echo t('SMTP password');?>:</div>

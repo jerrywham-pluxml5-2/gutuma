@@ -42,9 +42,10 @@ if (count($lists) > 0) {
 }
 ?>
 		<tr id="row_empty" style="display: <?php echo (count($lists) == 0) ? 'table-row' : 'none'; ?>"><td colspan="4" class="emptyresults"><?php echo t('No lists');?></td></tr>
-	</table> 
+	</table>
 </form>
 <h3><?php echo t('Create new list');?></h3>
+<div class="formfieldcomment"><?php echo t('If the list is marked as private then people cannot subscribe to it, and it will not be listed on the default subscribe page.');?></div>
 <form method="post" name="add_form" id="add_form" action="" onsubmit="gu_list_add(this.new_list_name.value, this.new_list_private.checked); return false;">
 	<div class="menubar">
 		<div style="float: left">
@@ -64,7 +65,7 @@ if (count($lists) > 0) {
 		<div style="float: left"><input name="import_file" type="file" id="import_file" /></div>
 		<div style="clear: both;text-align: left;">
 			<?php echo t('Separate by').'&nbsp;'; gu_theme_list_control('sep', array(array(';',t('Semicolon (;)')),array(',',t('Comma (,)'))),';') ?> &amp;
-			<?php echo t('Ingnore first line');?>&nbsp;<input type="checkbox" id="first" name="first" />
+			<?php echo t('Ingnore first line');?>&nbsp;<input type="checkbox" id="first" name="first" checked="" />
 			<div style="float: right">
 				<input name="import_submit" type="submit" id="import_submit" value="<?php echo t('Import');?>" />
 			</div>
