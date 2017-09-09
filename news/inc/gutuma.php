@@ -28,7 +28,7 @@ define('GUTUMA_DEMO_MODE', FALSE);#Demonstration mode
 define('GUTUMA_TITLE', t('Gutuma Newsletter Management'));#Application title of Gutuma
 define('GUTUMA_URL', 'https://web.archive.org/web/20081228162738/http://ijuru.com/gutuma');#Homepage of Gutuma
 define('GUTUMA_UPDATE_URL', 'https://raw.githubusercontent.com/jerrywham-pluxml5-2/gutuma/master/news/up_git.js?ver='.GUTUMA_VERSION_NUM);
-define('GUTUMA_ENCODING', 'UTF-8');#Content encoding
+define('GUTUMA_ENCODING', PLX_CHARSET);#Content encoding 'UTF-8'
 define('GUTUMA_PASSWORD_MIN_LEN', 6);#Minimum password length
 define('GUTUMA_EMAIL', 'rowanseymour@users.sourceforge.net');#Author email address
 define('GUTUMA_LISTS_DIR', $plxMotor->plxPlugins->aPlugins['gutuma']->listsDir);#Directory where lists are stored

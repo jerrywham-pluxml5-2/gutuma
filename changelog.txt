@@ -1,9 +1,22 @@
 Gutuma 4 PluXml
 Todo: gestion des tableaux par un datatablejs (vanilla) !?
+Le smtp_password est à crypté dans la conf, et décripté pour l'envoi des news, prévoir la MAJ ou prévenir l'admin. (reverse engineering protect)
 eval($plxAdmin->plxPlugins->callHook('AdminTopMenus'));
-verifé: si l'on change le(s) mot(s) de passe dans pluxml, si l'accés au plugin et tjrs valable : a priori oui
+verifé: si l'on change le(s) mot(s) de passe dans pluxml, si l'accés au plugin et tjrs valable : a priori oui, c'est toujours les id de l'admin (il y a que le nom d'utilisateur qui est différent)
 Evol: swiftmailer-5.4.6 pour future integration http://swiftmailer.org
 & si theme default -> use static mode & display (site theme au lieu de celuis d'admin) ou add gutuma logo (top left|center) [une iframe]
+Prévoir en cas de suppression d'un utilisateur, supprimer le param (user activé ou deésactivé)
+Possibilité d'utiliser les plugins éditeur de texte Tiers (WYSIWY(M|G)) a la place de celuis inclus (TyniMCe) Pour plus de possibilité et de réglages (accés aux medias manager, ...)
+
+
+##v.1.8.6.plx.5.6  09/09/2017##
+[+] Retouche legere des notifs
+[+] GUTUMA_ENCODING = PLX_CHARSET
+[+] Les antislash (\) remplacés par des slashs (/) dans les variable textes de config ::: Les antislash (qui sont contre le guitariste) sont remplacé par des slashs (qui sont pour) afin de proteger le fichier de config lorsque l'on applique de nouveaux paramétres ::: Par ex.: Si le nom de l'application était My-NewsLetter\ cela rendait la lecture du fichier de config impossible, voir ci-après
+Fix: Serveur win:
+:::: La racine ($gu_config['ROOT']) pose probleme après l'install du module, la derniere apostrophe est echapé par un antislash qui empeche d'accédé au reste du code évalué de $gu_conf (ici user) #*# $gu_config['ROOT'] = 'E:\htdocs\PluXml-5.6\myPluXml\plugins\gutuma\news\'; #*# (merci cpalo)
+:::: $gu_config['ROOT'] inutile et pose probleme sous windows commenté (todo: a supprimé dan setting.php)
+
 
 ##v.1.8.5.plx.5.6  02/09/2017##
 [+] Thèmes & langues retouchés + d'autres subtilités

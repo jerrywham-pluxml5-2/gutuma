@@ -129,7 +129,9 @@ hr{
 	min-height: 300px;
 }
 .notification {
-	margin: 0px 1rem 0px 0px;
+	margin: 0px 1rem;
+	left: 0;
+	right: 0px;
 }
 #errormsg{
 	top: 6.6rem;

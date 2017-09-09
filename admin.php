@@ -23,8 +23,8 @@ $ok_config = FALSE;
 if (file_exists($plxPlugin->listsDir.'/inc/config.php')){//Le fichier de config existe donc le module a été installé
 	$ok_config = TRUE;
 	// Récupération de la config de Gutuma
-	// Version encodée
-	eval(base64_decode(substr(file_get_contents($plxPlugin->listsDir.'/inc/config.php'),9,-5)));
+	//echo base64_decode(substr(file_get_contents($plxPlugin->listsDir.'/inc/config.php'),9,-5));// désencodé & affiché, si besoin est
+	eval(base64_decode(substr(file_get_contents($plxPlugin->listsDir.'/inc/config.php'),9,-5)));//var_dump($gu_config);exit;
 	// Version décodée
 	//eval(substr(file_get_contents($plxPlugin->listsDir.'/inc/config.php'),7,-4));
 }
