@@ -25,16 +25,30 @@ INCOMPATIBILITÉES :
 CSSNOCACHE (DOUBLE INSTANCE ERREUR)
 
 NOTES :
+add in url: &DEBUG=1
+
 is_post_var('msg_html')#aperçu
 is_post_var('msg_text')text aréa editor name (compose.php & ailleurs ... )
 
-
-##v.1.8.7.plx.5.6 ##/##/#### ##
+##v.1.8.7.plx.5.6 16/03/2018##
+fixé Unable to open message file[::->]Impossible d'ouvrir le fichier de message (surment car le dossier (vide) est tjrs présent
+ erreur de fileLock exclusive flock in free.fr 
+ Unable to lock newsletter recipient list[::->]Impossible de verrouiller la liste des destinataires de l'infolettre
+ lors de l'envoi de newsletter
+ http://manpagesfr.free.fr/man/man2/flock.2.html
+ Un appel flock() peut bloquer si un verrou incompatible est tenu par un autre processus. Pour que la requête soit non bloquante, il faut inclure LOCK_NB (par un OU binaire « | » ) avec la constante précisant l'opération. 
+[+] suppression des tmp free 
+[+] misc(.min).js gu_browser_keep_save_pass() & call onsbmit setting form 2 block savepassbrowserbox
+[+] function gu_theme_password_control($setting_name,$option=false) add option 4 add autocomplete="off"
+[+] gu_sender_test error return system (swift 4 have no multiple?)
+[+] debugmsg default theme
 [+] Retouche légère du style des boutons principaux
 [+] Redirige vers la page "erreur" tout appel a une page de Gutuma (/news/*) si le plugin est désactivé
 [+] Hook admin si dans l'admin avec PLX_ADMIN
 [+] Infobulle du Menu Admin plus explicite (user friendly) // Change tooltip menu with lang var
 [+] public static function set_adehsion($key)
+Fix: gutuma settings ::: Test Sendmail never called (FALSE O LIEU DE TRUE)
+Fix: _settings pass smtp visible: theme gutuma ::: gu_theme_[text|password]_control()
 Fix: misc.php check_email compatible free.fr (filter_var() absente)
 Fix: Double News au lien de confirmation d'inscription (Merci Jack31) ::: http://forum.pluxml.org/viewtopic.php?pid=55753#p55753
 Fix: Free [PHP.5.1.6] utilise plxUtils::checkMail() si filter_var() indéfinie + remise en route du filtre originel de Gutuma en dernier recours.

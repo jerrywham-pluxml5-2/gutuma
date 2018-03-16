@@ -123,9 +123,10 @@ hr{
 	margin-top:0.1618em;
 	margin-bottom:0;
 }
-#add_list{
-	padding-bottom: 2em;
+#list_name,#new_list_name{
+	color: initial;
 }
+#add_list{}
 /* Other objects */
 #content{
 	padding: 10px;
