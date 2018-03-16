@@ -60,7 +60,7 @@ function gu_subscription_process($address, &$list_ids, $subscribe){
 				$subject = '['.$subject_prefix.'] '.($subscribe ? t('Subscription') : t('Unsubscription')).t(' confirmation');
 				$action = ($subscribe ? t('subscribed to') : t('unsubscribed from'));
 				$text = t("This is an automated message to confirm that you have been % the following lists:",array($action))."\n\n* ".implode("\n* ", $succ_list_names)."\n\n";
-				$text .= t('To change your subscriptions visit: ').absolute_url('news/subscribe.php').'?addr='.$address."\n\n";
+				$text .= t('To change your subscriptions visit: ').absolute_url('subscribe.php').'?addr='.$address."\n\n";
 				$text .= t('Please do not reply to this message. Thank you.');
 				$mailer->send_mail($address, $subject, $text);
 			}

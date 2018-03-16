@@ -7,6 +7,7 @@
  * @author	Cyril MAGUIRE
  **/
 	$LANG = array(
+		'L_ADMIN_TITLE_MENU'    =>	'Gérer les cyberlettres avec Gutuma',
 		'L_GUTUMA_INSTALL'      =>	'Installer le module',
 		'L_WRITE_NEWS'          =>	'Accéder au module d&#039;infolettre',
 		'L_ACTIVATE_USER'       =>	'Activer l\'utilisateur',

@@ -12,9 +12,9 @@
  * @author	Cyril MAGUIRE
 */
 if(!defined('PLX_ROOT')) exit;
-$plxAdmin = @plxAdmin::getInstance();
+global $plxMotor;// = @plxMotor::getInstance();
 ?><!DOCTYPE html>
-<html lang="<?php echo $plxAdmin->aConf['default_lang'] ?>">
+<html lang="<?php echo $plxMotor->aConf['default_lang'] ?>">
 <head>
 <meta http-equiv="content-type" content="text/html;charset=<?php echo GUTUMA_ENCODING; ?>" />
 <meta name="robots" content="none">

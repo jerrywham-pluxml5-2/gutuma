@@ -91,7 +91,7 @@ if ($tiny_tools != 'no'){//tinyMCE
 	$mce_too1 = 'fullscreen | save | insert | undo redo';#1
 	$mce_too1.= ' | cut copy paste | pastetext | searchreplace';#1 pasteword (old?)
 	$mce_too1.= ' | visualblocks | charmap | emoticons';#1 cleanup (old?)
-	$mce_too1.= ' | image | media';#1 iespell (old?)
+	$mce_too1.= ' | table | image | media';#1 iespell (old?) toc?
 	$mce_too1.= ' | link unlink | anchor';#1
 	$mce_too1.= ' | forecolor backcolor';#1 colorpicker?
 	$mce_too1.= ' | blockquote hr';#1
@@ -112,8 +112,22 @@ if ($tiny_tools != 'no'){//tinyMCE
 			$tiny_opt .= "
 		toolbar: '".$mce_too1." | ".$mce_too2." | ".$mce_too3."',".PHP_EOL;//v4 emulated of old dvanced theme
 	}
+		echo '<style style="display:none;">
+/* Tiny theme skins/lightgray */
+.mce-menubtn.mce-fixed-width span{width:initial !important;max-width:90px}
+.mce-btn button {border: 0px solid #eee;}
+.mce-menubtn button:hover .mce-txt,.mce-btn button:hover,.mce-btn:hover .mce-ico{color:#efefef;background-color:#555;}
+/* PluCss */
+div.mce-fullscreen{z-index:800;}
+img {height: auto !important;max-width: 100% !important;}
+.in-action-bar {z-index: 9999 !important;}
+/* cache le menu principal de PluXml en plein écran (mobile) */
+@media (max-width:767px){div.mce-fullscreen{z-index: 10000;}}
+/* shortcuts codemirror table */
+.mce-container.mce-fullscreen table {border-collapse: initial;}
+</style>'.PHP_EOL;
 ?>
-<script type='text/javascript' src='js/tinymce/tinymce.min.js?v466'></script>
+<script type='text/javascript' src='js/tinymce/tinymce.min.js?v472c'></script>
 <script type='text/javascript'>
 	tinyMCE.init({// General options
 		mode : 'textareas',
@@ -123,11 +137,12 @@ if ($tiny_tools != 'no'){//tinyMCE
 		language: '<?php echo $_SESSION['lang'] ?>',
 		relative_urls: false,
 		remove_script_host: false,
+		paste_data_images: true,
 		plugins : '<?php echo $mce_plug ?>',<?php echo $tiny_opt.$spell_opt ?>
 		// Example word content CSS (should be your site CSS) this one removes paragraph margins
 		content_css : 'themes/gutuma/editor.css',
 		save_onsavecallback: function () { document.getElementById('save_submit').click(); },//Fix : on save normal event call window.onbeforeunload & launch alert
-		setup: function(ed){ ed.on('change',function(e){ gu_set_modified(true); }); }
+		setup: function(ed){ ed.on('change',function(e){ gu_set_modified(true); }); },
 	});
 </script>
 <?php

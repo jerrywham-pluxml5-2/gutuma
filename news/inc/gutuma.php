@@ -157,7 +157,7 @@ function gu_success($msg){
  * @author Idleman, Cyril MAGUIRE
  * @echo String $traduction
  */
-function t($key,$parameters=null,$langage=GU_CONFIG_LANG){
+function t($key,$parameters=null,$langage=GU_CONFIG_LANG){//se retrouve coté public (appel gadget.js.php)
 	if (!defined('RPATH')){
 		define('RPATH',str_replace('inc'.DIRECTORY_SEPARATOR.'gutuma.php','',__FILE__));
 	}

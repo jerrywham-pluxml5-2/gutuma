@@ -9,12 +9,14 @@ class gutuma extends plxPlugin {
 	public $release;
 	public $listsDir;
 	public function __construct($default_lang){
-		$this->listsDir = PLX_ROOT.'data/gutuma';# Définition de l'emplacement des listes de diffusion des newsletters
+		$this->listsDir = PLX_ROOT.'data/'.__CLASS__;# Définition de l'emplacement des listes de diffusion des newsletters
 		parent::__construct($default_lang);# appel du constructeur de la classe plxPlugin (obligatoire)
 		$this->setAdminProfil(PROFIL_ADMIN, PROFIL_MANAGER);# Autorisation d'accès à l'administration du plugin
-# Déclarations des hooks
-		$this->addHook('AdminTopBottom', 'AdminTopBottom');
-		$this->addHook('plxAdminEditUsersXml', 'plxAdminEditUsersXml');
+		if(defined('PLX_ADMIN')) {#Déclaration des hooks pour la zone d'administration
+//			$this->setAdminMenu($this->aInfos['title'], '', $this->getLang('L_ADMIN_TITLE_MENU'));
+			$this->addHook('AdminTopBottom', 'AdminTopBottom');
+			$this->addHook('plxAdminEditUsersXml', 'plxAdminEditUsersXml');
+		}
 	}
 	public function v(){//Méthode qui crée les constantes de version (info.xml) a transmettre à gutuma.php
 		$this->code = $this->getInfo('version');#Friendly v name

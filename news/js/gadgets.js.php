@@ -4,15 +4,15 @@
  * @author Rowan Seymour
  * @copyright This source is distributed under the GPL
  * @file Javascript functions for generating integration gadgets - Default theme main stylesheet
- * @modifications Cyril Maguire
- * 
+ * @modifications Cyril Maguire, Thomas I.
+ *
  * Gutama plugin package
- * @version 1.8.4
- * @date	01/09/2017
+ * @version 1.8.7
+ * @date	03/11/2017
  * @author	Cyril MAGUIRE, Thomas I.
 */
 include_once str_replace('js/gadgets.js.php','',__FILE__).'/inc/gutuma.php';//_if gutuma symlinked folder ::: origin is : include_once '../inc/gutuma.php';
-gu_init(FALSE, FALSE, FALSE);// Initialize Gutuma without validation or housekeeping
+gu_init(FALSE, FALSE);// Initialize Gutuma without validation or housekeeping
 if (!is_get_var('noajax')){
 //This file is a server-side merge of tw-sack.js and gadgets.js.php
 echo file_get_contents('tw-sack.min.js');

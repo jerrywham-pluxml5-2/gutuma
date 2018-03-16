@@ -1,13 +1,46 @@
-Gutuma 4 PluXml
-Todo: gestion des tableaux par un datatablejs (vanilla) !?
-Le smtp_password est à crypté dans la conf, et décripté pour l'envoi des news, prévoir la MAJ ou prévenir l'admin. (reverse engineering protect)
+Gutuma : Cyberlettres pour PluXml 5.6
+TODO :
+Gérer les tableaux avec datatablejs (vanilla) !?
+Historique des cyberlettres avec le liens envoyés et visibles sur le site
+Variables de langues sont en session ['glang']
+Si pluXml est en mono utilisateur : autoinstall/connect ???
+Le smtp_password est à crypté dans la conf, et décrypté pour l'envoi des news, prévoir la MAJ ou prévenir l'admin. (reverse engineering protect)
 eval($plxAdmin->plxPlugins->callHook('AdminTopMenus'));
-verifé: si l'on change le(s) mot(s) de passe dans pluxml, si l'accés au plugin et tjrs valable : a priori oui, c'est toujours les id de l'admin (il y a que le nom d'utilisateur qui est différent)
+verifié: si l'on change le(s) mot(s) de passe dans pluxml, si l'accés au plugin et tjrs valable : a priori oui, c'est toujours les id de l'admin (il y a que le nom d'utilisateur qui est différent)
 Evol: swiftmailer-5.4.6 pour future integration http://swiftmailer.org
-& si theme default -> use static mode & display (site theme au lieu de celuis d'admin) ou add gutuma logo (top left|center) [une iframe]
-Prévoir en cas de suppression d'un utilisateur, supprimer le param (user activé ou deésactivé)
-Possibilité d'utiliser les plugins éditeur de texte Tiers (WYSIWY(M|G)) a la place de celuis inclus (TyniMCe) Pour plus de possibilité et de réglages (accés aux medias manager, ...)
+& si theme default -> use static mode & display (site thème au lieu de celui d'admin) ou add gutuma logo (top left|center) [une iframe]
+Prévoir en cas de suppression d'un utilisateur, supprimer le param (user activé ou désactivé)
+Possibilité d'utiliser les plugins éditeur de texte Tiers (WYSIWY(M|G)) a la place de celuis inclus (TinyMce) Pour plus de possibilité et de réglages (accés aux medias manager, ...)
+Redirigé login.php de gutuma vers plugin?p=gutuma (s'affiche lorsque l'on désactive / réactive le plugin et que l'on se rend sur compose, newsletters.php ,...)
+AdminSettingsAdvanced plxAdminEditConfiguration ... data/gutuma set in PluXml advanced params
+Hook gadget.js.php inclus dans les themes
+public function ThemeEndBody(){#auto gadgets
+echo "\n\t".'<script type="text/javascript" src="'.PLX_PLUGINS.'gutuma/news/js/gadgets.js.php"></script>';
+}
 
+?erreur lors de l'accés chez fe (page login introuvable (une redir qui foire??? a retester (la b2 roule sur un unix like, return to this ??? & update themes) || only 4 local folder???
+?Passer par subscribe.php une fois la nvl installée ;) kit a var_dumpé ;)
+
+INCOMPATIBILITÉES :
+CSSNOCACHE (DOUBLE INSTANCE ERREUR)
+
+NOTES :
+is_post_var('msg_html')#aperçu
+is_post_var('msg_text')text aréa editor name (compose.php & ailleurs ... )
+
+
+##v.1.8.7.plx.5.6 ##/##/#### ##
+[+] Retouche légère du style des boutons principaux
+[+] Redirige vers la page "erreur" tout appel a une page de Gutuma (/news/*) si le plugin est désactivé
+[+] Hook admin si dans l'admin avec PLX_ADMIN
+[+] Infobulle du Menu Admin plus explicite (user friendly) // Change tooltip menu with lang var
+[+] public static function set_adehsion($key)
+Fix: misc.php check_email compatible free.fr (filter_var() absente)
+Fix: Double News au lien de confirmation d'inscription (Merci Jack31) ::: http://forum.pluxml.org/viewtopic.php?pid=55753#p55753
+Fix: Free [PHP.5.1.6] utilise plxUtils::checkMail() si filter_var() indéfinie + remise en route du filtre originel de Gutuma en dernier recours.
+Fix: Notices PLX_MULTILINGUE déjà définie lors de l’appel a getInstance de plxMotor [plxMyMultilingue]
+Fix: Mauvaise url du fichier css personnel [custom_admincss_file]
+Fix: gadget.js gu_init(FALSE, FALSE); (3 FALSE au lieu de 2) Initialize Gutuma without validation or housekeeping
 
 ##v.1.8.6.plx.5.6  09/09/2017##
 [+] Retouche legere des notifs

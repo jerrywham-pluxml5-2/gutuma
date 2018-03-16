@@ -32,12 +32,12 @@ if(isset($_GET["del"]) AND $_GET["del"]=="install") {
 	<link rel="stylesheet" type="text/css" href="<?php echo PLX_MORE ?>admin/theme/plucss.css?ver=<?php echo PLX_VERSION ?>" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<?php echo PLX_MORE ?>admin/theme/theme.css?ver=<?php echo PLX_VERSION ?>" media="screen" />
 	<link rel="icon" href="<?php echo PLX_MORE ?>admin/theme/images/favicon.png" />
-	<?php if(is_file($plxAdmin->urlRewrite().$plxAdmin->aConf['custom_admincss_file'])) echo '	<link rel="stylesheet" type="text/css" href="'.$plxAdmin->urlRewrite().$plxAdmin->aConf['custom_admincss_file'].'" media="screen" />'."\n" ?>
-	<?php
-	if(file_exists($plxAdmin->urlRewrite().$plxAdmin->aConf['racine_plugins'].'admin.css'))
-		echo '	<link rel="stylesheet" type="text/css" href="'.$plxAdmin->urlRewrite().$plxAdmin->aConf['racine_plugins'].'admin.css" media="screen" />'."\n";
+	<?php if(is_file(PLX_GROOT.$plxAdmin->aConf['custom_admincss_file'])) echo '	<link rel="stylesheet" type="text/css" href="'.PLX_GROOT.$plxAdmin->aConf['custom_admincss_file'].'?v=5.6" media="screen" />'."\n" ?>
+<?php
+	if(file_exists(PLX_GROOT.$plxAdmin->aConf['racine_plugins'].'admin.css'))
+		echo '	<link rel="stylesheet" type="text/css" href="'.PLX_GROOT.$plxAdmin->aConf['racine_plugins'].'admin.css" media="screen" />'."\n";
 	if(gu_session_is_valid()){//only valid user
-	?>
+?>
 <!--
 	<script src="<?php echo PLX_MORE ?>lib/functions.js?ver=<?php echo PLX_VERSION ?>"></script>
 	<script src="<?php echo PLX_MORE ?>lib/visual.js?ver=<?php echo PLX_VERSION ?>"></script>

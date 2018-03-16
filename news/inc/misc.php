@@ -6,8 +6,9 @@
  * @file Miscellaneous functions
  *
  * Gutama plugin package
- * @version 1.6
- * @date	01/10/2013
+ * @version 1.8.7
+ * @date	22/11/2017
+ * @author	Thomas INGLES
  * @author	Cyril MAGUIRE
 */
 /**
@@ -93,9 +94,12 @@ function check_email($address){
 // Reject blank addresses and invalid characters
 	if ($address == '' || preg_match('[^0-9a-zA-Z_@\.\[\]\-]', $address))
 		return FALSE;
+	if(function_exists('filter_var'))//Free [PHP.5.1.3] Fix: Call to undefined function filter_var()
+		return filter_var($address, FILTER_VALIDATE_EMAIL);
+	if(method_exists('plxUtils', 'checkMail'))//PluXml
+		return plxUtils::checkMail($address);
 // Allow only one @, which can't be the first character
-// return ((strpos($address, '@') > 0) && (substr_count($address, '@') == 1));
-	return filter_var($address, FILTER_VALIDATE_EMAIL);
+	return ((strpos($address, '@') > 0) && (substr_count($address, '@') == 1));//Gutuma Original
 }
 /**
  * Recursively deletes the specified directory or file

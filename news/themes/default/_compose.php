@@ -28,10 +28,9 @@ if (gu_config::get('admin_email') == '')
 	gu_error(t("A valid admin email must be specified before a newsletter can be sent"));
 
 gu_theme_messages();
-
 ?>
 <form enctype="multipart/form-data" id="send_form" name="send_form" method="post" action="compose.php<?php echo gu_is_debugging() ? '?DEBUG' : ''; ?>"><input type="hidden" id="msg_id" name="msg_id" value="<?php echo $newsletter->get_id(); ?>" /><input type="hidden" id="is_modified" name="is_modified" value="<?php echo $is_modified; ?>" />
-	<div class="menubar in-action-bar section sml-12 med-9 med-offset-3 lrg-10 lrg-offset-2">
+	<div class="menubar in-action-bar<?php echo defined('PLX_MYMULTILINGUE') ? ' multilingue' : '';?> section sml-12 med-9 med-offset-3 lrg-10 lrg-offset-2">
 		<input class="green" name="save_submit" type="submit" id="save_submit" value="<?php echo t('Save');?>" onclick="gu_cancel_unsaved_warning();" />
 <?php if ($preview_mode) { ?>
 		<input class="blue" name="edit_submit" type="submit" id="edit_submit" value="<?php echo t('Edit');?>" onclick="gu_cancel_unsaved_warning();" />

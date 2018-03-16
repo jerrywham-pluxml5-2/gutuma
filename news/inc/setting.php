@@ -24,13 +24,13 @@ class gu_config{
 		return self::$version;
 	}
 	/**
-	 * Gets the value of the specified setting
+	 * Sets the value of the specified setting (only in adhesion plugin)
 	 * @param string $key The setting name
-	 * @return mixed The setting value
+	 * @return no
 	 */
-	public static function get($key){
-		$plxAdmin = defined('PLX_ADMIN')?@plxAdmin::getInstance():@plxMotor::getInstance();
-		//~ $plxAdmin = $GLOBALS['plxMotor'];
+	public static function set_adehsion($key){
+		//$plxAdmin = defined('PLX_ADMIN')?@plxAdmin::getInstance():@plxMotor::getInstance();
+		$plxAdmin = $GLOBALS['plxMotor'];
 		if (isset($plxAdmin->plxPlugins->aPlugins["adhesion"])){
 			$adhesion = $plxAdmin->plxPlugins->aPlugins["adhesion"];
 			$admin = $adhesion->getParam('nom_asso');
@@ -46,6 +46,16 @@ class gu_config{
 				}
 			}
 		}
+		//return self::$values[$key];
+	}
+	/**
+	 * Gets the value of the specified setting
+	 * @param string $key The setting name
+	 * @return mixed The setting value
+	 */
+	public static function get($key){
+		if ($key == 'admin_email' OR $key == 'admin_name')
+			self::set_adehsion($key);
 		return self::$values[$key];
 	}
 	/**
@@ -113,9 +123,9 @@ class gu_config{
 	 * Loads settings - default values are overridden by user's config file if it exists
 	 */
 	public static function load(){
-		$plxAdmin = defined('PLX_ADMIN')?@plxAdmin::getInstance():@plxMotor::getInstance();
-		$profil = $plxAdmin->aUsers['001'];//default 4 1st install
-		if (empty($profil['email']) && strpos($plxAdmin->path_url,'news/ajax.php') === FALSE  && strpos($plxAdmin->path_url,'news/js/gadgets.js.php') === FALSE && strpos($plxAdmin->path_url,'news/subscribe.php') === FALSE){
+		global $plxMotor;//code is in perpetual movement//$plxMotor = defined('PLX_ADMIN')?plxAdmin::getInstance():plxMotor::getInstance();
+		$profil = $plxMotor->aUsers['001'];//default 4 1st install
+		if (empty($profil['email']) && strpos($plxMotor->path_url,'news/ajax.php') === FALSE  && strpos($plxMotor->path_url,'news/js/gadgets.js.php') === FALSE && strpos($plxMotor->path_url,'news/subscribe.php') === FALSE){
 			header('Location: '.PLX_MORE.'admin/profil.php');
 			exit;
 		}

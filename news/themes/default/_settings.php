@@ -19,12 +19,13 @@
 		<a href="settings.php" class="button<?php echo ($section == 'general') ? ' blue' : ''; ?>"><?php echo t('General');?></a>
 		<a href="settings.php?section=transport" class="button<?php echo ($section == 'transport') ? ' blue' : ''; ?>"><?php echo t('Transport');?></a>
 		<a href="settings.php?section=messages" class="button<?php echo ($section == 'messages') ? ' blue' : ''; ?>"><?php echo t('Messages');?></a>
-		<br />
-<?php if ($section == 'transport'){ ?>
-		<input name="test_settings" type="submit" id="test_settings" class="orange" value="<?php echo t('Test');?>" />
-<?php } ?>
-		<input name="save_settings" type="submit" id="save_settings" class="green" value="<?php echo t('Save');?>" />
 	</p>
+</div>
+<div class="menubar in-action-bar<?php echo defined('PLX_MYMULTILINGUE') ? ' multilingue' : '';?> section sml-12 med-9 med-offset-3 lrg-10 lrg-offset-2">
+<?php if ($section == 'transport'){ ?>
+	<input name="test_settings" type="submit" id="test_settings" class="orange" value="<?php echo t('Test');?>" />
+<?php } ?>
+	<input name="save_settings" type="submit" id="save_settings" class="green" value="<?php echo t('Save');?>" />
 </div>
 <?php gu_theme_messages(); ?>
 	<div class="formfieldset">

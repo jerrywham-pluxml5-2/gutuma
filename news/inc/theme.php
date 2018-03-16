@@ -5,13 +5,12 @@
  * @copyright This source is distributed under the GPL
  * @file Theme functions
  * @modifications Cyril Maguire
- */
- /* Gutama plugin package
+ * Gutama plugin package
  * @version 1.6
  * @date	01/10/2013
  * @author	Cyril MAGUIRE
 */
- 
+
 /**
  * Outputs the start of the site-wide theme
  */

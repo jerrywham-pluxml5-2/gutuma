@@ -7,6 +7,7 @@
  * @author	Cyril MAGUIRE
  **/
 	$LANG = array(
+		'L_ADMIN_TITLE_MENU'    =>	'Manage newsletters with Gutuma',
 		'L_GUTUMA_INSTALL'      =>	'Install module',
 		'L_WRITE_NEWS'          =>	'Go to the newsletters module',
 		'L_ACTIVATE_USER'       =>	'Activate user',
