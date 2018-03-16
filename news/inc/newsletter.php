@@ -7,9 +7,9 @@
  * @modifications Cyril Maguire
  *
  * Gutama plugin package
- * @version 1.6
- * @date	01/10/2013
- * @author	Cyril MAGUIRE
+ * @version 1.8.7
+ * @date	16/03/2018
+ * @author	Cyril MAGUIRE, Th0m@s
 */
 define('FILE_MARKER', "<?php die(); ?>\n");
 define('MESSAGE_FILE', 'msg.php');
@@ -223,8 +223,23 @@ class gu_newsletter{
 		$fh = @fopen($dir.'/'.RECIPIENTS_FILE, 'r+');// Open recipient list file
 		if ($fh == FALSE)
 			return gu_error(t('Unable to open newsletter recipient file'), ERROR_EXTRA);
-		if (!flock($fh, LOCK_EX))
+		try {//free.fr fix
+			flock($fh, LOCK_EX | LOCK_NB);
+		} catch (Exception $e) {
+			var_dump('Exception reçue : ',  $e->getMessage(), "\n",$e);//exit;
 			return gu_error(t('Unable to lock newsletter recipient list'), ERROR_EXTRA);
+		}
+
+/*
+		if (!flock($fh, LOCK_EX | LOCK_NB)){//free.fr fix test no
+			flock( $fp, LOCK_UN );// release the lock 
+			fclose($fh);
+			$fh = @fopen($dir.'/'.RECIPIENTS_FILE, 'r+');// Re Open recipient list file
+  
+			if (!flock($fh, LOCK_EX | LOCK_NB))//free.fr fix
+				return gu_error(t('Unable to lock newsletter recipient list'), ERROR_EXTRA);
+		}
+*/
 		fgets($fh); // Read file marker
 		$header = explode('|', fgets($fh)); // Read header
 		$remaining = $header[0];
@@ -371,12 +386,18 @@ class gu_newsletter{
 				return gu_error(t('Unable to delete message attachment'), ERROR_EXTRA);
 		}
 // Delete the newsletter files
-		$res1 = @rmdir($dir.'/attachments');
+		$res1 = @rmdir($dir.'/attachments');// (effacement normal ailleurs que chez Free)
+		if (is_dir($dir.'/attachments')) {// l'effacement a échoué
+			$res1 = rename($dir.'/attachments',$dir.'/../../.trash_me');// rename "spécial Free" rename empty folders to .trash_me (effet de bord non garanti de rename)
+		}
 		$res2 = @unlink($dir.'/'.MESSAGE_FILE);
 		$res3 = @unlink($dir.'/'.LOCK_FILE);
 		$res4 = !file_exists($dir.'/'.RECIPIENTS_FILE) || @unlink($dir.'/'.RECIPIENTS_FILE);
 		$res5 = @unlink($dir.'/index.html');
 		$res6 = @rmdir($dir);
+		if (is_dir($dir)) {// l'effacement a échoué
+			$res6 = rename($dir,$dir.'/../../.trash_me');// rename "spécial Free" rename empty folders to .trash_me (effet de bord non garanti de rename)
+		}
 		if (!($res1 && $res2 && $res3 && $res4 && $res5))
 			return gu_error(t('Some newsletter files could not be deleted'), ERROR_EXTRA);
 		$this->send_progress = NULL;

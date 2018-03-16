@@ -6,9 +6,9 @@
  * @file Theme functions
  * @modifications Cyril Maguire
  * Gutama plugin package
- * @version 1.6
- * @date	01/10/2013
- * @author	Cyril MAGUIRE
+ * @version 1.8.7
+ * @date	16/03/2018
+ * @author	Cyril MAGUIRE, Th0m@s
 */
 
 /**
@@ -86,9 +86,9 @@ function gu_theme_messages(){
  * Outputs a password control for the specified config setting
  * @param string $setting_name The config setting name
  */
-function gu_theme_password_control($setting_name){
+function gu_theme_password_control($setting_name,$option=false){
 	$val = is_post_var($setting_name) ? get_post_var($setting_name) : gu_config::get($setting_name);
-	echo '<input id="'.$setting_name.'" name="'.$setting_name.'" type="password" class="textfield" style="width: 95%" value="'.$val.'" />';
+	echo '<input id="'.$setting_name.'" name="'.$setting_name.'" type="password" class="textfield" style="width: 95%" value="'.$val.'"  '.$option.'/>';
 }
 /**
  * Outputs a text control for the specified config setting

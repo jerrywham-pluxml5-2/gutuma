@@ -76,7 +76,7 @@ elseif (is_post_var('test_settings')){
 	else
 		gu_error(t('Administrator email must be set before mail can be sent'));
 }
-function gu_sender_test(){// Get current settings, which may not have been saved
+function gu_sender_test(){// Get current settings, which may not have been saved (ajax & +)
 	$use_smtp = is_post_var('use_smtp');
 	$smtp_server = get_post_var('smtp_server');
 	$smtp_port = (int)get_post_var('smtp_port');
@@ -88,37 +88,39 @@ function gu_sender_test(){// Get current settings, which may not have been saved
 	if (!($use_smtp || $use_sendmail || $use_phpmail))
 		return gu_error(t('No method of mail transportation has been configured'));
 	$test_msg = t('If you have received this email then your settings clearly work!');
-
+$error = '';
 	if ($use_smtp){// Test SMTP settings first
 		$mailer = new gu_mailer();
 		if ($mailer->init(TRUE, $smtp_server, $smtp_port, $smtp_encryption, $smtp_username, $smtp_password, FALSE, FALSE)){
 			if (!$mailer->send_admin_mail('['.gu_config::get('collective_name').'] Testing SMTP', $test_msg))
-				return gu_error(t('Unable to send test message using SMTP'));
+				$error .= t('Unable to send test message using SMTP').'<br />';
 		}
 		else
-			return gu_error(t('Unable to initialize mailer with the SMTP settings'));
+			$error .= t('Unable to initialize mailer with the SMTP settings').'<br />';
 		$mailer->disconnect();
 	}
 	if ($use_sendmail){// Test Sendmail next
 		$mailer = new gu_mailer();
-		if ($mailer->init(FALSE, '', '', '', '', '', FALSE, FALSE)) {
+		if ($mailer->init(FALSE, '', '', '', '', '', TRUE, FALSE)) {
 			if (!$mailer->send_admin_mail('['.gu_config::get('collective_name').'] Testing Sendmail', $test_msg))
-				return gu_error(t('Unable to send test message using Sendmail'));
+				$error .= t('Unable to send test message using Sendmail').'<br />';
 		}
 		else
-			return gu_error(t('Unable to initialize mailer with Sendmail'));
+			$error .= t('Unable to initialize mailer with Sendmail').'<br />';
 		$mailer->disconnect();
 	}
 	if ($use_phpmail){// Test PHP mail next
 		$mailer = new gu_mailer();
 		if ($mailer->init(FALSE, '', '', '', '', '', FALSE, TRUE)){
 			if (!$mailer->send_admin_mail('['.gu_config::get('collective_name').'] Testing PHP mail', $test_msg))
-				return gu_error(t('Unable to send test message using PHP mail'));
+				$error .= t('Unable to send test message using PHP mail').'<br />';
 		}
 		else
-			return gu_error(t('Unable to initialize mailer with PHP mail'));
+			$error .= t('Unable to initialize mailer with PHP mail').'<br />';
 		$mailer->disconnect();
 	}
+	if ($error)
+		return gu_error($error);
 	gu_success(t('Test messages sent to <br><i>%</i></b>',array(gu_config::get('admin_email'))));
 }
 gu_theme_start();

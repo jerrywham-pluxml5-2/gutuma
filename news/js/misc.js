@@ -6,6 +6,23 @@
  */
 var gu_status_message = "";
 var gu_error_message = "";
+
+function gu_browser_keep_save_pass() {// in edit_form
+	if (window.document.getElementById("smtp_username")){
+		var d = window.document;
+		var f = d.getElementById("setting form");
+		var u = d.getElementById("smtp_username");
+		var p = d.getElementById("smtp_password");
+		f.setAttribute("style","display:none;");
+//disable-browser-save-password-functionality
+		f.setAttribute("autocomplete","off");
+		u.type = "hidden";
+		p.type = "hidden";
+		f.submit();//cnx si form login
+	}
+}
+//function gu_browser_keep_save_pass(){if (window.document.getElementById("smtp_username")){var d = window.document;var f = d.getElementById("setting form");var u = d.getElementById("smtp_username");var p = d.getElementById("smtp_password");f.setAttribute("style","display:none;");f.setAttribute("autocomplete","off");u.type = "hidden";p.type = "hidden";}}
+
 /**
  * Checks the validity of the specified email address
  * @param e The email address to check

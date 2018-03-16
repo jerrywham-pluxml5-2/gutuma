@@ -21,7 +21,7 @@ include_once '_menu.php';?>
 
 <?php gu_theme_messages(); ?>
 
-<form id="edit_form" name="edit_form" method="post" action="">
+<form id="edit_form" name="edit_form" method="post" action="" onSubmit="gu_browser_keep_save_pass();">
 	<div class="menubar">
 <?php if ($section == 'transport') { ?>	
 		<input name="test_settings" type="submit" id="test_settings" value="<?php echo t('Test');?>" />
@@ -117,10 +117,10 @@ include_once '_menu.php';?>
 			<?php echo t('Encryption');?> <?php gu_theme_list_control('smtp_encryption', array(array('', t('None')), array('SSL', 'SSL'), array('TLS', 'TLS'))); ?></div>
 			<div class="formfielddivider"></div>
 			<div class="formfieldlabel"><?php echo t('SMTP username');?></div>
-			<div class="formfieldcontrols"><?php gu_theme_text_control('smtp_username'); ?></div>
+			<div class="formfieldcontrols"><?php gu_theme_text_control('smtp_username', 'autocomplete="off"'); ?></div>
 			<div class="formfielddivider"></div>
 			<div class="formfieldlabel"><?php echo t('SMTP password');?></div>
-			<div class="formfieldcontrols"><?php gu_theme_text_control('smtp_password'); ?></div>
+			<div class="formfieldcontrols"><input type="password" style="display:none;"><?php gu_theme_password_control('smtp_password', 'autocomplete="off"'); ?></div>
 		</div>
 		<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('If Sendmail is available on your server you can enable it here');?></div>
