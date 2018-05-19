@@ -42,6 +42,6 @@ else
 	<p><input name="subscribe_submit" type="submit" id="subscribe_submit" value="<?php echo t('Subscribe');?>" />
 	<input name="unsubscribe_submit" type="submit" id="unsubscribe_submit" value="<?php echo t('Unsubscribe');?>" />
 	</p>
+	<p><br/><a href="<?php echo PLX_GROOT; ?>"><?php echo t('Back home'); ?></a></p>
 </form>
 </div>
-<p><a href="<?php echo PLX_GROOT; ?>"><?php echo t('Back home'); ?></a></p>

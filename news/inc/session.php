@@ -14,14 +14,14 @@ define('GU_SESSION_SITES', 'valid_sites');
 // In order to maintain separate authentication states for different Gutuma
 // installations on the same server we need a unique key for each installation
 define('GU_SESSION_SITE_KEY', absolute_url('index.php'));
-if ( !isset($_SESSION) && !function_exists('\php_error\reportErrors') ){// Start the PHP session engine
-	session_start();
-}
+//if ( !isset($_SESSION) && !function_exists('\php_error\reportErrors') ){// ORIGIN (Stand Alone) : Start the PHP session engine
+//	session_start();
+//}
 /**
  * Attempts to authenticate the current user. First checks the current session, then any stored cookies, and finally redirects to the login page
  * @return bool TRUE if session is valid, else causes exit and redirect
  */
-function gu_session_authenticate($username = NULL, $password = NULL, $remember = TRUE){
+function gu_session_authenticate($username = NULL, $password = NULL, $remember = FALSE){
 	if (isset($username) && isset($password)){// Check aganist specified credentials
 		if (gu_session_check_credentials($username, $password)){
 			if ($remember){
@@ -60,7 +60,7 @@ function gu_session_check_credentials($username, $password){
  * Attempts to authenticate the current user when parameters come from Pluxml. First checks the current session, then any stored cookies, and finally redirects to the login page
  * @return bool TRUE if session is valid, else causes exit and redirect
  */
-function plx_gu_session_authenticate($name = FALSE, $username = NULL, $password = NULL, $remember = TRUE,$user = FALSE){
+function plx_gu_session_authenticate($name = FALSE, $username = NULL, $password = NULL, $remember = FALSE, $user = FALSE){
 	if (isset($name) && isset($username) && isset($password)){// Check aganist specified credentials
 		if (plx_gu_session_check_credentials($name, $username, $password,$user)){
 			if ($remember){
@@ -78,7 +78,7 @@ function plx_gu_session_authenticate($name = FALSE, $username = NULL, $password 
 	if (gu_session_is_valid())// Check the session variable next
 		return TRUE;
 	if (isset($_COOKIE['username']) && isset($_COOKIE['password'])){// Then try authenticating with cookie values
-		if (plx_gu_session_check_credentials($_COOKIE['username'], $_COOKIE['password'],true)){
+		if (plx_gu_session_check_credentials($_COOKIE['username'], $_COOKIE['password'], FALSE)){
 			gu_session_set_valid(TRUE);
 			return TRUE;
 		}
@@ -92,7 +92,7 @@ function plx_gu_session_authenticate($name = FALSE, $username = NULL, $password 
  * @param string $password The MD5 encrypted password
  * @return bool TRUE if username and password match stored admin credentials
  */
-function plx_gu_session_check_credentials($name, $username, $password,$user = FALSE){
+function plx_gu_session_check_credentials($name, $username, $password, $user = FALSE){
 	if ($user == FALSE){
 		return ($username == gu_config::get('admin_username')) && ($password == gu_config::get('admin_password'));
 	} else {

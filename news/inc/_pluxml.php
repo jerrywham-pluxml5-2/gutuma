@@ -25,9 +25,9 @@ if(strstr($_SERVER['PHP_SELF'],'gadgets.js.php')){//4 gadget call
 define('PLX_GROOT', $gdgt.'..'.__GDS__.'..'.__GDS__.'..'.__GDS__);// GROOT 4 SYMBIOLINK
 define('PLX_MORE', PLX_GROOT.'core'.__GDS__);
 //PLX_ROOT détermine le chemin des params de XMLFILE_PARAMETERS * uncomment this 3 lines (below) if gutuma is symlinked in an other PluXml (I use it 4 my dev Thom@s)
-$gu_sub = explode('plugins',$_SERVER['DOCUMENT_ROOT'].$_SERVER['PHP_SELF']);#
-$gu_sub = str_replace($_SERVER['DOCUMENT_ROOT'].__GDS__,'',$gu_sub[0]);#//4 found subdir where plx is
-#define('PLX_ROOT',$_SERVER['DOCUMENT_ROOT'].__GDS__.$gu_sub);// OR PLX_GROOT ** AND COMMENT THIS
+$gu_sub = explode('plugins',$_SERVER['DOCUMENT_ROOT'].$_SERVER['PHP_SELF']);#if gutuma is symlinked
+$gu_sub = str_replace($_SERVER['DOCUMENT_ROOT'].__GDS__,'',$gu_sub[0]);#4 found subdir where plx is
+#define('PLX_ROOT',$_SERVER['DOCUMENT_ROOT'].__GDS__.$gu_sub);// OR PLX_GROOT **AND UNCOMMENT THIS
 define('PLX_ROOT', PLX_GROOT);# Normal config, gutuma is in plugins folder 4 real * comment this line if gutuma is symlinked & in an other PluXml**
 define('PLX_CORE', PLX_ROOT.'core'.__GDS__);
 
@@ -88,10 +88,17 @@ $plxMotor->mode='gutuma';//4 future ::: & solved bug header 404 in demarrage & p
 # Creation de l'objet d'affichage*
 #$plxShow = plxShow::getInstance();# origin :: FIXED* myMultiLingue ::: MML CALL PLX_MY_MULTILINGUE TWICE ::: $plxShow NOT IN global
 if(isset($_SESSION['user']) AND !empty($_SESSION['user'])) {
-	$_profil = $plxMotor->aUsers[$_SESSION['user']];// _profil ONLY CALLED IN INSTALL.PHP
+	$_profil = $plxMotor->aUsers[$_SESSION['user']];// $_profil is called in install.php
+	if(!$_profil['active'] OR $_profil['profil']>PROFIL_MANAGER OR $_profil['delete']){//déconnecte l'utilisteur si n'est plus autorisé
+		gu_session_set_valid(FALSE);
+		header('Location:'.PLX_MORE.'admin/plugin.php?p=gutuma');
+		exit;
+	}
 	$plxMotor->mode='gutumadmin';
 }#grant access 4 public php files subscript mode ::: other redirect (if not connected in PluXml backend)
 elseif(strpos($plxMotor->path_url,'news/ajax.php') === FALSE  && strpos($plxMotor->path_url,'news/js/gadgets.js.php') === FALSE && strpos($plxMotor->path_url,'news/subscribe.php') === FALSE){//gestion des abonnements (publics)
 	header('Location:'.PLX_MORE.'admin/auth.php?p=plugin.php?p=gutuma');
 	exit;
 }
+if(!defined('PLX_VERSION')) define('PLX_VERSION',$plxMotor->aConf['version']);//$plxMotor->version (<=5.4), PLX_VERSION (>=5.5) ::: aConf['version'] tous ;)
+define('THEMEVERS', 532 < str_pad(str_replace('.','',PLX_VERSION),  3, '0', STR_PAD_RIGHT)?'':'.5.3.1');//if PluXml < to 5.3.1 use retail old header, menu & footer (.5.3.1.php)

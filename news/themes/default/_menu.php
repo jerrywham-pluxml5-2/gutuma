@@ -7,7 +7,7 @@
  * @modifications Thomas Ingles
  */
 /* Gutama plugin package
- * @version 1.6
+ * @version 1.9
  * @date	08/06/2017
  * @author	Cyril MAGUIRE
 */
@@ -96,22 +96,24 @@ foreach($u as $k => $v) {
 					}
 		#menu des fonctionnalités de gutuma
 		$menu_gutuma = '';
-		if ($_SESSION['profil'] == PROFIL_ADMIN) : 
+		if($_SESSION['profil'] == PROFIL_ADMIN):
 		$menu_gutuma .= '
-			<li '. (str_ends($_SERVER['SCRIPT_NAME'], '/index.php') ? 'class="menu active menu-config">' : 'class="menu menu-config">').'<a href="index.php">'.t('Home').'</a></li>
+			<li class="menu'.(str_ends($_SERVER['SCRIPT_NAME'], '/index.php') ? ' active ' : ' ').'menu-config"><a href="index.php">'.t('Home').'</a></li>
 			';
 		endif;
 		$menu_gutuma .= '
-			<li '. (str_ends($_SERVER['SCRIPT_NAME'], '/compose.php') || (str_ends($_SERVER['SCRIPT_NAME'], '/newsletters.php')) ? 'class="menu active menu-config">' : 'class="menu menu-config">') .' <a href="compose.php">'.t('Newsletters').'</a></li>
-			<li '. (str_ends($_SERVER['SCRIPT_NAME'], '/lists.php') ? 'class="menu active menu-config">' : 'class="menu menu-config">') .'<a href="lists.php">'. t('Lists').'</a></li>
-			';
-		if ($_SESSION['profil'] == PROFIL_ADMIN) : 
+			<li class="menu'.(str_ends($_SERVER['SCRIPT_NAME'], '/compose.php') || (str_ends($_SERVER['SCRIPT_NAME'], '/newsletters.php')) ? ' active ' : ' ').'menu-config"><a href="compose.php">'.t('Newsletters').'</a></li>
+			<li class="menu'.(str_ends($_SERVER['SCRIPT_NAME'], '/lists.php') ? ' active ' : ' ').'menu-config"><a href="lists.php">'. t('Lists').'</a></li>'.PHP_EOL;
+		if ($_SESSION['profil'] == PROFIL_ADMIN) :
 		$menu_gutuma .= '
-			<li '. (str_ends($_SERVER['SCRIPT_NAME'], '/integrate.php') ? 'class="menu active menu-config">' : 'class="menu menu-config">') .'<a href="integrate.php">'. t('Gadgets').'</a></li>
-			<li '. (str_ends($_SERVER['SCRIPT_NAME'], '/settings.php') ? 'class="menu active menu-config">' : 'class="menu menu-config">') .'<a href="settings.php">'. t('Settings').'</a></li>
-			';
+			<li class="menu'.(str_ends($_SERVER['SCRIPT_NAME'], '/integrate.php') ? ' active ' : ' ').'menu-config"><a href="integrate.php">'. t('Gadgets').'</a></li>
+			<li class="menu'.(str_ends($_SERVER['SCRIPT_NAME'], '/settings.php') ? ' active ' : ' ').'menu-config"><a href="settings.php">'. t('Settings').'</a></li>'.PHP_EOL;
 		endif;
-
+		$menu_gutuma .= '
+			<li class="menu active menu-config">
+				<img id="imghead" title="'.gu_config::get('application_name').t(' Powered by').' Pluxml '.PLX_VERSION.' &amp; '.t('Gutuma').' '.GUTUMA_VERSION_NAME.'" src="themes/'.gu_config::get('theme_name').'/images/gutuma.png" />
+				<sup id="sitename"><sub><img style="float: right;" title="'.t('Gutuma').' for Pluxml" src="themes/'.gu_config::get('theme_name').'/favicon.png" /><i>'.gu_config::get('application_name').' '.t('Powered by Gutuma').'</i></sub></sup>
+			</li>'.PHP_EOL;
 					# récuperation des menus admin pour les plugins
 					foreach($plxAdmin->plxPlugins->aPlugins as $plugName => $plugInstance) {
 						if($plugInstance AND is_file(PLX_PLUGINS.$plugName.'/admin.php')) {
@@ -119,12 +121,12 @@ foreach($u as $k => $v) {
 								if($plugInstance->adminMenu) {
 									$menu = plxUtils::formatMenu(plxUtils::strCheck($plugInstance->adminMenu['title']), $plxAdmin->urlRewrite().'core/admin/plugin.php?p='.$plugName, plxUtils::strCheck($plugInstance->adminMenu['caption']));
 									if($plugInstance->adminMenu['position']!='')
-										array_splice($menus, ($plugInstance->adminMenu['position']-1), 0, $menu);
+										array_splice($menus, ($plugInstance->adminMenu['position']-1), 0, $menu.($plugName == 'gutuma'?$menu_gutuma:''));
 									else
-										$menus[] = $menu;
+										$menus[] = $menu.($plugName == 'gutuma'?$menu_gutuma:'');
 								} else {
 									if ($plugName == 'gutuma')
-										$menus[] = '<li class="menu in_gutuma"><a href="'.$plxAdmin->racine.'core/admin/plugin.php?p=gutuma" title="'.gu_config::get('application_name').'">Gutuma</a></li>'.$menu_gutuma;
+										$menus[] = '<li id="mnu_gutuma" class="menu in_gutuma"><a href="'.$plxAdmin->racine.'core/admin/plugin.php?p='.$plugName.'" title="'.t('Gutuma version:').' '.GUTUMA_VERSION_NAME.'">'.$plugInstance->getLang('L_ADMIN_MENU_NAME').'</a></li>'.$menu_gutuma;
 									else
 										$menus[] = plxUtils::formatMenu(plxUtils::strCheck($plugInstance->getInfo('title')), $plxAdmin->urlRewrite().'core/admin/plugin.php?p='.$plugName, plxUtils::strCheck($plugInstance->getInfo('title')));
 								}
@@ -138,5 +140,4 @@ foreach($u as $k => $v) {
 				?>
 			</ul>
 		</nav>
-		<sup><i><?php echo gu_config::get('application_name');?> <?php echo t('Powered by Gutuma');?></i></sup>
 	</aside>

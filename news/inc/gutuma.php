@@ -11,13 +11,13 @@
  * @date	01/10/2013
  * @author	Cyril MAGUIRE
 */
+include_once 'misc.php';
+include_once 'session.php';
 include_once ('_pluxml.php');#Inclusion des librairies de plxuml
 define('GU_CONFIG_LANG', $glang);
 if (version_compare(phpversion(), '5', '<'))#Check for PHP5+
 	die(t('Sorry - Gutuma requires at least PHP5. Please contact your hosting provider and ask them to upgrade.'));
 include_once 'setting.php';
-include_once 'misc.php';
-include_once 'session.php';
 include_once 'list.php';
 include_once 'theme.php';
 #Constants
@@ -92,7 +92,7 @@ function gu_init($validate_session = TRUE, $install_redirect = TRUE){
 		}
 	}
 	if ($validate_session){
-		if (!gu_session_authenticate()){
+		if (!plx_gu_session_authenticate()){
 			#If we don't have a stored valid session, redirect to the login page
 			header('Location: '.absolute_url('login.php').'?ref='.urlencode(absolute_url()));
 			exit;

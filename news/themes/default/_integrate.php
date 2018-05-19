@@ -16,7 +16,7 @@ gu_theme_messages();
 <form id="gadgets_form" name="gadgets_form" method="post" action="">
 	<div id="sectionheader" class="inline-form action-bar">
 		<h2><?php echo t('Gadgets for other sites');?></h2>
-		<p id="sectionmenu"><sup><sub><?php echo t('Here you can generate gadgets for other websites so that people can easily find and subscribe to your newsletters.');?></sub></sup>
+		<p id="sectionmenu" class="plx<?php echo str_replace('.','',PLX_VERSION) ?>"><sup><sub><?php echo t('Here you can generate gadgets for other websites so that people can easily find and subscribe to your newsletters.');?></sub></sup>
 <?php if (!$generate) { ?>
 		<input type="submit" id="gadget_generate" class="green" name="gadget_generate" value="<?php echo t('Next');?>" />
 		</p><!-- sectionmenu -->

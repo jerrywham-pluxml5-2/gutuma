@@ -4,6 +4,15 @@
  * @copyright This source is distributed under the GPL
  * @file Default theme main stylesheet
  */
+#langs{display:none;}/* hide plxMyMultilinge flags */
+#imghead{display:block;}/* img plx admin menu */
+[type="file"], select {/* compose (idea of plux > 5.6) */
+ margin: 5px 0;/* 8px 0 (select) */
+}
+[type="file"] {
+ background-color: #E8FEFA;
+ /* height: 23px;/* 30px*/
+}
 /* 5.6 */
 .button{
 	white-space: nowrap;
@@ -62,7 +71,7 @@ div.formfieldfloat{
 	margin-bottom: 1em;
 	background-color: rgba(207, 207, 207, 0.207);
 }
-div.menubar.in-action-bar.lists{
+.in-action-bar.lists{
 	top: -2.7em;
 	overflow: hidden;
 }
@@ -97,17 +106,19 @@ hr{
 	padding: 3px;
 }
 .section .action-bar h2{
-	font-size: 2.5rem;
-	margin-top: -0.1618rem;
-	margin-bottom: 0.1618rem;
+/*	font-size: 2.5rem; */
 }
 /* Sub menu (action-bar) */
 #sectionheader{
 	width: 100%;
 	overflow: hidden;
 }
-#sectionmenu{
-	line-height: 2;
+/* and Next plx ? */
+#sectionmenu.plx56{
+	line-height: 2.2 ;
+}
+#sectionmenu.plx54,#sectionmenu.plx55{/* pluxml 5.4 et 5.5 fix */
+	line-height: 1.5 ;
 }
 #sectionmenu sup sub{
 	line-height: 1;
@@ -120,8 +131,8 @@ hr{
 	color: #bdfcf1;
 }
 #sectionmenu > input{
-	margin-top:0.1618em;
-	margin-bottom:0;
+/*	margin-top:0.1618em; */
+/*	margin-bottom:0; */
 }
 #list_name,#new_list_name{
 	color: initial;
@@ -150,9 +161,22 @@ div.menubar{
 }
 .mce-fullscreen{z-index: 10000 !important;}/* responsive menu plx + 1 */
 div.menubar.in-action-bar{
-	margin-top: 7.2rem;
 	background-color: transparent;
-	z-index: 99;/* to high in plx */
+}
+.in-action-bar.plx56{
+	margin-top: 7.2rem;
+	z-index: 99;/* au dessus de .mce-fullscreen */
+}
+.in-action-bar.plx54,.in-action-bar.plx55{/* pluxml 5.4 et 5.5 fix */
+	margin-top: 4.5rem;
+	z-index: 9999;/* au dessus de .mce-fullscreen */
+}
+.in-action-bar.plx54{/* pluxml 5.4 fix */
+	/*z-index: 9999 !important */;
+}
+div.menubar.attach_file{
+	margin-top: 3px;
+	padding-bottom: 3px;
 }
 div.messagepreview{
 	height: 250px;
@@ -208,14 +232,11 @@ table.results tr td.emptyresults{
 	display: inline-block;
 }
 @media (max-width: 767px){
-	.in-action-bar{
+	.in-action-bar,.in-action-bar.plx55,.in-action-bar.plx54{
 		z-index: unset;
 		text-align: center;
 	}
-/*	#langs{display:none;}/* hide mymultilinge flags */
-	div.menubar.in-action-bar.multilingue{
-		margin-top: 9.2rem;
-	}
+	#imghead{display:none;}/* hide foot img in plx admin menu */
 	.imglink img{
 		width:27px;
 		height:27px;

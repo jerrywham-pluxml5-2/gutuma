@@ -27,12 +27,10 @@
 if (count($lists) == 0)
 	gu_error(t("A address list must be created before a newsletter can be sent"));
 if (gu_config::get('admin_email') == '')
-	gu_error(t("A valid admin email must be specified before a newsletter can be sent"));	
-
+	gu_error(t("A valid admin email must be specified before a newsletter can be sent"));
 gu_theme_messages();
-		
 ?>
-<form enctype="multipart/form-data" id="send_form" name="send_form" method="post" action="compose.php<?php echo gu_is_debugging() ? '?DEBUG' : ''; ?>"><input type="hidden" id="msg_id" name="msg_id" value="<?php echo $newsletter->get_id(); ?>" /><input type="hidden" id="is_modified" name="is_modified" value="<?php echo $is_modified; ?>" />
+<form enctype="multipart/form-data" id="send_form" name="send_form" method="post" action="compose.php<?php echo gu_is_debugging() ? '?DEBUG' : ''; ?>"><input type="hidden" id="msg_id" name="msg_id" value="<?php echo $newsletter->get_id(); ?>" /><input type="hidden" id="is_modified" name="is_modified" value="<?php echo $is_modified; ?>" /><input type="hidden" id="autosave" name="autosave" value="<?php echo $autosave; ?>" />
 	<div class="menubar">
 		<input name="save_submit" type="submit" id="save_submit" value="<?php echo t('Save');?>" onclick="gu_cancel_unsaved_warning();" />
 <?php if ($preview_mode) { ?>

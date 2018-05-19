@@ -14,7 +14,7 @@
 ?>
 <div id="sectionheader" class="inline-form action-bar">
 	<h2><?php echo t('Newsletters');?> (<?php echo t(ucfirst($box)); ?>)</h2>
-	<p id="sectionmenu">
+	<p id="sectionmenu" class="plx<?php echo str_replace('.','',PLX_VERSION) ?>">
 		<a href="compose.php" class="button"><?php echo t('Compose');?></a></li>
 		<a href="newsletters.php?box=drafts" class="button<?php echo ($box == 'drafts') ? ' blue' : '' ?>"><?php echo t('Drafts');?> (<span id="mailbox_drafts_count"><?php echo count($mailbox['drafts']) ?></span>)</a>
 		<a href="newsletters.php?box=outbox" class="button<?php echo ($box == 'outbox') ? ' blue' : '' ?>"><?php echo t('Outbox');?> (<span id="mailbox_outbox_count"><?php echo count($mailbox['outbox']) ?></span>)</a>

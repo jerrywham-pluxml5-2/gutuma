@@ -18,10 +18,11 @@ gu_init();
 gu_theme_start();
 // Get the modified flag of the current newsletter
 $is_modified = is_post_var('is_modified') ? get_post_var('is_modified') : FALSE;
+$autosave = (is_post_var('autosave') ? get_post_var('autosave') : (isset($_SESSION['gu_timer']) ? $_SESSION['gu_timer'] : 300000));
+$_SESSION['gu_timer'] = $autosave;
 // Get all available lists
 $lists = gu_list::get_all();
-if (is_get_var('msg'))
-	// Load newsletter from draft if one was specified
+if (is_get_var('msg'))// Load newsletter from draft if one was specified
 	$newsletter = gu_newsletter::get((int)get_get_var('msg'));
 else{// Create empty newsletter, and fill from post vars if they exist
 	$newsletter = new gu_newsletter();
@@ -120,17 +121,16 @@ if ($tiny_tools != 'no'){//tinyMCE
 /* PluCss */
 div.mce-fullscreen{z-index:800;}
 img {height: auto !important;max-width: 100% !important;}
-.in-action-bar {z-index: 9999 !important;}
 /* cache le menu principal de PluXml en plein écran (mobile) */
 @media (max-width:767px){div.mce-fullscreen{z-index: 10000;}}
 /* shortcuts codemirror table */
 .mce-container.mce-fullscreen table {border-collapse: initial;}
 </style>'.PHP_EOL;
 ?>
-<script type='text/javascript' src='js/tinymce/tinymce.min.js?v472c'></script>
+<script type='text/javascript' src='js/tinymce/tinymce.min.js?v=4710c'></script>
 <script type='text/javascript'>
 	tinyMCE.init({// General options
-		mode : 'textareas',
+		mode: 'textareas',
 //~ 		selector: 'textarea',// work
 		skin: 'lightgray',
 		theme: 'modern',
@@ -138,11 +138,11 @@ img {height: auto !important;max-width: 100% !important;}
 		relative_urls: false,
 		remove_script_host: false,
 		paste_data_images: true,
-		plugins : '<?php echo $mce_plug ?>',<?php echo $tiny_opt.$spell_opt ?>
+		plugins: '<?php echo $mce_plug ?>',<?php echo $tiny_opt.$spell_opt ?>
 		// Example word content CSS (should be your site CSS) this one removes paragraph margins
-		content_css : 'themes/gutuma/editor.css',
-		save_onsavecallback: function () { document.getElementById('save_submit').click(); },//Fix : on save normal event call window.onbeforeunload & launch alert
-		setup: function(ed){ ed.on('change',function(e){ gu_set_modified(true); }); },
+		content_css: 'themes/<?php echo gu_config::get('theme_name') ?>/css/editor.css',
+		save_onsavecallback: function(){document.getElementById('save_submit').click();},//Fix : on save normal event call window.onbeforeunload & launch alert    //console.log(tinyMCE.activeEditor.selection.getStart(false), tinyMCE.activeEditor.selection.getNode().nodeName, tinyMCE.activeEditor.selection.getBookmark(), tinyMCE.activeEditor.selection.getRng(1));//<span style="overflow:hidden;line-height:0px" data-mce-style="overflow:hidden;line-height:0px" id="mce_1_start" data-mce-type="bookmark">﻿</span> ::: before send to save (pos of cursor) ::: https://stackoverflow.com/questions/9178785/tinymce-get-content-up-to-cursor-position?rq=1
+		setup: function(ed){ ed.on('change',function(e){ gu_set_modified(true); });},
 	});
 </script>
 <?php
@@ -170,6 +170,7 @@ img {height: auto !important;max-width: 100% !important;}
 <script type="text/javascript">
 /* <![CDATA[ */
 	var is_post_back = false;
+	timeoutHandle = false;
 	function gu_presend_check(){
 		if (document.send_form.msg_subject.value == "")
 			return confirm("<?php echo t('Are you sure you want to send a message with an empty subject?');?>");
@@ -195,8 +196,77 @@ img {height: auto !important;max-width: 100% !important;}
 	function gu_set_modified(modified){
 		document.getElementById('is_modified').value = (modified ? 1 : 0);
 	}
+	function gu_auto_save(){
+		var time = document.getElementById('gu_timer').value;
+		var is_modified = document.getElementById('is_modified').value;
+		if (is_modified){
+			setTimeout(function(){
+				if(window.location.hash=='#gu_auto_save_overlay')
+					document.getElementById('save_submit').click();
+				else if(time>0){
+					if(timeoutHandle)
+						window.clearTimeout(timeoutHandle);
+					timeoutHandle = setTimeout(gu_auto_save, time);
+				}
+			},5000);
+			if(time>1)
+				window.location.hash='gu_auto_save_overlay';//active overlay;
+		}else{
+			if(time>1){
+				if(timeoutHandle)
+					window.clearTimeout(timeoutHandle);
+				timeoutHandle = setTimeout(gu_auto_save, time);
+			}
+		}
+	}
+	function gu_auto_save_is_active(){
+		var time = document.getElementById('gu_timer').value;
+		document.getElementById('autosave').value = time;
+		if((!timer && time) || timer != time){
+			if(timeoutHandle)
+				window.clearTimeout(timeoutHandle);
+			timeoutHandle = setTimeout(gu_auto_save, time);
+		}
+		timer = time;
+	}
+//add overlay css
+	var fileref=document.createElement("link")
+	fileref.setAttribute("rel", "stylesheet")
+	fileref.setAttribute("type", "text/css")
+	fileref.setAttribute("href", "inc/overlay.css")
+	document.getElementsByTagName("head")[0].appendChild(fileref)
 /* ]]> */
 </script>
 <?php
 include_once 'themes/'.gu_config::get('theme_name').'/_compose.php';//Body
+?>
+	<div class="formfieldset">
+		<div class="formfield">
+			<div class="formfieldlabel"><?php echo t('Auto save');?>:</div>
+			<div class="formfieldcontrols">
+<?php
+$maxlifetime = (ini_get("session.gc_maxlifetime") - 60);//php garbage collector : 1440 seconds (24m)-1min :
+gu_theme_list_control('gu_timer',
+	array(
+		array(($maxlifetime * 1000),t('Every % Minutes', array(($maxlifetime / 60)))),
+		array('600000',t('Every % Minutes', array(10))),
+		array('300000',t('Every % Minutes', array(5))),
+		array('180000',t('Every % Minutes', array(3))),
+		array('120000',t('Every % Minutes', array(2))),
+		array('1', t('Inactive')),
+	),
+	$autosave,//$control = FALSE, valeur OU $_SESSION['gu_timer'] (inc/theme.php)
+	'onchange="gu_auto_save_is_active();"'
+);
+?></div>
+		</div>
+	</div>
+<div id="gu_auto_save_overlay" class="gu_overlay">
+	<span><?php echo t('Your message go to be auto saved in 5 seconds.');?><br /><a href="#gu_no_save"><?php echo t('Cancel');?></a></span>
+</div>
+<script type="text/javascript">
+	timer = document.getElementById('gu_timer').value;//global var
+	window.onload = function(){gu_auto_save();}
+</script>
+<?php
 gu_theme_end();

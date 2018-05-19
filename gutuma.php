@@ -13,7 +13,7 @@ class gutuma extends plxPlugin {
 		parent::__construct($default_lang);# appel du constructeur de la classe plxPlugin (obligatoire)
 		$this->setAdminProfil(PROFIL_ADMIN, PROFIL_MANAGER);# Autorisation d'accès à l'administration du plugin
 		if(defined('PLX_ADMIN')) {#Déclaration des hooks pour la zone d'administration
-//			$this->setAdminMenu($this->aInfos['title'], '', $this->getLang('L_ADMIN_TITLE_MENU'));
+			$this->setAdminMenu($this->getLang('L_ADMIN_MENU_NAME'), 0, $this->getLang('L_ADMIN_TITLE_MENU'));#Position du Menu : remplcer 0 tout autre chiffre
 			$this->addHook('AdminTopBottom', 'AdminTopBottom');
 			$this->addHook('plxAdminEditUsersXml', 'plxAdminEditUsersXml');
 		}
@@ -29,7 +29,7 @@ class gutuma extends plxPlugin {
 	 **/
 	public function AdminTopBottom(){
 		$string = 'if(empty($plxAdmin->aUsers["001"]["email"])) {
-			echo "<p class=\"warning\">Plugin Gutuma<br />'.$this->getLang("L_ERR_EMAIL").'</p>";
+			echo "<p class=\"warning\">Plugin '.$this->getLang("L_ADMIN_MENU_NAME").'<br />'.$this->getLang("L_ERR_EMAIL").'</p>";
 			plxMsg::Display();
 		}';
 		echo '<?php '.$string.' ?>';
@@ -41,15 +41,16 @@ class gutuma extends plxPlugin {
 	 */
 	public function plxAdminEditUsersXml(){
 		$string =<<<END
+		\$Gutumaction = FALSE;
 		\$Gutuma = \$this->plxPlugins->aPlugins["gutuma"];
-		if(!empty(\$content['selection']) AND \$content['selection']=='delete' AND isset(\$content['idUser'])){
-			foreach(\$content['idUser'] as \$user_id) {
-				if(\$content['selection']=='delete' AND \$user_id!='001'){
-					\$Gutuma->setParam('user_'.\$user_id, 'supprimé', 'cdata');
-				}
+		if(\$user_id!='001'){
+			if(!\$user['active'] OR \$user['profil']>PROFIL_MANAGER OR \$user['delete']){
+				if(!\$Gutuma->delParam('user_'.\$user_id))//unset(\$Gutuma->aParams['user_'.\$user_id]);//delParam
+					\$Gutuma->setParam('user_'.\$user_id, 'desactivé', 'cdata');//au cas ou
+				\$Gutumaction = TRUE;
 			}
-			\$Gutuma->saveParams();
 		}
+		if(\$Gutumaction)	\$Gutuma->saveParams();
 END;
 		echo '<?php '.$string.'?>';
 	}

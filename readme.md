@@ -1,14 +1,18 @@
-# Gutuma - Plugin pour gerer les newsletters avec PluXml 5.6
+# Gutuma - Plugin pour gerer des infolettres (newsletters) avec PluXml 5.2+
 
-Le theme "default" reproduits le menu de pluxml 5.6 afin d'intégrer le menu principal de Gutuma
-Il est possible de régler le theme original "gutuma" (chercher dans le menu Réglages)
+Une auto sauvegarde permet d'enregistrer le boulot non enregistré (option sessionnelle désactivable)
 
-- Mise a jour de TinyMCE avec la derniere version 4.6.6
-- Le Theme par Defaut est adapté a PluXml 5.6
-- Mise a jour de [Gutuma](https://web.archive.org/web/20141221193606/http://www.gutuma.com/) avec la derniere version [1.6.s du 01-OCT-2008](https://sourceforge.net/projects/gutuma/files/) retouché est nomé 1.8.4
+## Réglages Admins, Voir "Réglages" de son menu :)
+Le theme par defaut "default" reproduits les menus de pluxml afin de s'y intégrer.
+Il est possible de régler le theme original "gutuma".
 
-#### Pour les PluXml inferieurs a la 5.6:
-il est possible que le theme original (gutuma) soit une solution le temps que des themes plus adapés aux versions 5.4, 5.5 soient créés, si besoin est...
+- TinyMCE v4.7.10
+- Le Theme par Defaut s'adapte a PluXml 5.2 à 5.6
+- Fourche de [Gutuma](https://web.archive.org/web/20141221193606/http://www.gutuma.com/) avec la derniere version [1.6.s du 01-OCT-2008](https://sourceforge.net/projects/gutuma/files/) retouché est nommé 1.9.0, avec quelques modif, il est possible de le re-rendre autonome ;)
+
+#### Pour les PluXml inferieurs a la v5.4:
+Le theme par defaut s'adapte en suivant le coeur du PluXml utilisé (tests avec : v5.2 v5.3.1 v5.4 v5.5 v5.6 et dev)
++L'entête et le pied de page bascule en mode 5.3.1 pour respecter le theme de l'époque (sorti des archives et peaufinés)
 
 [support officiel sur le forum de PluXml](http://forum.pluxml.org/viewtopic.php?id=3358)
 

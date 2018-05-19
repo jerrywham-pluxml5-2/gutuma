@@ -41,6 +41,7 @@ if (is_get_var('action') && get_get_var('action') == 'plxlogin'){
 		gu_error(t('Incorrect username or password'));
 	}
 }elseif (is_get_var('action') && get_get_var('action') == 'login'){
+
 	$username = is_post_var('u') ? get_post_var('u') : '';
 	$password = is_post_var('p') ? get_post_var('p') : '';
 	$remember = is_post_var('login_remember');
@@ -56,6 +57,12 @@ if (is_get_var('action') && get_get_var('action') == 'plxlogin'){
 elseif (is_get_var('action') && get_get_var('action') == 'logout'){
 	gu_session_set_valid(FALSE);// Invalidate session flag
 }
+//No in Origin go 2 pluxml Login
+	$redirect = is_get_var('ref') ? '&ref='.get_get_var('ref') : '';
+	$redirect = '../../../core/admin/plugin.php?p=gutuma'.$redirect;
+	header('Location: '.$redirect);echo '<meta HTTP-EQUIV="REFRESH" content="0; url='.$redirect.'">';
+	exit;//go 2 pluxml Login
+//No in Origin
 gu_theme_start();
 //gu_theme_messages();
 ?>

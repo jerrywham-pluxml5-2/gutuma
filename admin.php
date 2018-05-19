@@ -104,7 +104,7 @@ if($_SESSION['profil'] == PROFIL_ADMIN)://Si l'utilisateur est administrateur
 	$num = 0;
 	if($plxAdmin->aUsers){
 		foreach($plxAdmin->aUsers as $_userid => $_user){
-			if (!$_user['delete'] && $_user['profil'] < PROFIL_MODERATOR){
+			if (!$_user['delete'] && $_user['active'] && $_user['profil'] < PROFIL_MODERATOR){
 				echo '
 		<tr class="line-'.($num%2).'">
 			<td>'.plxUtils::strCheck($_user['name']).'</td>
@@ -170,7 +170,7 @@ if($_SESSION['profil'] == PROFIL_ADMIN)://Si l'utilisateur est administrateur
 				} else {//Si le gutuma n'est pas installé
 					echo '</td>'.PHP_EOL.'			<td>'.PHP_EOL;
 					if($_userid=='001' && $_userid == $_SESSION['user']){//Si l'utilisateur est le premier et que celui qui est connecté est administrateur
-?>			<a class="button green" href="<?php echo PLX_PLUGINS; ?>gutuma/news/install.php" style="color:yellow;"><?php echo $plxPlugin->getLang('L_GUTUMA_INSTALL');?></a><?php
+?>			<a class="button green" href="<?php echo PLX_PLUGINS; ?>gutuma/news/install.php" style="color:orange;"><?php echo $plxPlugin->getLang('L_GUTUMA_INSTALL');?></a><?php
 					} else {
 ?>				<em><?php echo $plxPlugin->getLang('L_INSTALL_FIRST'); ?></em><?php
 					}

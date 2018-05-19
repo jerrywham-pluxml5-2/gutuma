@@ -1,3 +1,4 @@
+<?php exit; //1.6 STANDALONE FILE ?>
 			</div>
 			<div id="footer"><a href="<?php echo GUTUMA_URL; ?>">Gutuma</a> is released under the GPL | <a href="http://ijuru.com/gutuma/support.php">Help</a> | &copy; <a href="http://rowan.ijuru.com">Rowan</a> </div>
 			<?php

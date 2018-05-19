@@ -3,12 +3,12 @@
  * @project Gutuma Newsletter Managment
  * @author Rowan Seymour
  * @copyright This source is distributed under the GPL
- * @file included header page
- * @modifications Thomas Ingles
- */
-/* Gutama plugin package
- * @version 1.6
- * @date	09/07/2017
+ * @file included header page : Mix of pluxml/core/admin/theme/top.php v5.6
+ * @maintainer : Thomas Ingles
+ *
+ * Gutama plugin package
+ * @version 1.9.0
+ * @date	19/05/2018
  * @author	Cyril MAGUIRE
 */
 if(!defined('PLX_ROOT')) exit;
@@ -27,12 +27,12 @@ if(isset($_GET["del"]) AND $_GET["del"]=="install") {
 <head>
 	<meta name="robots" content="noindex, nofollow" />
 	<meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0">
-	<title><?php echo plxUtils::strCheck($plxAdmin->aConf['title']) ?> <?php echo L_ADMIN ?></title>
+	<title><?php echo GUTUMA_TITLE; ?> <?php echo plxUtils::strCheck($plxAdmin->aConf['title']) ?> <?php echo L_ADMIN ?></title>
 	<meta http-equiv="content-type" content="text/html; charset=<?php echo strtolower(GUTUMA_ENCODING) ?>" />
 	<link rel="stylesheet" type="text/css" href="<?php echo PLX_MORE ?>admin/theme/plucss.css?ver=<?php echo PLX_VERSION ?>" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<?php echo PLX_MORE ?>admin/theme/theme.css?ver=<?php echo PLX_VERSION ?>" media="screen" />
 	<link rel="icon" href="<?php echo PLX_MORE ?>admin/theme/images/favicon.png" />
-	<?php if(is_file(PLX_GROOT.$plxAdmin->aConf['custom_admincss_file'])) echo '	<link rel="stylesheet" type="text/css" href="'.PLX_GROOT.$plxAdmin->aConf['custom_admincss_file'].'?v=5.6" media="screen" />'."\n" ?>
+	<?php /* if(file_exists(PLX_GROOT.$plxAdmin->aConf['custom_admincss_file'])) */ echo '	<link rel="stylesheet" type="text/css" href="'.PLX_GROOT.$plxAdmin->aConf['custom_admincss_file'].'?v='.PLX_VERSION.'" media="screen" />'."\n" ?>
 <?php
 	if(file_exists(PLX_GROOT.$plxAdmin->aConf['racine_plugins'].'admin.css'))
 		echo '	<link rel="stylesheet" type="text/css" href="'.PLX_GROOT.$plxAdmin->aConf['racine_plugins'].'admin.css" media="screen" />'."\n";
@@ -171,10 +171,10 @@ if(isset($_GET["del"]) AND $_GET["del"]=="install") {
 	<!-- <aside class="aside col sml-12 med-3 lrg-2 sml-text-left med-text-right hide"></aside> -->
 	<section class="section col sml-12">
 <?php } ?>
-<noscript><h3 class="warning">Oups, No JS</h3></noscript>
-		<?php
+		<noscript><h3 class="warning">Oups, No JS</h3></noscript>
+<?php
 		if(is_file($plxAdmin->urlRewrite().'install.php')) echo '<p class="alert red">'.L_WARNING_INSTALLATION_FILE.'</p>';
 		//plxMsg::Display();
-		?>
+?>
 
 		<?php if(!$nomenu) eval($plxAdmin->plxPlugins->callHook('AdminTopBottom')) ?>

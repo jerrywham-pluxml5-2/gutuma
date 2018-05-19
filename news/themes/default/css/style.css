@@ -4,9 +4,9 @@
  * @copyright This source is distributed under the GPL
  * @file Default theme main stylesheet
  * @modifications Cyril Maguire
- */
-/* Gutama plugin package
- * @version 1.6
+ *
+ * Gutama plugin package
+ * @version 1.9
  * @date	01/10/2013
  * @author	Cyril MAGUIRE
 */
@@ -21,7 +21,8 @@ body.subscribe {
 #imghead{
 	border-radius: 3px;
 	width: 100%;
-	max-width: 340px;}
+	max-width: 340px;
+}
 span.yes {
 	font-weight: bold;
 	color: #009966;
@@ -187,7 +188,7 @@ div.messagepreview,#msg_text {
 #gadget_generate {
 	float:right;
 }
-#list_update,.pagercontrols, #install_submit, #save_settings {
+#list_update,.pagercontrols, #install_submit{/*, #save_settings */
 	float:right;
 }
 #admin_name, #admin_email, input.users {

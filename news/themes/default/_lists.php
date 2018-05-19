@@ -16,7 +16,7 @@
 <div id="sectionheader" class="inline-form action-bar">
 	<h2><?php echo t('Manage lists');?></h2>
 	<form method="post" name="add_form" id="add_form" action="" onsubmit="gu_list_add(this.new_list_name.value, this.new_list_private.checked); return false;">
-		<p id="sectionmenu">
+		<p id="sectionmenu" class="plx<?php echo str_replace('.','',PLX_VERSION) ?>">
 			<?php echo t('Name');?>&nbsp;<input name="new_list_name" type="text" class="textfield" id="new_list_name" placeholder="(<?php echo t('Create new list');?>)" /><br class="med-hide"/>
 			<?php echo t('Private');?>&nbsp;<input type="checkbox" id="new_list_private" name="new_list_private" /><br />
 			<input name="add_list" type="submit" id="add_list" class="green" value="<?php echo t('Add');?>" />

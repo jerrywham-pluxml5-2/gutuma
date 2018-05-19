@@ -15,7 +15,7 @@
 <div id="sectionheader" class="inline-form action-bar">
 	<h2><?php echo t('Edit list');?></h2>
 	<form method="post" name="edit_form" id="edit_form" action="">
-		<p id="sectionmenu">
+		<p id="sectionmenu" class="plx<?php echo str_replace('.','',PLX_VERSION) ?>">
 			<?php echo t('Name');?>&nbsp;<input type="text" class="textfield" name="list_name" id="list_name" value="<?php echo $list->get_name(); ?>" placeholder="<?php echo t('Name');?>" /><br class="med-hide"/>
 			<?php echo t('Private');?>&nbsp;<input name="list_private" type="checkbox" id="list_private" value="1" <?php echo $list->is_private() ? 'checked="checked"' : ''; ?> /><br />
 			<input name="list_back" type="button" id="list_back" class="blue" value="<?php echo t('Back');?>" onclick="location.href='lists.php'" />

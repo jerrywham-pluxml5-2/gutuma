@@ -15,13 +15,13 @@
 <form id="edit_form" name="edit_form" method="post" action="" onSubmit="gu_browser_keep_save_pass();">
 <div id="sectionheader" class="inline-form action-bar">
 	<h2><?php echo $section_titles[$section]; ?></h2>
-	<p id="sectionmenu">
+	<p id="sectionmenu" class="plx<?php echo str_replace('.','',PLX_VERSION) ?>">
 		<a href="settings.php" class="button<?php echo ($section == 'general') ? ' blue' : ''; ?>"><?php echo t('General');?></a>
 		<a href="settings.php?section=transport" class="button<?php echo ($section == 'transport') ? ' blue' : ''; ?>"><?php echo t('Transport');?></a>
 		<a href="settings.php?section=messages" class="button<?php echo ($section == 'messages') ? ' blue' : ''; ?>"><?php echo t('Messages');?></a>
 	</p>
 </div>
-<div class="menubar in-action-bar<?php echo defined('PLX_MYMULTILINGUE') ? ' multilingue' : '';?> section sml-12 med-9 med-offset-3 lrg-10 lrg-offset-2">
+<div class="menubar in-action-bar plx<?php echo str_replace('.','',PLX_VERSION) ?> section sml-12 med-9 med-offset-3 lrg-10 lrg-offset-2">
 <?php if ($section == 'transport'){ ?>
 	<input name="test_settings" type="submit" id="test_settings" class="orange" value="<?php echo t('Test');?>" />
 <?php } ?>

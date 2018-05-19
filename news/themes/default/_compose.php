@@ -10,12 +10,10 @@
  * @date	01/10/2013
  * @author	Cyril MAGUIRE
 */
-
 ?>
-
 <div id="sectionheader" class="inline-form action-bar">
 	<h2><?php echo $preview_mode ? t('Preview ') : t('Compose '); echo t('newsletter');?></h2>
-	<p id="sectionmenu">
+	<p id="sectionmenu" class="plx<?php echo str_replace('.','',PLX_VERSION) ?>">
 		<a href="compose.php" class="button blue"><?php echo t('Compose');?></a>
 		<a href="newsletters.php?box=drafts" class="button"><?php echo t('Drafts');?>&nbsp;(<?php echo count($mailbox['drafts']) ?>)</a>
 		<a href="newsletters.php?box=outbox" class="button"><?php echo t('Outbox');?>&nbsp;(<?php echo count($mailbox['outbox']) ?>)</a>
@@ -29,8 +27,8 @@ if (gu_config::get('admin_email') == '')
 
 gu_theme_messages();
 ?>
-<form enctype="multipart/form-data" id="send_form" name="send_form" method="post" action="compose.php<?php echo gu_is_debugging() ? '?DEBUG' : ''; ?>"><input type="hidden" id="msg_id" name="msg_id" value="<?php echo $newsletter->get_id(); ?>" /><input type="hidden" id="is_modified" name="is_modified" value="<?php echo $is_modified; ?>" />
-	<div class="menubar in-action-bar<?php echo defined('PLX_MYMULTILINGUE') ? ' multilingue' : '';?> section sml-12 med-9 med-offset-3 lrg-10 lrg-offset-2">
+<form enctype="multipart/form-data" id="send_form" name="send_form" method="post" action="compose.php<?php echo gu_is_debugging() ? '?DEBUG' : ''; ?>"><input type="hidden" id="msg_id" name="msg_id" value="<?php echo $newsletter->get_id(); ?>" /><input type="hidden" id="is_modified" name="is_modified" value="<?php echo $is_modified; ?>" /><input type="hidden" id="autosave" name="autosave" value="<?php echo $autosave; ?>" />
+	<div class="menubar in-action-bar plx<?php echo str_replace('.','',PLX_VERSION) ?> section sml-12 med-9 med-offset-3 lrg-10 lrg-offset-2">
 		<input class="green" name="save_submit" type="submit" id="save_submit" value="<?php echo t('Save');?>" onclick="gu_cancel_unsaved_warning();" />
 <?php if ($preview_mode) { ?>
 		<input class="blue" name="edit_submit" type="submit" id="edit_submit" value="<?php echo t('Edit');?>" onclick="gu_cancel_unsaved_warning();" />
@@ -60,9 +58,9 @@ gu_theme_messages();
 			<div class="formfieldcontrols"><input name="msg_subject" type="text" class="textfield" id="msg_subject" value="<?php echo $newsletter->get_subject(); ?>" onchange="gu_set_modified(true)" /></div>
 		</div>
 	</div>
-	<div class="menubar" style="margin-top: 10px; padding-bottom: 3px;">
-		<div class="float-left"><input name="attach_file" type="file" id="attach_file" />&nbsp;<input name="attach_submit" type="submit" id="attach_submit" class="green" value="<?php echo t('Attach');?>" onclick="gu_cancel_unsaved_warning();" /></div>
-		<div class="float-right">
+	<div class="menubar attach_file">
+		<div style="float:left"><input name="attach_file" type="file" id="attach_file" />&nbsp;<input name="attach_submit" type="submit" id="attach_submit" class="green" value="<?php echo t('Attach');?>" onclick="gu_cancel_unsaved_warning();" /></div>
+		<div style="float:right">
 <?php
 	if (count($attachments) > 0) {
 		echo '<select id="msg_attachments" name="msg_attachments">';

@@ -40,6 +40,7 @@ sending[::->]envoi[%%]
 SMTP server:[::->]Serveur SMTP :
 Licence[::->]Licence
 Gutuma is free open source software released under the GPL version 3 licence. However, if you would like to assist further development of this project please consider making a donation, which will be much appreciated.[::->]Gutuma est un logiciel libre open source sous licence GPL version 3. Malgré ça, si vous souhaitez assister à un développement ultérieur de ce projet, merci d'envisager un don, qui sera fortement apprécié.
+Donate using Liberapay.[::->]Faites un don en utilisant Liberapay.
 PayPal - The safer, easier way to pay online.[::->]PayPal
 is released under the GPL[::->]est sous licence GPL
 Help[::->]Aide
@@ -323,6 +324,11 @@ Password must be at least % characters long[::->]Le mot de passe doit avoir au m
 A valid administrator email must be at provided[::->]Une adresse administrateur valide doit être fourni
 Unable to create/open % file for writing[::->]Impossible de créer/ouvrir le fichier [%%] pour écriture
 Invalid email address[::->]Adresse courriel non valide
+Your message go to be auto saved in 5 seconds.[::->]Votre message va s'auto sauvegarder dans 5 secondes.
+Cancel[::->]Annuler
+Auto save[::->]Enr. Automatique
+Every % Minutes[::->]Toutes les [%%] Minutes
+Inactive[::->]Inactif
 //************************************************************************
 //			SWIFT
 //************************************************************************
@@ -352,14 +358,14 @@ Sending failed:<br />[::->]L&#039;envoi a échoué :<br />
 //			INSTALL
 //************************************************************************
 Update to Gutuma [::->]Mise à jour du module d'infolettres Gutuma 
-Install Gutuma [::->]Installation du module d'infolettres Gutuma
+Install Gutuma [::->]Installation du module d'infolettres Gutuma 
 Congratulations! You can now sending newsletters. Don't forget to check the installation checklist on the home page for any further steps you need to take.[::->]Félicitations ! Vous pouvez dès à présent commencer à envoyer vos courriels, veuillez vérifier les réglages de l'installation sur la page dédiée sont les prochaines étapes qui vous seront nécessaires.
 For security reasons, this install script has now been deleted from your server.[::->]Pour des raisons de sécurité, ce script d'installation va maintenant être supprimé de votre serveur.
 For security reasons, this install script (<code>install.php</code>) must be deleted from your server.[::->]Pour des raisons de sécurité, ce script d'installation (<code>install.php</code>) doit maintenant être supprimé de votre serveur.
 Login[::->]Connexion
 Finish[::->]Terminer
 Finished[::->]Terminé
-There are no major changes required for this update.[::->]Il n'y a pas de changement majeur nécessaire pour cet mise à jour.
+There are no major changes required for this update.[::->]Aucun changement majeur nécessaire pour cette mise à jour.
 Install[::->]Installer
 The following is usually the name of your organization or company. It is used in messages not specific to one list[::->]Le champ suivant correspond habituellement au nom de votre structure ou de votre entreprise. Il est utilisé dans tous les messages et pas pour une liste en particulier
 Collective name[::->]Nom collectif
@@ -381,4 +387,4 @@ This gadget requires a valid list[::->]Ce gadget nécessite une liste de diffusi
 Please enter your email address[::->]Merci de renseigner votre adresse courriel
 An error occured whilst requesting subscription[::->]Une erreur est survenue durant la demande d'inscription</span>
 Requesting...[::->]Demande...
-Back Home[::->]Retour à l'index
+Back Home[::->]Retour à l'accueil

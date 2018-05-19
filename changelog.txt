@@ -1,8 +1,8 @@
 Gutuma : Cyberlettres pour PluXml 5.6
 TODO :
+Proposer d'envoyer l'article, page statique a son édition. 
 Gérer les tableaux avec datatablejs (vanilla) !?
-Historique des cyberlettres avec le liens envoyés et visibles sur le site
-Variables de langues sont en session ['glang']
+Historique des cyberlettres avec le liens envoyés et visibles sur le site.
 Si pluXml est en mono utilisateur : autoinstall/connect ???
 Le smtp_password est à crypté dans la conf, et décrypté pour l'envoi des news, prévoir la MAJ ou prévenir l'admin. (reverse engineering protect)
 eval($plxAdmin->plxPlugins->callHook('AdminTopMenus'));
@@ -13,22 +13,44 @@ Prévoir en cas de suppression d'un utilisateur, supprimer le param (user activ�
 Possibilité d'utiliser les plugins éditeur de texte Tiers (WYSIWY(M|G)) a la place de celuis inclus (TinyMce) Pour plus de possibilité et de réglages (accés aux medias manager, ...)
 Redirigé login.php de gutuma vers plugin?p=gutuma (s'affiche lorsque l'on désactive / réactive le plugin et que l'on se rend sur compose, newsletters.php ,...)
 AdminSettingsAdvanced plxAdminEditConfiguration ... data/gutuma set in PluXml advanced params
-Hook gadget.js.php inclus dans les themes
+Hook gadget.js.php auto inclus dans la partie site
 public function ThemeEndBody(){#auto gadgets
 echo "\n\t".'<script type="text/javascript" src="'.PLX_PLUGINS.'gutuma/news/js/gadgets.js.php"></script>';
 }
-
-?erreur lors de l'accés chez fe (page login introuvable (une redir qui foire??? a retester (la b2 roule sur un unix like, return to this ??? & update themes) || only 4 local folder???
-?Passer par subscribe.php une fois la nvl installée ;) kit a var_dumpé ;)
 
 INCOMPATIBILITÉES :
 CSSNOCACHE (DOUBLE INSTANCE ERREUR)
 
 NOTES :
 add in url: &DEBUG=1
+Variables de langues sont en session ['glang']
 
 is_post_var('msg_html')#aperçu
 is_post_var('msg_text')text aréa editor name (compose.php & ailleurs ... )
+
+
+##v.1.9.0 19/05/2018##
+[+] Compatibilités : 5.2, 5.3.1, 5.4, 5.5 & 5.6+
+[+] [compose] tinyMCE 4.7.10 customisé (browser_spellcheck: true)
+[+] [style du Theme default] classes ajouté aux menus + compatible avec les themes admin de PluXml (pluCss class : menu) + logo gutuma
+[+] Nom du Menu d'admin est "cyberlettres", peut être changer, si besoins est. Vient du fichier de langue, plus admin|user friendly :)
+[+] Position du Menu : remplacer 0 par tout autre chiffre change sa position (classe du plugin : gutuma.php a la ligne 16) * En rapport avec d'autre Plugins :)
+[+] Sécurité : les profils évoluent en temps réel + plxAdminEditUsersXml réécrit
+    [administrer les utilisateurs du plugin] verifie s'il est activé a chaque pages
+      Fix : lors de la désactivation d'un utilisateur, si celui-ci est connécté, il peut le rester tant qu'il reste dans gutuma.
+      Vérifie cnx users désactivé ou supprimés de pluxml(no admin menu?)
+      Si perte du cookie de PluXml et accés a compose par exemple (tjrs connecté a gutuma) [vérifie si connecté dans PluXml]
+[+] Auto sauvegarde des du projet (5 min par defaut, réglage sessionnaire)
+[+] Lien d'install du module couleur orange (+compatible avec les anciens PluXml)
+[+] news/inc/theme.php : ajout de possibilité d'attributs : fonction gu_theme_list_control
+[+] [admin] cache les drapeaux de plxMyMultilingue (css)
+[+] [themes] Nouveau systeme de boutons des pourboires, news/inc/index.tips.inc.php : Liberapay
+    (le formulaire Paypal de l'auteur original (gutuma 1.6), Rowan Seymour, y est décommentable)
+Fix [install] Si non connecté dans PluXml lancement de l'install puis redirigé vers l'accueil de l'admin lors du clic sur "connexion" a Gutuma
+Fix [admin] Liste les utilisateurs activés sont les seuls affichés
+Fix [compose] tinyMCE : editor.css tjrs du theme gutuma : content_css: 'themes/<?php echo gu_config::get('theme_name') ?>/css/editor.css
+ren public static function set_adehsion($key) en set_adhesion
+
 
 ##v.1.8.7.plx.5.6 16/03/2018##
 fixé Unable to open message file[::->]Impossible d'ouvrir le fichier de message (surment car le dossier (vide) est tjrs présent

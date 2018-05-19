@@ -14,15 +14,15 @@
 /**
  * Outputs the start of the site-wide theme
  */
-function gu_theme_start($nomenu = FALSE){
-	include RPATH.'themes/'.gu_config::get('theme_name').'/header.php';
+function gu_theme_start($nomenu = FALSE){//THEMEVERS PluXml 5.3.1 default theme
+	include RPATH.'themes/'.gu_config::get('theme_name').'/header'.(gu_config::get('theme_name')=='default'?THEMEVERS:'').'.php';
 }
 
 /**
  * Outputs the end of the site-wide theme
  */
 function gu_theme_end(){
-	include RPATH.'themes/'.gu_config::get('theme_name').'/footer.php';
+	include RPATH.'themes/'.gu_config::get('theme_name').'/footer'.(gu_config::get('theme_name')=='default'?THEMEVERS:'').'.php';
 }
 
 /**
@@ -86,17 +86,17 @@ function gu_theme_messages(){
  * Outputs a password control for the specified config setting
  * @param string $setting_name The config setting name
  */
-function gu_theme_password_control($setting_name,$option=false){
+function gu_theme_password_control($setting_name,$attrs=''){
 	$val = is_post_var($setting_name) ? get_post_var($setting_name) : gu_config::get($setting_name);
-	echo '<input id="'.$setting_name.'" name="'.$setting_name.'" type="password" class="textfield" style="width: 95%" value="'.$val.'"  '.$option.'/>';
+	echo '<input id="'.$setting_name.'" name="'.$setting_name.'" type="password" class="textfield" style="width: 95%" value="'.$val.'"'.($attrs?' '.$attrs:'').'/>';
 }
 /**
  * Outputs a text control for the specified config setting
  * @param string $setting_name The config setting name
  */
-function gu_theme_text_control($setting_name,$option=false){
+function gu_theme_text_control($setting_name,$attrs=''){
 	$val = is_post_var($setting_name) ? get_post_var($setting_name) : gu_config::get($setting_name);
-	echo '<input id="'.$setting_name.'" name="'.$setting_name.'" type="text" class="textfield" style="width: 95%" value="'.$val.'" '.$option.'/>';
+	echo '<input id="'.$setting_name.'" name="'.$setting_name.'" type="text" class="textfield" style="width: 95%" value="'.$val.'"'.($attrs?' '.$attrs:'').'/>';
 }
 /**
  * Outputs a checkbox (boolean) control for the specified config setting
@@ -104,14 +104,14 @@ function gu_theme_text_control($setting_name,$option=false){
  */
 function gu_theme_bool_control($setting_name){
 	$val = is_post_var($setting_name) ? TRUE : gu_config::get($setting_name);
-	echo '<input id="'.$setting_name.'" name="'.$setting_name.'" type="checkbox" value="1" '.($val ? 'checked="checked"' : '').' />';
+	echo '<input id="'.$setting_name.'" name="'.$setting_name.'" type="checkbox" value="1"'.($val ? ' checked="checked"' : '').' />';
 }
 /**
  * Outputs a textbox (integer only) control for the specified config setting
  * @param string $setting_name The config setting name
  * @param int $max_chars The maximum length in characters of any inputted integer
  */
-function gu_theme_int_control($setting_name, $max_chars = 10){
+function gu_theme_int_control($setting_name,$max_chars=10){
 	$val = is_post_var($setting_name) ? get_post_var($setting_name) : gu_config::get($setting_name);
 	echo '<input id="'.$setting_name.'" name="'.$setting_name.'" type="text" class="textfield" style="width: 70px" maxlength="'.$max_chars.'" onkeypress="return gu_is_numeric_key(event);" value="'.$val.'" />';
 }
@@ -120,9 +120,9 @@ function gu_theme_int_control($setting_name, $max_chars = 10){
  * @param string $setting_name The config setting name
  * @param array $options The 2D array of possible options - [n][0] is the value of the nth option and [n][1] is the display name
  */
-function gu_theme_list_control($setting_name, $options, $control = FALSE){
+function gu_theme_list_control($setting_name,$options,$control=FALSE,$attrs=''){
 	$val = is_post_var($setting_name) ? get_post_var($setting_name) : ($control ? $control : gu_config::get($setting_name));
-	echo '<select name="'.$setting_name.'" id="'.$setting_name.'">';
+	echo '<select name="'.$setting_name.'" id="'.$setting_name.'"'.($attrs?' '.$attrs:'').'>';
 	foreach ($options as $option)
 		echo '<option value="'.$option[0].'" '.(($val == $option[0]) ? 'selected="selected"' : '').'>'.$option[1].'</option>';
 	echo '</select>';

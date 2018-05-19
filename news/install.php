@@ -4,9 +4,25 @@
  * @author Rowan Seymour
  * @copyright This source is distributed under the GPL
  * @file The install page
- */
+ * @maintener : Thomas Ingles
+ *
+ * Gutama plugin package
+ * @version 1.9.0
+ * @date	19/05/2018
+ * @author Thomas Ingles
+*/
 define('RPATH',str_replace('install.php','',realpath('install.php')));
 include 'inc/gutuma.php';
+if (!isset($_SESSION['profil'])){//PluXml
+	header('Location:'.PLX_GROOT);
+	exit();
+}
+elseif ($_SESSION['profil'] != PROFIL_ADMIN){//PluXml
+	plxMsg::Error($plxMotor->plxPlugins->aPlugins['gutuma']->getLang('L_ERR_UPDATE'));
+	header('Location:'.PLX_GROOT.'core/admin/index.php');
+	exit();
+}
+
 gu_init(FALSE, FALSE);
 /**
  * Main install script
