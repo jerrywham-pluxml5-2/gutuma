@@ -11,66 +11,42 @@
 plxToken::validateFormToken($_POST);
 # Controle de l'accès à la page en fonction du profil de l'utilisateur connecté
 $plxAdmin->checkProfil(PROFIL_ADMIN,PROFIL_MANAGER);
-# Tableau des profils
-$aProfils = array(
-	PROFIL_ADMIN => L_PROFIL_ADMIN,
-	PROFIL_MANAGER => L_PROFIL_MANAGER,
-	PROFIL_MODERATOR => L_PROFIL_MODERATOR,
-	PROFIL_EDITOR => L_PROFIL_EDITOR,
-	PROFIL_WRITER => L_PROFIL_WRITER
-);
-$ok_config = FALSE;
-if (file_exists($plxPlugin->listsDir.'/inc/config.php')){//Le fichier de config existe donc le module a été installé
+
+$aProfils = $plxPlugin->aProfils();# Tableau des profils
+$ok_config = $plxPlugin->getGutumaConfig();#On charge la config de gutuma : $gu_config_version & $gu_config[]
+#echo $ok_config;exit;//dbg
+if($ok_config){//Le fichier de config existe donc le module est installé
+	eval($ok_config);
 	$ok_config = TRUE;
-	// Récupération de la config de Gutuma
-	//echo base64_decode(substr(file_get_contents($plxPlugin->listsDir.'/inc/config.php'),9,-5));// désencodé & affiché, si besoin est
-	eval(base64_decode(substr(file_get_contents($plxPlugin->listsDir.'/inc/config.php'),9,-5)));//var_dump($gu_config);exit;
-	// Version décodée
-	//eval(substr(file_get_contents($plxPlugin->listsDir.'/inc/config.php'),7,-4));
-}
+}//var_dump($gu_config_version,$gu_config);//dbg
 if(!empty($_POST)){
-	foreach ($_POST['user'] as $key => $value){
+	foreach($_POST['user'] as $key => $value){
 		$plxPlugin->setParam('user_'.$key, $value, 'cdata');
 		$_userid = $key;
 	}
 	$plxPlugin->saveParams();
-	$Gut_users = unserialize($gu_config['users']);
-	foreach($_POST['user'] as $id => $activation){
-		if ($activation == 'activé'){
-			$Gut_users[$plxAdmin->aUsers[$id]['name']] = array(
-				'id'=>$id,
-				'login'=>$plxAdmin->aUsers[$id]['login'],
-				'password'=>$plxAdmin->aUsers[$id]['password'],
-				'salt'=>$plxAdmin->aUsers[$id]['salt'],
-				'profil'=>$aProfils[$plxAdmin->aUsers[$id]['profil']]
-			);
+	foreach($_POST['user'] as $id => $status){
+		if($status == 'activé'){
+			$gu_config['users'] = $plxPlugin->setGutumaUser($plxAdmin,$gu_config['users'],$id);#On Met A Jour l'utilisateur
 		}
 	}
-	$gu_config['users'] = serialize($Gut_users);
-	$plxPlugin->v();#populate $plxPlugin->release (& code)
-	$GU_config = "\$gu_config_version = $plxPlugin->release;\n";
-	foreach ($gu_config as $key => $value){
-		$GU_config .="\$gu_config['$key'] = ".($value===false ? "FALSE" : ($value === true ? "TRUE" : "'$value'")).";\n";
-	}
-	// Version encodée
-	file_put_contents($plxPlugin->listsDir.'/inc/config.php',"<?php /*\n".base64_encode($GU_config)."\n*/  ?>");
-	// Version décodée
-	/*file_put_contents($plxPlugin->listsDir.'/inc/config.php',"<?php \n".$GU_config."\n?>");*/
-	if ($plxPlugin->getParam('user_'.$_userid) == 'activé'){
+	$plxPlugin->setGutumaConfig($gu_config);#On sauve la config
+	if($plxPlugin->getParam('user_'.$_userid) == 'activé'){
 		header('Location:'.PLX_PLUGINS.'gutuma/news/login.php?action=plxlogin&ref=users.php&token='.base64_encode(serialize($gu_config['admin_name'].'[::]'.$gu_config['admin_username'].'[::]'.$gu_config['admin_password'].'[::]'.plxUtils::charAleatoire(1).$gu_config['salt'].plxUtils::charAleatoire(2).'[::]'.$aProfils[0].'[::]'.$_userid.'[::]'.$_POST['nr'])));
-		exit();
-	} else {
+		exit;
+	}
+	else{
 		header('Location:'.PLX_PLUGINS.'gutuma/news/login.php?action=plxlogin&ref=deluser.php&token='.base64_encode(serialize($gu_config['admin_name'].'[::]'.$gu_config['admin_username'].'[::]'.$gu_config['admin_password'].'[::]'.plxUtils::charAleatoire(1).$gu_config['salt'].plxUtils::charAleatoire(2).'[::]'.$aProfils[0].'[::]'.$_userid.'[::]'.$_POST['rtd'])));
-		exit();
+		exit;
 	}
 }//fi !empty($_POST)
-if(isset($_GET['u']) && isset($_GET['rec']) && !empty($_GET['u']) && $_GET['rec'] == 'done'){
+if(isset($_GET['u']) && isset($_GET['rec']) && !empty($_GET['u']) && $_GET['rec'] == 'done'){#utilisateur activé
 	$plxPlugin->setParam('user_'.$_GET['u'],'activé', 'cdata');
 	$plxPlugin->saveParams();
 	header('Location:plugin.php?p=gutuma');
 	exit;
 }
-if(isset($_GET['u']) && isset($_GET['del']) && !empty($_GET['u']) && $_GET['del'] == 'done'){
+if(isset($_GET['u']) && isset($_GET['del']) && !empty($_GET['u']) && $_GET['del'] == 'done'){#utilisateur désactivé
 	$plxPlugin->setParam('user_'.$_GET['u'],'desactivé', 'cdata');
 	$plxPlugin->saveParams();
 	header('Location:plugin.php?p=gutuma');

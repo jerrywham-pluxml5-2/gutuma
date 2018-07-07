@@ -1,6 +1,9 @@
-Gutuma : Cyberlettres pour PluXml 5.6
+Gutuma : Cyberlettres pour PluXml ;)
+
 TODO :
-Proposer d'envoyer l'article, page statique a son édition. 
++ 1 profil éditeur (2), le manager peut gérer les gadjets.
+Double confirmation (opt in)
+Proposer d'envoyer l'article, page statique a son édition.
 Gérer les tableaux avec datatablejs (vanilla) !?
 Historique des cyberlettres avec le liens envoyés et visibles sur le site.
 Si pluXml est en mono utilisateur : autoinstall/connect ???
@@ -22,14 +25,22 @@ INCOMPATIBILITÉES :
 CSSNOCACHE (DOUBLE INSTANCE ERREUR)
 
 NOTES :
-add in url: &DEBUG=1
+Pour débogger url: &DEBUG=1
 Variables de langues sont en session ['glang']
+http://postmaster.free.fr/
 
 is_post_var('msg_html')#aperçu
 is_post_var('msg_text')text aréa editor name (compose.php & ailleurs ... )
+@Fixé [js MAJ bloqué] utiliser rawgit.com ;)
 
 
-##v.1.9.0 19/05/2018##
+##v.1.9.1 07/07/2018 ##
+[+] La config de gutuma change si un admin ou un gestionnaire modifie s(l)es identifiants
+[+] Écrire une infolettre : Placeholder explicatif dans le champ pour le selecteur de liste
+[+] subscribe.php?list= ... &backlink=no # @$_GET["backlink"]=='no'?' style="display:none"':'' # Cache "retour a l'acceuil" sur les 2 themes ;)
+
+
+##v.1.9.0 19/05/2018 ##
 [+] Compatibilités : 5.2, 5.3.1, 5.4, 5.5 & 5.6+
 [+] [compose] tinyMCE 4.7.10 customisé (browser_spellcheck: true)
 [+] [style du Theme default] classes ajouté aux menus + compatible avec les themes admin de PluXml (pluCss class : menu) + logo gutuma
@@ -40,7 +51,7 @@ is_post_var('msg_text')text aréa editor name (compose.php & ailleurs ... )
       Fix : lors de la désactivation d'un utilisateur, si celui-ci est connécté, il peut le rester tant qu'il reste dans gutuma.
       Vérifie cnx users désactivé ou supprimés de pluxml(no admin menu?)
       Si perte du cookie de PluXml et accés a compose par exemple (tjrs connecté a gutuma) [vérifie si connecté dans PluXml]
-[+] Auto sauvegarde des du projet (5 min par defaut, réglage sessionnaire)
+[+] Auto sauvegarde du projet (5 min par defaut, réglage sessionnaire)
 [+] Lien d'install du module couleur orange (+compatible avec les anciens PluXml)
 [+] news/inc/theme.php : ajout de possibilité d'attributs : fonction gu_theme_list_control
 [+] [admin] cache les drapeaux de plxMyMultilingue (css)

@@ -40,7 +40,8 @@ if (is_get_var('action') && get_get_var('action') == 'plxlogin'){
 		$name = '';
 		gu_error(t('Incorrect username or password'));
 	}
-}elseif (is_get_var('action') && get_get_var('action') == 'login'){
+}
+elseif (is_get_var('action') && get_get_var('action') == 'login'){
 
 	$username = is_post_var('u') ? get_post_var('u') : '';
 	$password = is_post_var('p') ? get_post_var('p') : '';

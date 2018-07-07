@@ -215,7 +215,7 @@ class gu_config{
 	 **/
 	public static function plx_charAleatoire($taille='10'){
 		$string = '';
-		$chaine = 'abcdefghijklmnpqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$chaine = 'abcdefghijklmnpqrstuvwxyz23456789ABCDEFGHIJKLMNPQRSTUVWXYZ';
 		mt_srand((float)microtime()*1000000);
 		for($i=0; $i<$taille; $i++)
 			$string .= $chaine[ mt_rand()%strlen($chaine) ];

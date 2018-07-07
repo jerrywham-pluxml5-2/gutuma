@@ -29,7 +29,7 @@ if (isset($users[$user_name])){
 // Save settings
 if (is_post_var('save_settings')){
 	if (isset($users[$user_name])){
-		gu_error(t('<span style="color:red;">User already exists !</span>'));
+		gu_error('<span style="color:red;">'.t('User already exists !').'</span>');
 	} else {
 		gu_config::setUsers(
 			get_post_var('id'),

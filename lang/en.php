@@ -7,8 +7,8 @@
  * @author	Cyril MAGUIRE@date	29/10/2012
  **/
 	$LANG = array(
-		'L_ADMIN_MENU_NAME'     =>	'Cyberletters',#Name in PluXml Menu : default theme
-		'L_ADMIN_TITLE_MENU'    =>	'Manage newsletters with Gutuma',
+		'L_ADMIN_MENU_NAME'     =>	'Cyberletters',#Name in PluXml Menu : admin & default theme
+		'L_ADMIN_TITLE_MENU'    =>	'Manage newsletters with Gutuma',#title attribute
 		'L_GUTUMA_INSTALL'      =>	'Install Gutuma Core',
 		'L_WRITE_NEWS'          =>	'Go to the newsletters',
 		'L_ACTIVATE_USER'       =>	'Activate user',

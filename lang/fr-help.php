@@ -8,6 +8,8 @@
  **/
 if(!defined('PLX_ROOT')) exit; ?>
 <p class="in-action-bar">Aide du plugin Gutuma, le gestionnaire de Newsletters</p>
+<p class="warning" style="color:purple;">Astuce : pour facilité la compréhention de vos utilisateurs. Il est possible de changer le titre du menu et son infobulle.<br />
+Il vous suffit d'éditer le(s) fichier(s) de langue <b><em>plugins/gutuma/lang/##.php</em></b> et d'y placer vos textes.</p>
 <h3>Installation</h3>
 <p>Le plugin est constitué de deux dossiers principaux:</p>
 <ol>
@@ -31,7 +33,7 @@ if(!defined('PLX_ROOT')) exit; ?>
 <li>Renommer le dossier data/gutuma/temp en data/gutuma/tmp</li>
 <li>Verifier les droits data/gutuma/*/*</li>
 </ol>
-<h4 style="color:red;">DE LA V1.1 A LA V1.8.5.plx.5.6</h4>
+<h4 style="color:red;">DE LA V1.1 A LA V1.8.5.plx.5.6 et supérieures</h4>
 <ol>
 <li>Remplacer l'ancien dossier gutuma par le nouveau dans le dossier plugins</li>
 <li>Copier tout le contenu de l'ancien dossier /news/lists/ (celui à la racine de pluxml) dans le dossier /data/gutuma/</li>

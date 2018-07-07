@@ -173,10 +173,10 @@
 		<div class="formfield messages">
 			<div class="formfieldcomment"><?php echo t('Administrator notifications');?></div>
 			<div class="formfieldcontrols"><?php gu_theme_bool_control('list_subscribe_notify'); ?></div>
-			<div class="formfieldlabel"><?php echo t('Notify of new subscribes');?>:</div>
+			<div class="formfieldlabel"><?php echo t('Notify of new subscribes');?></div>
 			<div class="formfielddivider"></div>
 			<div class="formfieldcontrols"><?php gu_theme_bool_control('list_unsubscribe_notify'); ?></div>
-			<div class="formfieldlabel"><?php echo t('Notify of unsubscribes');?>:</div>
+			<div class="formfieldlabel"><?php echo t('Notify of unsubscribes');?></div>
 		</div>
 	<div>
 <?php } ?>

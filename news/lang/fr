@@ -90,7 +90,10 @@ Newsletter deleted[::->]Infolettre supprimée
 Address <b><i>%</i></b> already in the list[::->]L'adresse <b><i>[%%]</i></b> est déjà dans la liste
 Addresses cannot be more than % characters[::->]Une adresse ne peut pas avoir plus de [%%] caractères
 Lists can have a maximum of % addresses in demo mode[::->]Les listes peuvent contenir un maximum de [%%] adresses en mode de démonstration
+Error when create OptIn OptOut list.[::->]Erreur, liste OptIn OptOut non créé.
 Ingnore first line[::->]Ignorer la première ligne
+Out[::->]Sortantes
+In[::->]Entrantes
 Separate by[::->]Séparé par
 Comma (,)[::->], (Virgule)
 Semicolon (;)[::->]; (Point virgule)
@@ -128,7 +131,8 @@ Preview[::->]Aperçu
 Send[::->]Envoyer
 Address book[::->]Listes
 Add[::->]Ajouter
-To[::->]Destinataire
+To[::->]Destinataire(s)
+Add list here with Add button only[::->]Ajouter des listes uniquement a l'aide du bouton Ajouter
 Subject[::->]Sujet
 Below is the plain text version that will also be sent so that users with non-HTML email clients can receive this newsletter. You can edit this before the email is sent.[::->]Ci-dessous, la version textuelle qui sera également envoyée afin que les utilisateurs d'un client de messagerie ne prenant pas en charge le langage HTML puissent recevoir cette infolettre. Vous pouvez la modifier avant que le courriel ne soit envoyé.
 Attach[::->]Joindre
@@ -375,7 +379,7 @@ This address used as the From field of all sent messages. To minimize the chance
 Administrator email[::->]Adresse de l'administrateur
 Add a new user[::->]Ajouter un nouvel utilisateur
 New user successfully saved.[::->]Nouvel utilisateur correctement enregistré
-<span style="color:red;">User already exists !</span>[::->]<span style="color:red;">Cet utilisateur est déjà enregistré !</span>
+User already exists ![::->]Cet utilisateur est déjà enregistré !
 Profile[::->]Profil
 Back to site[::->]Retour au site
 Ok[::->]Ok

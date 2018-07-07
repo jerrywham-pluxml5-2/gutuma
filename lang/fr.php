@@ -3,12 +3,12 @@
  * Fichier de traduction pour gutuma
  *
  * @version 1.9
- * @author	Thomas INGLES@date	19/05/2018
- * @author	Cyril MAGUIRE@date	29/10/2012
+ * @author	Thomas INGLES @date	19/05/2018
+ * @author	Cyril MAGUIRE @date	29/10/2012
  **/
 	$LANG = array(
-		'L_ADMIN_MENU_NAME'     =>	'Cyberlettres',#Nom du menu admin dans PluXml : thème default
-		'L_ADMIN_TITLE_MENU'    =>	'Organiser des cyberlettres avec Gutuma',
+		'L_ADMIN_MENU_NAME'     =>	'Cyberlettres',#Nom du menu admin dans PluXml : admin & thème default
+		'L_ADMIN_TITLE_MENU'    =>	'Gerer des InfoLettres avec Gutuma',#infobulle
 		'L_GUTUMA_INSTALL'      =>	'Installer le Noyau de Gutuma',
 		'L_WRITE_NEWS'          =>	'Accéder aux infolettres',
 		'L_ACTIVATE_USER'       =>	'Activer l&#039;utilisateur',

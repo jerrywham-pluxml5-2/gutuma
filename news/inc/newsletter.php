@@ -446,11 +446,11 @@ class gu_newsletter{
 	 */
 	public static function get_all(){
 		$newsletters = array();
-		if ($dh = @opendir(realpath(GUTUMA_TEMP_DIR))){//~ if ($dh = @opendir(GUTUMA_TEMP_DIR)){
-			while (($file = readdir($dh)) !== FALSE){
-				if ($file == '.' || $file == '..' || $file == 'index.html' || $file[0] == '.')//[0] == . is 4 .htaccess
+		if ($dh = @opendir(realpath(GUTUMA_TEMP_DIR))){
+			while (($f = readdir($dh)) !== FALSE){
+				if (strpos($f,'.') >= 0 )//. ou .. ou index(.)html ou .htaccess
 					continue;
-				if (($newsletter = self::get($file)) !== FALSE)
+				if (($newsletter = self::get($f)) !== FALSE)
 					$newsletters[] = $newsletter;
 			}
 		}
