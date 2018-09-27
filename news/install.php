@@ -39,6 +39,13 @@ function gu_install($collective_name, $admin_username, $admin_password, $admin_e
  * Main update script
  */
 function gu_update(){
+	$lists = gu_list::get_all();//<=1.9.1 to 2.0.0 : get_all($load_addresses = FALSE, $inc_private = TRUE, $tmp = '')
+	foreach($lists as $list){//2.0.0 : for all lists
+		$tmpFile = realpath(GUTUMA_TEMP_DIR.'/'.$list->get_id().'.i.php');
+		if(!file_exists($tmpFile) OR !is_file($tmpFile)){#if unexist
+			$list->update('i');//create empty ²opt(in/out) temporary lists (data/gutuma/tmp/##TIME_ID##.i.php)
+		}
+	}
 	return gu_config::save();
 }
 if (isset($_profil['salt'])){// If pluxml is used
@@ -66,11 +73,11 @@ echo '</div><div id="content"><h2>'.$title.'</h2>';// Output title
 gu_theme_messages();
 if ($install_success){
 ?>
-<p><?php echo t("Congratulations! You can now sending newsletters. Don't forget to check the installation checklist on the home page for any further steps you need to take.");?></p>
+<p class="success"><?php echo t("Congratulations! You can now sending newsletters. Don't forget to check the installation checklist on the home page for any further steps you need to take.");?></p>
 <?php if (@unlink('install.php')) { ?>
-	<p><?php echo t('For security reasons, this install script has now been deleted from your server.');?></p>
+	<p class="success"><?php echo t('For security reasons, this install script has now been deleted from your server.');?></p>
 <?php } else { ?>
-	<p><?php echo t('For security reasons, this install script (<code>install.php</code>) must be deleted from your server.');?></p>
+	<p class="error"><?php echo t('For security reasons, this install script (<code>install.php</code>) must be deleted from your server.');?></p>
 <?php } ?>
 <p style="text-align: center"><a href="../../../core/admin/plugin.php?p=gutuma"><?php echo t('Login');?> (PluXml)</a>
 <?php if (gu_config::get('theme_name') == 'gutuma'){ ?> - <s><a href="login.php"><?php echo t('Login');?></a></s><?php } echo '</p>';//gu_origin

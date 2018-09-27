@@ -24,18 +24,21 @@ include_once '_menu.php';?>
 		<tr>
 			<td><strong><?php echo t('Name');?></strong></td>
 			<td><strong><?php echo t('Addresses');?></strong></td>
+			<td><strong><?php echo t('In transit');?></strong></td>
 			<td><strong><?php echo t('Private');?></strong></td>
 			<td>&nbsp;</td>
 		</tr>
 <?php
 if (count($lists) > 0) {
 	foreach($lists as $list) {
+		$list_is_private = $list->is_private();
 ?>
 		<tr id="row_<?php echo $list->get_id(); ?>">
 			<td class="name" title="<?php echo $list->get_name(); ?>"><?php echo $list->get_name(); ?></td>
 			<td><?php echo $list->get_size(); ?></td>
-			<td><?php echo $list->is_private() ? t('Yes') : t('No'); ?></td>
-			<td style="text-align: right"><script type="text/javascript">document.write(gu_list_menu(<?php echo $list->get_id(); ?>))</script></td>
+			<td><i style="<?php echo ($list_is_private||!@$listsTmpSize[$list->get_id()])?'display:none;':''; ?>"><script type="text/javascript">document.write(gu_list_menu(<?php echo $list->get_id(); ?>, "tmp"))</script></i>&nbsp;<?php echo @$listsTmpSize[$list->get_id()] ?></td>
+			<td><?php echo $list_is_private ? t('Yes') : t('No'); ?></td>
+			<td style="text-align: center"><script type="text/javascript">document.write(gu_list_menu(<?php echo $list->get_id(); ?>))</script></td>
 		</tr>
 <?php
 	}

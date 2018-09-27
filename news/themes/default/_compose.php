@@ -52,7 +52,7 @@ gu_theme_messages();
 			</div>
 			<br />
 			<div class="formfieldlabel"><?php echo t('To');?>:</div>
-			<div class="formfieldcontrols"><input name="msg_recips" type="text" class="textfield" id="msg_recips" value="<?php echo $newsletter->get_recipients(); ?>" onchange="gu_set_modified(true)" placeholder="<?php echo t('Add list here with Add button only');?>" /></div>
+			<div class="formfieldcontrols"><input name="msg_recips" type="text" class="textfield" id="msg_recips" value="<?php echo $newsletter->get_recipients(); ?>" onchange="gu_set_modified(true)" placeholder="<?php echo t('Add recipient list here with Add button');?>" /></div>
 			<br />
 			<div class="formfieldlabel"><?php echo t('Subject');?>:</div>
 			<div class="formfieldcontrols"><input name="msg_subject" type="text" class="textfield" id="msg_subject" value="<?php echo $newsletter->get_subject(); ?>" onchange="gu_set_modified(true)" /></div>

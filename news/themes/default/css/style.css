@@ -69,7 +69,7 @@ table.results tr td.emptyresults {
 	width:96%;
 	background-color: #ffcece;
 }
-.notification {
+#msg {/* .notification */
 	position:absolute;
 	top:-5px;
 	z-index:9999;

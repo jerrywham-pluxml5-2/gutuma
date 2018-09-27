@@ -59,6 +59,12 @@
 		</div>
 -->
 		<div class="formfield">
+<?php $days = array(); foreach(array(15, 20, 30, 60, 90) AS $day) $days[] = array($day,$day.' '.t('days')); ?>
+			<div class="formfieldcomment"><?php echo t('The following selector choose retention days in temporary lists when user (un)subscribe for first time.');?></div>
+			<div class="formfieldlabel"><?php echo t('Leave temporary emails after'); ?>:</div>
+			<div class="formfieldcontrols"><?php gu_theme_list_control('days', $days); ?></div>
+		</div>
+		<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('The following selector choose text editor comportement when compose a newsletter.');?></div>
 			<div class="formfieldlabel" title="tinyMCE"><?php echo t('Text editor');?>:</div>
 			<div class="formfieldcontrols"><?php gu_theme_list_control('tiny_tools', array(array('all',t('Menu and toolbar')) , array('tools',t('Only toolbar')) , array('menu',t('Only menu')) , array('no',t('Editor Off')))); ?></div>

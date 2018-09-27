@@ -14,7 +14,7 @@
 include_once 'misc.php';
 include_once 'session.php';
 include_once ('_pluxml.php');#Inclusion des librairies de plxuml
-define('GU_CONFIG_LANG', $glang);
+define('GU_CONFIG_LANG', isset($slang)?$slang:$glang);//For subscribe.php url query ?lng= (slang)
 if (version_compare(phpversion(), '5', '<'))#Check for PHP5+
 	die(t('Sorry - Gutuma requires at least PHP5. Please contact your hosting provider and ask them to upgrade.'));
 include_once 'setting.php';
@@ -26,14 +26,13 @@ define('GUTUMA_VERSION_NUM', $plxMotor->plxPlugins->aPlugins['gutuma']->release)
 define('GUTUMA_VERSION_NAME', $plxMotor->plxPlugins->aPlugins['gutuma']->code);#friendly name
 define('GUTUMA_DEMO_MODE', FALSE);#Demonstration mode
 define('GUTUMA_TITLE', t('Gutuma Newsletter Management'));#Application title of Gutuma
-define('GUTUMA_URL', 'https://web.archive.org/web/20081228162738/http://ijuru.com/gutuma');#Homepage of Gutuma
-define('GUTUMA_UPDATE_URL', 'https://raw.githubusercontent.com/jerrywham-pluxml5-2/gutuma/master/news/up_git.js?ver='.GUTUMA_VERSION_NUM);
+define('GUTUMA_URL', 'http://sudwebdesign.free.fr/index.php?article5');#Homepage of Gutuma : https://web.archive.org/web/20081228162738/http://ijuru.com/gutuma
+define('GUTUMA_UPDATE_URL', 'http://sudwebdesign.free.fr/zips/gutuma/up_git.js?ver='.GUTUMA_VERSION_NUM);#https://cdn.rawgit.com/jerrywham-pluxml5-2/gutuma/master/news/up_git.js inaccessible (CORS policy)
 define('GUTUMA_ENCODING', PLX_CHARSET);#Content encoding 'UTF-8'
 define('GUTUMA_PASSWORD_MIN_LEN', 6);#Minimum password length
-define('GUTUMA_EMAIL', 'rowanseymour@users.sourceforge.net');#Author email address
 define('GUTUMA_LISTS_DIR', $plxMotor->plxPlugins->aPlugins['gutuma']->listsDir);#Directory where lists are stored
 define('GUTUMA_CONFIG_FILE', GUTUMA_LISTS_DIR.'/inc/config.php');#Configuration file
-define('GUTUMA_TEMP_DIR', GUTUMA_LISTS_DIR.'/tmp');#sys_get_temp_dir()#Directory where temp message files are stored
+define('GUTUMA_TEMP_DIR', GUTUMA_LISTS_DIR.'/tmp');#sys_get_temp_dir()#Directory where project files and list In-Out are stored
 define('GUTUMA_TEMP_EXPIRY_AGE', 3*60*60);#The number of seconds from last access before subfolders/files are deleted from the temp directory
 define('GUTUMA_PAGE_SIZE', 10);#The number of items per page in lists of addresses
 define('GUTUMA_MAX_ADDRESS_LEN', 320);#The max allowable length in characters of an email address
@@ -119,7 +118,7 @@ function gu_is_debugging(){
  * @return bool Always FALSE so that you can write if (...) return gu_error("...")
  */
 function gu_error($msg, $extra = NULL){
-	$_SERVER['GU_ERROR_MSG'] = $msg;
+	@$_SERVER['GU_ERROR_MSG'] .= $msg;
 	$_SERVER['GU_ERROR_EXTRA'] = $extra;
 	return FALSE;
 }

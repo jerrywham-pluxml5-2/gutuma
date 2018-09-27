@@ -29,7 +29,7 @@
 <form method="post" name="newsletters_form" id="newsletters_form" action=""><input name="num_newsletters" type="hidden" id="num_newsletters" value="<?php echo count($newsletters); ?>" />
 	<table border="0" cellspacing="0" cellpadding="0" class="results">
 		<tr>
-			<td>&nbsp;</td>
+			<td><?php for($n=0;$n<9;$n++)echo '&nbsp;';?></td>
 <?php if ($box == 'drafts') { ?>
 			<td>&nbsp;</td>
 <?php } elseif ($box == 'outbox') { ?>

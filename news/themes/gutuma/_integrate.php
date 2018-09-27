@@ -35,7 +35,7 @@ if (!$generate) {
 		</div>
 		<div class="formfield">
 			<div class="formfieldlabel"><input type="radio" name="gadget_type" value="basic_form" /> <?php echo t('Basic subscribe form');?></div>
-			<div class="formfieldcontrols"><script type="text/javascript">gu_gadgets_write_basic_form(<?php echo $example_list_id; ?>, '<?php echo t('Subscribe');?>', 'bf_');</script></div>
+			<div class="formfieldcontrols"><script type="text/javascript">gu_gadgets_write_basic_form(<?php echo $example_list_id; ?>, '<?php echo t('Subscribe');?>', '<?php echo t('Your email');?>', 'bf_');</script></div>
 		</div>
 		<div class="formfield">
 			<div class="formfieldlabel"><input type="radio" name="gadget_type" value="ajax_link" /> <?php echo t('AJAX subscribe link');?></div>

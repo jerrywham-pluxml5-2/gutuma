@@ -1,11 +1,12 @@
-Gutuma : Cyberlettres pour PluXml ;)
+Gutuma : CyberLettres pour PluXml ;)
 
 TODO :
-+ 1 profil éditeur (2), le manager peut gérer les gadjets.
-Double confirmation (opt in)
+Supprimer un courriel global, qui l'efface dans toutes les listes (lists.php)
++ 1 profil d'éditeur? (2 possible pour le moment) et/ou le manager peut gérer les gadjets.
+Un param query du formulaire (subscribe) (choix du theme de gutuma)
 Proposer d'envoyer l'article, page statique a son édition.
 Gérer les tableaux avec datatablejs (vanilla) !?
-Historique des cyberlettres avec le liens envoyés et visibles sur le site.
+Historique des cyberlettres avec le liens envoyés et visibles sur le site. (si ok send.lock ==> send.ok)
 Si pluXml est en mono utilisateur : autoinstall/connect ???
 Le smtp_password est à crypté dans la conf, et décrypté pour l'envoi des news, prévoir la MAJ ou prévenir l'admin. (reverse engineering protect)
 eval($plxAdmin->plxPlugins->callHook('AdminTopMenus'));
@@ -14,30 +15,103 @@ Evol: swiftmailer-5.4.6 pour future integration http://swiftmailer.org
 & si theme default -> use static mode & display (site thème au lieu de celui d'admin) ou add gutuma logo (top left|center) [une iframe]
 Prévoir en cas de suppression d'un utilisateur, supprimer le param (user activé ou désactivé)
 Possibilité d'utiliser les plugins éditeur de texte Tiers (WYSIWY(M|G)) a la place de celuis inclus (TinyMce) Pour plus de possibilité et de réglages (accés aux medias manager, ...)
-Redirigé login.php de gutuma vers plugin?p=gutuma (s'affiche lorsque l'on désactive / réactive le plugin et que l'on se rend sur compose, newsletters.php ,...)
-AdminSettingsAdvanced plxAdminEditConfiguration ... data/gutuma set in PluXml advanced params
-Hook gadget.js.php auto inclus dans la partie site
-public function ThemeEndBody(){#auto gadgets
-echo "\n\t".'<script type="text/javascript" src="'.PLX_PLUGINS.'gutuma/news/js/gadgets.js.php"></script>';
+Rediriger login.php de gutuma vers plugin?p=gutuma (s'affiche lorsque l'on désactive / réactive le plugin et que l'on se rend sur compose, newsletters.php ,...)
+AdminSettingsAdvanced plxAdminEditConfiguration ... data/gutuma set in PluXml advanced params*
+*Hook gadget.js.php auto inclus dans la partie site
+*public function ThemeEndBody(){#auto gadgets
+*#PHP echo "\n\t".'<script type="text/javascript" src="'.PLX_PLUGINS.'gutuma/news/js/gadgets.js.php"></script>';
+*}
+
+#idées:
+	si auto save actif : post-it last saved time
+	#replay sess (add list id OR not to add new address)
+	(edit)list(s)
+		(reload buttons)
+		tempo : on clic on email go to search in real (with filter ;)
+	subscribe.php :::
+		#TODO : to add another friends reset address #PHP:   $list->get_name()   absolute_url('subscribe.php').'?list='.$list->get_id().'&action=subscribe
+		Un wall-e?
+#+ misc.js
+function hideShow(id,o){//used for show keycode in admin ::: todo for statusmsg AND errormsg ???
+ o = o?o:'';//inline-block
+ if (document.getElementById(id).style.display==o){
+  document.getElementById(id).style.display='none';
+ }
+ else{
+  document.getElementById(id_div).style.display=o;
+ }   
 }
+
+#Curieux mais normal
+Si mail non inscrit dans liste reele mais dans tmp, si utilise keycode pour désinscrire = envoie de mail érroné; ne s'est réellement désinscrit, il n'était pas ds la liste réele);
+Possible que l'inverse se produise, si ds liste réele et ds tmp; si keycode utilisé pour inscrire = envoi de mail de confirm & notif? En effet OUI.
+#Ptet modifier le courriel (& MESSAGE SYS) en stipulant (vous etiez déja (dés)abonné, vous avez effacé votre courriel de la liste [d'accueil] temporaire
+Message Oups went wrong ::: mauvaise clé abonné ou non, mauvaise liste (id) ... une erreur inconnu quoi...
+si array_unique of time ²opt (just one link to gérér subcribtion)
+? changer ou enlever le i. en time des listes temporaires (var algo) ::: clé ds config (sécu)
+Notifs : si nojs les rendre display:block (class nojs ?) (si js rem class nojs)
+
 
 INCOMPATIBILITÉES :
 CSSNOCACHE (DOUBLE INSTANCE ERREUR)
 
-NOTES :
-Pour débogger url: &DEBUG=1
+#NOTES :
+Parametres d'url *(du formulaire d'inscription) :
+ Pour débogger : &DEBUG=1
+*Pour changer la langue : &l=fr
+*Pour cacher le lien "retour a l'accueil" : &backlink=no
+Chez free (php 5.1) a chaque envoi d'une lettre = Impossible de verrouiller l'infolettre. N'en tenez point compte, ceci est du au LOCK_EX
+
+
 Variables de langues sont en session ['glang']
 http://postmaster.free.fr/
+//number_format($number, $decimals, ",", "")
 
 is_post_var('msg_html')#aperçu
 is_post_var('msg_text')text aréa editor name (compose.php & ailleurs ... )
-@Fixé [js MAJ bloqué] utiliser rawgit.com ;)
+
+
+##v.2.0.0 23/09/2018 ##
+[+] Double confirmation (²opt in/Out)
+[+] ²opt : dbl verif (si ds opt et reelle)???
+[+] ²opt : resend key ::: veta dak
+[+] Roule en php.5.1.3RC4-dev (free.fr) fixed :
+    Warning: array_walk() [function.array-walk]: Unable to call SELF::get_tmp_address() in plugins/gutuma/news/inc/list.php on line 101
+  		  array_walk($addressesStr, array('self', 'get_tmp_address'));#'SELF::get_tmp_address()' : FIX Warning: array_walk() [function.array-walk]: Unable to call SELF::get_tmp_address() ::: THX ezhacher at gmail dot com : https://php.net/manual/en/function.array-walk.php#115622
+[+] Cron maison dans la func get (classe list) qui MAJ la liste tmp si trop vieux courriel ::: OLD idea ::: un bouton wash (editlist) pour effacer les mails tempo (anciens/ tous?) (et)ou un autowash temporel (ds la function)
+[+] subscribe.php : Le formulaire peut changer de langue avec un parametre d'url : ?l=fr ;) Exemple : /plugins/gutuma/news/subscribe.php?backlink=no&l=en
+[+] Aide explicative au formulaire basique car tous le monde y passe (clé de validité)
+[+] gu_error('<br />'.  ::: 4ll
+[+] Themes : gutuma est fluide (480 -> 700px), default (petites retouches)
+[+] Tableau des liste trié par ordre alphabètique
+[+] Afficher ou cacher les clés de validité dans l'admin
+[+] Souscription basique : renvoi les clés hash (key code) (case a cocher)
+[+] Efface k_sbscribe afin que le champ k soit vide aprés la ²opt
+[+] Lors de la mise a jour, créer les fichiers temporaires (si absents) ::: gu_update() ::: #csv_fix by clone()
+[+] settings (#tep default, #tep gutuma) : 15, 20, 30, 45, 60, 90 jours de rétention des email temporaires ::: gu_theme_list_control($setting_name,$options,$control=FALSE,$attrs='')
+[+] Message(s) lors de la premiere (dés)inscription avec la(es) clé(s) //send 1st opt mail with validate key code(s) and user notice:::BEP
+[+] Effacer les adresses des espaces temporaires au dela de 15/30/60/90 jours (config?) +? si clic sur souscrire?
+[+] Admin lists + les courriels en transit
+[+] Admin editlist interfaces des courriels en transit + icones d'info
+[+] Admin editlist (temporaires) : permet l'envoi d'un courriel avec les instruction et le keycode (de validité) d'un clic (icone).
+[+] Messages lang singuliers et pluriel
+[+] Souscription basique : les listes sont toute cochées par defaut
+[+] Themes subscribe : si aucune liste dispo, l'affiche
+[+] Gadget : formulaire classique : ajout de l'indice (placeholder d'antan)
+Fix Page informations (index.php) : MAJ bloqué js chez github par le Navi (CORS policy) : déplacé chez free.fr ;)
+Fix Impossible de lire le fichier de la liste ... &+???
+Fix Les projets (compos) ont disparues de l'écran (strpos >= 0 vers !== FALSE)
+Fix Lors d'un import csv (duplique les adresses dans la liste 'i' ??? et sans le time();
+Fix Add address in list (private OR not) (admin)
+Fix Lors du renomage d'une liste (renommer la tempo)
+Fix Si noscript impossible redemandé la clé hash de validité.
+Fix Test réglages smtp.free.fr : swift non instancié = Fatal error: Call to a member function disconnect() on a non-object in gutuma/news/inc/mailer.php on line 230
 
 
 ##v.1.9.1 07/07/2018 ##
 [+] La config de gutuma change si un admin ou un gestionnaire modifie s(l)es identifiants
-[+] Écrire une infolettre : Placeholder explicatif dans le champ pour le selecteur de liste
-[+] subscribe.php?list= ... &backlink=no # @$_GET["backlink"]=='no'?' style="display:none"':'' # Cache "retour a l'acceuil" sur les 2 themes ;)
+[+] Écrire une infolettre : Placeholder explicatif dans le champ pour le sélecteur de liste
+[+] subscribe.php?list= ... &backlink=no # @$_GET["backlink"]=='no'?' style="display:none"':'' # Cache "retour a l’accueil" sur les 2 thèmes ;)
 
 
 ##v.1.9.0 19/05/2018 ##

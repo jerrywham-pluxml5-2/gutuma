@@ -4,6 +4,6 @@
  * Licence: This source is distributed under the GPL
  */
 
-var gu_latest_version_num = 2018070707;
-var gu_latest_version_name = "1.9.1";
-var gu_latest_download_url = "https://codeload.github.com/jerrywham-pluxml5-2/gutuma/zip/v.1.9.1.zip";
+var gu_latest_version_num = 2018092323;
+var gu_latest_version_name = "2.0.0";
+var gu_latest_download_url = "http://sudwebdesign.free.fr/index.php?article5";

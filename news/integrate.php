@@ -23,7 +23,8 @@ $script_import = '<script type="text/javascript" src="'.absolute_url('js/gadgets
 $gadget_type = is_post_var('gadget_type') ? get_post_var('gadget_type') : '';
 $generate = is_post_var('gadget_generate') && ($gadget_type != '');
 // Default to first list if one exists
-$example_list_id = (count($lists) > 0) ? $lists[0]->get_id() : 0;
+reset($lists);//stackoverflow.com/posts/8131148 key($lists)
+$example_list_id = (count($lists) > 0) ? $lists[key($lists)]->get_id() : 0;
 if ($generate) {
 	$gadget_list = is_post_var('gadget_list') ? get_post_var('gadget_list') : $example_list_id;
 	switch ($gadget_type) {
@@ -36,10 +37,11 @@ if ($generate) {
 			break;
 		case 'basic_form':
 			$gadget_btn_text = is_post_var('gadget_btn_text') ? str_replace('"','&quot;',get_post_var('gadget_btn_text')) : t('Subscribe');
+			$gadget_email_hint = is_post_var('gadget_email_hint') ? str_replace('"','&quot;',get_post_var('gadget_email_hint')) : t('Your email');
 			$gadget_prefix = is_post_var('gadget_prefix') ? get_post_var('gadget_prefix') : 'gu_';
-			$script_create = 'gu_gadgets_create_basic_form('.$gadget_list.', "'.$gadget_btn_text.'", "'.$gadget_prefix.'")';
-			$script_write = '<script type="text/javascript">gu_gadgets_write_basic_form('.$gadget_list.', "'.$gadget_btn_text.'", "'.$gadget_prefix.'")</script>';
-			$gadget_params = array('list', 'btn_text', 'prefix');
+			$script_create = 'gu_gadgets_create_basic_form('.$gadget_list.', "'.$gadget_btn_text.'", "'.$gadget_email_hint.'", "'.$gadget_prefix.'")';
+			$script_write = '<script type="text/javascript">gu_gadgets_write_basic_form('.$gadget_list.', "'.$gadget_btn_text.'", "'.$gadget_email_hint.'", "'.$gadget_prefix.'")</script>';
+			$gadget_params = array('list', 'btn_text', 'email_hint', 'prefix');
 			$gadget_requires_import = FALSE;
 			break;
 		case 'ajax_link':

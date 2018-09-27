@@ -34,18 +34,19 @@
 <div class="scrollable-table">
 	<table border="0" cellspacing="0" cellpadding="0" class="table full-width results" id="liststable">
 		<tr>
-			<td>&nbsp;</td>
+			<td><?php for($n=0;$n<24;$n++)echo '&nbsp;';?></td>
 			<td class="sml-text-center"><strong><?php echo t('Private');?></strong></td>
-			<td class="cell-off"><strong><b>(<?php echo t('Addresses');?>)</b><span><?php echo t('Name');?></span></strong></td>
+			<td class="cell-off"><strong><b>(<?php echo t('Addresses');?>)</b><b>(<?php echo t('In transit');?>)</b><span><?php echo t('Name');?></span></strong></td>
 		</tr>
 <?php
 if (count($lists) > 0) {
 	foreach($lists as $list) {
+		$list_is_private = $list->is_private();
 ?>
 		<tr id="row_<?php echo $list->get_id(); ?>">
 			<td><script type="text/javascript">document.write(gu_list_menu(<?php echo $list->get_id(); ?>))</script></td>
-			<td class="sml-text-center"><?php echo $list->is_private() ? t('Yes') : t('No'); ?></td>
-			<td class="cell-off"><b>(<?php echo $list->get_size(); ?>)</b><span class="should-cut-off"><?php echo $list->get_name(); ?></span></td>
+			<td class="sml-text-center"><?php echo $list_is_private ? t('Yes') : t('No'); ?></td>
+			<td class="cell-off"><b>(<?php echo $list->get_size(); ?>)</b><b><i style="<?php echo ($list_is_private||!@$listsTmpSize[$list->get_id()])?'display:none':''; ?>"><script type="text/javascript">document.write(gu_list_menu(<?php echo $list->get_id(); ?>, "tmp"))</script></i>(<?php echo @$listsTmpSize[$list->get_id()] ?>)</b><span class="should-cut-off"><?php echo $list->get_name(); ?></span></td>
 		</tr>
 <?php
 	}

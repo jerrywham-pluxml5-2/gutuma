@@ -28,4 +28,23 @@ $mailbox = gu_newsletter::get_mailbox();
 ob_start();include'inc/index.tips.inc.php';$tips = ob_get_clean();//pourboires des auteurs
 gu_theme_start();
 include_once 'themes/'.gu_config::get('theme_name').'/_index.php';//Body
+?>
+<script type="text/javascript" src="<?php echo GUTUMA_UPDATE_URL; ?>" ></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var current_ver_num = <?php echo GUTUMA_VERSION_NUM; ?>;
+if (gu_latest_version_num > current_ver_num) {
+	gu_success("Gutuma <a href=\"" + gu_latest_download_url + "\"><b>" + gu_latest_version_name + "</b><?php echo t('</a> is now available. Please upgrade.');?>");
+	gu_messages_display(0);
+	setTimeout("gu_element_set_inner_html('new', '<br />' + document.getElementById('statusmsg').innerHTML);", 1618);
+}
+else if (gu_latest_version_num < current_ver_num) {
+	gu_success("<?php echo t('You are using a pre-release or beta version of Gutuma. Please report any bugs or problems you encounter.');?>");
+	gu_messages_display(0);
+}
+//~ if (gu_latest_version_num != current_ver_num)
+	//~ gu_messages_display(0);
+/* ]]> */
+</script>
+<?php
 gu_theme_end();

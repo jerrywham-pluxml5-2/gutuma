@@ -7,9 +7,9 @@
  * @modifications Cyril Maguire
  *
  * Gutama plugin package
- * @version 1.6
- * @date	01/10/2013
- * @author	Cyril MAGUIRE
+ * @version 2.0.0
+ * @date	23/09/2018
+ * @author	Cyril MAGUIRE, Thomas Ingles
 */
 
 class gu_config{
@@ -111,9 +111,9 @@ class gu_config{
 			return FALSE;
 // Read file values and copy to static members
 		$gu_config = array();
-//include GUTUMA_CONFIG_FILE;
+// include GUTUMA_CONFIG_FILE;
 		eval(base64_decode(substr(file_get_contents(GUTUMA_CONFIG_FILE),9,-5)));// Version encodée (voir ligne 196)
-//eval(substr(file_get_contents(GUTUMA_CONFIG_FILE),7,-4));// Version décodée (voir ligne 197)
+//		eval(substr(file_get_contents(GUTUMA_CONFIG_FILE),7,-4));// Version décodée (voir ligne 197)
 		self::$version = $gu_config_version;
 		foreach (array_keys($gu_config) as $keys)
 			self::$values[$keys] = $gu_config[$keys];
@@ -130,7 +130,7 @@ class gu_config{
 			exit;
 		}
 // Set defaults
-		self::$values	= array();
+		self::$values = array();
 		self::$values['application_name'] = t('Newsletters');
 		self::$values['collective_name'] = t('My Newsletters');
 		self::$values['admin_name'] = $profil['name'];
@@ -154,20 +154,21 @@ class gu_config{
 		self::$values['spell_check'] = 'browser';// browser, no
 		self::$values['tiny_tools'] = 'tools';//tools, menu, all (tools & menu), no (dont use tiny?)
 		self::$values['theme_name'] = 'default';//gutuma (original theme)
+		self::$values['days'] = 15;//temporary lists retention days, leave after (15, 20, 30, 60, 90)
 		self::$values['list_send_welcome'] = TRUE;
 		self::$values['list_send_goodbye'] = TRUE;
 		self::$values['list_subscribe_notify'] = TRUE;
 		self::$values['list_unsubscribe_notify'] = TRUE;
 		self::$values['salt'] = $profil['salt'];
 //		self::$values['ROOT'] = RPATH;
-		self::$values['users']= serialize (array());
+		self::$values['users'] = serialize (array());
 		if (!file_exists(GUTUMA_CONFIG_FILE))// Check if a config exists
 			return FALSE;
 // Read file values and copy to static members
 		$gu_config = array();
 //include GUTUMA_CONFIG_FILE;
 		eval(base64_decode(substr(file_get_contents(GUTUMA_CONFIG_FILE),9,-5)));//var_dump($gu_config);// Version encodée (voir ligne 105 & 196)
-//eval(substr(file_get_contents(GUTUMA_CONFIG_FILE),7,-4));// Version décodée (voir ligne 106 & 197)
+//		eval(substr(file_get_contents(GUTUMA_CONFIG_FILE),7,-4));// Version décodée (voir ligne 106 & 197)
 		self::$version = $gu_config_version;
 		foreach (array_keys($gu_config) as $keys)
 			self::$values[$keys] = $gu_config[$keys];
@@ -204,7 +205,7 @@ class gu_config{
 				$f .= "\$gu_config['".$key."'] = '".str_replace(array('\"',"'",'\\'),array('"','’','/'),self::$values[$key])."';\n";#replace last \ by / ::: preg_replace('/^.|.$/','',$string); //rem 1st & last char
 		}
 		file_put_contents(GUTUMA_CONFIG_FILE,"<?php /*\n".base64_encode($f)."\n*/  ?>");// Version encodée (voir ligne 159)
-/*file_put_contents(GUTUMA_CONFIG_FILE,"<?php \n".$f."\n?>");*/ // Version décodée (voir ligne 160)
+/*		file_put_contents(GUTUMA_CONFIG_FILE,"<?php \n".$f."\n?>"); */ // Version décodée (voir ligne 160)
 		return TRUE;
 	}
 	/**

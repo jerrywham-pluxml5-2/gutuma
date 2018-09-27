@@ -2,10 +2,10 @@
 /**
  * Gestion des utilisateurs pour le module de newsletters
  *
- * @version 1.6
- * @date	01/10/2013
+ * @version 2.0.0
+ * @date	23/09/2018
  * @package plugin Gutuma
- * @author	Cyril MAGUIRE
+ * @author	Cyril MAGUIRE, Thomas Ingles
  **/
 # Control du token du formulaire
 plxToken::validateFormToken($_POST);
@@ -18,7 +18,7 @@ $ok_config = $plxPlugin->getGutumaConfig();#On charge la config de gutuma : $gu_
 if($ok_config){//Le fichier de config existe donc le module est installé
 	eval($ok_config);
 	$ok_config = TRUE;
-}//var_dump($gu_config_version,$gu_config);//dbg
+}
 if(!empty($_POST)){
 	foreach($_POST['user'] as $key => $value){
 		$plxPlugin->setParam('user_'.$key, $value, 'cdata');

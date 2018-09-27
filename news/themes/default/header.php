@@ -1,4 +1,4 @@
-<?php 
+<?php if(!defined('PLX_ROOT')) exit;
 /************************************************************************
  * @project Gutuma Newsletter Managment
  * @author Rowan Seymour
@@ -11,7 +11,6 @@
  * @date	19/05/2018
  * @author	Cyril MAGUIRE
 */
-if(!defined('PLX_ROOT')) exit;
 $plxAdmin = @plxAdmin::getInstance();
 if(isset($_GET["del"]) AND $_GET["del"]=="install") {
 	if(@unlink(PLX_ROOT.'install.php'))
@@ -27,7 +26,7 @@ if(isset($_GET["del"]) AND $_GET["del"]=="install") {
 <head>
 	<meta name="robots" content="noindex, nofollow" />
 	<meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0">
-	<title><?php echo GUTUMA_TITLE; ?> <?php echo plxUtils::strCheck($plxAdmin->aConf['title']) ?> <?php echo L_ADMIN ?></title>
+	<title><?php echo GUTUMA_TITLE; ?> - <?php echo plxUtils::strCheck($plxAdmin->aConf['title']) ?> - <?php echo L_ADMIN ?></title>
 	<meta http-equiv="content-type" content="text/html; charset=<?php echo strtolower(GUTUMA_ENCODING) ?>" />
 	<link rel="stylesheet" type="text/css" href="<?php echo PLX_MORE ?>admin/theme/plucss.css?ver=<?php echo PLX_VERSION ?>" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<?php echo PLX_MORE ?>admin/theme/theme.css?ver=<?php echo PLX_VERSION ?>" media="screen" />
@@ -46,24 +45,23 @@ if(isset($_GET["del"]) AND $_GET["del"]=="install") {
 -->
 	<?php eval($plxAdmin->plxPlugins->callHook('AdminTopEndHead')) ?>
 	<?php } ?>
-	<link rel="stylesheet" type="text/css" href="themes/<?php echo gu_config::get('theme_name');?>/css/gutuma.css" media="screen" />
-	<script type="text/javascript" src="js/misc.min.js"></script>
-	<script type="text/javascript" src="js/tw-sack.min.js"></script>
-	<script type="text/javascript" src="js/md5.min.js"></script>
-	<script type="text/javascript" src="js/sha1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="themes/<?php echo gu_config::get('theme_name');?>/css/gutuma.css?v=<?php echo GUTUMA_VERSION_NAME ?>" media="screen" />
+	<script type="text/javascript" src="js/misc.min.js?v=<?php echo GUTUMA_VERSION_NAME ?>"></script>
+	<script type="text/javascript" src="js/tw-sack.min.js?v=<?php echo GUTUMA_VERSION_NAME ?>"></script>
+	<script type="text/javascript" src="js/md5.min.js?v=<?php echo GUTUMA_VERSION_NAME ?>"></script>
+	<script type="text/javascript" src="js/sha1.min.js?v=<?php echo GUTUMA_VERSION_NAME ?>"></script>
 </head>
 
-<body id="<?php echo basename($_SERVER['SCRIPT_NAME'], ".php") ?>"<?php echo ($nomenu)?' class="subscribe"':'';?>>
+<body id="<?php echo basename($_SERVER['SCRIPT_NAME'], ".php") ?>"<?php echo $nomenu?' class="subscribe"':'';?>>
 
 <main class="main grid">
-
-	<?php if (gu_is_demo()) { ?><div id="demobanner">DEMO MODE</div><?php } ?>
-
-	<?php if (!$nomenu) {
-	if (gu_session_is_valid()) { ?>
-	<?php include ('_menu.php');?>
-	<?php } else { ?>
-
+<?php if (gu_is_demo()) { ?>
+	<div id="demobanner">DEMO MODE</div>
+<?php }
+if (!$nomenu) {
+	if (gu_session_is_valid()) {
+		include ('_menu.php');
+	} else {# !gu_session_is_valid ?>
 	<aside class="aside col sml-12 med-3 lrg-2 sml-text-left med-text-right">
 		<header class="header sml-text-center med-text-right">
 			<ul class="unstyled-list head">
@@ -167,14 +165,13 @@ if(isset($_GET["del"]) AND $_GET["del"]=="install") {
 	</aside>
 <?php } ?>
 	<section class="section col sml-12 med-9 med-offset-3 lrg-10 lrg-offset-2">
-<?php } else { ?>
+<?php } else {# nomenu ?>
 	<!-- <aside class="aside col sml-12 med-3 lrg-2 sml-text-left med-text-right hide"></aside> -->
-	<section class="section col sml-12">
+	<section class="col sml-12">
 <?php } ?>
 		<noscript><h3 class="warning">Oups, No JS</h3></noscript>
 <?php
 		if(is_file($plxAdmin->urlRewrite().'install.php')) echo '<p class="alert red">'.L_WARNING_INSTALLATION_FILE.'</p>';
 		//plxMsg::Display();
-?>
-
-		<?php if(!$nomenu) eval($plxAdmin->plxPlugins->callHook('AdminTopBottom')) ?>
+if(!$nomenu)
+	eval($plxAdmin->plxPlugins->callHook('AdminTopBottom')) ?>

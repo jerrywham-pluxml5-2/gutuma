@@ -33,7 +33,7 @@ else{// Create empty newsletter, and fill from post vars if they exist
 	if (is_post_var('msg_text'))
 		$newsletter->set_text(get_post_var('msg_text'));
 	else
-		$newsletter->generate_text();
+		$newsletter->generate_text();// html_to_text(msg_text)
 }
 if ($newsletter->get_recipients() == '' && is_get_var('list')){// Take recipient list from querystring if none specified thus far
 	foreach ($lists as $list){
@@ -172,6 +172,10 @@ img {height: auto !important;max-width: 100% !important;}
 	var is_post_back = false;
 	timeoutHandle = false;
 	function gu_presend_check(){
+		if (document.send_form.msg_recips.value == ""){
+			alert("<?php echo t('Please specify at least one recipient list!');?>");
+			return false;
+		}
 		if (document.send_form.msg_subject.value == "")
 			return confirm("<?php echo t('Are you sure you want to send a message with an empty subject?');?>");
 		return true;
@@ -240,7 +244,7 @@ img {height: auto !important;max-width: 100% !important;}
 <?php
 include_once 'themes/'.gu_config::get('theme_name').'/_compose.php';//Body
 ?>
-	<div class="formfieldset">
+	<div class="formfieldset" id="gu_auto_save_field" style="display:none">
 		<div class="formfield">
 			<div class="formfieldlabel"><?php echo t('Auto save');?>:</div>
 			<div class="formfieldcontrols">
@@ -261,12 +265,14 @@ gu_theme_list_control('gu_timer',
 ?></div>
 		</div>
 	</div>
-<div id="gu_auto_save_overlay" class="gu_overlay">
+<div class="gu_overlay" id="gu_auto_save_overlay" style="display:none">
 	<span><?php echo t('Your message go to be auto saved in 5 seconds.');?><br /><a href="#gu_no_save"><?php echo t('Cancel');?></a></span>
 </div>
 <script type="text/javascript">
 	timer = document.getElementById('gu_timer').value;//global var
 	window.onload = function(){gu_auto_save();}
+	document.getElementById('gu_auto_save_field').style.display='';
+	document.getElementById('gu_auto_save_overlay').style.display='';
 </script>
 <?php
 gu_theme_end();

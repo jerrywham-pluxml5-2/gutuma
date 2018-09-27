@@ -25,7 +25,7 @@ Il vous suffit d'éditer le(s) fichier(s) de langue <b><em>plugins/gutuma/lang/#
 </ul>
 <h5>L'adresse courriel du premier compte admin (001) doit être renseignée.</h5>
 <p>&nbsp;</p>
-<h3 style="color:red;">IMPORTANT POUR LA MIGRATION (POUR RETROUVER LES ANCIENNES LISTES DE DIFFUSION</h3>
+<h3 style="color:red;">IMPORTANT POUR LA MIGRATION (POUR RETROUVER LES ANCIENNES LISTES DE DIFFUSION)</h3>
 <h4 style="color:red;">DE LA V1.2 A LA V1.8.5.plx.5.6</h4>
 <ol>
 <li>Copier tout le contenu de l'ancien dossier plugins/gutuma/news/lists (celui à la racine de pluxml) dans le dossier data/gutuma/</li>
@@ -49,7 +49,7 @@ Seuls les administrateurs et les gestionnaires peuvent utiliser le plugin.</p>
 <p>Les administrateurs ont accès aux réglages, tandis que les gestionnaires ne peuvent que gérer les news et les listes d'envoi.</p>
 <p>Le module doit être installé <span style="color:red;">par l'administrateur principal (le numéro 001) du site</span> (<strong>Important !</strong>).</p>
 <p>&nbsp;</p>
-<p>Une fois le plugin activé, un lien "Gutuma" apparait dans la sidebar du panneau d'administration. Un clic sur ce lien dirige vers une liste d'utilisateurs susceptibles de pouvoir utiliser le plugin (les administrateurs et les gestionnaires). Par défaut, ils sont tous désactivés , sauf le premier utilisateur.</p>
+<p>Une fois le plugin activé, un lien "Cyberlettres" apparait dans la sidebar du panneau d'administration. Un clic sur ce lien dirige vers une liste d'utilisateurs susceptibles de pouvoir utiliser le plugin (les administrateurs et les gestionnaires). Par défaut, ils sont tous désactivés , sauf le premier utilisateur.</p>
 <p>Pour poursuivre l'installation, ce dernier doit cliquer sur <a class="button green" style="color:yellow;" href="plugin.php?p=gutuma">Installer le module</a>.</p>
 <p>Il est alors dirigé vers la page d'installation du module de news. Les informations affichées sont modifiables. Un clic sur le bouton <code>installer</code> termine l'installation.</p>
 <p>L'utilisateur principal doit alors activer son compte en se connectant avec les mêmes identifiants que ceux utilisés pour la connexion au panneau d'administration de Pluxml.</p>

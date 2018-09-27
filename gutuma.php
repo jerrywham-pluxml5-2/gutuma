@@ -1,9 +1,10 @@
 <?php
 /**
  * Classe gutuma
+ * @version 2.0.0 * @date	23/09/2018 * @author	Thomas Ingles
  * @version 1.9.1 * @date	07/07/2018 * @author	Thomas Ingles
- * @version 1.8 * @date	01/09/2017 * @author	Thomas Ingles
- * @version 1.6 * @date	01/10/2013 * @author	Cyril MAGUIRE
+ * @version 1.8.0 * @date	01/09/2017 * @author	Thomas Ingles
+ * @version 1.6.0 * @date	01/10/2013 * @author	Cyril MAGUIRE
  **/
 class gutuma extends plxPlugin {
 	public $code;
@@ -24,9 +25,8 @@ class gutuma extends plxPlugin {
 		$this->release = str_replace('.','',$this->getInfo('date'));#v release time YYYYMMDDHH
 	}
 	public function setGutumaUser(&$plxAdmin,$GU_users,$id){//Méthode qui retourne la MAJ : (array) $gu_config['users'] serialisé
-#		var_dump(__CLASS__,__FUNCTION__,$GU_users,$id,$plxAdmin->aUsers[$id]);//exit;//dbg
 		$aProfils = $this->aProfils();# Tableau des profils
-		$GU_users = unserialize($GU_users);//var_dump('gutuma setGutumaUser $GU_users:',$GU_users);exit;
+		$GU_users = unserialize($GU_users);
 		$GU_users[$plxAdmin->aUsers[$id]['name']] = array(
 			'id'=>$id,
 			'login'=>$plxAdmin->aUsers[$id]['login'],
@@ -34,26 +34,23 @@ class gutuma extends plxPlugin {
 			'salt'=>$plxAdmin->aUsers[$id]['salt'],
 			'profil'=>$aProfils[$plxAdmin->aUsers[$id]['profil']]
 		);
-#		var_dump(__CLASS__,__FUNCTION__,$GU_users,$id,$plxAdmin->aUsers[$id]);//exit;//dbg
-		return serialize($GU_users);//$gu_config['users']
+		return serialize($GU_users);
 	}
 	public function aProfils(){//Méthode qui retourne le Tableau des profils PluXml
-  return array(
-   PROFIL_ADMIN => L_PROFIL_ADMIN,
-   PROFIL_MANAGER => L_PROFIL_MANAGER,
-   PROFIL_MODERATOR => L_PROFIL_MODERATOR,
-   PROFIL_EDITOR => L_PROFIL_EDITOR,
-   PROFIL_WRITER => L_PROFIL_WRITER
-  );
+		return array(
+			PROFIL_ADMIN => L_PROFIL_ADMIN,
+			PROFIL_MANAGER => L_PROFIL_MANAGER,
+			PROFIL_MODERATOR => L_PROFIL_MODERATOR,
+			PROFIL_EDITOR => L_PROFIL_EDITOR,
+			PROFIL_WRITER => L_PROFIL_WRITER
+		);
 	}
 	public function getGutumaConfig(){//Méthode qui retourne gutuma/inc/config.php a éval(ué) (faux si fichier absent)
-		//var_dump(__CLASS__,__FUNCTION__/*,$plxAdmin*/);//WIt
 		if (file_exists($this->listsDir.'/inc/config.php')){//Le fichier de config existe donc le module est installé
-			// Récupération de la config de Gutuma
-			//echo base64_decode(substr(file_get_contents($this->listsDir.'/inc/config.php'),9,-5));// désencodé & affiché, si besoin est
-			//return substr(file_get_contents($this->listsDir.'/inc/config.php'),7,-4);// Version décodée
+//			Récupération de la config de Gutuma
+//			echo base64_decode(substr(file_get_contents($this->listsDir.'/inc/config.php'),9,-5));// désencodé & affiché, si besoin est
+//			return substr(file_get_contents($this->listsDir.'/inc/config.php'),7,-4);// Version décodée
 			return base64_decode(substr(file_get_contents($this->listsDir.'/inc/config.php'),9,-5));
-			//return true;
 		}
 		return FALSE;
 	}
@@ -63,10 +60,10 @@ class gutuma extends plxPlugin {
 		foreach($gu_config as $key => $value){
 			$GU_config .="\$gu_config['$key'] = ".($value===false ? "FALSE" : ($value === true ? "TRUE" : "'$value'")).";\n";
 		}
-		// Version encodée
+//		Version encodée
 		file_put_contents($this->listsDir.'/inc/config.php',"<?php /*\n".base64_encode($GU_config)."\n*/  ?>");
-		// Version décodée
-		/*file_put_contents($this->listsDir.'/inc/config.php',"<?php \n".$GU_config."\n?>");*/
+//		Version décodée
+/*		file_put_contents($this->listsDir.'/inc/config.php',"<?php \n".$GU_config."\n?>");*/
 	}
 	public function onUpdate(){
 		//return array('cssCache' => true);#mise a jour du cache des css
@@ -84,7 +81,7 @@ class gutuma extends plxPlugin {
 		echo '<?php '.$string.' ?>';
 	}
 	/**
-	 * Méthode qui supprime les utilisateurs de la liste des utilisateurs valides (fichier parameters.xml)
+	 * Méthode qui supprime ou met a jour les utilisateurs de la liste des utilisateurs valides (fichier parameters.xml)
 	 * L'utilisateur n'est pas véritablement supprimé de la liste mais son statut passe de activé/désactivé à supprimé
 	 * @author Cyril MAGUIRE, Thomas Ingles
 	 */

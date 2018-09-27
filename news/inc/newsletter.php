@@ -7,9 +7,9 @@
  * @modifications Cyril Maguire
  *
  * Gutama plugin package
- * @version 1.8.7
- * @date	16/03/2018
- * @author	Cyril MAGUIRE, Th0m@s
+ * @version 2.0.0
+ * @date	23/09/2018
+ * @author	Cyril MAGUIRE, Thomas Ingles
 */
 define('FILE_MARKER', "<?php die(); ?>\n");
 define('MESSAGE_FILE', 'msg.php');
@@ -141,7 +141,7 @@ class gu_newsletter{
 	 */
 	public function save(){
 		if (gu_is_demo())
-			return gu_error(t('Newsletters cannot be saved or sent in demo mode'));
+			return gu_error('<br />'.t('Newsletters cannot be saved or sent in demo mode'));
 		$dir = $this->get_dir();
 		if (!file_exists($dir)){// Create newsletter's temp directory if it doesn't already exist
 			mkdir($dir);
@@ -150,7 +150,7 @@ class gu_newsletter{
 		}
 		$fh = @fopen($dir.'/'.MESSAGE_FILE, 'w');// Save message file
 		if ($fh == FALSE)
-			return gu_error(t('Unable to save newsletter draft'), ERROR_EXTRA);
+			return gu_error('<br />'.t('Unable to save newsletter draft'), ERROR_EXTRA);
 		fwrite($fh, FILE_MARKER);
 		fwrite($fh, $this->recipients."\n");
 		fwrite($fh, $this->subject."\n");
@@ -167,14 +167,14 @@ class gu_newsletter{
 	private function acquire_lock(){
 		gu_debug(t('Locking recipient file (%)',array($this->id)));
 		$this->lock = @fopen($this->get_dir().'/'.LOCK_FILE, 'w');
-		if (!$this->lock || !flock($this->lock, LOCK_EX))
-			return gu_error(t('Unable to lock newsletter'));
+		if (!$this->lock || !flock($this->lock, LOCK_EX))// | LOCK_NB ::: free.fr fix? no
+			return gu_error('<br />'.t('Unable to lock newsletter'));
 	}
 	/**
 	 * Release a lock on this newsletter
 	 */
 	private function release_lock(){
-		gu_debug(t('Unlocking recipient file (%)',array($this->id)));
+		gu_debug('<br />'.t('Unlocking recipient file (%)',array($this->id)));
 		flock($this->lock, LOCK_UN);
 		fclose($this->lock);
 	}
@@ -193,7 +193,7 @@ class gu_newsletter{
 		if (!file_exists($dir.'/'.RECIPIENTS_FILE)){// Save address list
 			$fh = @fopen($dir.'/'.RECIPIENTS_FILE, 'w');
 			if ($fh == FALSE)
-				return gu_error(t('Unable to save newsletter recipient list'), ERROR_EXTRA);
+				return gu_error('<br />'.t('Unable to save newsletter recipient list'), ERROR_EXTRA);
 			$this->send_progress = array($num_addresses, $num_addresses);
 			fwrite($fh, FILE_MARKER);
 			fwrite($fh, $this->send_progress[0].'|'.$this->send_progress[1]."\n");
@@ -222,22 +222,21 @@ class gu_newsletter{
 		}
 		$fh = @fopen($dir.'/'.RECIPIENTS_FILE, 'r+');// Open recipient list file
 		if ($fh == FALSE)
-			return gu_error(t('Unable to open newsletter recipient file'), ERROR_EXTRA);
+			return gu_error('<br />'.t('Unable to open newsletter recipient file'), ERROR_EXTRA);
 		try {//free.fr fix
 			flock($fh, LOCK_EX | LOCK_NB);
 		} catch (Exception $e) {
 			var_dump('Exception reçue : ',  $e->getMessage(), "\n",$e);//exit;
-			return gu_error(t('Unable to lock newsletter recipient list'), ERROR_EXTRA);
+			return gu_error('<br />'.t('Unable to lock newsletter recipient list'), ERROR_EXTRA);
 		}
-
 /*
 		if (!flock($fh, LOCK_EX | LOCK_NB)){//free.fr fix test no
-			flock( $fp, LOCK_UN );// release the lock 
+			flock( $fp, LOCK_UN );// release the lock
 			fclose($fh);
 			$fh = @fopen($dir.'/'.RECIPIENTS_FILE, 'r+');// Re Open recipient list file
-  
+
 			if (!flock($fh, LOCK_EX | LOCK_NB))//free.fr fix
-				return gu_error(t('Unable to lock newsletter recipient list'), ERROR_EXTRA);
+				return gu_error('<br />'.t('Unable to lock newsletter recipient list'), ERROR_EXTRA);
 		}
 */
 		fgets($fh); // Read file marker
@@ -289,7 +288,7 @@ class gu_newsletter{
 			$this->release_lock();
 		if (count($failed_recipients) > 0){
 			$extra = t('Unable to deliver to:<br /><br />').implode('<br />', $failed_recipients);
-			return gu_error(t('Message could not be sent to all recipients'), $extra);
+			return gu_error('<br />'.t('Message could not be sent to all recipients'), $extra);
 		}
 		return TRUE;
 	}
@@ -306,7 +305,7 @@ class gu_newsletter{
 		gu_debug(t('Storing attachment ').$dest_path);
 // Move uploaded file to the newsletter's temp directory
 		if (!@move_uploaded_file($path, $dest_path))
-			return gu_error(t('Unable to save uploaded file. Check permissions for directory <code>%</code>',array(GUTUMA_TEMP_DIR)));
+			return gu_error('<br />'.t('Unable to save uploaded file. Check permissions for directory <code>%</code>',array(GUTUMA_TEMP_DIR)));
 		return TRUE;
 	}
 	/**
@@ -314,9 +313,9 @@ class gu_newsletter{
 	 * @param string $filename The name of the file to delete
 	 * @return bool TRUE if operation was successful, else FALSE
 	 */
-	public function delete_attachment($filename){	
+	public function delete_attachment($filename){
 		if (!@unlink($this->get_dir().'/attachments/'.$filename))// Delete file from newsletter's temp directory
-			return gu_error(t('Unable to delete uploaded file. Check permissions for directory <code>%</code>',array(GUTUMA_TEMP_DIR)));
+			return gu_error('<br />'.t('Unable to delete uploaded file. Check permissions for directory <code>%</code>',array(GUTUMA_TEMP_DIR)));
 		if (!$this->save())// Save the message
 			return FALSE;
 		return TRUE;
@@ -365,7 +364,7 @@ class gu_newsletter{
 					$addresses[$address] = $list->get_name();
 			}
 			else
-				return gu_error(t('Unrecognized list name <i>%</i>',array($list_names[$l])));
+				return gu_error('<br />'.t('Unrecognized list name <i>%</i>',array($list_names[$l])));
 		}
 // If admin wants a copy, add the admin address as well
 		if (gu_config::get('msg_admin_copy'))
@@ -383,7 +382,7 @@ class gu_newsletter{
 			return TRUE;
 		foreach ($this->get_attachments() as $attachment){// Delete individual attachments to ensure directory is empty
 			if (!$this->delete_attachment($attachment['name']))
-				return gu_error(t('Unable to delete message attachment'), ERROR_EXTRA);
+				return gu_error('<br />'.t('Unable to delete message attachment'), ERROR_EXTRA);
 		}
 // Delete the newsletter files
 		$res1 = @rmdir($dir.'/attachments');// (effacement normal ailleurs que chez Free)
@@ -399,7 +398,7 @@ class gu_newsletter{
 			$res6 = rename($dir,$dir.'/../../.trash_me');// rename "spécial Free" rename empty folders to .trash_me (effet de bord non garanti de rename)
 		}
 		if (!($res1 && $res2 && $res3 && $res4 && $res5))
-			return gu_error(t('Some newsletter files could not be deleted'), ERROR_EXTRA);
+			return gu_error('<br />'.t('Some newsletter files could not be deleted'), ERROR_EXTRA);
 		$this->send_progress = NULL;
 		return TRUE;
 	}
@@ -411,7 +410,7 @@ class gu_newsletter{
 	public static function get($id){
 		$h = @fopen(realpath(GUTUMA_TEMP_DIR.'/'.$id.'/'.MESSAGE_FILE), 'r');// Open message file
 		if ($h == FALSE)
-			return gu_error(t("Unable to open message file").' : '.GUTUMA_TEMP_DIR.'/'.$id.'/'.MESSAGE_FILE);
+			return gu_error('<br />'.t("Unable to open message file").' : '.GUTUMA_TEMP_DIR.'/'.$id.'/'.MESSAGE_FILE);
 		fgets($h); // Discard first line
 		$newsletter = new gu_newsletter();
 		$newsletter->id = $id;
@@ -432,7 +431,7 @@ class gu_newsletter{
 		if (file_exists($recip_file)){
 			$rh = @fopen(realpath($recip_file), 'r');// Open list file
 			if ($rh == FALSE)
-				return gu_error(t("Unable to read newsletter recipient file"));
+				return gu_error('<br />'.t("Unable to read newsletter recipient file"));
 			fgets($rh); // Read file marker line
 			$header = explode("|", fgets($rh));
 			$newsletter->send_progress = array($header[0], $header[1]);
@@ -448,14 +447,14 @@ class gu_newsletter{
 		$newsletters = array();
 		if ($dh = @opendir(realpath(GUTUMA_TEMP_DIR))){
 			while (($f = readdir($dh)) !== FALSE){
-				if (strpos($f,'.') >= 0 )//. ou .. ou index(.)html ou .htaccess
+				if (strpos($f,'.') !== FALSE)//. OR .. OR ##timeStamp##.php OR index(.)html OR .htaccess
 					continue;
 				if (($newsletter = self::get($f)) !== FALSE)
 					$newsletters[] = $newsletter;
 			}
 		}
 		else
-			return gu_error(t('Unable to open newsletter folder'), ERROR_EXTRA);
+			return gu_error('<br />'.t('Unable to open newsletter folder'), ERROR_EXTRA);
 		return $newsletters;
 	}
 	/**

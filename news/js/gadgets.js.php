@@ -54,7 +54,7 @@ function gu_gadgets_create_basic_link(list_id, text){
  * @param prefix The prefix applied to all IDs of elements
  * @return The gadget HTML
  */
-function gu_gadgets_create_basic_form(list_id, btn_text, prefix){
+function gu_gadgets_create_basic_form(list_id, btn_text, email_hint, prefix){
 	var html = '';
 	if (!gu_gadgets_formless)
 		html += '<form name="' + prefix + 'subscribe_form" id="' + prefix + 'subscribe_form" method="post" action="' + gu_gadgets_subcribe_url + '">';
@@ -66,6 +66,8 @@ function gu_gadgets_create_basic_form(list_id, btn_text, prefix){
 		html += '<input name="' + prefix + 'subscribe_submit" id="' + prefix + 'subscribe_submit" type="hidden" value="" />';
 	if (!gu_gadgets_formless)
 		html += '</form>';
+	if (email_hint != '')
+		html += '<script type="text\/javascript">gu_gadgets_textfield_hint(document.getElementById("' + prefix + 'subscribe_address"), "' + email_hint.replace(/&quot;/g,'\\"') + '");<\/script>';
 	return html;
 }
 /**
@@ -99,7 +101,7 @@ function gu_gadgets_create_ajax_form(list_id, btn_text, email_hint, prefix){
 	if (!gu_gadgets_formless)
 		html += '</form>';
 	if (email_hint != '')
-		html += '<script type="text\/javascript">gu_gadgets_textfield_hint(document.getElementById("' + prefix + 'subscribe_address"), "' + email_hint.replace(/&quot;/g,'\\"') + '");<\/script>';	//SyntaxError: unterminated string literal
+		html += '<script type="text\/javascript">gu_gadgets_textfield_hint(document.getElementById("' + prefix + 'subscribe_address"), "' + email_hint.replace(/&quot;/g,'\\"') + '");<\/script>';
 	return html;
 }
 /**
@@ -108,8 +110,8 @@ function gu_gadgets_create_ajax_form(list_id, btn_text, email_hint, prefix){
 function gu_gadgets_write_basic_link(list_id, text){
 	document.write(gu_gadgets_create_basic_link(list_id, text));
 }
-function gu_gadgets_write_basic_form(list_id, btn_text, prefix){
-	document.write(gu_gadgets_create_basic_form(list_id, btn_text, prefix));
+function gu_gadgets_write_basic_form(list_id, btn_text, email_hint, prefix){
+	document.write(gu_gadgets_create_basic_form(list_id, btn_text, email_hint, prefix));
 }
 
 function gu_gadgets_write_ajax_link(list_id, text){

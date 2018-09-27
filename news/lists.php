@@ -26,19 +26,26 @@ if (isset($_FILES['import_file'])){// Import CSV into new list if one has been u
 		if (is_file($csv)){
 		unlink($csv);
 		}
-	} else{
-		gu_error(t('Uploaded file is not a csv file'));
+	} else {
+		gu_error('<br />'.t('Uploaded file is not a csv file'));
 	}
 }
-$lists = gu_list::get_all();
+$lists = gu_list::get_all();//get_all($load_addresses = FALSE, $inc_private = TRUE, $tmp = '')
+$listsTmp = gu_list::get_all(FALSE,TRUE,'i');//²IO
+$listsTmpSize = array();
+foreach($listsTmp as $listi)
+	$listsTmpSize[$listi->get_id()] = $listi->get_size();
 ?>
 <?php //gu_theme_messages(); ?>
 <script type="text/javascript">
 /* <![CDATA[ */
-	function gu_list_menu(list_id){
+	function gu_list_menu(list_id, tmp){
+		if(!!tmp)
+			return '<a href="editlist.php?list=' + list_id + '&amp;tmp=i" class="imglink" title="<?php echo t('Edit');?>"><img src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_edit.png" /></a>&nbsp;&nbsp;';
+
 		return '<a href="editlist.php?list=' + list_id + '" class="imglink" title="<?php echo t('Edit');?>"><img src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_edit.png" /></a>&nbsp;&nbsp;'
 		      +'<a href="compose.php?list=' + list_id + '" class="imglink" title="<?php echo t('Send newsletter to');?>"><img src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_mail.png" /></a>&nbsp;&nbsp;'
-		      +'<a href="gencsv.php?list=' + list_id + '" class="imglink" title="<?php echo t('Download as CSV');?>"><img src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_download.png" /></a>&nbsp;&nbsp;'		  
+		      +'<a href="gencsv.php?list=' + list_id + '" class="imglink" title="<?php echo t('Download as CSV');?>"><img src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_download.png" /></a>&nbsp;&nbsp;'
 		      +'<a href="javascript:gu_list_delete(' + list_id + ')" class="imglink" title="<?php echo t('Delete');?>"><img src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_delete.png" /></a>';
 	}
 	function gu_list_add(name, is_private){
@@ -49,9 +56,10 @@ $lists = gu_list::get_all();
 		mysack.execute = 1;
 		mysack.method = "POST";
 		mysack.setVar("action", "list_add");
+		mysack.setVar("k", "ADMIN");
 		mysack.setVar("name", name);
 		mysack.setVar("private", is_private ? 1 : 0);
-		mysack.onError = function(){ gu_error("<?php echo t('An error occured whilst making AJAX request');?>"); gu_messages_display(0); };
+		mysack.onError = function(){ gu_error("<?php echo t('An error occured whilst making AJAX request');?>"); gu_messages_display(0); }
 		mysack.onCompletion = function(){ gu_messages_display(1000); }
 		mysack.runAJAX();
 	}
@@ -70,17 +78,20 @@ $lists = gu_list::get_all();
 		var cell3 = document.createElement("td");
 		cell3.innerHTML = '0';
 		var cell4 = document.createElement("td");
-		cell4.innerHTML = name;
+		cell4.innerHTML = '0';
+		var cell5 = document.createElement("td");
+		cell5.innerHTML = name;
 		if('default' == '<?php echo gu_config::get('theme_name');?>'){
-			cell3.innerHTML = '<b>(0)</b><span class="should-cut-off">'+cell4.innerHTML+'</span>';
+			cell3.innerHTML = '<b>(0)</b><b>(0)</b><span class="should-cut-off">'+cell5.innerHTML+'</span>';
 			cell2.setAttribute("class", "sml-text-center");
 			cell3.setAttribute("class", "cell-off");
 //			row.appendChild(cell1+cell2+cell3);// TypeError: Argument 1 of Node.appendChild is not an object. :/
 			row.appendChild(cell1);
 			row.appendChild(cell2);
 			row.appendChild(cell3);
-		}else{//Gutuma original order 
-			cell1.setAttribute("style", "text-align: right");
+		}else{//Gutuma original order
+			cell1.setAttribute("style", "text-align: center");
+			row.appendChild(cell5);
 			row.appendChild(cell4);
 			row.appendChild(cell3);
 			row.appendChild(cell2);

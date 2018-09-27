@@ -37,7 +37,7 @@ function gu_check_email(e){
 	}
 	if (document.images){
 		re = /(@.*@)|(\.\.)|(^\.)|(^@)|(@$)|(\.$)|(@\.)/;
-		re_two = /^.+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+		re_two = /^.+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,13}|[0-9]{1,3})(\]?)$/;
 		if (!e.match(re) && e.match(re_two)){
 			return (-1);
 		}
@@ -211,6 +211,16 @@ function gu_element_fade(id, duration, start, end){
 }
 function setMsge(id){
 	if(document.getElementById(id)){
-		setTimeout("gu_element_fade_out('" + id + "', 1618)",3236);//fadeOut(id);
+		setTimeout("gu_element_fade_out('" + id + "', 1618)",5663);//fadeOut(id);
+	}
+}
+//Show or hide keycode in editlist
+function hideShow(id,o){//todo for statusmsg AND errormsg ???
+	o = o?o:'';//inline-block
+	if (document.getElementById(id).style.display==o){
+		document.getElementById(id).style.display='none';
+	}
+	else{
+		document.getElementById(id).style.display=o;
 	}
 }

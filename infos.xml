@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document>
   <title><![CDATA[Gutuma]]></title>
-  <author><![CDATA[Cyril MAGUIRE, Thomas I.]]></author>
-  <version>1.9.1</version>
-  <date>2018.07.07.07</date><!-- AAAA.MM.JJ.HH -->
-  <site>http://www.ecyseo.net</site>
-  <description><![CDATA[Gérer des cyberlettres avec Gutuma intégré à Pluxml]]></description>
+  <author><![CDATA[Thomas Ingles]]></author>
+  <version>2.0.0</version>
+  <date>2018.09.23.23</date><!-- AAAA.MM.JJ.HH -->
+  <site>http://sudwebdesign.free.fr/index.php?article5</site>
+  <description><![CDATA[Gérer des cyberlettres avec Gutuma pour Pluxml]]></description>
   <scope></scope>
 </document>

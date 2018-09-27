@@ -49,19 +49,20 @@ switch ($action) {
 		break;
 	case 'list_add':
 		$name = is_post_var('name') ? trim(get_post_var('name')) : '';
-		$private = is_post_var('private') ? (bool)get_post_var('private') : false;		
+		$private = is_post_var('private') ? (bool)get_post_var('private') : false;
 		gu_ajax_list_add($name, $private);
-		break;			
+		break;
 	case 'list_delete':
 		$list = is_post_var('list') ? gu_list::get((int)get_post_var('list'), TRUE) : NULL;
 		gu_ajax_list_delete($list);
-		break;	
+		break;
 	case 'remove_address':
-		$list = is_post_var('list') ? gu_list::get((int)get_post_var('list'), TRUE) : NULL;
+		$tmp = is_post_var('tmp') ? get_post_var('tmp') : '';
+		$list = is_post_var('list') ? gu_list::get((int)get_post_var('list'), TRUE, $tmp) : NULL;
 		$address = is_post_var('address') ? get_post_var('address') : '';
 		$address_id = is_post_var('address_id') ? (int)get_post_var('address_id') : 0;
-		gu_ajax_remove_address($list, $address, $address_id);
-		break;	
+		gu_ajax_remove_address($list, $address, $address_id, $tmp);
+		break;
 	case 'newsletter_delete':
 		$newsletter = is_post_var('newsletter') ? gu_newsletter::get((int)get_post_var('newsletter')) : NULL;
 		gu_ajax_newsletter_delete($newsletter);
@@ -103,8 +104,8 @@ function gu_ajax_subscribe($list, $address, $subscribe = TRUE){
 		return gu_ajax_return('alert("'.t('Invalid list').'")');
 	$list_ids = array($list->get_id());
 	if (!gu_subscription_process($address, $list_ids, $subscribe))
-		gu_ajax_return('alert("'.addslashes(strip_tags($_SERVER['GU_ERROR_MSG'])).'")');
-	gu_ajax_return('alert("'.($subscribe ? t('Subscription') : t('Unsubscription')).t(' successful!').'")');
+		gu_ajax_return('alert("'.addslashes(strip_tags(@$_SERVER['GU_STATUS_MSG'].' '.@$_SERVER['GU_SUCCESS_MSG'].' '.@$_SERVER['GU_ERROR_MSG'])).'")');
+	gu_ajax_return('alert("'.($subscribe ? t('Subscription') : t('Unsubscription')).', '.t('first step successful!').'")');
 }
 /**
  * Adds a new list with the specified name
@@ -135,10 +136,15 @@ function gu_ajax_list_delete($list){
  * @param string $address The address to remove
  * @param int $address_id The id of the address - only used to reference a HTML element on the calling page
  */
-function gu_ajax_remove_address($list, $address, $address_id){
+function gu_ajax_remove_address($list, $address, $address_id, $tmp = ''){
 	if (!$list)
 		return gu_error(t('Invalid list'));
-	if ($list->remove($address, TRUE)){
+	if ($list->remove($address, TRUE, $tmp)){
+		if (!$tmp){
+			$listi = gu_list::get($list->get_id(), TRUE, 'i');
+			if ($listi->contains($address, 'i', '0000'))
+				$listi->remove($address, TRUE, 'i');
+		}
 		gu_success(t('Address <b><i>%</i></b> removed',array($address)));
 		gu_ajax_return('gu_ajax_on_remove_address('.$address_id.')');
 	}

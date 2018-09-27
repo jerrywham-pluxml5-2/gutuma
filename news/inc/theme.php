@@ -6,9 +6,9 @@
  * @file Theme functions
  * @modifications Cyril Maguire
  * Gutama plugin package
- * @version 1.8.7
- * @date	16/03/2018
- * @author	Cyril MAGUIRE, Th0m@s
+ * @version 2.0.0
+ * @date	23/09/2018
+ * @author	Cyril MAGUIRE, Thomas Ingles
 */
 
 /**
@@ -63,16 +63,13 @@ function gu_theme_pager($id, $baseurl, $start, $pagesize, $total){
 function gu_theme_messages(){
 	echo '<span id="msg">';
 	if (isset($_SERVER['GU_ERROR_MSG'])){
-		echo '<p id="errormsg" class="notification error">';
+		echo '<p id="errormsg" class="notification error">'.trim($_SERVER['GU_ERROR_MSG'],'<br />').'</p>';
 		if (isset($_SERVER['GU_ERROR_EXTRA'])){
-			echo '  '.$_SERVER['GU_ERROR_MSG'];
-			echo '  <div id="errormore"><a onclick="gu_messages_toggle_error_extra()" href="#">'.t('More').'</a></div>';
-			echo '  <div id="errorless" style="display: none"><a onclick="gu_messages_toggle_error_extra()" href="#">'.t('Less').'</a></div>';
-			echo '  <div id="errorextra" style="display: none;">'.$_SERVER['GU_ERROR_EXTRA'].'</div>';
+			echo '  <div id="errormore" class="notification error"><a onclick="gu_messages_toggle_error_extra()" href="#">'.t('More').'</a></div>';
+			echo '  <div id="errorless" class="notification error" style="display: none"><a onclick="gu_messages_toggle_error_extra()" href="#">'.t('Less').'</a></div>';
+			echo '  <div id="errorextra" class="notification error" style="display: none;">'.$_SERVER['GU_ERROR_EXTRA'].'</div>';
 		}
-		else
-			echo $_SERVER['GU_ERROR_MSG'].'</p>';
-	}else {
+	} else {
 		echo '<p id="errormsg" class="notification error" style="display:none;"></p>';
 	}
 	if (isset($_SERVER['GU_STATUS_MSG'])){

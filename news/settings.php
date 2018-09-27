@@ -7,9 +7,9 @@
  * @modifications Cyril Maguire
  *
  * Gutama plugin package
- * @version 1.6
- * @date	01/10/2013
- * @author	Cyril MAGUIRE
+ * @version 2.0
+ * @date	27/07/2018
+ * @author	Cyril MAGUIRE, Thomas Ingles
 */
 include_once 'inc/gutuma.php';
 include_once 'inc/mailer.php';
@@ -29,10 +29,11 @@ if (is_post_var('save_settings')){// Save settings
 		gu_config::set('application_name', get_post_var('application_name'));
 		gu_config::set('admin_name', get_post_var('admin_name'));
 		gu_config::set('admin_email', get_post_var('admin_email'));
-		gu_config::set('spell_check', get_post_var('spell_check'));
+		gu_config::set('days', get_post_var('days'));
 		gu_config::set('tiny_tools', get_post_var('tiny_tools'));
+		gu_config::set('spell_check', get_post_var('spell_check'));
 		gu_config::set('theme_name', get_post_var('theme_name'));
-/*
+/* STAND ALONE
 		gu_config::set('admin_username', get_post_var('admin_username'));
 		$pass1 = get_post_var('admin_password');
 		$pass2 = get_post_var('admin_password_retype');
@@ -93,35 +94,35 @@ $error = '';
 		$mailer = new gu_mailer();
 		if ($mailer->init(TRUE, $smtp_server, $smtp_port, $smtp_encryption, $smtp_username, $smtp_password, FALSE, FALSE)){
 			if (!$mailer->send_admin_mail('['.gu_config::get('collective_name').'] Testing SMTP', $test_msg))
-				$error .= t('Unable to send test message using SMTP').'<br />';
+				$error .= '<br />'.t('Unable to send test message using SMTP');
 		}
 		else
-			$error .= t('Unable to initialize mailer with the SMTP settings').'<br />';
+			$error .= '<br />'.t('Unable to initialize mailer with the SMTP settings');
 		$mailer->disconnect();
 	}
 	if ($use_sendmail){// Test Sendmail next
 		$mailer = new gu_mailer();
 		if ($mailer->init(FALSE, '', '', '', '', '', TRUE, FALSE)) {
 			if (!$mailer->send_admin_mail('['.gu_config::get('collective_name').'] Testing Sendmail', $test_msg))
-				$error .= t('Unable to send test message using Sendmail').'<br />';
+				$error .= '<br />'.t('Unable to send test message using Sendmail');
 		}
 		else
-			$error .= t('Unable to initialize mailer with Sendmail').'<br />';
+			$error .= '<br />'.t('Unable to initialize mailer with Sendmail');
 		$mailer->disconnect();
 	}
 	if ($use_phpmail){// Test PHP mail next
 		$mailer = new gu_mailer();
 		if ($mailer->init(FALSE, '', '', '', '', '', FALSE, TRUE)){
 			if (!$mailer->send_admin_mail('['.gu_config::get('collective_name').'] Testing PHP mail', $test_msg))
-				$error .= t('Unable to send test message using PHP mail').'<br />';
+				$error .= '<br />'.t('Unable to send test message using PHP mail');
 		}
 		else
-			$error .= t('Unable to initialize mailer with PHP mail').'<br />';
+			$error .= '<br />'.t('Unable to initialize mailer with PHP mail');
 		$mailer->disconnect();
 	}
 	if ($error)
 		return gu_error($error);
-	gu_success(t('Test messages sent to <br><i>%</i></b>',array(gu_config::get('admin_email'))));
+	gu_success(t('Test messages sent to <br /><i>%</i></b>',array(gu_config::get('admin_email'))));
 }
 gu_theme_start();
 include_once 'themes/'.gu_config::get('theme_name').'/_settings.php';//Body
