@@ -117,7 +117,7 @@ function gu_subscription_process($address, &$list_ids, $subscribe, $hash = ''){
 //gu_debug('gu_subscription_process() sendkey message to: '.$address.'<br /> subject: '.$subject.'<br />text: '.$text);
 //echo '<pre>subject : '.$subject.PHP_EOL.$text.'</pre>';#dbg
 			$mailer->send_mail($address, $subject, $text);
-			return gu_success(t('Your key code sended for list'.($plural?'s':'').':<br /><i>%</i>', array(implode('</i>, <i>', $succ_list_names))));
+			return gu_success(($subscribe ? t('Subscription') : t('Unsubscription')).', '.t('first step successful!').'<br />'.t('Your key code sended for list'.($plural?'s':'').': <i>%</i>', array(implode('</i>, <i>', $succ_list_names))).'<br /><br /><i>'.t('Remember to <b>check in spam mails</b> if the messages are not found in your inbox').'.</i>');
 		}#FI 1st time or unsub
 		else if (gu_config::get('list_send_welcome') || gu_config::get('list_send_goodbye') || gu_config::get('list_subscribe_notify') || gu_config::get('list_unsubscribe_notify')){
 //			Send welcome / goodbye message
@@ -144,5 +144,5 @@ function gu_subscription_process($address, &$list_ids, $subscribe, $hash = ''){
 	}
 	$action = (($subscribe) ? t('subscribed to') : t('unsubscribed from'));//TODO : Vous allez vous (dés)abonné de
 	if(!$sendkey)//fix (tep) message if is in tmp list & clic on send me key
-		return gu_success(t('You have been % list'.($plural?'s':'').': <i>%</i>', array($action,implode('</i>, <i>', $succ_list_names))));
+		return gu_success(t('You have been % list'.($plural?'s':'').': <i>%</i>', array($action,implode('</i>, <i>', $succ_list_names))).'<br /><br /><i>'.t('Remember to <b>check in spam mails</b> if the messages are not found in your inbox').'.</i>');
 }

@@ -22,8 +22,8 @@ gu_init(FALSE, FALSE);
 gu_theme_start('ok');
 
 // If variables have been posted then they may have prefixes
-$posted_address = '';
 $posted_lists = array();
+$posted_address = '';
 $posted_action = '';
 $posted_k = '';
 foreach (array_keys($_POST) as $var) {
@@ -75,6 +75,8 @@ if ($k == '' && $posted_k != '')#wip
 	$k = $posted_k;
 if($k == '0000' OR strlen($k) == 40)#tep len ::: (strlen($k) == 40 AND $action)
 	$k = '';//reset key field
+$contact_url = gu_config::get('contact_url');
+$contact_url = $contact_url?$contact_url:absolute_url('../../../');
 ?>
 <script type="text/javascript">
 /* <![CDATA[ */

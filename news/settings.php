@@ -27,6 +27,7 @@ if (is_post_var('save_settings')){// Save settings
 	if ($section == 'general'){
 		gu_config::set('collective_name', get_post_var('collective_name'));
 		gu_config::set('application_name', get_post_var('application_name'));
+		gu_config::set('contact_url', get_post_var('contact_url'));
 		gu_config::set('admin_name', get_post_var('admin_name'));
 		gu_config::set('admin_email', get_post_var('admin_email'));
 		gu_config::set('days', get_post_var('days'));
@@ -122,7 +123,7 @@ $error = '';
 	}
 	if ($error)
 		return gu_error($error);
-	gu_success(t('Test messages sent to <br /><i>%</i></b>',array(gu_config::get('admin_email'))));
+	gu_success(t('Test messages sent to <b><i>%</i></b>',array(gu_config::get('admin_email'))));
 }
 gu_theme_start();
 include_once 'themes/'.gu_config::get('theme_name').'/_settings.php';//Body

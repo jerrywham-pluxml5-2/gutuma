@@ -133,6 +133,7 @@ class gu_config{
 		self::$values = array();
 		self::$values['application_name'] = t('Newsletters');
 		self::$values['collective_name'] = t('My Newsletters');
+		self::$values['contact_url'] = '';
 		self::$values['admin_name'] = $profil['name'];
 		self::$values['admin_username'] = $profil['login'];
 		self::$values['admin_password'] = $profil['password'];

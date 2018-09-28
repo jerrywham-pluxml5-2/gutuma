@@ -178,7 +178,6 @@ Here you can generate gadgets for other websites so that people can easily find 
 Next[::->]Suivant
 Basic subscribe link[::->]Lien basique
 Basic subscribe form[::->]Formulaire basique
-Subscribe[::->]Inscrire
 AJAX subscribe link[::->]Lien AJAX
 AJAX subscribe form[::->]Formulaire AJAX
 Update[::->]Mettre à jour
@@ -227,16 +226,18 @@ Unable to send test message using Sendmail[::->]Impossible d'envoyer le message 
 Unable to initialize mailer with Sendmail[::->]Impossible d'initialiser la messagerie avec Sendmail
 Unable to send test message using PHP mail[::->]Impossible d'envoyer le message de test en utilisant PHP mail
 Unable to initialize mailer with PHP mail[::->]Impossible d'initialiser la messagerie avec PHP mail
-Test messages sent to <br><i>%</i></b>[::->]Message de test envoyé à <b><i>[%%]</i></b>
+Test messages sent to <b><i>%</i></b>[::->]Message de test envoyé à <b><i>[%%]</i></b>
 General[::->]Général
 Transport[::->]Transport
 Messages[::->]Messages
 Test[::->]Test
-The following is usually the name of your organization or company. It is used in messages not specific to one list[::->]Le texte suivant est généralement le nom de l'organisation ou de l'entreprise. Il est utilisé dans tous les messages pas seulement dans ceux appartenant à une seule liste.
+The following is usually the name of your organization or company. It is used in messages not specific to one list[::->]Le texte suivant est généralement le nom de l'organisation ou de l'entreprise. Il est utilisé dans tous les messages pas seulement dans ceux appartenant à une seule liste
 Collective name[::->]Nom collectif
-The following user details are used as the <em>From</em> field of all sent messages. To minimize the chances of your messages being misidentified as spam, ensure that the email address is valid[::->]Les renseignements suivants sont utilisés dans le champ <em>Expéditeur</em> de tous les messages. Afin de minimiser les risques que vos messages soient identifiés par mégarde comme des pourriels, assurez-vous que cette adresse soit valide. 
+The following user details are used as the <em>From</em> field of all sent messages. To minimize the chances of your messages being misidentified as spam, ensure that the email address is valid[::->]Les renseignements suivants sont utilisés dans le champ <em>Expéditeur</em> de tous les messages. Afin de minimiser les risques que vos messages soient identifiés par mégarde comme des pourriels, assurez-vous que cette adresse soit valide
+The following is the contact page url of your site. It is used in help section in subscribe page[::->]Le champ suivant est l'url de la page de contact de votre site. Il est utilisé dans la section d'aide de la page d'abonnement
 Administrator name[::->]Nom de l'administrateur
 Administrator email[::->]Adresse courriel de l'administrateur
+Contact url[::->]Url de contact
 Your login details[::->]Vos identifiants de connexion
 Administrator username[::->]Pseudonyme de l'administrateur
 Change administrator password[::->]Modifier le mot de passe administrateur
@@ -247,16 +248,16 @@ Only menu[::->]Menu seul
 Editor Off[::->]Éditeur inactif
 Provided by the web browser[::->]Fourni par le navigateur web
 Off[::->]Inactif
-The following selector choose text editor comportement when compose a newsletter.[::->]Le sélecteur suivant permet de choisir le comportement de l'éditeur de texte lorsque de l'écriture d'une infolettre.
+The following selector choose text editor comportement when compose a newsletter[::->]Le sélecteur suivant permet de choisir le comportement de l'éditeur de texte lorsque de l'écriture d'une infolettre
 Text editor[::->]Éditeur de texte
 The following selector choose spell checker comportement.[::->]Le sélecteur suivant permet de choisir le comportement du Correcteur orthographique.
 Spell check[::->]Correcteur orthographique
-The following selector choose retention days in temporary lists when user (un)subscribe for first time.[::->]Le sélecteur suivant permet de choisir le temps de conservation des adresses courriels temporaires lors de la première (dés)inscrption de l'utilisateur.
+The following selector choose retention days in temporary lists when user (un)subscribe for first time[::->]Le sélecteur suivant permet de choisir le temps de conservation des adresses courriels temporaires lors de la première (dés)inscrption de l'utilisateur
 Leave temporary emails after[::->]Effacer les courriels après
 days[::->]jours
-The following selector list is for choose one of all Theme's available in subfolders of Gutuma.[::->]Le sélecteur suivant permet de choisir le thème graphique utilisé par Gutuma. Liste les dossiers de /news/themes/*
+The following selector list is for choose one of all Theme's available in subfolders of Gutuma[::->]Le sélecteur suivant permet de choisir le thème graphique utilisé par Gutuma. (Liste les dossiers de /news/themes/*)
 Name of the theme[::->]Nom du thème
-Gutuma will first try to use an SMTP server to send messages. If that fails, <code>Sendmail</code> may be tried followed by PHP <code>mail()</code>[::->]Gutuma essaiera d'utiliser en premier le serveur SMTP pour envoyer les messages. S'il échoue, <code>Sendmail</code> sera utilisé ensuite, puis la fonction PHP <code>mail()</code>.
+Gutuma will first try to use an SMTP server to send messages. If that fails, <code>Sendmail</code> may be tried followed by PHP <code>mail()</code>[::->]Gutuma essaiera d'utiliser en premier le serveur SMTP pour envoyer les messages. S'il échoue, <code>Sendmail</code> sera utilisé ensuite, puis la fonction PHP <code>mail()</code>
 Use SMTP[::->]Utiliser SMTP
 If server and port are left blank, Gutuma will attempt to auto-detect them[::->]Si le serveur et le port ne sont pas renseignés, Gutuma tentera de les détecter automatiquement
 SMTP server[::->]Serveur SMTP
@@ -269,7 +270,7 @@ If Sendmail is available on your server you can enable it here[::->]Si Sendmail 
 Use Sendmail[::->]Utiliser Sendmail
 You may experience problems with sending to large address lists with PHP <code>mail()</code>[::->]Vous pouvez rencontrer des problèmes avec des listes d'adresses longues en utilisant PHP <code>mail()</code>
 Use PHP mail[::->]Utiliser PHP mail
-Some SMTP servers have restrictions on the number of emails that can be sent per connection so you can limit the number of messages sent in a single batch. You can also set a time limit on batch sends to avoid timeouts.[::->]Certains serveur SMTP ayant des restrictions quant au nombre de courriels pouvant être envoyés par connection, vous pouvez limiter le nombre de messages envoyés dans un seul lot. Vous pouvez aussi paramétrer le temps limite d'envoi des lots afin d'éviter les déconnexions.
+Some SMTP servers have restrictions on the number of emails that can be sent per connection so you can limit the number of messages sent in a single batch. You can also set a time limit on batch sends to avoid timeouts[::->]Certains serveur SMTP ayant des restrictions quant au nombre de courriels pouvant être envoyés par connection, vous pouvez limiter le nombre de messages envoyés dans un seul lot. Vous pouvez aussi paramétrer le temps limite d'envoi des lots afin d'éviter les déconnexions
 Max batch size[::->]Taille de lot maximale
  emails[::->] courriels
 Batch time limit[::->]Temps limite par lot
@@ -282,11 +283,11 @@ A signature containing an unsubscribe link can be automatically appended to all 
 Append unsubscribe link to sent newsletters[::->]Ajouter un lien pour se désabonner aux infolettres envoyées
 Send copy of sent newsletters to Administrator[::->]Envoyer à l'administrateur une copie des infolettres envoyées
 Subscriber confirmations[::->]Notifier par courriel les personnes
-Send welcome message to new subscribers[::->]Avec un message de d'accueil aux nouveaux abonnés
-Send goodbye message to unsubscribers[::->]Avec un message d'adieu aux personnes s'étants désabonnés
+Send welcome message to new subscribers[::->]Avec un message de d'accueil aux nouveaux inscrits
+Send goodbye message to unsubscribers[::->]Avec un message d'adieu aux personnes s'étants désinscrits
 Administrator notifications[::->]Notifier par courriel l'adminsitrateur
-Notify of new subscribes[::->]Lorsque quelqu'un s'abonne
-Notify of unsubscribes[::->]Lorsque quelqu'un se désabonne
+Notify of new subscribes[::->]Lorsque quelqu'un s'inscrit
+Notify of unsubscribes[::->]Lorsque quelqu'un se désinscrit
 //************************************************************************
 //			SUBSCRIBE
 //************************************************************************
@@ -315,7 +316,11 @@ Second step[::->]Deuxième étape
 clic on link(s) inside sended email <b>OR</b> paste the keycode in good field and clic on subscribe button.[::->]cliquer sur le(s) lien(s) présent(s) dans le courriel reçu <b>OU</b> coller la clé de validité dans le champ correspondant et cliquer sur le bouton inscrire.
 For unsubscribe:[::->]Pour se désabonner :
 Same procedure of subscribe but use unsubscribe button.[::->]Même procédé que pour l'abonnement sauf qu'il suffit d'utiliser le bouton désinscrire en lieu et place du bouton inscrire.
-If need it, check "Resend key codes" before clic on (un)subscribe button is used to send again the steps to be completed.[::->]Si besoin est, cocher "envoyer la clé de validité" avant de cliquer sur le bouton (dés)inscrire permet d'envoyer a nouveau les démarches a réaliser.
+Remarks:[::->]Remarques :
+Remember to <b>check in spam mails</b> if the messages are not found in your inbox[::->]Pensez a <b>vérifier les pourriels</b> si les messages sont introuvables votre boîte de réception
+If no message is received, there are other possibilities to validate and (un)subscribe:[::->]Si aucun message est reçu, il y a d'autres possibilités pour valider et vous (dés)inscrire :
+Either tick "%" before clic on (un)subscribe button to send again the steps to be completed.[::->]Soit cocher "[%%]" avant de cliquer sur le bouton (dés)inscrire pour envoyer a nouveau les démarches a réaliser
+Or <a href="%">contact the author</a> of the site so that he can validate for you[::->]Ou <a href="[%%]">contacter l'auteur du site</a> afin qu'il valide pour vous
 //************************************************************************
 //			SENDING
 //************************************************************************
@@ -370,10 +375,10 @@ Inactive[::->]Inactif
 //************************************************************************
 //			SWIFT mail & subscription
 //************************************************************************
-Your key code sended for list:<br /><i>%</i>[::->]Clé de validité envoyée de la lettre d'information suivante :<br /><i>[%%]</i>
-Your key code sended for lists:<br /><i>%</i>[::->]Clés de validités envoyées des lettres d'informations suivantes :<br /><i>[%%]</i>
-Your key code unsended for list:<br /><i>%</i>[::->]Clé de validité inenvoyée de la lettre d'information suivante :<br /><i>[%%]</i>
-Your key code unsended for lists:<br /><i>%</i>[::->]Clés de validités inenvoyées des lettres d'informations suivantes :<br /><i>[%%]</i>
+Your key code sended for list: <i>%</i>[::->]Clé de validité envoyée de la lettre d'information suivante : <i>[%%]</i>
+Your key code sended for lists: <i>%</i>[::->]Clés de validités envoyées des lettres d'informations suivantes : <i>[%%]</i>
+Your key code unsended for list: <i>%</i>[::->]Clé de validité inenvoyée de la lettre d'information suivante : <i>[%%]</i>
+Your key code unsended for lists: <i>%</i>[::->]Clés de validités inenvoyées des lettres d'informations suivantes : <i>[%%]</i>
 You have been % lists: <i>%</i>[::->]Vous vous êtes [%%] lettres d'informations suivantes : <i>[%%]</i>
 You have been % list: <i>%</i>[::->]Vous vous êtes [%%] lettre d'information suivante : <i>[%%]</i>
  validation key[::->] : clé(s) de validité(s)

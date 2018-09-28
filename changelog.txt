@@ -10,7 +10,6 @@ Historique des cyberlettres avec le liens envoyés et visibles sur le site. (si 
 Si pluXml est en mono utilisateur : autoinstall/connect ???
 Le smtp_password est à crypté dans la conf, et décrypté pour l'envoi des news, prévoir la MAJ ou prévenir l'admin. (reverse engineering protect)
 eval($plxAdmin->plxPlugins->callHook('AdminTopMenus'));
-verifié: si l'on change le(s) mot(s) de passe dans pluxml, si l'accés au plugin et tjrs valable : a priori oui, c'est toujours les id de l'admin (il y a que le nom d'utilisateur qui est différent)
 Evol: swiftmailer-5.4.6 pour future integration http://swiftmailer.org
 & si theme default -> use static mode & display (site thème au lieu de celui d'admin) ou add gutuma logo (top left|center) [une iframe]
 Prévoir en cas de suppression d'un utilisateur, supprimer le param (user activé ou désactivé)
@@ -21,6 +20,16 @@ AdminSettingsAdvanced plxAdminEditConfiguration ... data/gutuma set in PluXml ad
 *public function ThemeEndBody(){#auto gadgets
 *#PHP echo "\n\t".'<script type="text/javascript" src="'.PLX_PLUGINS.'gutuma/news/js/gadgets.js.php"></script>';
 *}
+Message Oups went wrong ::: mauvaise clé abonné ou non, mauvaise liste (id) ... une erreur inconnu quoi...
+si array_unique of time ²opt (just one link to gérér subcribtion)
+? changer ou enlever le i. en time des listes temporaires (var algo) ::: clé ds config (sécu)
+Notifs : si nojs les rendre display:block (class nojs ?) (si js rem class nojs)
+Gadget : utiliser les "placeholder" pour remplacer ceux en js (hint)
+
+#Curieux mais normal
+Si mail non inscrit dans liste reele mais dans tmp, si utilise keycode pour désinscrire = envoie de mail érroné; ne s'est réellement désinscrit, il n'était pas ds la liste réele);
+Possible que l'inverse se produise, si ds liste réele et ds tmp; si keycode utilisé pour inscrire = envoi de mail de confirm & notif? En effet OUI.
+#Ptet modifier le courriel (& MESSAGE SYS) en stipulant (vous etiez déja (dés)abonné, vous avez effacé votre courriel de la liste [d'accueil] temporaire
 
 #idées:
 	si auto save actif : post-it last saved time
@@ -39,20 +48,11 @@ function hideShow(id,o){//used for show keycode in admin ::: todo for statusmsg 
  }
  else{
   document.getElementById(id_div).style.display=o;
- }   
+ }
 }
 
-#Curieux mais normal
-Si mail non inscrit dans liste reele mais dans tmp, si utilise keycode pour désinscrire = envoie de mail érroné; ne s'est réellement désinscrit, il n'était pas ds la liste réele);
-Possible que l'inverse se produise, si ds liste réele et ds tmp; si keycode utilisé pour inscrire = envoi de mail de confirm & notif? En effet OUI.
-#Ptet modifier le courriel (& MESSAGE SYS) en stipulant (vous etiez déja (dés)abonné, vous avez effacé votre courriel de la liste [d'accueil] temporaire
-Message Oups went wrong ::: mauvaise clé abonné ou non, mauvaise liste (id) ... une erreur inconnu quoi...
-si array_unique of time ²opt (just one link to gérér subcribtion)
-? changer ou enlever le i. en time des listes temporaires (var algo) ::: clé ds config (sécu)
-Notifs : si nojs les rendre display:block (class nojs ?) (si js rem class nojs)
 
-
-INCOMPATIBILITÉES :
+#INCOMPATIBILITÉES :
 CSSNOCACHE (DOUBLE INSTANCE ERREUR)
 
 #NOTES :
@@ -69,6 +69,13 @@ http://postmaster.free.fr/
 
 is_post_var('msg_html')#aperçu
 is_post_var('msg_text')text aréa editor name (compose.php & ailleurs ... )
+
+
+##v.2.0.1 29/09/2018 ##
+[+] Messages des notifs peaufiné (subscribe form)
+[+] L'aide est plus explicite (subscribe form)
+[+] Réglages Généraux : Typo + url de contact pour le lien de l'aide (subscribe form)
+Fix Réglages Transport : Message Test Notif erreur de trad : scbb @jack31 : https://forum.pluxml.org/viewtopic.php?pid=57568#p57568
 
 
 ##v.2.0.0 23/09/2018 ##

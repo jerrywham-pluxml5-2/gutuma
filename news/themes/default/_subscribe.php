@@ -55,6 +55,10 @@ else
 <br /><b><?php echo t('Second step') ?></b>, <?php echo t('clic on link(s) inside sended email <b>OR</b> paste the keycode in good field and clic on subscribe button.') ?>
 <br /><br /><b><i><?php echo t('For unsubscribe:') ?></i></b>
 <br /><?php echo t('Same procedure of subscribe but use unsubscribe button.') ?>
-<br /><br /><i><?php echo t('If need it, check "Resend key codes" before clic on (un)subscribe button is used to send again the steps to be completed.') ?></i></p>
+<br /><br /><b><i><?php echo t('Remarks:') ?></i></b>
+<br /><i><?php echo t('Remember to <b>check in spam mails</b> if the messages are not found in your inbox') ?>.</i>
+<br /><u><?php echo t('If no message is received, there are other possibilities to validate and (un)subscribe:') ?></u>
+<br />*<i><?php echo t('Either tick "%" before clic on (un)subscribe button to send again the steps to be completed.',array(t('Resend key code'.$s))) ?>.</i>
+<br />*<i><?php echo t('Or <a href="%">contact the author</a> of the site so that he can validate for you',array($contact_url)) ?>.</i></p>
 	<p<?php echo (@$_GET["backlink"]=='no'?' style="display:none"':''); ?>><br /><a href="<?php echo PLX_GROOT; ?>"><?php echo t('Back home'); ?></a></p>
 </div>
