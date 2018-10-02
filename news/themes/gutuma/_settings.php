@@ -46,6 +46,22 @@ include_once '_menu.php';?>
 			<div class="formfieldcontrols"><?php gu_theme_text_control('contact_url','placeholder="'.absolute_url('../../../feedback').'"'); ?></div>
 		</div>
 		<div class="formfield">
+			<div class="formfieldcomment"><?php echo t('The following is the url subscribe page of your site where subscribe.php is included');?> (php include).<br />
+				<?php echo t('If you leave blank, return to the original subscription page and are <a href="%">always accessible with this url</a>',array(absolute_url('subscribe.php')));?>.</div>
+			<div class="formfieldlabel"><?php echo t('Subscribe form url');?>:</div>
+			<div class="formfieldcontrols"><?php gu_theme_text_control('subscribe_url','placeholder="'.absolute_url('../../../static-1/subscribe').'"'); ?></div>
+		</div>
+		<div class="formfield">
+			<div class="formfieldcomment"><?php echo t('The following is for show or hide help in public subscription page');?>. (&amp;help=no)</div>
+			<div class="formfieldlabel"><?php echo t('Display help link');?>:</div>
+			<div class="formfieldcontrols"><?php gu_theme_list_control('subscribe_help', array(array(1,t('Yes')) , array(0,t('No'))));?></div>
+		</div>
+		<div class="formfield">
+			<div class="formfieldcomment"><?php echo t('The following is for show or hide home backlink in public subscription page');?>. (&amp;backlink=no)</div>
+			<div class="formfieldlabel"><?php echo t('Display home link');?>:</div>
+			<div class="formfieldcontrols"><?php gu_theme_list_control('show_home_link', array(array(1,t('Yes')) , array(0,t('No'))));?></div>
+		</div>
+		<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('The following user details are used as the <em>From</em> field of all sent messages. To minimize the chances of your messages being misidentified as spam, ensure that the email address is valid');?>.</div>
 			<div class="formfieldlabel"><?php echo t('Administrator name');?>:</div>
 			<div class="formfieldcontrols"><?php gu_theme_text_control('admin_name'); ?></div>

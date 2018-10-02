@@ -44,6 +44,7 @@ Donate using Liberapay.[::->]Faites un don en utilisant Liberapay.
 PayPal - The safer, easier way to pay online.[::->]PayPal
 is released under the GPL[::->]est sous licence GPL
 Help[::->]Aide
+Thank you for your[::->]Merci pour votre
 //************************************************************************
 //			LOGIN
 //************************************************************************
@@ -84,7 +85,7 @@ List <b><i>%</i></b> deleted[::->]Liste <b><i>[%%]</i></b> supprimée
 Address <b><i>%</i></b> removed[::->]Adresse <b><i>[%%]</i></b> supprimée
 Subscription[::->]Abonnement
 Unsubscription[::->]Désabonnement
-first step successful![::->]première étape réussi!
+first step successful![::->]la première étape est réussi!
 Invalid newsletter[::->]Infolettre non valide
 Newsletter deleted[::->]Infolettre supprimée
 Address <b><i>%</i></b> already in the % list of <b><i>%</i></b>[::->]L'adresse <b><i>[%%]</i></b> est déjà dans la liste [%%] de <b><i>[%%]</i></b>
@@ -113,7 +114,7 @@ View or hide key code with single click[::->]Un clic pour voir ou cacher la clé
 Unable to write list file. Check permissions for directory <code>%</code>[::->]Impossible d'écrire dans le fichier de la liste. Vérifiez les permissions du dossier <code>[%%]</code>
 Unable to delete list. Check permissions for directory <code>%</code>[::->]Impossible de supprimer la liste. Vérifiez les permissions du dossier <code>[%%]</code>
 Unable to read list file[::->]Impossible de lire le fichier de la liste
-Invalid list name. Names must only contain alphanumeric characters, spaces and dashes[::->]Nom de liste invalide.<br />Les noms ne doivent être formés que de<br /> caractèresalphanumériques, d'espaces ou de tirets
+Invalid list name. Names must only contain alphanumeric characters, spaces and dashes[::->]Nom de liste invalide.<br />Les noms ne doivent être formés que de<br /> caractères alphanumériques, d'espaces ou de tirets
 A list with the name <b><i>%</i></b> already exists[::->]Une liste nommée <b><i>[%%]</i></b> existe déjà
 You can have a maximum of % lists in demo mode[::->]Vous pouvez avoir un maximum de [%%] listes en mode de démonstration
 Unable to open CSV file for reading[::->]Impossible d'ouvrir et de lire le fichier CSV
@@ -156,7 +157,7 @@ Address <b><i>%</i></b> added to list[::->]L'adresse <b><i>[%%]</i></b> a été 
 You must enter a valid email address[::->]Vous devez entrer une adresse de courriel valide
 Are you sure you want to remove this address?[::->]Êtes vous sûr de vouloir supprimer cette adresse ?
 Back[::->]Retour
-If the list is marked as private then people cannot subscribe to it, and it will not be listed on the default subscribe page.[::->]Si la liste est qualifiée de privée alors il sera impossible au public de s'y inscrire et elle sera occulté de la page de souscription globale.
+If the list is marked as private then people cannot subscribe to it, and it will not be listed on the default subscribe page.[::->]Si la liste est qualifiée de privée alors il sera impossible au public de s'y inscrire et elle sera occultée de la page de souscription globale.
 Subscribers[::->]Abonnés
 Search[::->]Rechercher
 Clear[::->]Effacer
@@ -174,7 +175,7 @@ All[::->]Toutes
 //			INTEGRATE
 //************************************************************************
 Gadgets for other sites[::->]Gadgets pour les autres sites
-Here you can generate gadgets for other websites so that people can easily find and subscribe to your newsletters.[::->]Ici vous pouvez générer des gadgets pour les autres sites afin que les personnes puissent facilement trouver et s'inscrire à vos infolettres
+Here you can generate gadgets for other websites so that people can easily find and subscribe to your newsletters.[::->]Ici vous pouvez générer des gadgets pour les autres sites afin que les personnes puissent facilement trouver vos infolettres et s'y inscrire.
 Next[::->]Suivant
 Basic subscribe link[::->]Lien basique
 Basic subscribe form[::->]Formulaire basique
@@ -234,10 +235,17 @@ Test[::->]Test
 The following is usually the name of your organization or company. It is used in messages not specific to one list[::->]Le texte suivant est généralement le nom de l'organisation ou de l'entreprise. Il est utilisé dans tous les messages pas seulement dans ceux appartenant à une seule liste
 Collective name[::->]Nom collectif
 The following user details are used as the <em>From</em> field of all sent messages. To minimize the chances of your messages being misidentified as spam, ensure that the email address is valid[::->]Les renseignements suivants sont utilisés dans le champ <em>Expéditeur</em> de tous les messages. Afin de minimiser les risques que vos messages soient identifiés par mégarde comme des pourriels, assurez-vous que cette adresse soit valide
-The following is the contact page url of your site. It is used in help section in subscribe page[::->]Le champ suivant est l'url de la page de contact de votre site. Il est utilisé dans la section d'aide de la page d'abonnement
 Administrator name[::->]Nom de l'administrateur
 Administrator email[::->]Adresse courriel de l'administrateur
+The following is the contact page url of your site. It is used in help section in subscribe page[::->]Le champ suivant est l'url de la page de contact de votre site. Il est utilisé dans la section d'aide de la page d'abonnement
 Contact url[::->]Url de contact
+The following is the url subscribe page of your site where subscribe.php is included[::->]Le champ suivant est l'url de la page ou est inclus subscribe.php sur votre site
+If you leave blank, return to the original subscription page and are <a href="%">always accessible with this url</a>[::->]Si vous effacer ce champ et enregitrer, revient à l'adresse originale de subscibe.php qui est <a href="[%%]">toujours accessible avec cette adresse url</a>
+Subscribe form url[::->]Url du formulaire des abonnements
+The following is for show or hide help in public subscription page[::->]Le sélecteur suivant permet de choisir si l'aide est affiché ou non dans la page publique de gestion des abonnements
+Display help link[::->]Afficher le lien de l'aide
+The following is for show or hide home backlink in public subscription page[::->]Le sélecteur suivant permet de choisir si le lien de retour a l'accueil du site est affiché ou non dans la page publique de gestion des abonnements
+Display home link[::->]Afficher le lien "retour à l'accueil"
 Your login details[::->]Vos identifiants de connexion
 Administrator username[::->]Pseudonyme de l'administrateur
 Change administrator password[::->]Modifier le mot de passe administrateur
@@ -284,7 +292,7 @@ Append unsubscribe link to sent newsletters[::->]Ajouter un lien pour se désabo
 Send copy of sent newsletters to Administrator[::->]Envoyer à l'administrateur une copie des infolettres envoyées
 Subscriber confirmations[::->]Notifier par courriel les personnes
 Send welcome message to new subscribers[::->]Avec un message de d'accueil aux nouveaux inscrits
-Send goodbye message to unsubscribers[::->]Avec un message d'adieu aux personnes s'étants désinscrits
+Send goodbye message to unsubscribers[::->]Avec un message d'adieu aux personnes s'étant désinscrites
 Administrator notifications[::->]Notifier par courriel l'adminsitrateur
 Notify of new subscribes[::->]Lorsque quelqu'un s'inscrit
 Notify of unsubscribes[::->]Lorsque quelqu'un se désinscrit
@@ -296,31 +304,28 @@ Newsletters[::->]Infolettres
 No List[::->]Aucune Liste disponible
 Email address[::->]Adresse courriel
 Unsubscribe[::->]Désinscrire
-Resend key code[::->]Renvoyer la clé de validité
-Resend key codes[::->]Renvoyer les clés de validité
 Hide[::->]Cacher
 Back home[::->]Retour à l'accueil
-State of email <b>"%"</b> is: [::->]Le statut du courriel <b>"[%%]"</b> est : 
+Email <b>"%"</b> is: [::->]Le courriel <b>"[%%]"</b> est : 
 subscribed[::->]inscrit
 unsubscribed[::->]désinscrit
-and its key code is[::->]et sa clé de validité est
-present[::->]présente
-ungenerated[::->]non créée
+and[::->]et
+is awaiting a process[::->]est en attente d'une démarche
+has no pending requests[::->]n'a aucune démarche en cours
 in[::->]dans
-//help of subscribe.php
-This newsletters use two step system to validate subscribtion.[::->]Ce système de lettres numérique utilise une méthode pour validé les abonnements en deux étapes.
+//Aide dans subscribe.php (thèmes)
+This newsletters use two step system to validate subscribtion.[::->]Ce système de lettres numérique utilise une méthode pour valider les abonnements en deux étapes.
 For subscribe:[::->]Pour s'abonner :
 First step[::->]Première étape
-enter an email address and clic on subscribe button. The system send in enter address an email with the steps to follow.[::->]saisir une adresse courriel et cliquer sur le bouton inscrire. Le système envoie une lettre électronique avec les démarches à suivre a l'adresse saisie.
+enter an email address and clic on subscribe button. The system send in enter address an email with the steps to follow.[::->]saisir une adresse courriel et cliquer sur le bouton "Inscrire". Le système envoie une lettre électronique avec les démarches à suivre a l'adresse saisie.
 Second step[::->]Deuxième étape
-clic on link(s) inside sended email <b>OR</b> paste the keycode in good field and clic on subscribe button.[::->]cliquer sur le(s) lien(s) présent(s) dans le courriel reçu <b>OU</b> coller la clé de validité dans le champ correspondant et cliquer sur le bouton inscrire.
+click on the link in the email received to validate the subscription.[::->]cliquer sur le lien présent dans le courriel reçu pour valider l'abonnement.
+click on the links in the email received to validate the subscription.[::->]cliquer sur les liens présents dans le courriel reçu pour valider les abonnements.
 For unsubscribe:[::->]Pour se désabonner :
 Same procedure of subscribe but use unsubscribe button.[::->]Même procédé que pour l'abonnement sauf qu'il suffit d'utiliser le bouton désinscrire en lieu et place du bouton inscrire.
 Remarks:[::->]Remarques :
-Remember to <b>check in spam mails</b> if the messages are not found in your inbox[::->]Pensez a <b>vérifier les pourriels</b> si les messages sont introuvables votre boîte de réception
-If no message is received, there are other possibilities to validate and (un)subscribe:[::->]Si aucun message est reçu, il y a d'autres possibilités pour valider et vous (dés)inscrire :
-Either tick "%" before clic on (un)subscribe button to send again the steps to be completed.[::->]Soit cocher "[%%]" avant de cliquer sur le bouton (dés)inscrire pour envoyer a nouveau les démarches a réaliser
-Or <a href="%">contact the author</a> of the site so that he can validate for you[::->]Ou <a href="[%%]">contacter l'auteur du site</a> afin qu'il valide pour vous
+Remember to <b>check in spam mails</b> if the message are not found in your inbox[::->]Pensez a <b>vérifier les pourriels</b> si le message est introuvable dans votre boîte de réception
+If you encounter problems registering / unsubscribing, please <a href="%">contact the site author</a> so that they can do it for you[::->]Si vous rencontrez des proplèmes pour vous inscrire/désinscrire, <a href="[%%]">veuillez contacter l'auteur du site</a> afin qu'il le fasse pour vous
 //************************************************************************
 //			SENDING
 //************************************************************************
@@ -339,7 +344,7 @@ from this newsletter.[::->]de cette infolettre.
 Unable to attach '[::->]Impossible de joindre '
 Check permissions for directory <code>%</code>[::->]Vérifiez les permissions du répertoire <code>[%%]</code>
 Newsletters cannot be saved or sent in demo mode[::->]Les infolettres ne peuvent pas être sauvegardées en mode de démonstration
-Unable to save newsletter draft[::->]Impossible de sauvegardé l'infolettre comme projet
+Unable to save newsletter draft[::->]Impossible de sauvegarder l'infolettre comme projet
 Locking recipient file (%)[::->]Verrouillage du fichier du destinataire ([%%])
 Unable to lock newsletter[::->]Impossible de verrouiller l'infolettre
 Unlocking recipient file (%)[::->]Déverrouillage du fichier du destinataire ([%%])
@@ -375,32 +380,33 @@ Inactive[::->]Inactif
 //************************************************************************
 //			SWIFT mail & subscription
 //************************************************************************
-Your key code sended for list: <i>%</i>[::->]Clé de validité envoyée de la lettre d'information suivante : <i>[%%]</i>
-Your key code sended for lists: <i>%</i>[::->]Clés de validités envoyées des lettres d'informations suivantes : <i>[%%]</i>
-Your key code unsended for list: <i>%</i>[::->]Clé de validité inenvoyée de la lettre d'information suivante : <i>[%%]</i>
-Your key code unsended for lists: <i>%</i>[::->]Clés de validités inenvoyées des lettres d'informations suivantes : <i>[%%]</i>
+You will receive one email to validate your % for following list: <i>%</i>[::->]Vous allez recevoir un courriel pour valider votre [%%] à la lettre d'information suivante : <i>[%%]</i>
+You will receive one email to validate your % for following lists: <i>%</i>[::->]Vous allez recevoir un courriel pour valider votre [%%] aux lettres d'informations suivantes : <i>[%%]</i>
 You have been % lists: <i>%</i>[::->]Vous vous êtes [%%] lettres d'informations suivantes : <i>[%%]</i>
-You have been % list: <i>%</i>[::->]Vous vous êtes [%%] lettre d'information suivante : <i>[%%]</i>
- validation key[::->] : clé(s) de validité(s)
- confirmation[::->] : confirmation
- notification[::->] : notification
-subscribed to[::->]abonné(e) a la (aux)
-unsubscribed from[::->]désabonné(e) de(s)
+You have been % list: <i>%</i>[::->]Vous vous êtes [%%] la lettre d'information suivante : <i>[%%]</i>
+security link[::->]lien de sécurité
+security links[::->]liens de sécurités
+of[::->]de
+confirmed[::->]confirmé
+notification[::->]notification
+subscribed to[::->]abonné(e) à la
+subscribed  to[::->]abonné(e) aux
+unsubscribed from[::->]désabonné(e) de
+unsubscribed  from[::->]désabonné(e) des
+waiting a process[::->]attente d'une démarche
+process validated[::->]démarche validée
 This is an automated message[::->]Ceci est un message automatique
-key code to validate operation[::->]Clé de validité pour certifié l'opération
-Key code is used for approval your (un)subsciption[::->]Une clé de validité est utilisé pour approuver vos (dés)inscriptions
-Use this link or keycode before %, after you need a new keycode.[::->]Utiliser le lien ou la clé de validité avant le [%%], après vous aurez besoin d'une nouvelle clé valide.
- to send key code for validate % operation on the following lists:[::->] pour vous envoyer les clés de sécurités et certifié que vous ou un(e) ami(e) êtes bien a l'origine de l'opération a réalisé ([%%]) pour les lettres d'informations suivantes :
- to send key code for validate % operation on the following list:[::->] pour vous envoyer la clé de validité et certifié que vous ou un(e) ami(e) êtes bien a l'origine de l'opération a réalisé ([%%]) pour la lettre d'informations suivante :
+Use this link before %, after this date, you need a request new valid link.[::->]Utiliser ce lien avant le [%%], après cette date, vous devrez demander un nouveau lien valide.
+ to secure the % and certify that you are the initiator of this process for the following lists:[::->] pour sécuriser votre "[%%]" et certifier que vous êtes bien a l'origine de cette démarche pour les lettres d'informations suivantes :
+ to secure the % and certify that you are the initiator of this process for the following list:[::->] pour sécuriser votre "[%%]" en certifiant que vous êtes bien a l'origine de cette démarche pour la lettre d'informations suivante :
  to confirm that you have been % the following lists:[::->] pour confirmer que vous vous êtes [%%] lettres d'informations suivantes :
  to confirm that you have been % the following list:[::->] pour confirmer que vous vous êtes [%%] lettre d'information suivante :
  to notify you that % has been % the following lists:[::->] pour vous informer que [%%] s'est [%%] lettres d'informations suivantes :
  to notify you that % has been % the following list:[::->] pour vous informer que [%%] s'est [%%] lettre d'information suivante :
-Or paste this text in "key code" field before clic on % button: [::->]Ou copier le texte ci-dessous et coller le dans le champ "clé de validité" avant de cliquer sur le bouton [%%] : 
-To change your subscription visit: [::->]Pour changer l'abonnement, merci de vous rendre à l'adresse ci-dessous : 
-To change your subscriptions visit: [::->]Pour changer les abonnements, merci de vous rendre à l'adresse ci-dessous : 
-To validate your opération (%) for list "%" visit: [::->]Pour finalisé l'opération ([%%]) sur l'infolettre "[%%]" merci de vous y rendre avec l'adresse ci-dessous : 
-Please do not reply to this message. Thank you.[::->]Merci de ne pas répondre à ce message.
+To change your subscription visit: [::->]Pour modifier votre abonnement, merci de vous rendre à l'adresse ci-dessous : 
+To change your subscriptions visit: [::->]Pour modifier vos abonnements, merci de vous rendre à l'adresse ci-dessous : 
+To approve your % for list "%" visit: [::->]Merci de confirmer votre [%%] à la lettre d'information "[%%]" en cliquant sur le lien ci-dessous ou en le recopiant dans la barre d'adresse de votre navigateur. 
+Please do not reply to this message. Thank you.[::->]Veuillez ne pas répondre à ce message, Merci.
 The connection failed to start.  An exception was thrown:<br />[::->]La connexion a échoué. Une erreur a été générée :<br />
 A MIME part failed to detach due to the error:<br />[::->]La partie MIME n&#039;a pas pu se détacher à cause d&#039;une erreur :<br />
 An attachment failed to detach due to the error:<br />[::->]Une pièce jointe n&#039;a pas pu se détacher suite à une erreur :<br />
@@ -419,7 +425,7 @@ Sending failed:<br />[::->]L&#039;envoi a échoué :<br />
 //************************************************************************
 Update to Gutuma [::->]Mise à jour du module d'infolettres Gutuma 
 Install Gutuma [::->]Installation du module d'infolettres Gutuma 
-Congratulations! You can now sending newsletters. Don't forget to check the installation checklist on the home page for any further steps you need to take.[::->]Félicitations ! Vous pouvez dès à présent commencer à envoyer vos infolettres, veuillez vérifier les réglages de l'installation sur la page dédiée sont les prochaines étapes qui vous seront nécessaires.
+Congratulations! You can now sending newsletters. Don't forget to check the installation checklist on the home page for any further steps you need to take.[::->]Félicitations ! Vous pouvez dès à présent commencer à envoyer vos infolettres. Veuillez vérifier les réglages de l'installation sur la page dédiée. Ces prochaines étapes vous seront nécessaires.
 For security reasons, this install script has now been deleted from your server.[::->]Pour des raisons de sécurité, ce script d'installation va maintenant être supprimé de votre serveur.
 For security reasons, this install script (<code>install.php</code>) must be deleted from your server.[::->]Pour des raisons de sécurité, ce script d'installation (<code>install.php</code>) doit maintenant être supprimé de votre serveur.
 Login[::->]Connexion

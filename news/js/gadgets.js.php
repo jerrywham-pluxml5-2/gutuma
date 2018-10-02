@@ -4,12 +4,12 @@
  * @author Rowan Seymour
  * @copyright This source is distributed under the GPL
  * @file Javascript functions for generating integration gadgets - Default theme main stylesheet
- * @modifications Cyril Maguire, Thomas I.
+ * @modifications Cyril Maguire, Thomas Ingles
  *
  * Gutama plugin package
- * @version 1.8.7
- * @date	03/11/2017
- * @author	Cyril MAGUIRE, Thomas I.
+ * @version 2.1.0
+ * @date	01/10/2018
+ * @author	Cyril MAGUIRE, Thomas INGLES
 */
 include_once str_replace('js/gadgets.js.php','',__FILE__).'/inc/gutuma.php';//_if gutuma symlinked folder ::: origin is : include_once '../inc/gutuma.php';
 gu_init(FALSE, FALSE);// Initialize Gutuma without validation or housekeeping
@@ -17,9 +17,12 @@ if (!is_get_var('noajax')){
 //This file is a server-side merge of tw-sack.js and gadgets.js.php
 echo file_get_contents('tw-sack.min.js');
 }
+$inc_url = gu_config::get('subscribe_url') != absolute_url('subscribe.php');
+$gadgets_subscribe_url = $inc_url ? gu_config::get('subscribe_url') : absolute_url($gdgt.'subscribe.php');//TEP for php include ::: Origin absolute_url($gdgt.'subscribe.php')
+$inc_url = $inc_url?'&':'?';//for basic link
 ?>
 var gu_gadgets_formless = false;
-var gu_gadgets_subcribe_url = "<?php echo absolute_url($gdgt.'subscribe.php') ?>";
+var gu_gadgets_subcribe_url = "<?php echo $gadgets_subscribe_url ?>";
 var gu_gadgets_ajax_url = "<?php echo absolute_url($gdgt.'ajax.php'); ?>";
 var gu_gadgets_ajax_proxy = "";
 /**
@@ -44,7 +47,7 @@ function gu_gadgets_set_ajax_proxy(url){
  * @return The gadget HTML
  */
 function gu_gadgets_create_basic_link(list_id, text){
-	var sub_url = gu_gadgets_subcribe_url + ((list_id > 0) ? ("?list=" + list_id) : '');
+	var sub_url = gu_gadgets_subcribe_url + ((list_id > 0) ? ("<?php echo $inc_url ?>list=" + list_id) : '');
 	return '<a href="' + sub_url + '" class="subscribe-link" id="suscribe-link">' + text.replace(/&quot;/g,'"') + '</a>';
 }
 /**

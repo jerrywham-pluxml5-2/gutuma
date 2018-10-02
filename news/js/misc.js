@@ -209,9 +209,11 @@ function gu_element_fade(id, duration, start, end){
 		}
 	}
 }
-function setMsge(id){
-	if(document.getElementById(id)){
-		setTimeout("gu_element_fade_out('" + id + "', 1618)",5663);//fadeOut(id);
+function setMsge(id,mvto){
+	if(el = document.getElementById(id)){
+		setTimeout("gu_element_fade_out('" + id + "', 1618);"+
+			(mvto?"gu_element_set_inner_html('" + mvto + "', '" + el.innerHTML.replace(/'/g,'’') + "');gu_element_fade('" + mvto + "', 1618,0,100);":""),
+		5663);
 	}
 }
 //Show or hide keycode in editlist

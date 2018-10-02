@@ -4,12 +4,12 @@
  * @author Rowan Seymour
  * @copyright This source is distributed under the GPL
  * @file The AJAX interface to Gutuma
- * @modifications Cyril Maguire
- */
-/* Gutama plugin package
- * @version 1.6
- * @date	01/10/2013
- * @author	Cyril MAGUIRE
+ * @modifications Cyril Maguire, thomas Ingles
+ *
+ * Gutama plugin package
+ * @version 2.1.0
+ * @date	01/10/2018
+ * @author	Cyril MAGUIRE, Thomas INGLES
 */
 header('Content-Type: application/x-javascript; charset=utf-8');
 //header('Content-Type: text/html; charset=utf-8');
@@ -105,7 +105,8 @@ function gu_ajax_subscribe($list, $address, $subscribe = TRUE){
 	$list_ids = array($list->get_id());
 	if (!gu_subscription_process($address, $list_ids, $subscribe))
 		gu_ajax_return('alert("'.addslashes(strip_tags(@$_SERVER['GU_STATUS_MSG'].' '.@$_SERVER['GU_SUCCESS_MSG'].' '.@$_SERVER['GU_ERROR_MSG'])).'")');
-	gu_ajax_return('alert("'.($subscribe ? t('Subscription') : t('Unsubscription')).', '.t('first step successful!').'")');
+	$success = t('Thank you for your').' '.t('Subscription').' '.$address.', '.t('first step successful!').' '.t('You will receive one email to validate your % for following list: <i>%</i>', array(t('Subscription'),$list->get_name())).'. '.t('Remember to <b>check in spam mails</b> if the message are not found in your inbox');
+	gu_ajax_return('alert("'.strip_tags($success).'.")');
 }
 /**
  * Adds a new list with the specified name

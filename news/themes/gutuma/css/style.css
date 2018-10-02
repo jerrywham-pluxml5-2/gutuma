@@ -2,13 +2,13 @@
  * @project Gutuma Newsletter Managment
  * @author Rowan Seymour
  * @copyright This source is distributed under the GPL
- * @file Default theme main stylesheet
- * @modifications Cyril Maguire
+ * @file Gutuma theme main stylesheet
+ * @modifications Cyril Maguire, thomas Ingles
  *
  * Gutama plugin package
- * @version 1.6
- * @date	01/10/2013
- * @author	Cyril MAGUIRE
+ * @version 2.1.0
+ * @date	01/10/2018
+ * @author	Cyril MAGUIRE, Thomas INGLES
 */
 *{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -256,7 +256,7 @@ div.pagerinfo{
 	text-align: center;
 	top: 20px;
 }
-#statusmsg{
+#statusmsg, .success{
 	background-color: #93BFB8;
 }
 #errormsg,#errorless,#errormore,#errorextra{

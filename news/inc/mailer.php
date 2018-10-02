@@ -4,12 +4,12 @@
  * @author Rowan Seymour
  * @copyright This source is distributed under the GPL
  * @file The mailer class
- * @modifications Cyril Maguire
+ * @modifications Cyril Maguire, Thomas Ingles
  *
  * Gutama plugin package
- * @version 1.6
- * @date	01/10/2013
- * @author	Cyril MAGUIRE
+ * @version 2.1.0
+ * @date	01/10/2018
+ * @author	Cyril MAGUIRE, Thomas INGLES
 */
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 
@@ -198,10 +198,11 @@ class gu_mailer
 			$subject = '['.$list_name.'] '.$newsletter->get_subject();
 		else
 			$subject = '['.gu_config::get('collective_name').'] '.$newsletter->get_subject();
+		$subscribe_url = gu_config::get('subscribe_url') != absolute_url('subscribe.php') ? gu_config::get('subscribe_url').'&' : absolute_url('subscribe.php').'?';//TEP for php include ::: Origin absolute_url('subscribe.php')
 
 		if ($list_name != '' && gu_config::get('msg_append_signature')) {
-			$text = $newsletter->get_text()."\n-------------------------------------------------\n".t('Unsubscribe')." ".t('from this newsletter.').": ".absolute_url('subscribe.php')."?addr=".$address."\n".t('Powered by Gutuma')." (".GUTUMA_URL.")\n";
-			$html = $newsletter->get_html().'<hr /><p><a href="'.absolute_url('subscribe.php').'?addr='.$address.'">'.t('Unsubscribe').'</a> '.t('from this newsletter.').t(' Powered by').' <a href="'.GUTUMA_URL.'">'.t('Gutuma').'</a></p>';
+			$text = $newsletter->get_text()."\n-------------------------------------------------\n".t('Unsubscribe').' '.t('from this newsletter.').': '.$subscribe_url.'addr='.$address."\n".t('Powered by Gutuma').' ('.GUTUMA_URL.')'."\n";
+			$html = $newsletter->get_html().'<hr /><p><a href="'.$subscribe_url.'addr='.$address.'">'.t('Unsubscribe').'</a> '.t('from this newsletter.').t(' Powered by').' <a href="'.GUTUMA_URL.'">'.t('Gutuma').'</a></p>';
 		}
 		else {
 			$text = $newsletter->get_text();//Strict standards: Only variables should be assigned by reference

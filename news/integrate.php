@@ -7,9 +7,9 @@
  * @modifications Cyril Maguire
  *
  * Gutama plugin package
- * @version 1.6
- * @date	01/10/2013
- * @author	Cyril MAGUIRE
+ * @version 2.0.0
+ * @date	28/09/2018
+ * @author	Cyril MAGUIRE, Thomas Ingles
 */
 include 'inc/gutuma.php';
 if ($_SESSION['profil'] != PROFIL_ADMIN){

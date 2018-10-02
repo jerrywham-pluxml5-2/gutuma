@@ -4,12 +4,12 @@
  * @author Rowan Seymour
  * @copyright This source is distributed under the GPL
  * @file included editlist page
- * @modifications Cyril Maguire, thomas ingles
+ * @modifications Cyril Maguire, thomas Ingles
  *
  * Gutama plugin package
- * @version 2.0.0
- * @date	18/08/2018
- * @author	Cyril MAGUIRE, thomas ingles
+ * @version 2.1.0
+ * @date	01/10/2018
+ * @author	Cyril MAGUIRE, Thomas INGLES
 */
 ?>
 <div id="sectionheader" class="inline-form action-bar">
@@ -58,7 +58,8 @@ if ($list->get_size() > 0) {
 	$selection = $list->select_addresses($filter, $start, GUTUMA_PAGE_SIZE, $filtered_total,($tmp?TRUE:FALSE));
 	gu_theme_pager('pager_addresses', 'editlist.php?list='.$list->get_id().($tmp?'&amp;tmp=i':'').'&amp;filter='.$filter, $start, GUTUMA_PAGE_SIZE, $filtered_total);
 	$valtime = gu_config::get('days')*24*60*60;
-	$baseUrl = absolute_url('subscribe.php').'?list='.$list->get_id().'&addr=';
+	$subscribe_url = gu_config::get('subscribe_url') != absolute_url('subscribe.php') ? gu_config::get('subscribe_url').'&' : absolute_url('subscribe.php').'?';
+	$baseUrl = $subscribe_url.'list='.$list->get_id().'&addr=';
 	foreach ($selection as $address) {
 		$keycode = $datetmp = '';//uneeded if real list
 //icons of ²opt in/out

@@ -4,12 +4,12 @@
  * @author Rowan Seymour
  * @copyright This source is distributed under the GPL
  * @file included subscribe page
- * @modifications Cyril Maguire
+ * @modifications Cyril Maguire, thomas Ingles
  *
  * Gutama plugin package
- * @version 2.0.0
- * @date	23/09/2018
- * @author	Cyril MAGUIRE, Thomas Ingles
+ * @version 2.1.0
+ * @date	01/10/2018
+ * @author	Cyril MAGUIRE, Thomas INGLES
 */
 $s = '';//pluriel
 ?>
@@ -17,6 +17,7 @@ $s = '';//pluriel
 		<div id="content">
 			<?php gu_theme_messages(); if(!$list_exist){ echo t('No List').'!'; return;} ?>
 			<div style="text-align: center">
+				<p id="mvto" class="notification success" style="opacity:0"></p>
 				<form action="" name="subscribe_form" method="post" onsubmit="return checkSubmit(this);">
 <?php
 				if (isset($list) && is_object($list))
@@ -39,7 +40,7 @@ $s = '';//pluriel
 				}
 				echo '<p>'.t('Email address').'</p>';
 				if ($address != '')
-					echo '<h3>'.$address.'</h3><input name="subscribe_address" type="hidden" id="subscribe_address" value="'.$address.'" /><p><input name="k_submit" type="text" class="textfield" id="k_submit" style="width: 366px" value="'.$k.'" autocomplete="off" placeholder="'.t('key code to validate operation').'" /><br/><sup><sub>'.t('Key code is used for approval your (un)subsciption').'</sub></sup><br/><input name="send_k" type="checkbox" id="send_k" />&nbsp;'.t('Resend key code'.$s).'</p>';
+					echo '<h3>'.$address.'</h3><input name="subscribe_address" type="hidden" id="subscribe_address" value="'.$address.'" />';
 				else
 					echo '<p><input name="subscribe_address" type="text" class="textfield" id="subscribe_address" style="width: 200px" placeholder="address@email.com" required="required" /></p>';
 ?>
@@ -47,17 +48,16 @@ $s = '';//pluriel
 					<input name="unsubscribe_submit" type="submit" id="unsubscribe_submit" value="<?php echo t('Unsubscribe');?>" />
 					</p>
 				</form>
-	<br />
+<div id="gu_help"<?php echo (!gu_config::get('subscribe_help') OR @$_GET['help']=='no')?' style="display:none"':''; ?>>
 	<p><a title="<?php echo t('See').'/'.t('Hide') ?>" href="javascript:hideShow('help')"><?php echo t('Help') ?></a></p>
 <p id="help" style="text-align:left;margin:1rem;display:none;"><?php echo t('This newsletters use two step system to validate subscribtion.') ?>
 <br /><br /><b><i><?php echo t('For subscribe:') ?></i></b><br /><b><?php echo t('First step') ?></b>, <?php echo t('enter an email address and clic on subscribe button. The system send in enter address an email with the steps to follow.') ?>
-<br /><b><?php echo t('Second step') ?></b>, <?php echo t('clic on link(s) inside sended email <b>OR</b> paste the keycode in good field and clic on subscribe button.') ?>
+<br /><b><?php echo t('Second step') ?></b>, <?php echo t('click on the link'.$s.' in the email received to validate the subscription.') ?>
 <br /><br /><b><i><?php echo t('For unsubscribe:') ?></i></b>
 <br /><?php echo t('Same procedure of subscribe but use unsubscribe button.') ?>
 <br /><br /><b><i><?php echo t('Remarks:') ?></i></b>
-<br /><i><?php echo t('Remember to <b>check in spam mails</b> if the messages are not found in your inbox') ?>.</i>
-<br /><u><?php echo t('If no message is received, there are other possibilities to validate and (un)subscribe:') ?></u>
-<br />*<i><?php echo t('Either tick "%" before clic on (un)subscribe button to send again the steps to be completed.',array(t('Resend key code'.$s))) ?>.</i>
-<br />*<i><?php echo t('Or <a href="%">contact the author</a> of the site so that he can validate for you',array($contact_url)) ?>.</i></p>
+<br /><i><?php echo t('Remember to <b>check in spam mails</b> if the message are not found in your inbox') ?>.</i>
+<br /><i><?php echo t('If you encounter problems registering / unsubscribing, please <a href="%">contact the site author</a> so that they can do it for you',array($contact_url)) ?>.</i></p>
+</div><!-- gu_help -->
+	<p<?php echo (!gu_config::get('show_home_link') OR @$_GET["backlink"]=='no')?' style="display:none"':''; ?>><br /><a href="<?php echo $plxMotor->racine; ?>"><?php echo t('Back home'); ?></a></p>
 			</div>
-			<p>&nbsp;</p>

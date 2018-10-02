@@ -11,8 +11,8 @@
 #
 # ------------------- END LICENSE BLOCK -------------------
 /* Gutama plugin package (from core/admin/prepend.php)
- * @version 1.8.7
- * @date	22/11/2017
+ * @version 2.1.0
+ * @date	01/10/2018
  * @author	Cyril MAGUIRE, Thomas I.
 */
 # Définition des constantes
@@ -24,6 +24,12 @@ if(strstr($_SERVER['PHP_SELF'],'gadgets.js.php')){//4 gadget call
 }
 define('PLX_GROOT', $gdgt.'..'.__GDS__.'..'.__GDS__.'..'.__GDS__);// GROOT 4 SYMBIOLINK
 define('PLX_MORE', PLX_GROOT.'core'.__GDS__);
+if(defined('PLX_ROOT')){;#Test for include (fix error of Twice PluXml)
+ $plxMotor = $this->plxMotor;//var_dump($this->plxMotor);
+ $lang = $glang = $plxMotor->aConf['default_lang'];
+ $gu_is_included = TRUE;
+ return;
+}
 //PLX_ROOT détermine le chemin des params de XMLFILE_PARAMETERS * uncomment this 3 lines (below) if gutuma is symlinked in an other PluXml (I use it 4 my dev Thom@s)
 #$gu_sub = explode('plugins',$_SERVER['DOCUMENT_ROOT'].$_SERVER['PHP_SELF']);#if gutuma is symlinked
 #$gu_sub = str_replace($_SERVER['DOCUMENT_ROOT'].__GDS__,'',$gu_sub[0]);#4 found subdir where plx is

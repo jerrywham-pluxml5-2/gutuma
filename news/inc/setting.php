@@ -133,7 +133,10 @@ class gu_config{
 		self::$values = array();
 		self::$values['application_name'] = t('Newsletters');
 		self::$values['collective_name'] = t('My Newsletters');
-		self::$values['contact_url'] = '';
+		self::$values['contact_url'] = '';//In help in subscibe.php
+		self::$values['subscribe_url'] = absolute_url('subscribe.php');//Normal or with php include
+		self::$values['subscribe_help'] = TRUE;//display help tool in subscribe.php
+		self::$values['show_home_link'] = TRUE;//display home_link in subscribe.php
 		self::$values['admin_name'] = $profil['name'];
 		self::$values['admin_username'] = $profil['login'];
 		self::$values['admin_password'] = $profil['password'];

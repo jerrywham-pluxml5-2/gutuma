@@ -1,199 +1,270 @@
-/*****UNUSED*******************************************************************
+/************************************************************************
  * @project Gutuma Newsletter Managment
- * @author Rowan Seymour
+ * @authors Rowan Seymour, Thomas Ingles
  * @copyright This source is distributed under the GPL
  * @file Default theme main stylesheet
- * @modifications Cyril Maguire
+ * @modifications thomas Ingles
  *
  * Gutama plugin package
- * @version 1.9
- * @date	01/10/2013
- * @author	Cyril MAGUIRE
-*/
-body {
-	margin:0;
-	padding:0 0 0 200px; /* width sidebar */
+ * @version 2.1.0
+ * @date	01/10/2018
+ * @author	Thomas INGLES
+ */
+#langs{display:none;}/* hide plxMyMultilinge flags */
+#imghead{display:block;}/* img plx admin menu */
+[type="file"], select {/* compose (idea of plux > 5.6) */
+ margin: 5px 0;/* 8px 0 (select) */
 }
-body.subscribe {
-	padding:0; /* no sidebar */
-	text-align: center;
+[type="file"] {
+ background-color: #E8FEFA;
+ /* height: 23px; */
 }
-#imghead{
-	border-radius: 3px;
+/* 5.6 */
+.button{
+	white-space: nowrap;
+}
+.in_gutuma{
+	background-color: #393939;
+}
+#send_form input[type="text"], #send_form #msg_text{
 	width: 100%;
-	max-width: 340px;
 }
-span.yes {
-	font-weight: bold;
-	color: #009966;
+#list_name,#new_list_name{
+	width: 55.5%;
 }
-
-span.no {
-	font-weight: bold;
-	color: #CC0000;	
+.formfield{
+	padding: 0.5rem 0px;
+	border-bottom: 1px dotted #000;
 }
-
-.clearer {
+div.formfield > div{
+	display: inline-block;
+	width: 100%;
+	max-width: 70%;
+	padding: 0 0 0.5rem;
+}
+div.formfield.messages > div.formfieldlabel{
+	max-width: 70%;
+}
+div.formfield.messages > div.formfieldcontrols{
+	max-width: 20px;
+}
+div.formfield > div > select{
+	max-width: 66%;
+}
+div.formfield > div.formfieldlabel{
+	max-width: 27%;
+}
+div.formfieldset.gadget div.formfieldlabel{
+	max-width: 100%;
+}
+div.formfieldset.gadget div.formfieldcontrols{
+	text-align: center;
+	max-width: 100%;
+}
+div.formfield::after, .formfieldcomment, .formfielddivider{
+	content: " ";
+	display: block !important;
 	clear: both;
 }
-
-/* -------------
-   Results table classes
-------------- */
-table {
-	width: 100%;
+div.formfieldcomment{
+	font-size: small;
+	margin-bottom: 10px;
+	max-width: 100% !important;
 }
-
-table.results tr td {
-	border-bottom: 1px dotted black;
-	padding: 5px;
+.yes{color: green;}
+.no{color: red;}
+div.formfieldfloat{
+	margin-bottom: 1em;
+	background-color: rgba(207, 207, 207, 0.207);
 }
-
-table.results tr td.emptyresults {
-	padding: 10px;
-	font-style: italic;
+.in-action-bar.lists{
+	top: -2.7em;
+	overflow: hidden;
+}
+code{
+	font-family: "Courier New", Courier, mono;
+	font-size: 12px;
+	line-height: 16px;
+}
+textarea{
+	background-color: #F8F8F8;
+	border-top: 1px solid #abadb3;
+	border-right: 1px solid #e3e9ef;
+	border-bottom: 1px solid #e3e9ef;
+	border-left: 1px solid #e3e9ef;
+	padding: 4px;
+	margin: 0px;
+	font-family: "Courier New", Courier, mono;
+}
+hr{
+	border-top: 1px dotted black;
+	border-right: 0;
+	border-bottom: 0;
+	border-left: 0;
+	height: 1px;
+	background-color: white;
+}
+#demobanner{
+	background-color: #f6f8c1;
+	border-bottom: 1px solid #e6ea75;
 	text-align: center;
-}
-
-/* -------------
-   Messages
-------------- */
-#errormsg, #statusmsg {
-	text-align: center;
-}
-.warning {
-	margin: 10px 320px 10px 0;
-	padding: 10px 5px 10px 20px;
-	border: 1px solid #df8f8f;
-	font-size: 13px;
-	width:96%;
-	background-color: #ffcece;
-}
-#msg {/* .notification */
-	position:absolute;
-	top:-5px;
-	z-index:9999;
-	padding: 2px 15px 2px 15px;
-	border: 1px solid;
-	font-size: 13px;
-	font-weight:bold;
-	color:#000 !important;
-}
-.error {
-	background-color: #ffcfcf;
-	border-color: #df8f8f;
-}
-.success {
-	background-color: #fff1a8;
-	border-color: #e6db55;
-}
-
-div#sectionheader {
-	width: 100%;
-}
-
-ul#sectionmenu {
-	padding: 0;
-	margin: 20px 0 20px 0;
-	list-style-type: none;
-}
-
-ul#sectionmenu li {
-	display: inline;
-	padding-left: 20px;
-	line-height: 12px;
-}
-
-ul#sectionmenu li a {	
-	margin: 0 2px 0 2px;
-	background-color:#dedede;
-	border:1px solid #A8A9A8;
-	color:#555;
-	padding:2px 5px;
-	font-weight: normal;
-}
-
-ul#sectionmenu li a.current {	
 	font-weight: bold;
+	padding: 3px;
 }
-
-ul#sectionmenu li a:hover {
-	color:#000;
-	background-color: #bbb ;
+.section .action-bar h2{
+/*	font-size: 2.5rem; */
 }
-
-div#sidebar {
-	position:absolute;
-	top:-8px;
-	left:-40px;
-	width: 240px; /* width sidebar */
-	height:100%;
-}
-div#sidebar ul li {
-	padding-top:5px;
-}
-/* -------------
-   Field set classes 
-------------- */
-
-div.formfieldset {
-}
-
-div.formfield {
+/* Sub menu (action-bar) */
+#sectionheader{
 	width: 100%;
 	overflow: hidden;
-	padding: 10px 0 10px 0;	
-	border-bottom: 1px dotted black;
 }
-
-div.formfieldcomment {
-	margin-bottom: 10px;
+/* and Next plx ? */
+#sectionmenu.plx56{
+	line-height: 2.2 ;
 }
-
-div.formfielddivider {
-	clear: both;
-	height: 10px;
+#sectionmenu.plx54,#sectionmenu.plx55{/* pluxml 5.4 et 5.5 fix */
+	line-height: 1.5 ;
 }
-
-div.formfieldlabel {
-	float: left;
-	width: 50%;
-	font-weight: bold;
-	margin: 0;
-	padding: 0;
+#sectionmenu sup sub{
+	line-height: 1;
+	display: block;
 }
-
-div.formfieldcontrols {
-	float: right;
-	clear: right;
-	width: 50%;
-	margin: 0;
-	padding: 0;
+#sectionmenu a.current{
+	color: #7dbcb1;
 }
-
-div.messagepreview,#msg_text {
+#sectionmenu a:hover{
+	color: #bdfcf1;
+}
+#sectionmenu > input{
+	font-size: small;/* inherit */
+/*	height: auto; 3rem; */
+	margin-top:0.1618em;
+	margin-bottom:0;
+}
+#list_name,#new_list_name{
+	color: initial;
+}
+#add_list{}
+/* Other objects */
+#content{
+	padding: 10px;
+	min-height: 300px;
+}
+.notification {
+	position:relative;
+	margin: 0px 1rem;
+	font-weight: normal;
+	left: 0;
+	right: 0px;
+}
+#statusmsg{}
+#errormsg{}
+#debugmsg{
+	padding: 10px;
+	background-color: #FFFFCC;
+}
+#msg {/* .notification */
+	position:fixed;
+	top:5px;
+	left:5px;
+	right:5px;
+	z-index:9999;
+	padding: 2px 15px 2px 15px;
+	color:#000 !important;
+}
+div.menubar{
+	background-color: #d8eeea;
+	overflow: hidden;
+}
+.mce-fullscreen{z-index: 10000 !important;}/* responsive menu plx + 1 */
+div.menubar.in-action-bar{
+	background-color: transparent;
+}
+.in-action-bar.plx56{
+	margin-top: 7.2rem;
+	z-index: 99;/* au dessus de .mce-fullscreen */
+}
+.in-action-bar.plx54,.in-action-bar.plx55{/* pluxml 5.4 et 5.5 fix */
+	margin-top: 4.5rem;
+	z-index: 9999;/* au dessus de .mce-fullscreen */
+}
+.in-action-bar.plx54{/* pluxml 5.4 fix */
+	/*z-index: 9999 !important */;
+}
+div.menubar.attach_file{
+	margin-top: 3px;
+	padding-bottom: 3px;
+}
+div.messagepreview{
 	height: 250px;
 	border: 1px solid black;
 	padding: 5px;
 	overflow: auto;
 }
-#msg_text {
-	color:#666;
-	font-family:Arial;
+/* Pager bar classes */
+div.pager{
+	background-color: rgba(207, 207, 207, 0.207);
+	overflow: hidden;
+	width: 100%;
 }
-#msg_recips, #msg_subject {
-	width:350px;
+div.pagercontrols{
+	float: left;
+	width: 140px;
+	text-align: center;
+	padding: 10px 0px 10px 0px;
 }
-
-#gadget_generate {
-	float:right;
+div.pagerinfo{
+	float: right;
+	padding: 10px 0px 10px 0px;
 }
-#list_update,.pagercontrols, #install_submit{/*, #save_settings */
-	float:right;
+/* Results table classes */
+table{
+	width: 100%;
 }
-#admin_name, #admin_email, input.users {
-	background-color: #D6D6D6;
+table.results tr td{
+	border-bottom: 1px dotted black;
+	padding: 5px;
+}
+table.results tr td.emptyresults{
+	padding: 10px;
 	font-style: italic;
-	color: #434343;
-	cursor:default;
+	text-align: center;
+}
+.should-cut-off{
+	max-width: 92%;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.subscribe .should-cut-off{
+	max-width: 320px;
+}
+.cell-off{
+	min-width: 80%;
+}
+.cell-off b{
+	min-width: 11rem;
+	text-align: left;
+	padding-right: 1rem;
+	display: inline-block;
+}
+@media (max-width: 767px){
+	.in-action-bar,.in-action-bar.plx55,.in-action-bar.plx54{
+		z-index: unset;
+		text-align: center;
+	}
+	.section .action-bar h2{
+		font-size: 1.1em;
+	}
+	#imghead{display:none;}/* hide foot img in plx admin menu */
+	.imglink img{
+		width:27px;
+		height:27px;
+	}
+}
+@media (max-width: 480px){
+	div.formfield > div{
+		max-width: 100% !important;
+	}
 }

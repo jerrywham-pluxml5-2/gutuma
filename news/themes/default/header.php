@@ -45,7 +45,7 @@ if(isset($_GET["del"]) AND $_GET["del"]=="install") {
 -->
 	<?php eval($plxAdmin->plxPlugins->callHook('AdminTopEndHead')) ?>
 	<?php } ?>
-	<link rel="stylesheet" type="text/css" href="themes/<?php echo gu_config::get('theme_name');?>/css/gutuma.css?v=<?php echo GUTUMA_VERSION_NAME ?>" media="screen" />
+	<link rel="stylesheet" type="text/css" href="themes/<?php echo gu_config::get('theme_name');?>/css/style.css?v=<?php echo GUTUMA_VERSION_NAME ?>" media="screen" />
 	<script type="text/javascript" src="js/misc.min.js?v=<?php echo GUTUMA_VERSION_NAME ?>"></script>
 	<script type="text/javascript" src="js/tw-sack.min.js?v=<?php echo GUTUMA_VERSION_NAME ?>"></script>
 	<script type="text/javascript" src="js/md5.min.js?v=<?php echo GUTUMA_VERSION_NAME ?>"></script>

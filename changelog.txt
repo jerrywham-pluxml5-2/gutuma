@@ -1,6 +1,18 @@
 Gutuma : CyberLettres pour PluXml ;)
 
 TODO :
+++Une fois le timer de la notification javascript dépassé l'affichée (mais ou) pour qu'elle soit toujours visible pour l'internaute.
+---Peut-être remanier le texte sur les pourriel pour y adjoindre "et ajouter [emailProtetégé] a votre carnet d'adresses" NON (les internautes ne le font jamais, et semble ne servir a rien) ::: chouette du taf en moin
+++Avoir la possibilité d'intégrer a subscibe.php l'apparence du site PluXml qui l'héberge, belle idée a creuser...
+	Plusieurs pistes :
+		avec une page statique et un <?php include() ?> ou 
+		alors une frame en html,
+		mais il y a un hic, car les @mails envoyés par gutuma auront l'url standard!
+
+		Dans cette optique, une option du coté des réglages genre "[i]url de la page publique de gestion des abonnements (subscribe.php)[/i]" qui, si présente change l'adresse url des lettres des (dés)inscriptions peu faire l'affaire. 
+		Il y a même la possibilité d'activé une page statique ou de créer un hook a appeler (config du plugin (standard) a créer et ça complique les réglages).
+		@ voir ...
+
 Supprimer un courriel global, qui l'efface dans toutes les listes (lists.php)
 + 1 profil d'éditeur? (2 possible pour le moment) et/ou le manager peut gérer les gadjets.
 Un param query du formulaire (subscribe) (choix du theme de gutuma)
@@ -71,14 +83,29 @@ is_post_var('msg_html')#aperçu
 is_post_var('msg_text')text aréa editor name (compose.php & ailleurs ... )
 
 
-##v.2.0.1 29/09/2018 ##
+## v2.1.0 01/10/2018 ##
+[+] Languages peaufinés, messages plus clairs (notifs et courriels)
+[+] Subscription, & subscribe(s) (+ simple)
+[+] Algo : systeme de ré-envois & POST keycode : option supprimé
+[+] 3 réglages en plus : show_home_link, subscribe_help & subscribe_url (général)
+    : subscribe_url change tous les liens des courriels (utilisateurs & admins)
+[+] Nouveau paramètre d'url &help=no en plus du &backlink=no
+[+] Inclure dans une autre page avec php est maintenant possible, voir l'aide du plugin ;)
+[+] Code d'exemple inclu : static_include_code.txt dans fr-help.php
+[+] themes/default/css/gutuma.css Renommé en style.css
+[+] Les #msg (notif js) sont copiés dans un paragraphe dédié pour rester affiché a l'internaute
+    : $mvto est "l'id" ou sera copié le(s) #msg : function gu_theme_end($mvto='')
+[+] Merci @jack31 qui a permis de simplifier les messages et son comportement
+
+
+## v2.0.1 28/09/2018 ##
 [+] Messages des notifs peaufiné (subscribe form)
 [+] L'aide est plus explicite (subscribe form)
 [+] Réglages Généraux : Typo + url de contact pour le lien de l'aide (subscribe form)
 Fix Réglages Transport : Message Test Notif erreur de trad : scbb @jack31 : https://forum.pluxml.org/viewtopic.php?pid=57568#p57568
 
 
-##v.2.0.0 23/09/2018 ##
+## v2.0.0 23/09/2018 ##
 [+] Double confirmation (²opt in/Out)
 [+] ²opt : dbl verif (si ds opt et reelle)???
 [+] ²opt : resend key ::: veta dak
@@ -115,13 +142,13 @@ Fix Si noscript impossible redemandé la clé hash de validité.
 Fix Test réglages smtp.free.fr : swift non instancié = Fatal error: Call to a member function disconnect() on a non-object in gutuma/news/inc/mailer.php on line 230
 
 
-##v.1.9.1 07/07/2018 ##
+## v1.9.1 07/07/2018 ##
 [+] La config de gutuma change si un admin ou un gestionnaire modifie s(l)es identifiants
 [+] Écrire une infolettre : Placeholder explicatif dans le champ pour le sélecteur de liste
 [+] subscribe.php?list= ... &backlink=no # @$_GET["backlink"]=='no'?' style="display:none"':'' # Cache "retour a l’accueil" sur les 2 thèmes ;)
 
 
-##v.1.9.0 19/05/2018 ##
+## v1.9.0 19/05/2018 ##
 [+] Compatibilités : 5.2, 5.3.1, 5.4, 5.5 & 5.6+
 [+] [compose] tinyMCE 4.7.10 customisé (browser_spellcheck: true)
 [+] [style du Theme default] classes ajouté aux menus + compatible avec les themes admin de PluXml (pluCss class : menu) + logo gutuma
@@ -144,7 +171,7 @@ Fix [compose] tinyMCE : editor.css tjrs du theme gutuma : content_css: 'themes/<
 ren public static function set_adehsion($key) en set_adhesion
 
 
-##v.1.8.7.plx.5.6 16/03/2018##
+## v1.8.7.plx.5.6 16/03/2018##
 fixé Unable to open message file[::->]Impossible d'ouvrir le fichier de message (surment car le dossier (vide) est tjrs présent
  erreur de fileLock exclusive flock in free.fr 
  Unable to lock newsletter recipient list[::->]Impossible de verrouiller la liste des destinataires de l'infolettre
@@ -170,7 +197,7 @@ Fix: Notices PLX_MULTILINGUE déjà définie lors de l’appel a getInstance de 
 Fix: Mauvaise url du fichier css personnel [custom_admincss_file]
 Fix: gadget.js gu_init(FALSE, FALSE); (3 FALSE au lieu de 2) Initialize Gutuma without validation or housekeeping
 
-##v.1.8.6.plx.5.6  09/09/2017##
+## v1.8.6.plx.5.6  09/09/2017##
 [+] Retouche legere des notifs
 [+] GUTUMA_ENCODING = PLX_CHARSET
 [+] Les antislash (\) remplacés par des slashs (/) dans les variable textes de config ::: Les antislash (qui sont contre le guitariste) sont remplacé par des slashs (qui sont pour) afin de proteger le fichier de config lorsque l'on applique de nouveaux paramétres ::: Par ex.: Si le nom de l'application était My-NewsLetter\ cela rendait la lecture du fichier de config impossible, voir ci-après
@@ -179,7 +206,7 @@ Fix: Serveur win:
 :::: $gu_config['ROOT'] inutile et pose probleme sous windows commenté (todo: a supprimé dan setting.php)
 
 
-##v.1.8.5.plx.5.6  02/09/2017##
+## v1.8.5.plx.5.6  02/09/2017##
 [+] Thèmes & langues retouchés + d'autres subtilités
 [+] Canal de mise a jour officiel lié au dépôt github ::: https://raw.githubusercontent.com/jerrywham-pluxml5-2/gutuma/master/news/up_git.js ::: origine v1.6 => http://gutuma.sourceforge.net/update.js.php
 [+] Convertisseur html_to_text peaufiné
@@ -191,7 +218,7 @@ Fix² _pluxml.php crash a l'install du module ::: http://forum.pluxml.org/viewto
 :::: Mauvais chemin racine si PluXml est dans un sous dossier
 :::: Mauvaise config de PluXml & gutuma chargé si le dossier du plugin est symbolique (par Exemple, est en réalité dans un autre PluXml) voir l'aide pour faire les modifs nécessaires au fichier news/inc/_pluxml.php ;-)
 
-##v.1.8.4.P56  01/09/2017##
+## v1.8.4.P56  01/09/2017##
 [+] tinyMCE en v4.6.6 + la langue de l'éditeur est celle de l'utilisateur + plugins activé
 [+] jsHash mis a jours en 2.2 ::: http://pajhome.org.uk/crypt/md5/scripts.html
 [+] js minifiés avec jscompress.com et utlisés
@@ -201,7 +228,7 @@ Fixs _pluxml.php crash a l'install du module ::: http://forum.pluxml.org/viewtop
 :::: Serveur autre que Tux
 :::: exec interdit en safe_mode (PHP) (Par defaut ds WAMP) && __LINK__ supprimé (inutilisé)
 
-##v.1.8.4.plx.5.6  30/08/2017##
+## v1.8.4.plx.5.6  30/08/2017##
 [+] Admin thème 'default' + adapté a PluXml 5.6 & + coloré + responsive (stratégie mobile 1st)
 [+] Admin Manager Auto connect ::: Les gestionnaires accèdent a l'interface pour composer une infolettre en JavaScript
 [+] Admin choix des thèmes par sélecteur listant les dossiers présent (gutuma & default)
@@ -231,7 +258,7 @@ Fix Souscription si guest user : fichiers ajax, js et subscribe inaccessibles ca
 Fix Admin header 404 + mode erreur si ? dans url ou sinon en mode home : suppression des appels au préchauffage() et au démarrage()
 Fix Verif config modifiable (themes/*/_index.php) 'inc' to GUTUMA_CONFIG_FILE
 
-##v.1.8.4.plx.5.3.1  02/03/2017##
+## v1.8.4.plx.5.3.1  02/03/2017##
 [+] certaines redir (complexes) doublé d'un méta refresh (pb de not found 404)
 [+] fixé lors de certaines opération (js), ne recharge pas la page (champs non mis a jour) (suppression liste,brouillon, ...)
 [+] fixé Liste des utilisateurs validés (affiche plusieurs fois (2) les utilisateurs) in settings (Only in default theme)

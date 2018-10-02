@@ -21,7 +21,7 @@ function gu_theme_start($nomenu = FALSE){//THEMEVERS PluXml 5.3.1 default theme
 /**
  * Outputs the end of the site-wide theme
  */
-function gu_theme_end(){
+function gu_theme_end($mvto=''){//$mvto is id to move notify msg
 	include RPATH.'themes/'.gu_config::get('theme_name').'/footer'.(gu_config::get('theme_name')=='default'?THEMEVERS:'').'.php';
 }
 

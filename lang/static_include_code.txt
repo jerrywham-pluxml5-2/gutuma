@@ -1,0 +1,37 @@
+<style>/* A placer dans la balise head votre theme ou dans une feuille externe (pour de meilleure perf) : vient de core/admin/theme/theme.css (pour les notif) */
+.notification {
+	position: fixed;
+	top: 48px;
+	z-index: 999999;
+	text-align: center;
+	margin: 0 auto;
+	padding: 2px 15px 2px 15px;
+	border: 1px solid;
+	font-size: 13px;
+	font-weight: bold;
+	color: #000;
+}
+.error {
+	background-color: #ffcfcf;
+	border-color: #df8f8f;
+}
+.success {
+	background-color: #fff1a8;
+	border-color: #e6db55;
+}
+#msg p, #center_sub p, #content p{
+	text-align:center !important;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="plugins/gutuma/news/themes/default/css/style.css?v=2.1.0" media="screen" /><!-- A placer dans la balise head votre theme -->
+<script type="text/javascript" src="plugins/gutuma/news/js/misc.min.js?v=2.1.0"></script><!-- A placer dans la balise head votre theme -->
+
+<?php # ou utiliser les réglages ou les paramètres dans l'url
+$_GET['backlink'] = 'no';#cache le lien retour a l'accueil
+$_GET['help'] = 'no';#cache le lien de l'aide
+?>
+<div id="center_sub">
+	<p id="msg_js" class="success" style="opacity:0"></p><!-- Tous les messages de statusmsg sont dupliqués et affichés ici -->
+	<?php include('plugins/gutuma/news/subscribe.php'); ?>
+</div>
+<script type="text/javascript">setMsge('errormsg');setMsge('statusmsg','msg_js');</script><!-- affiche les notifications. 'mvto' peut remplacer 'msg_js' pour utiliser la balise intégré au formulaire. Ensuite (<p id="msg_js" ...></p>) peut être supprimé du code -->

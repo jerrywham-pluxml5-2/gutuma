@@ -10,6 +10,7 @@ if(!defined('PLX_ROOT')) exit; ?>
 <p class="in-action-bar">Aide du plugin Gutuma, le gestionnaire de Newsletters</p>
 <p class="warning" style="color:purple;">Astuce : pour facilité la compréhention de vos utilisateurs. Il est possible de changer le titre du menu et son infobulle.<br />
 Il vous suffit d'éditer le(s) fichier(s) de langue <b><em>plugins/gutuma/lang/##.php</em></b> et d'y placer vos textes.</p>
+<p class="warning" style="color:green;">Astuce : <a href="#phpinclude">comme expliqué dans ce chapitre, <b><em>il est possible d'inclure le script "subscribe.php" dans une page statique</em></b></a>.</p>
 <h3>Installation</h3>
 <p>Le plugin est constitué de deux dossiers principaux:</p>
 <ol>
@@ -70,8 +71,32 @@ Seuls les administrateurs et les gestionnaires peuvent utiliser le plugin.</p>
 <h3>Configuration</h3>
 <p>La configuration se fait en mode administrateur uniquement. C'est l'option <code>Réglages</code> du menu de la sidebar qui permet de faire les modifications. Les champs sont suffisamment explicites et ne seront pas détaillés ici.</p>
 <p>Un panneau d'informations sur l'installation et les paramètres système est également disponible.</p>
+<p>&nbsp;</p>
 <h3>Gadgets</h3>
 <p>Pour permettre aux lecteurs du site de s'abonner aux newsletters, des codes javascripts sont à placer sur la partie publique du site, dans le code source. Différentes possibilités sont offertes : affichage de liens, de bouton ou de champ de formulaire.</p>
 <p>Pour mettre en page ces codes d'abonnement, des index css sont disponibles :  #suscribe-link pour les liens basiques et ajax, et #gu_subscribe_form pour les formulaires.</p>
+<p id="phpinclude">&nbsp;</p>
+<h2>Inclure le formulaire d'abonnement</h2>
+<p>Pour réussir a inclure le formulaire dans une page statique (ou ailleur), voici une piste a suivre.</p>
+<h3>En premier lieu, créez une page statique avec comme titre Gérer mes lettres.</h3>
+<p>Ensuite dans la partie réglages de Gutuma dans le champ "<em>Url du formulaire des abonnements</em>" copiez y son url.</p>
+<p>Par exemple : <code><?php echo $plxAdmin->racine ?>index.php?static1/gerer-mes-lettres&amp;backlink=no&amp;help=no</code>
+<br /><sup><sub><em>Cette url est utilisé pour les gadgets ainsi que pour les courriers de confirmation et de validation lors des (dés)abonnements.</em></sub></sup></p>
+<h3>En second lieu, coder</h3>
+<p>Il suffit de dupliquer dans le corp de la page statique le code ci-après&nbsp:</p>
+<pre>
+<div style="color:#fff;padding:0 10px 15px 10px;background-color:#000;border:1px solid #888;">
+<code style="background-color:#000">
+<?php
+$racine = isset($_SERVER['SCRIPT_FILENAME'])?$_SERVER['SCRIPT_FILENAME']:$_SERVER['PHP_SELF'];//On
+$racine = substr($racine, 0, strpos($racine, "core/admin"));//dé-symlink
+$racine .= str_replace(PLX_ROOT,'',PLX_PLUGINS);//le fichier d'aide du plugin
+$code = file_get_contents($racine.'gutuma/lang/static_include_code.txt');//Pour inclure le code d'exemple
+echo htmlentities($code);
+?>
+</code>
+</div>
+et adapter le au besoin.
+</pre>
 <h3>Service Après Téléchargement</h3>
 <p>Une idée, un comment on fait, un caillou dans les roues, Allez voir sur le <a href="http://forum.pluxml.org/viewtopic.php?id=3358">fil officiel du forum PluXml</a></p>

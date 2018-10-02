@@ -38,6 +38,6 @@ if(gu_session_is_valid()){//only admin valid user
 	}
 }
 ?>
-<script type="text/javascript">setMsge('errormsg');setMsge('statusmsg');</script>
+<script type="text/javascript">setMsge('errormsg');setMsge('statusmsg'<?php echo !$mvto?'':",'".$mvto."'" ?>);</script>
 	</body>
 </html>

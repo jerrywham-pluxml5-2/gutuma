@@ -4,12 +4,12 @@
  * @author Rowan Seymour
  * @copyright This source is distributed under the GPL
  * @file The settings page
- * @modifications Cyril Maguire
+ * @modifications Cyril Maguire, thomas Ingles
  *
  * Gutama plugin package
- * @version 2.0
- * @date	27/07/2018
- * @author	Cyril MAGUIRE, Thomas Ingles
+ * @version 2.1.0
+ * @date	01/10/2018
+ * @author	Cyril MAGUIRE, Thomas INGLES
 */
 include_once 'inc/gutuma.php';
 include_once 'inc/mailer.php';
@@ -28,6 +28,10 @@ if (is_post_var('save_settings')){// Save settings
 		gu_config::set('collective_name', get_post_var('collective_name'));
 		gu_config::set('application_name', get_post_var('application_name'));
 		gu_config::set('contact_url', get_post_var('contact_url'));
+		if(!get_post_var('subscribe_url')) $_POST['subscribe_url'] = absolute_url('subscribe.php');//if empty return to original
+		gu_config::set('subscribe_url', get_post_var('subscribe_url'));//Normal or with php include in other place
+		gu_config::set('subscribe_help', get_post_var('subscribe_help'));//help tips link
+		gu_config::set('show_home_link', get_post_var('show_home_link'));
 		gu_config::set('admin_name', get_post_var('admin_name'));
 		gu_config::set('admin_email', get_post_var('admin_email'));
 		gu_config::set('days', get_post_var('days'));
