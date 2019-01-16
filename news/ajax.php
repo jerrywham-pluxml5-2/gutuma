@@ -105,7 +105,7 @@ function gu_ajax_subscribe($list, $address, $subscribe = TRUE){
 	$list_ids = array($list->get_id());
 	if (!gu_subscription_process($address, $list_ids, $subscribe))
 		gu_ajax_return('alert("'.addslashes(strip_tags(@$_SERVER['GU_STATUS_MSG'].' '.@$_SERVER['GU_SUCCESS_MSG'].' '.@$_SERVER['GU_ERROR_MSG'])).'")');
-	$success = t('Thank you for your').' '.t('Subscription').' '.$address.', '.t('first step successful!').' '.t('You will receive one email to validate your % for following list: <i>%</i>', array(t('Subscription'),$list->get_name())).'. '.t('Remember to <b>check in spam mails</b> if the message are not found in your inbox');
+	$success = t('Thank you for your').' '.t('Subscription').' '.$address.', '.t('the first step is successful!').' '.t('You will receive one email to validate your % for following list: <i>%</i>', array(t('Subscription'),$list->get_name())).'. '.t('Remember to <b>check in spam mails</b> if the message are not found in your <b>inbox</b>');
 	gu_ajax_return('alert("'.strip_tags($success).'.")');
 }
 /**

@@ -22,8 +22,8 @@ $list_id = isset($_GET['list']) ? (int)$_GET['list'] : 0;
 // Load list data
 $list = gu_list::get($list_id, TRUE);
 
-header("Content-type: application/octet-stream");
-header("Content-Disposition: attachment; filename=\"".$list->get_name().".csv\"");
+header('Content-type: application/octet-stream');
+header('Content-Disposition: attachment; filename="'.$list->get_name().'.csv"');
 
 foreach ($list->get_addresses() as $address) {
 	echo $address."\r\n";

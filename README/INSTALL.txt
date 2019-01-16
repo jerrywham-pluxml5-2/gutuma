@@ -1,0 +1,13 @@
+=====================================================================
+ INSTALLATION INSTRUCTIONS FOR GUTUMA PLUGIN
+=====================================================================
+
+1. Upload "gutuma" directory and all subdirectories to a directory on
+   "plugins" folder inyour PluXml.
+2. Activate the plugin in your pluxml where you have uploaded Gutuma.
+   Clic on "Cyberletters" menu and clic on install newsletters module
+   you will be redirected to the installation page.
+3. Follow the on screen instructions
+
+If you click on the "Home" link, and look under "Installation checklist",
+ it will tell you if you need to make any further changes.

@@ -46,6 +46,16 @@ function gu_update(){
 			$list->update('i');//create empty ²opt(in/out) temporary lists (data/gutuma/tmp/##TIME_ID##.i.php)
 		}
 	}
+//2.2.0
+	$subscribe_uri = gu_config::get('subscribe_url');
+	$subscribe_ori = absolute_url('subscribe.php');
+	if($subscribe_ori!=$subscribe_uri){
+		global $plxMotor;
+		$plxPlugin = $plxMotor->plxPlugins->getInstance('gutuma');
+		$plxPlugin->setParam('subscribe_url',$subscribe_uri,'string');//2.2.0
+		$plxPlugin->setParam('subscribe_is_good',(int)($subscribe_ori!=$subscribe_uri),'numeric');//2.2.0
+		$plxPlugin->saveParams();//2.2.0
+	}
 	return gu_config::save();
 }
 if (isset($_profil['salt'])){// If pluxml is used

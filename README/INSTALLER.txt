@@ -1,0 +1,13 @@
+=====================================================================
+ INSTRUCTIONS D'INSTALLATION POUR LE PLUGIN GUTUMA
+=====================================================================
+
+1. Téléversez le répertoire "gutuma" et tous les sous-répertoires dans
+   le dossier "plugins" de PluXml.
+2. Activez le plugin dans votre pluxml où vous avez placé le greffon de Gutuma.
+   Cliquez sur le menu "Cyberlettres" et cliquez sur installer module d'infolettres
+   vous serez redirigé vers la page d'installation.
+3. Suivez les instructions à l'écran
+
+Si vous cliquez sur le lien "Informations", et regardez sous "Vérification de l'installation",
+il vous indiquera si vous avez besoin d'effectuer d'autres changements.

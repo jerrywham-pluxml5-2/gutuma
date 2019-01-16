@@ -46,7 +46,7 @@ include_once '_menu.php';?>
 			<div class="formfieldcontrols"><?php gu_theme_text_control('contact_url','placeholder="'.absolute_url('../../../feedback').'"'); ?></div>
 		</div>
 		<div class="formfield">
-			<div class="formfieldcomment"><?php echo t('The following is the url subscribe page of your site where subscribe.php is included');?> (php include).<br />
+			<div class="formfieldcomment"><?php echo t('The following is the url subscribe page of your site where subscribe.php is included');?> (<a href="<?php echo gu_config::get('subscribe_url') ?>"><?php echo @L_VIEW ?> php include</a>).<br />
 				<?php echo t('If you leave blank, return to the original subscription page and are <a href="%">always accessible with this url</a>',array(absolute_url('subscribe.php')));?>.</div>
 			<div class="formfieldlabel"><?php echo t('Subscribe form url');?>:</div>
 			<div class="formfieldcontrols"><?php gu_theme_text_control('subscribe_url','placeholder="'.absolute_url('../../../static-1/subscribe').'"'); ?></div>
@@ -96,7 +96,7 @@ include_once '_menu.php';?>
 			<div class="formfieldcontrols"><?php gu_theme_list_control('spell_check', array(array('browser',t('Provided by the web browser')), array('no',t('Off')))); ?></div>
 		</div>
 		<div class="formfield">
-			<div class="formfieldcomment"><?php echo t('The following selector list is for choose one of all Theme\'s available in subfolders of Gutuma');?>.</div>
+			<div class="formfieldcomment"><?php echo t('The following selector list is for choose one of all Theme\'s available in subfolders of Gutuma');?>. <sub><sup>(/news/themes/*)</sup></sub></div>
 			<div class="formfieldlabel"><?php echo t('Name of the theme');?>:</div>
 			<div class="formfieldcontrols"><?php
 				$thms = array();
@@ -105,6 +105,20 @@ include_once '_menu.php';?>
 				foreach($thm_dir AS $thm)
 					$thms[] = array($thm,$thm);
 				gu_theme_list_control('theme_name', $thms); ?></div>
+		</div>
+		<div class="formfield">
+			<div class="formfieldcomment"><?php echo t('The following selector list is for choose one of all Theme\'s available for CodeMirror');?>. <sub><sup>(/news/js/codemirror/theme/*.css)</sup></sub></div>
+			<div class="formfieldlabel"><?php echo t('Name of the theme');?>:</div>
+			<div class="formfieldcontrols"><?php
+				$thms = array();
+				$dir = dirname(__FILE__).'/../../js/codemirror/theme/';//plugins/gutuma/news/js/codemirror/theme
+				$thm_dir = array_diff(scandir($dir), array('..', '.'));
+				foreach($thm_dir AS $thm){
+					$thm = explode('.',$thm);
+					$thm = $thm[0];
+					$thms[] = array($thm,$thm);
+				}
+				gu_theme_list_control('cmtheme', $thms); ?></div>
 		</div>
 		<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('List of valid users');?>.</div>

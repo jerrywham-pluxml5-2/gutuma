@@ -7,10 +7,14 @@
  * @date	02/09/2017 * @author	Thomas Ingles
  **/
 if(!defined('PLX_ROOT')) exit; ?>
-<p class="in-action-bar">Aide du plugin Gutuma, le gestionnaire de Newsletters</p>
-<p class="warning" style="color:purple;">Astuce : pour facilité la compréhention de vos utilisateurs. Il est possible de changer le titre du menu et son infobulle.<br />
+<p class="in-action-bar">Aide du plugin Gutuma, le gestionnaire de Newsletters
+<?php $lp = 'Dons réguliés avec Liberapay.'; ?>
+<br /><span style="z-index:1;margin-left: 10px" title="<?php echo $lp ?>"><script src="https://liberapay.com/sudwebdesign/widgets/button.js"></script><noscript><a href="https://liberapay.com/sudwebdesign/donate"><img alt="<?php echo $lp ?>" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript></span>
+</p>
+<p class="warning" style="color:purple;">Astuce : pour facilité la compréhention de vos utilisateurs. Il est possible de changer l'infobulle et le titre du menu de l'admin.<br />
 Il vous suffit d'éditer le(s) fichier(s) de langue <b><em>plugins/gutuma/lang/##.php</em></b> et d'y placer vos textes.</p>
 <p class="warning" style="color:green;">Astuce : <a href="#phpinclude">comme expliqué dans ce chapitre, <b><em>il est possible d'inclure le script "subscribe.php" dans une page statique</em></b></a>.</p>
+<p class="warning" style="color:blue;"><a href="http://sudwebdesign.free.fr/index.php?article5#comments">Service Après Téléchargement</a> : Du sable dans les rouages, un comment on fait ou des idées, le <a href="http://forum.pluxml.org/viewtopic.php?id=3358">fil officiel du forum PluXml</a>.</p>
 <h3>Installation</h3>
 <p>Le plugin est constitué de deux dossiers principaux:</p>
 <ol>
@@ -76,17 +80,18 @@ Seuls les administrateurs et les gestionnaires peuvent utiliser le plugin.</p>
 <p>Pour permettre aux lecteurs du site de s'abonner aux newsletters, des codes javascripts sont à placer sur la partie publique du site, dans le code source. Différentes possibilités sont offertes : affichage de liens, de bouton ou de champ de formulaire.</p>
 <p>Pour mettre en page ces codes d'abonnement, des index css sont disponibles :  #suscribe-link pour les liens basiques et ajax, et #gu_subscribe_form pour les formulaires.</p>
 <p id="phpinclude">&nbsp;</p>
-<h2>Inclure le formulaire d'abonnement</h2>
+<h1>Inclure le formulaire d'abonnement</h1>
 <p>Pour réussir a inclure le formulaire dans une page statique (ou ailleur), voici une piste a suivre.</p>
-<h3>En premier lieu, créez une page statique avec comme titre Gérer mes lettres.</h3>
-<p>Ensuite dans la partie réglages de Gutuma dans le champ "<em>Url du formulaire des abonnements</em>" copiez y son url.</p>
-<p>Par exemple : <code><?php echo $plxAdmin->racine ?>index.php?static1/gerer-mes-lettres&amp;backlink=no&amp;help=no</code>
-<br /><sup><sub><em>Cette url est utilisé pour les gadgets ainsi que pour les courriers de confirmation et de validation lors des (dés)abonnements.</em></sub></sup></p>
-<h3>En second lieu, coder</h3>
-<p>Il suffit de dupliquer dans le corp de la page statique le code ci-après&nbsp:</p>
-<pre>
-<div style="color:#fff;padding:0 10px 15px 10px;background-color:#000;border:1px solid #888;">
-<code style="background-color:#000">
+<h2>En premier lieu&nbsp;:</h2>
+<p>créez / adaptez une <a href="statiques.php"><b>page statique</b></a> (<b><i>active</i></b>) avec comme <b>titre</b> <i>Gérer mes lettres</i> et <b>url</b> <i>gerer-mes-lettres</i>.</p>
+<h3>Ceci fait, codez...<br />
+Collez y le code ci-dessous&nbsp:
+<b><a title="Ouvrir ou Fermer le code a dupliquer dans le corps de la page statique" id="toggler" href="javascript:void(0)" onclick="toggleDiv('stack','toggler','+','—')" style="outline:none; text-decoration: none">+</a></b>
+</h3>
+<style>#stack code{background-color:#000}#stack div{color:#fff;padding:0 10px 15px 10px;background-color:#000;border:1px solid #888;}</style>
+<pre id="stack" style="display:none">
+<div>
+<code>
 <?php
 $racine = isset($_SERVER['SCRIPT_FILENAME'])?$_SERVER['SCRIPT_FILENAME']:$_SERVER['PHP_SELF'];//On
 $racine = substr($racine, 0, strpos($racine, "core/admin"));//dé-symlink
@@ -96,7 +101,35 @@ echo htmlentities($code);
 ?>
 </code>
 </div>
-et adapter le au besoin.
+Nettoyez, testez et ajustez aux besoins.
 </pre>
-<h3>Service Après Téléchargement</h3>
-<p>Une idée, un comment on fait, un caillou dans les roues, Allez voir sur le <a href="http://forum.pluxml.org/viewtopic.php?id=3358">fil officiel du forum PluXml</a></p>
+<h2>En second lieu&nbsp;:</h2>
+<p>Dans la partie <b><i>réglages</i></b> de Gutuma <b><i>(onglet général)</i></b> dans le champ "<em>Url du formulaire des abonnements</em>" copiez y son url.
+<br />*<i>Le plus simple est d'y coller l'url du lien <a href="statiques.php">(<b>Voir</b>)</a> de la page et d'y adjoindre <b>&amp;backlink=no&amp;help=no</b></i>
+</p>
+<p>Exemple d'URL <?php
+if(isset($plxAdmin->plxPlugins->aPlugins['plxMyBetterUrls'])){
+ $pMBU = $plxAdmin->plxPlugins->aPlugins['plxMyBetterUrls'];
+ $fs = $pMBU->getParam('format_static');//article category
+ $pMBU->getParam('ext_url');
+ $eurl = $plxAdmin->racine.($fs?$fs.'/':'').'gerer-mes-lettres'.$pMBU->getParam('ext_url');
+?>
+Avec plxMyBetterUrls&nbsp;:
+<br /><code><?php echo $eurl ?>?backlink=no&amp;help=no</code>
+<?php
+}//plxMyBetterUrls
+elseif($plxAdmin->aConf['urlrewriting']){
+?>
+Réécrite&nbsp;:
+<br /><code><?php echo $plxAdmin->racine ?>static<b>1</b>/gerer-mes-lettres&amp;backlink=no&amp;help=no</code>
+<?php
+}//urlrewriting
+else{
+?>
+Basique&nbsp;:
+<br /><code><?php echo $plxAdmin->racine ?>index.php?static<b>1</b>/gerer-mes-lettres&amp;backlink=no&amp;help=no</code>
+<?php
+}//basic
+?></p>
+<h3><sup><sub><em>Cette url est utilisé pour les gadgets ainsi que pour les courriers de confirmation et de validation lors des (dés)abonnements.
+<br /><i>Attention au numéro qui identifie la page</i> ;)</em></sub></sup></h3>

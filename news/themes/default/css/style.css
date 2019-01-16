@@ -6,12 +6,12 @@
  * @modifications thomas Ingles
  *
  * Gutama plugin package
- * @version 2.1.0
- * @date	01/10/2018
+ * @version 2.2.0
+ * @date	13/01/2019
  * @author	Thomas INGLES
  */
 #langs{display:none;}/* hide plxMyMultilinge flags */
-#imghead{display:block;}/* img plx admin menu */
+#imghead{display:block;height: auto !important;max-width: 100% !important;}/* img plx admin menu */
 [type="file"], select {/* compose (idea of plux > 5.6) */
  margin: 5px 0;/* 8px 0 (select) */
 }
@@ -119,8 +119,8 @@ hr{
 	width: 100%;
 	overflow: hidden;
 }
-/* and Next plx ? */
-#sectionmenu.plx56{
+/* and Next plx */
+#sectionmenu.plx56, #sectionmenu.plx57{
 	line-height: 2.2 ;
 }
 #sectionmenu.plx54,#sectionmenu.plx55{/* pluxml 5.4 et 5.5 fix */
@@ -169,7 +169,7 @@ hr{
 	top:5px;
 	left:5px;
 	right:5px;
-	z-index:9999;
+	z-index:1000000;
 	padding: 2px 15px 2px 15px;
 	color:#000 !important;
 }
@@ -177,11 +177,11 @@ div.menubar{
 	background-color: #d8eeea;
 	overflow: hidden;
 }
-.mce-fullscreen{z-index: 10000 !important;}/* responsive menu plx + 1 */
+.mce-fullscreen{z-index: 1000000 !important;}/* plxAdminBar2 +10 : OLD : responsive menu plx + 1 (10000)  */
 div.menubar.in-action-bar{
 	background-color: transparent;
 }
-.in-action-bar.plx56{
+.in-action-bar.plx56, .in-action-bar.plx57{
 	margin-top: 7.2rem;
 	z-index: 99;/* au dessus de .mce-fullscreen */
 }

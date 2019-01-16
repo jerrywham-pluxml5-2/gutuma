@@ -1,22 +1,26 @@
 Gutuma : CyberLettres pour PluXml ;)
 
-TODO :
-++Une fois le timer de la notification javascript dépassé l'affichée (mais ou) pour qu'elle soit toujours visible pour l'internaute.
----Peut-être remanier le texte sur les pourriel pour y adjoindre "et ajouter [emailProtetégé] a votre carnet d'adresses" NON (les internautes ne le font jamais, et semble ne servir a rien) ::: chouette du taf en moin
-++Avoir la possibilité d'intégrer a subscibe.php l'apparence du site PluXml qui l'héberge, belle idée a creuser...
+A la possibilité d'intégrer subscibe.php l'apparence du site PluXml qui l'héberge, belle idée...
+	#C'est_fait* avec une page statique, *voir l'aide ;)
 	Plusieurs pistes :
-		avec une page statique et un <?php include() ?> ou 
-		alors une frame en html,
-		mais il y a un hic, car les @mails envoyés par gutuma auront l'url standard!
+		*avec une page statique et un <?php include() ?> ou 
+		alors une frame en html, mais il y a un hic, car les @mails envoyés par gutuma auront l'url standard!
 
-		Dans cette optique, une option du coté des réglages genre "[i]url de la page publique de gestion des abonnements (subscribe.php)[/i]" qui, si présente change l'adresse url des lettres des (dés)inscriptions peu faire l'affaire. 
+		*Une option du coté des réglages "[i]url de la page publique de gestion des abonnements (subscribe.php)[/i]"
+	 *qui, si présente change l'adresse url des lettres des (dés)inscriptions semble faire l'affaire. 
 		Il y a même la possibilité d'activé une page statique ou de créer un hook a appeler (config du plugin (standard) a créer et ça complique les réglages).
 		@ voir ...
+
+
+TODO :
+Pourquoi les variables de langues sont en session?
+++Une fois le timer de la notification javascript dépassé l'affichée (mais ou) pour qu'elle soit toujours visible pour l'internaute.
+---Peut-être remanier le texte sur les pourriel pour y adjoindre "et ajouter [emailProtetégé] a votre carnet d'adresses" NON (les internautes ne le font jamais, et semble ne servir a rien) ::: chouette du taf en moin
 
 Supprimer un courriel global, qui l'efface dans toutes les listes (lists.php)
 + 1 profil d'éditeur? (2 possible pour le moment) et/ou le manager peut gérer les gadjets.
 Un param query du formulaire (subscribe) (choix du theme de gutuma)
-Proposer d'envoyer l'article, page statique a son édition.
+Hook : (in plxAdminBar?) Proposer d'envoyer l'article, page statique a son édition.
 Gérer les tableaux avec datatablejs (vanilla) !?
 Historique des cyberlettres avec le liens envoyés et visibles sur le site. (si ok send.lock ==> send.ok)
 Si pluXml est en mono utilisateur : autoinstall/connect ???
@@ -24,9 +28,9 @@ Le smtp_password est à crypté dans la conf, et décrypté pour l'envoi des new
 eval($plxAdmin->plxPlugins->callHook('AdminTopMenus'));
 Evol: swiftmailer-5.4.6 pour future integration http://swiftmailer.org
 & si theme default -> use static mode & display (site thème au lieu de celui d'admin) ou add gutuma logo (top left|center) [une iframe]
-Prévoir en cas de suppression d'un utilisateur, supprimer le param (user activé ou désactivé)
+?Prévoir en cas de suppression d'un utilisateur, supprimer le param (user activé ou désactivé)
 Possibilité d'utiliser les plugins éditeur de texte Tiers (WYSIWY(M|G)) a la place de celuis inclus (TinyMce) Pour plus de possibilité et de réglages (accés aux medias manager, ...)
-Rediriger login.php de gutuma vers plugin?p=gutuma (s'affiche lorsque l'on désactive / réactive le plugin et que l'on se rend sur compose, newsletters.php ,...)
+?Rediriger login.php de gutuma vers plugin?p=gutuma (s'affiche lorsque l'on désactive / réactive le plugin et que l'on se rend sur compose, newsletters.php ,...)
 AdminSettingsAdvanced plxAdminEditConfiguration ... data/gutuma set in PluXml advanced params*
 *Hook gadget.js.php auto inclus dans la partie site
 *public function ThemeEndBody(){#auto gadgets
@@ -82,12 +86,64 @@ http://postmaster.free.fr/
 is_post_var('msg_html')#aperçu
 is_post_var('msg_text')text aréa editor name (compose.php & ailleurs ... )
 
++ aide aux traducteurs (comment tourne le système de fichier de langue) :
+le fichier de langue se trouve a l'interieur du dossier gutuma/news/lang/
+Dupliquer le fichier fr et le rennomer (es, oc, ru, ro, ...)
+Le texte qui précede ces 6  [::->]  caractères sont la clé (en anglais). Après ceux-ci se trouve la traduction.
+Gutuma Newsletter Management[::->]Gestion des Infolettres
+Les cles anglaises sont liées aux système de gutuma, si vous souhaitez les changer, veulliez les changer partout ou leurs textes (original) sont (en général dans les themes, mais ils peuvent être parteout dans le codes, et le ficher est divisé en parties. An aparté : les commentaires (//) sont possible a chaques début de ligne
+
++ aide aux intégrateurs :
+#Multi_Pluxml et #même_domaines (localhost/plx1/, localhost/plx2/) :
+#SI les #dossiers gutuma du plugin sont #symboliques et qu'il vous est impossible d'acceder au module d'infolettre a partir de certains PluXml!
+·le fichier "news/inc/_pluxml.php" est a modifier :
+·Commenter en ajoutant un dièse [#] au début de la ligne 38
+·Décommenter en supprimant les dièses [#] au début des lignes 35, 36 et 37
+·Cela change la définition de la racine de pluxml : PLX_ROOT
+·#$gu_sub = str_replace($_SERVER['DOCUMENT_ROOT'].__GDS__,'',$gu_sub[0]);#4 found subdir where plx is
+
+
+<script type="text/javascript">
+	setMsge('errormsg');
+	setMsge('statusmsg');//il devrait etre subscribe.php 5.3.1 setMsge('statusmsg','mvto');  ?????????
+</script>
+
+TD
++ Si url subscribe est différente, afficher un lien "voir" (logic in param + see link(s) in themes
++ lien aide du plugin (page info)
++ Si session gutuma actif, lors du clic (admin -> redirect to compose ?
++ 1 Page statique. Dans admin (1 lien parametre d'intégration du module gutuma -> confiXml Activer la page statique du plugin, Si connecté une fois tjrs goto compose on clic in PluXml menu (admin)
+
+#TEP
+Rétablir: subscribe PLX_GROOT + rem var_dump et réactiver les envois
+
+===============================CHANGELOG================================
+
+## v2.2.0 16/01/2019 ##
+[+] composer lettre* : Auto sauvegarde amélioré (compose.php + overlay)
+[+] *media manager : gestionnaire de media natif de PluXml pour l'insert d'images et de médias (tinyMCE de compose.php)
+[+] *Langue : L_NO_JS_STORAGE : classe du plugin gutuma.php : pour le systeme du gestionnaire de media (tinyMCE de compose.php)
+[+] *MAJ : Tinymce : 4.7.10 (2018-04-03) ==> 4.9.0 (2018-11-27)
+[+] *codemirror.5.42.2 (21-12-2018) (tinyMCE de compose.php)
+[+] Aide (fr) : Fichier d'exemple (Une page statique a copié) + conseils peaufinés
+ : : page statique subscribe est compatible avec la réécriture d'url :)
+[+] subscription.php
+ : : Messages de la première (fr & en) retouchés (1st In/Out messages)
+ : : Fins de ligne unifiés des message (courriels) : $EOL = "\r\n" + $HR (72 =) 
+ : : Moins de sauts de ligne
+ : : Norme des courriels : Fin de ligne des messages de LF à CRLF (\n --> \r\n)
+Fix inc/_pluxml.php : si connecté avec un compte inferieur a gestionnaire : ajax, gadget et subscribe(.php) Bloqué (erreur FrontEnd)
+Fix : image du menu theme 5.3.1 bonne taille avec compose.php, non les autres menu :: graçe a sa règles css "inline" img {height: auto !important;max-width: 100% !important;} theme default 5.3.1 
+Fix : Warning: is_dir(): open_basedir restriction in effect. File(..) is not within the allowed path(s) : in gutuma/news/inc/list.php on line 367
+ 			  if ($file[0] != ".") //fix Warning: is_dir(): open_basedir restriction in effect. File(..)
+Fix : Notice: A non well formed numeric value encountered in gutuma/news/inc/list.php on line 368 and on line 278
+https://forum.pluxml.org/viewtopic.php?pid=57616#p57616
 
 ## v2.1.0 01/10/2018 ##
 [+] Languages peaufinés, messages plus clairs (notifs et courriels)
 [+] Subscription, & subscribe(s) (+ simple)
 [+] Algo : systeme de ré-envois & POST keycode : option supprimé
-[+] 3 réglages en plus : show_home_link, subscribe_help & subscribe_url (général)
+[+] 3 réglages en plus : show_home_link, subscribe_help & subscribe_url (onglet général)
     : subscribe_url change tous les liens des courriels (utilisateurs & admins)
 [+] Nouveau paramètre d'url &help=no en plus du &backlink=no
 [+] Inclure dans une autre page avec php est maintenant possible, voir l'aide du plugin ;)

@@ -51,6 +51,11 @@ define('GUTUMA_DEMO_MAX_LIST_SIZE', 100);#Maximum number of addresses per list
 define('GUTUMA_DEMO_MAX_NUM_LISTS', 10);#Maximum number of lists
 #Apparently IIS5 servers don't populate PHP_SELF
 $_SERVER['PHP_SELF'] = (isset($_SERVER['PHP_SELF'])) ? $_SERVER['PHP_SELF'] : $_SERVER['SCRIPT_NAME'];
+
+//Good ROOT FILEMAN : SIMLINK FIX
+$GU_PLX_FILEMAN = str_replace($_SERVER['DOCUMENT_ROOT'],'',PLX_ROOT).(isset($plxMotor->aConf['medias'])?$plxMotor->aConf['medias']:$plxMotor->aConf['images']);// media = plx.5.4+
+$_SESSION["GU_FILEMAN_FILES_ROOT"] = rtrim($GU_PLX_FILEMAN,__GDS__);
+
 $htaccess = "Allow from none\n";
 $htaccess .= "Deny from all\n";
 $htaccess .= "<Files *.php>\n";

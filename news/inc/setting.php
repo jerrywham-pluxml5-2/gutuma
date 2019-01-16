@@ -7,8 +7,8 @@
  * @modifications Cyril Maguire
  *
  * Gutama plugin package
- * @version 2.0.0
- * @date	23/09/2018
+ * @version 2.2.0
+ * @date	16/01/2019
  * @author	Cyril MAGUIRE, Thomas Ingles
 */
 
@@ -112,8 +112,8 @@ class gu_config{
 // Read file values and copy to static members
 		$gu_config = array();
 // include GUTUMA_CONFIG_FILE;
-		eval(base64_decode(substr(file_get_contents(GUTUMA_CONFIG_FILE),9,-5)));// Version encodée (voir ligne 196)
-//		eval(substr(file_get_contents(GUTUMA_CONFIG_FILE),7,-4));// Version décodée (voir ligne 197)
+		eval(base64_decode(substr(file_get_contents(GUTUMA_CONFIG_FILE),9,-5)));// Version encodée (voir ligne 175 & 216)
+//		eval(substr(file_get_contents(GUTUMA_CONFIG_FILE),7,-4));// Version décodée (voir ligne 176 & 217)
 		self::$version = $gu_config_version;
 		foreach (array_keys($gu_config) as $keys)
 			self::$values[$keys] = $gu_config[$keys];
@@ -157,7 +157,8 @@ class gu_config{
 		self::$values['msg_admin_copy'] = TRUE;
 		self::$values['spell_check'] = 'browser';// browser, no
 		self::$values['tiny_tools'] = 'tools';//tools, menu, all (tools & menu), no (dont use tiny?)
-		self::$values['theme_name'] = 'default';//gutuma (original theme)
+		self::$values['theme_name'] = 'default';//gutuma is original theme
+		self::$values['cmtheme'] = 'default';//codemirror theme //default,neo , abcdef ...
 		self::$values['days'] = 15;//temporary lists retention days, leave after (15, 20, 30, 60, 90)
 		self::$values['list_send_welcome'] = TRUE;
 		self::$values['list_send_goodbye'] = TRUE;
@@ -171,8 +172,8 @@ class gu_config{
 // Read file values and copy to static members
 		$gu_config = array();
 //include GUTUMA_CONFIG_FILE;
-		eval(base64_decode(substr(file_get_contents(GUTUMA_CONFIG_FILE),9,-5)));//var_dump($gu_config);// Version encodée (voir ligne 105 & 196)
-//		eval(substr(file_get_contents(GUTUMA_CONFIG_FILE),7,-4));// Version décodée (voir ligne 106 & 197)
+		eval(base64_decode(substr(file_get_contents(GUTUMA_CONFIG_FILE),9,-5)));#var_dump($gu_config);// Version encodée (voir ligne 115 & 216)
+//		eval(substr(file_get_contents(GUTUMA_CONFIG_FILE),7,-4));// Version décodée (voir ligne 116 & 217)
 		self::$version = $gu_config_version;
 		foreach (array_keys($gu_config) as $keys)
 			self::$values[$keys] = $gu_config[$keys];
@@ -198,6 +199,7 @@ class gu_config{
 			return gu_error(t("Unable to create/open % file for writing",array(GUTUMA_CONFIG_FILE)));
 //		$w = (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN');#iswin more simply # 1st idea 4 detect windwos ((strpos(str_replace(":\\","",self::$values[$key]),":\\")!=false))//check is :\ in path (is windows path ?) /:
 		$f = "\$gu_config_version = ".GUTUMA_VERSION_NUM.";\n";#Begin txt 4 config file
+		global $plxMotor;//code is in perpetual movement//$plxMotor = defined('PLX_ADMIN')?plxAdmin::getInstance():plxMotor::getInstance();
 		foreach (array_keys(self::$values) as $key){
 			if (is_bool(self::$values[$key]))
 				$f .= "\$gu_config['".$key."'] = ".(self::$values[$key] ? 'TRUE' : 'FALSE').";\n";
@@ -207,9 +209,14 @@ class gu_config{
 				$rien = '';#$f .= "\$gu_config['".$key."'] = 'E:\htdocs\PluXml-5.6\myPluXml\plugins\gutuma\news\';\n";#test //~ 2nd idea  $f .= "\$gu_config['".$key."'] = '".str_replace('\\','\\',self::$values[$key])."';\n";
 			else
 				$f .= "\$gu_config['".$key."'] = '".str_replace(array('\"',"'",'\\'),array('"','’','/'),self::$values[$key])."';\n";#replace last \ by / ::: preg_replace('/^.|.$/','',$string); //rem 1st & last char
+			if ($key == 'subscribe_url'){//2.2.0 for PluXml hook IndexEnd to stop if mybetterurl & use static page to subscribtion
+				$plxMotor->plxPlugins->aPlugins['gutuma']->setParam('subscribe_url',self::$values[$key],'string');//2.2.0
+				$plxMotor->plxPlugins->aPlugins['gutuma']->saveParams();//2.2.0
+			}
 		}
-		file_put_contents(GUTUMA_CONFIG_FILE,"<?php /*\n".base64_encode($f)."\n*/  ?>");// Version encodée (voir ligne 159)
-/*		file_put_contents(GUTUMA_CONFIG_FILE,"<?php \n".$f."\n?>"); */ // Version décodée (voir ligne 160)
+		file_put_contents(GUTUMA_CONFIG_FILE,"<?php /*\n".base64_encode($f)."\n*/  ?>");// Version encodée (voir ligne 115 & 174)
+/*		file_put_contents(GUTUMA_CONFIG_FILE,"<?php \n".$f."\n?>"); */ // Version décodée (voir ligne 116 & 175)
+		$plxMotor->plxPlugins->aPlugins['gutuma']->saveParams();//2.2.0
 		return TRUE;
 	}
 	/**

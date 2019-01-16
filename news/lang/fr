@@ -5,9 +5,9 @@
  * @file Fr translatoin page
  *
  * Gutama plugin package
- * @version 1.6
- * @date	01/10/2013
- * @author	Cyril MAGUIRE
+ * @version 2.2.0
+ * @date	12/01/2019
+ * @authors	Cyril MAGUIRE, Thomas Ingles
  */
 Gutuma Newsletter Management[::->]Gestion des Infolettres
 Sorry - Gutuma requires at least PHP5. Please contact your hosting provider and ask them to upgrade.[::->]Désolé - Gutuma nécessite au moins PHP5. Merci de contacter votre hébergeur afin de lui demander une mise à niveau.
@@ -85,7 +85,7 @@ List <b><i>%</i></b> deleted[::->]Liste <b><i>[%%]</i></b> supprimée
 Address <b><i>%</i></b> removed[::->]Adresse <b><i>[%%]</i></b> supprimée
 Subscription[::->]Abonnement
 Unsubscription[::->]Désabonnement
-first step successful![::->]la première étape est réussi!
+the first step is successful![::->]la première étape est réussie!
 Invalid newsletter[::->]Infolettre non valide
 Newsletter deleted[::->]Infolettre supprimée
 Address <b><i>%</i></b> already in the % list of <b><i>%</i></b>[::->]L'adresse <b><i>[%%]</i></b> est déjà dans la liste [%%] de <b><i>[%%]</i></b>
@@ -263,8 +263,9 @@ Spell check[::->]Correcteur orthographique
 The following selector choose retention days in temporary lists when user (un)subscribe for first time[::->]Le sélecteur suivant permet de choisir le temps de conservation des adresses courriels temporaires lors de la première (dés)inscrption de l'utilisateur
 Leave temporary emails after[::->]Effacer les courriels après
 days[::->]jours
-The following selector list is for choose one of all Theme's available in subfolders of Gutuma[::->]Le sélecteur suivant permet de choisir le thème graphique utilisé par Gutuma. (Liste les dossiers de /news/themes/*)
+The following selector list is for choose one of all Theme's available in subfolders of Gutuma[::->]Le sélecteur suivant permet de choisir le thème graphique utilisé par Gutuma
 Name of the theme[::->]Nom du thème
+The following selector list is for choose one of all Theme's available for CodeMirror[::->]Le sélecteur suivant permet de choisir le thème graphique utilisé par CodeMirror
 Gutuma will first try to use an SMTP server to send messages. If that fails, <code>Sendmail</code> may be tried followed by PHP <code>mail()</code>[::->]Gutuma essaiera d'utiliser en premier le serveur SMTP pour envoyer les messages. S'il échoue, <code>Sendmail</code> sera utilisé ensuite, puis la fonction PHP <code>mail()</code>
 Use SMTP[::->]Utiliser SMTP
 If server and port are left blank, Gutuma will attempt to auto-detect them[::->]Si le serveur et le port ne sont pas renseignés, Gutuma tentera de les détecter automatiquement
@@ -324,7 +325,7 @@ click on the links in the email received to validate the subscription.[::->]cliq
 For unsubscribe:[::->]Pour se désabonner :
 Same procedure of subscribe but use unsubscribe button.[::->]Même procédé que pour l'abonnement sauf qu'il suffit d'utiliser le bouton désinscrire en lieu et place du bouton inscrire.
 Remarks:[::->]Remarques :
-Remember to <b>check in spam mails</b> if the message are not found in your inbox[::->]Pensez a <b>vérifier les pourriels</b> si le message est introuvable dans votre boîte de réception
+Remember to <b>check in spam mails</b> if the message are not found in your <b>inbox</b>[::->]Si le message est introuvable, pensez a <b>vérifier les pourriels</b> de votre <b>boîte de réception</b>
 If you encounter problems registering / unsubscribing, please <a href="%">contact the site author</a> so that they can do it for you[::->]Si vous rencontrez des proplèmes pour vous inscrire/désinscrire, <a href="[%%]">veuillez contacter l'auteur du site</a> afin qu'il le fasse pour vous
 //************************************************************************
 //			SENDING
@@ -372,7 +373,7 @@ Password must be at least % characters long[::->]Le mot de passe doit avoir au m
 A valid administrator email must be at provided[::->]Une adresse administrateur valide doit être fourni
 Unable to create/open % file for writing[::->]Impossible de créer/ouvrir le fichier [%%] pour écriture
 Invalid email address[::->]Adresse courriel non valide
-Your message go to be auto saved in 5 seconds.[::->]Votre message va s'auto sauvegarder dans 5 secondes.
+Your message go to be <i>auto saved</i> in <b>5</b> seconds.[::->]Votre message va <i>s'auto sauvegarder</i> dans <b>5</b> secondes.
 Cancel[::->]Annuler
 Auto save[::->]Enr. Automatique
 Every % Minutes[::->]Toutes les [%%] Minutes
@@ -396,16 +397,16 @@ unsubscribed  from[::->]désabonné(e) des
 waiting a process[::->]attente d'une démarche
 process validated[::->]démarche validée
 This is an automated message[::->]Ceci est un message automatique
-Use this link before %, after this date, you need a request new valid link.[::->]Utiliser ce lien avant le [%%], après cette date, vous devrez demander un nouveau lien valide.
+Use this link (or copy in your browser address bar) before %, after this date, you need a request new valid link.[::->]Utiliser ce lien avant le [%%] (ou copier le dans la barre d'adresse de votre navigateur), après cette date, vous devrez demander un nouveau lien valide..
  to secure the % and certify that you are the initiator of this process for the following lists:[::->] pour sécuriser votre "[%%]" et certifier que vous êtes bien a l'origine de cette démarche pour les lettres d'informations suivantes :
  to secure the % and certify that you are the initiator of this process for the following list:[::->] pour sécuriser votre "[%%]" en certifiant que vous êtes bien a l'origine de cette démarche pour la lettre d'informations suivante :
  to confirm that you have been % the following lists:[::->] pour confirmer que vous vous êtes [%%] lettres d'informations suivantes :
  to confirm that you have been % the following list:[::->] pour confirmer que vous vous êtes [%%] lettre d'information suivante :
  to notify you that % has been % the following lists:[::->] pour vous informer que [%%] s'est [%%] lettres d'informations suivantes :
  to notify you that % has been % the following list:[::->] pour vous informer que [%%] s'est [%%] lettre d'information suivante :
-To change your subscription visit: [::->]Pour modifier votre abonnement, merci de vous rendre à l'adresse ci-dessous : 
-To change your subscriptions visit: [::->]Pour modifier vos abonnements, merci de vous rendre à l'adresse ci-dessous : 
-To approve your % for list "%" visit: [::->]Merci de confirmer votre [%%] à la lettre d'information "[%%]" en cliquant sur le lien ci-dessous ou en le recopiant dans la barre d'adresse de votre navigateur. 
+To change your subscription visit: [::->]Pour modifier votre abonnement, veuillez visiter : 
+To change your subscriptions visit: [::->]Pour modifier vos abonnements, veuillez visiter : 
+To approve your % for list "%" visit: [::->]Merci à vous. Pour confirmer votre [%%] à la lettre d'information "[%%]", veuillez visiter : 
 Please do not reply to this message. Thank you.[::->]Veuillez ne pas répondre à ce message, Merci.
 The connection failed to start.  An exception was thrown:<br />[::->]La connexion a échoué. Une erreur a été générée :<br />
 A MIME part failed to detach due to the error:<br />[::->]La partie MIME n&#039;a pas pu se détacher à cause d&#039;une erreur :<br />

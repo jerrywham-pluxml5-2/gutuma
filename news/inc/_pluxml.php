@@ -11,11 +11,12 @@
 #
 # ------------------- END LICENSE BLOCK -------------------
 /* Gutama plugin package (from core/admin/prepend.php)
- * @version 2.1.0
- * @date	01/10/2018
- * @author	Cyril MAGUIRE, Thomas I.
+ * @version 2.2.0
+ * @date	16/01/2019
+ * @author	Thomas INGLES.
 */
 # Définition des constantes
+define('__GRN__', "\r\n");//Gutuma EOL 
 define('__GDS__', DIRECTORY_SEPARATOR);//Gutuma Dir. Sep. 4 nux|dow
 $gdgt='';
 if(strstr($_SERVER['PHP_SELF'],'gadgets.js.php')){//4 gadget call
@@ -25,7 +26,7 @@ if(strstr($_SERVER['PHP_SELF'],'gadgets.js.php')){//4 gadget call
 define('PLX_GROOT', $gdgt.'..'.__GDS__.'..'.__GDS__.'..'.__GDS__);// GROOT 4 SYMBIOLINK
 define('PLX_MORE', PLX_GROOT.'core'.__GDS__);
 if(defined('PLX_ROOT')){;#Test for include (fix error of Twice PluXml)
- $plxMotor = $this->plxMotor;//var_dump($this->plxMotor);
+ $plxMotor = $this->plxMotor;
  $lang = $glang = $plxMotor->aConf['default_lang'];
  $gu_is_included = TRUE;
  return;
@@ -76,7 +77,7 @@ include_once(PLX_CORE.'lib/class.plx.feed.php');
 include_once(PLX_CORE.'lib/class.plx.show.php');
 # Creation de l'objet principal et lancement du traitement
 //$plxShow = plxShow::getInstance();//call plxMotor::getInstance() && FIX* myMultiLingue CONSTANT already defined
-$plxMotor = plxMotor::getInstance(); //$plxShow->plxMotor;
+$plxMotor = $plxAdmin = plxMotor::getInstance(); //$plxShow->plxMotor;
 if (!isset($plxMotor->plxPlugins->aPlugins['gutuma'])){//if deactivated goto erreur 4 all news system
 	header('Location:'.PLX_GROOT.'erreur');
 	exit;
@@ -93,18 +94,40 @@ $plxMotor->mode='gutuma';//4 future ::: & solved bug header 404 in demarrage & p
 #$plxMotor->demarrage();#origin :: inutile de l'appeler maintenant
 # Creation de l'objet d'affichage*
 #$plxShow = plxShow::getInstance();# origin :: FIXED* myMultiLingue ::: MML CALL PLX_MY_MULTILINGUE TWICE ::: $plxShow NOT IN global
-if(isset($_SESSION['user']) AND !empty($_SESSION['user'])) {
+
+//CECI EST CORRIGÉ : SI CONNECTÉ ET EN DESSOUS PROFIL_MANAGER (ERREUR IL REDIRIGE) : FRONT END gadgets.js.php
+$gu_front = FALSE;#grant access 4 public php files subscript mode ::: other redirect (if not connected in PluXml backend)
+/*
+if(strpos($plxMotor->path_url,'news/ajax.php') === FALSE  && strpos($plxMotor->path_url,'news/js/gadgets.js.php') === FALSE && strpos($plxMotor->path_url,'news/subscribe.php') === FALSE){//gestion des abonnements (publics)
+	//header('Location:'.PLX_MORE.'admin/auth.php?p=plugin.php?p=gutuma');
+	//exit;
+ $gu_front = FALSE;
+}
+*/
+//echo '//hello0 '.__FILE__.PHP_EOL;//exit;
+switch(true){
+ case strpos($plxMotor->path_url,'news/ajax.php') === FALSE:
+ case strpos($plxMotor->path_url,'news/js/gadgets.js.php') === FALSE:
+ case strpos($plxMotor->path_url,'news/subscribe.php') === FALSE:
+  $gu_front = TRUE;
+//echo '//hello00 '.__FILE__.PHP_EOL;//exit;
+ break;
+ default:
+}
+
+
+if(!$gu_front AND isset($_SESSION['user']) AND !empty($_SESSION['user'])) {
 	$_profil = $plxMotor->aUsers[$_SESSION['user']];// $_profil is called in install.php
 	if(!$_profil['active'] OR $_profil['profil']>PROFIL_MANAGER OR $_profil['delete']){//déconnecte l'utilisteur si n'est plus autorisé
+//echo '//hello000000'.PHP_EOL;exit;
 		gu_session_set_valid(FALSE);
 		header('Location:'.PLX_MORE.'admin/plugin.php?p=gutuma');
 		exit;
 	}
 	$plxMotor->mode='gutumadmin';
-}#grant access 4 public php files subscript mode ::: other redirect (if not connected in PluXml backend)
-elseif(strpos($plxMotor->path_url,'news/ajax.php') === FALSE  && strpos($plxMotor->path_url,'news/js/gadgets.js.php') === FALSE && strpos($plxMotor->path_url,'news/subscribe.php') === FALSE){//gestion des abonnements (publics)
-	header('Location:'.PLX_MORE.'admin/auth.php?p=plugin.php?p=gutuma');
-	exit;
 }
+//echo '//hello000'.PHP_EOL;//exit;
 if(!defined('PLX_VERSION')) define('PLX_VERSION',$plxMotor->aConf['version']);//$plxMotor->version (<=5.4), PLX_VERSION (>=5.5) ::: aConf['version'] tous ;)
 define('THEMEVERS', 532 < str_pad(str_replace('.','',PLX_VERSION),  3, '0', STR_PAD_RIGHT)?'':'.5.3.1');//if PluXml < to 5.3.1 use retail old header, menu & footer (.5.3.1.php)
+# Hook Plugins
+eval($plxAdmin->plxPlugins->callHook('AdminPrepend'));

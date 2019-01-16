@@ -7,8 +7,8 @@
  * @modifications Cyril Maguire, Thomas Ingles
  *
  * Gutama plugin package
- * @version 2.1.0
- * @date	01/10/2018
+ * @version 2.2.0
+ * @date	16/01/2019
  * @author	Cyril MAGUIRE, Thomas INGLES
 */
 include_once str_replace('js/gadgets.js.php','',__FILE__).'/inc/gutuma.php';//_if gutuma symlinked folder ::: origin is : include_once '../inc/gutuma.php';

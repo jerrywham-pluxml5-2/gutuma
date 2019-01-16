@@ -240,8 +240,8 @@ class gu_list{
 	 * @return mixed The list or FALSE if an error occured
 	 */
 	public static function get($id, $load_addresses = FALSE, $tmp = ''){
-		$dr = $tmp?GUTUMA_TEMP_DIR:GUTUMA_LISTS_DIR;
 		$time_start = microtime();
+		$dr = $tmp?GUTUMA_TEMP_DIR:GUTUMA_LISTS_DIR;
 // Open list file
 		$lh = @fopen(realpath($dr.'/'.$id.($tmp?'.'.$tmp:'').'.php'), 'r');
 		if ($lh == FALSE)
@@ -275,7 +275,7 @@ class gu_list{
 				$list->update('i');//remove if old tmp address
 		}
 		fclose($lh);
-		gu_debug('gu_list::get(id: '.$id.', load_addresses: '.($load_addresses ? 'TRUE' : 'FALSE').', istmp: '.($tmp?'Y':'N').') time : '.number_format((microtime() - $time_start), 7).' secs');
+		gu_debug('gu_list::get(id: '.$id.', load_addresses: '.($load_addresses ? 'TRUE' : 'FALSE').', istmp: '.($tmp?'Y':'N').') time : '.number_format((int)(microtime() - $time_start), 7).' secs');
 		return $list;
 	}
 	/**
@@ -364,10 +364,10 @@ class gu_list{
 		$lists = array();
 		if ($dh = @opendir(realpath($dr))){
 			while (($file = readdir($dh)) !== FALSE){
-				if (!is_dir($file) && str_ends($file, '.php')){
+				if ($file[0] != "." && !is_dir($file) && str_ends($file, '.php')){
 					$list = gu_list::get(substr($file, 0, strlen($file - 4)), $load_addresses, $tmp);
 					if (!isset($list->name))
-								$list->update('i');
+						$list->update('i');
 					if ($inc_private || !$list->private)
 						$lists[$list->name] = $list;
 				}

@@ -226,8 +226,8 @@ class gu_newsletter{
 		try {//free.fr fix
 			flock($fh, LOCK_EX | LOCK_NB);
 		} catch (Exception $e) {
-			var_dump('Exception reçue : ',  $e->getMessage(), "\n",$e);//exit;
-			return gu_error('<br />'.t('Unable to lock newsletter recipient list'), ERROR_EXTRA);
+#			var_dump('Exception reçue : ', $e->getMessage(), "\n",$e);//exit;
+			return gu_error('<br />'.t('Unable to lock newsletter recipient list'). ' :<br />' . $e->getMessage(), ERROR_EXTRA);
 		}
 /*
 		if (!flock($fh, LOCK_EX | LOCK_NB)){//free.fr fix test no

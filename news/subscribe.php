@@ -85,4 +85,4 @@ $contact_url = $contact_url?$contact_url:absolute_url('../../../');
 //Body
 include_once 'themes/'.gu_config::get('theme_name').'/_subscribe.php';
 if(!isset($gu_is_included))//no footer if is in php include
-	gu_theme_end('mvto');//mvto is id elemt to copy success #msg
+	gu_theme_end('mvto');//mvto is id element to copy success #msg
