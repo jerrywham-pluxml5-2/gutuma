@@ -1,4 +1,4 @@
-<?php 
+<?php
 /************************************************************************
  * @project Gutuma Newsletter Managment
  * @author Rowan Seymour
@@ -42,6 +42,28 @@ $plxAdmin = plxAdmin::getInstance();
 	<?php
 		$menus = array();
 
+		#menu des fonctionnalités de gutuma
+		$menu_gutuma = '';
+		if ($_SESSION['profil'] == PROFIL_ADMIN) :
+		$menu_gutuma .= '
+			<li '. (str_ends($_SERVER['SCRIPT_NAME'], '/index.php') ? 'class="menu active sub">' : 'class="menu sub">').'<a href="index.php">'.t('Home').'</a></li>
+			';
+		endif;
+		$menu_gutuma .= '
+			<li '. (str_ends($_SERVER['SCRIPT_NAME'], '/compose.php') || str_ends($_SERVER['SCRIPT_NAME'], '/newsletters.php') ? 'class="menu active sub">' : 'class="menu sub">') .' <a href="compose.php">'.t('Newsletters').'</a></li>
+			<li '. (str_ends($_SERVER['SCRIPT_NAME'], '/lists.php') || str_ends($_SERVER['SCRIPT_NAME'], '/editlist.php') ? 'class="menu active sub">' : 'class="menu sub">') .'<a href="lists.php">'. t('Lists').'</a></li>
+			';
+		if($_SESSION['profil'] == PROFIL_ADMIN):
+		$menu_gutuma .= '
+			<li '. (str_ends($_SERVER['SCRIPT_NAME'], '/integrate.php') ? 'class="menu active sub">' : 'class="menu sub">') .'<a href="integrate.php">'. t('Gadgets').'</a></li>
+			<li '. (str_ends($_SERVER['SCRIPT_NAME'], '/settings.php') ? 'class="menu active sub">' : 'class="menu sub">') .'<a href="settings.php">'. t('Settings').'</a></li>'.PHP_EOL;
+		endif;
+		$menu_gutuma .= '
+			<li class="sub">
+				<img id="imghead" title="'.gu_config::get('application_name').t(' Powered by').' Pluxml '.PLX_VERSION.' &amp; '.t('Gutuma').' '.GUTUMA_VERSION_NAME.'" src="themes/'.gu_config::get('theme_name').'/images/gutuma.png" />
+				<sup id="sitename"><sub><img style="float: right;" title="'.t('Gutuma').' for Pluxml" src="themes/'.gu_config::get('theme_name').'/favicon.png" /><i>'.gu_config::get('application_name').' '.t('Powered by Gutuma').'</i></sub></sup>
+			</li>'.PHP_EOL;
+
 		$userId = ($_SESSION['profil'] < PROFIL_WRITER ? '[0-9]{3}' : $_SESSION['user']);
 		$nbartsmod = $plxAdmin->nbArticles('all', $userId, '_');
 		$arts_mod = $nbartsmod>0 ? '&nbsp;<a class="cpt" href="'.$plxAdmin->urlRewrite().'core/admin/index.php?sel=mod&amp;page=1" title="'.L_ALL_AWAITING_MODERATION.'">'.$nbartsmod.'</a>':'';
@@ -78,31 +100,10 @@ $plxAdmin = plxAdmin::getInstance();
 			}
 		}
 		$menus[] = plxUtils::formatMenu(L_MENU_PROFIL, $plxAdmin->urlRewrite().'core/admin/profil.php', L_MENU_PROFIL_TITLE);
-		
-			#menu des fonctionnalités de gutuma
-		$menu_gutuma = '';
-		if ($_SESSION['profil'] == PROFIL_ADMIN) : 
-		$menu_gutuma .= '
-			<li '. (str_ends($_SERVER['SCRIPT_NAME'], '/index.php') ? 'class="menu active sub">' : 'class="menu sub">').'<a href="index.php">'.t('Home').'</a></li>
-			';
-		endif;
-		$menu_gutuma .= '
-			<li '. (str_ends($_SERVER['SCRIPT_NAME'], '/compose.php') || (str_ends($_SERVER['SCRIPT_NAME'], '/newsletters.php')) ? 'class="menu active sub">' : 'class="menu sub">') .' <a href="compose.php">'.t('Newsletters').'</a></li>
-			<li '. (str_ends($_SERVER['SCRIPT_NAME'], '/lists.php') ? 'class="menu active sub">' : 'class="menu sub">') .'<a href="lists.php">'. t('Lists').'</a></li>
-			';
-		if($_SESSION['profil'] == PROFIL_ADMIN):
-		$menu_gutuma .= '
-			<li '. (str_ends($_SERVER['SCRIPT_NAME'], '/integrate.php') ? 'class="menu active sub">' : 'class="menu sub">') .'<a href="integrate.php">'. t('Gadgets').'</a></li>
-			<li '. (str_ends($_SERVER['SCRIPT_NAME'], '/settings.php') ? 'class="menu active sub">' : 'class="menu sub">') .'<a href="settings.php">'. t('Settings').'</a></li>'.PHP_EOL;
-		endif;
-		$menu_gutuma .= '
-			<li class="sub">
-				<img id="imghead" title="'.gu_config::get('application_name').t(' Powered by').' Pluxml '.PLX_VERSION.' &amp; '.t('Gutuma').' '.GUTUMA_VERSION_NAME.'" src="themes/'.gu_config::get('theme_name').'/images/gutuma.png" />
-				<sup id="sitename"><sub><img style="float: right;" title="'.t('Gutuma').' for Pluxml" src="themes/'.gu_config::get('theme_name').'/favicon.png" /><i>'.gu_config::get('application_name').' '.t('Powered by Gutuma').'</i></sub></sup>
-			</li>'.PHP_EOL;
 
 		# récuperation des menus admin pour les plugins
 		foreach($plxAdmin->plxPlugins->aPlugins as $plugName => $plugInstance) {
+			if($plugName == 'gutuma') continue;
 			if($plugInstance AND is_file(PLX_PLUGINS.$plugName.'/admin.php')) {
 				if($plxAdmin->checkProfil($plugInstance->getAdminProfil(),false)) {
 					if($plugInstance->adminMenu) {
@@ -122,6 +123,9 @@ $plxAdmin = plxAdmin::getInstance();
 			}
 		}
 
+		#gutuma on top
+		array_splice($menus, 0, 0, $menu_gutuma);
+
 		# Hook Plugins
 		eval($plxAdmin->plxPlugins->callHook('AdminTopMenus'));
 
@@ -129,7 +133,8 @@ $plxAdmin = plxAdmin::getInstance();
 ?>
 
 	<li class="pluxml">
-		<a title="PluXml" href="http://www.pluxml.org">Pluxml <?php echo $plxAdmin->aConf['version'] ?></a>
+		<a class="version" title="<?php echo gu_config::get('application_name').t(' Powered by') .' ' . t('Gutuma') ?>" href="<?php echo GUTUMA_URL ?>"><?php echo t('Gutuma').'&nbsp;'.GUTUMA_VERSION_NAME ?></a> &amp;
+		<a title="PluXml" href="http://www.pluxml.org">Pluxml&nbsp;<?php echo $plxAdmin->aConf['version'] ?></a>
 		<br/>
 <!--
 		<a href="<?php echo GUTUMA_URL; ?>" onclick="window.open(this.href);return false;">Gutuma</a> <?php echo t('is released under the GPL');?> | &copy; Rowan

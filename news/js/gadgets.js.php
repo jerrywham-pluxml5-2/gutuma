@@ -7,17 +7,19 @@
  * @modifications Cyril Maguire, Thomas Ingles
  *
  * Gutama plugin package
- * @version 2.2.0
- * @date	16/01/2019
+ * @version 2.2.1
+ * @date	16/07/2020
  * @author	Cyril MAGUIRE, Thomas INGLES
 */
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: text/javascript; charset=utf-8');
 include_once str_replace('js/gadgets.js.php','',__FILE__).'/inc/gutuma.php';//_if gutuma symlinked folder ::: origin is : include_once '../inc/gutuma.php';
 gu_init(FALSE, FALSE);// Initialize Gutuma without validation or housekeeping
 if (!is_get_var('noajax')){
 //This file is a server-side merge of tw-sack.js and gadgets.js.php
 echo file_get_contents('tw-sack.min.js');
 }
-$inc_url = gu_config::get('subscribe_url') != absolute_url('subscribe.php');
+$inc_url = gu_config::get('subscribe_url') != absolute_url('../subscribe.php');
 $gadgets_subscribe_url = $inc_url ? gu_config::get('subscribe_url') : absolute_url($gdgt.'subscribe.php');//TEP for php include ::: Origin absolute_url($gdgt.'subscribe.php')
 $inc_url = $inc_url?'&':'?';//for basic link
 ?>

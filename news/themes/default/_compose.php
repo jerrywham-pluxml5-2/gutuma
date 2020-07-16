@@ -1,4 +1,5 @@
-<?php /************************************************************************
+<?php
+/************************************************************************
  * @project Gutuma Newsletter Managment
  * @author Rowan Seymour
  * @copyright This source is distributed under the GPL
@@ -12,11 +13,11 @@
 */
 ?>
 <div id="sectionheader" class="inline-form action-bar">
-	<h2><?php echo $preview_mode ? t('Preview ') : t('Compose '); echo t('newsletter');?></h2>
+	<h2><?php echo $preview_mode ? t('Preview') : t('Compose'); echo ' ' . t('newsletter');?><sup id="gu_auto_save_msg"></sup></h2>
 	<p id="sectionmenu" class="plx<?php echo str_replace('.','',PLX_VERSION) ?>">
-		<a href="compose.php" class="button blue"><?php echo t('Compose');?></a>
-		<a href="newsletters.php?box=drafts" class="button"><?php echo t('Drafts');?>&nbsp;(<?php echo count($mailbox['drafts']) ?>)</a>
-		<a href="newsletters.php?box=outbox" class="button"><?php echo t('Outbox');?>&nbsp;(<?php echo count($mailbox['outbox']) ?>)</a>
+		<a href="compose.php" class="h6 button blue"><?php echo t('Compose');?></a>
+		<a href="newsletters.php?box=drafts" class="h6 button"><?php echo t('Drafts');?>&nbsp;(<?php echo count($mailbox['drafts']) ?>)</a>
+		<a href="newsletters.php?box=outbox" class="h6 button"><?php echo t('Outbox');?>&nbsp;(<?php echo count($mailbox['outbox']) ?>)</a>
 	</p>
 </div>
 <?php
@@ -29,13 +30,13 @@ gu_theme_messages();
 ?>
 <form enctype="multipart/form-data" id="send_form" name="send_form" method="post" action="compose.php<?php echo gu_is_debugging() ? '?DEBUG' : ''; ?>"><input type="hidden" id="msg_id" name="msg_id" value="<?php echo $newsletter->get_id(); ?>" /><input type="hidden" id="is_modified" name="is_modified" value="<?php echo $is_modified; ?>" /><input type="hidden" id="autosave" name="autosave" value="<?php echo $autosave; ?>" />
 	<div class="menubar in-action-bar plx<?php echo str_replace('.','',PLX_VERSION) ?> section sml-12 med-9 med-offset-3 lrg-10 lrg-offset-2">
-		<input class="green" name="save_submit" type="submit" id="save_submit" value="<?php echo t('Save');?>" onclick="gu_cancel_unsaved_warning();" />
+		<input class="h6 green" name="save_submit" type="submit" id="save_submit" value="<?php echo t('Save');?>" onclick="gu_cancel_unsaved_warning();" />
 <?php if ($preview_mode) { ?>
-		<input class="blue" name="edit_submit" type="submit" id="edit_submit" value="<?php echo t('Edit');?>" onclick="gu_cancel_unsaved_warning();" />
+		<input class="h6 blue" name="edit_submit" type="submit" id="edit_submit" value="<?php echo t('Edit');?>" onclick="gu_cancel_unsaved_warning();" />
 <?php } else { ?>
-		<input class="blue" name="preview_submit" type="submit" id="preview_submit" value="<?php echo t('Preview');?>" onclick="gu_cancel_unsaved_warning();" />
+		<input class="h6 blue" name="preview_submit" type="submit" id="preview_submit" value="<?php echo t('Preview');?>" onclick="gu_cancel_unsaved_warning();" />
 <?php } ?>
-		<input class="orange" name="send_submit" type="submit" id="send_submit" value="<?php echo t('Send');?>" onclick="gu_cancel_unsaved_warning(); return gu_presend_check();" />
+		<input class="h6 orange" name="send_submit" type="submit" id="send_submit" value="<?php echo t('Send');?>" onclick="gu_cancel_unsaved_warning(); return gu_presend_check();" />
 	</div>
 	<div class="formfieldset">
 		<div class="formfield">
@@ -65,7 +66,7 @@ gu_theme_messages();
 	if (count($attachments) > 0) {
 		echo '<select id="msg_attachments" name="msg_attachments">';
 		foreach ($attachments as $attachment) {
-			$name = str_limit($attachment['name'], 25);		
+			$name = str_limit($attachment['name'], 25);
 			$sizeKB = round($attachment['size'] / 1024.0, 2);
 			echo '<option value="'.$attachment['name'].'">'.$name.' ('.$sizeKB.' KB)</option>';
 		}

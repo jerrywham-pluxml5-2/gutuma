@@ -27,9 +27,10 @@ if (isset($users[$user_name])){
 	exit;
 }
 // Save settings
+$posted = FALSE;#gu_success
 if (is_post_var('save_settings')){
 	if (isset($users[$user_name])){
-		gu_error('<span style="color:red;">'.t('User already exists !').'</span>');
+		gu_error('<span style="color:red;">'.t('User already exists!').'</span>');
 	} else {
 		gu_config::setUsers(
 			get_post_var('id'),
@@ -41,8 +42,13 @@ if (is_post_var('save_settings')){
 		);
 		if (gu_config::save())
 			$ok = '';
-			gu_success(t('New user successfully saved.'));
+			$posted = t('New user successfully saved.');
 	}
+}
+#evite le repost
+if($posted){
+	$_SESSION['gu_posted'] = $posted;#gu_success
+	gu_redirect($_SERVER['REQUEST_URI']);#'Location: ' . $_SERVER['REQUEST_URI'] + EXIT;
 }
 gu_theme_start();
 include_once 'themes/'.gu_config::get('theme_name').'/_users.php';//Body

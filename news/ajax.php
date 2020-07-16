@@ -27,7 +27,7 @@ $public_actions = array('subscribe', 'unsubscribe');
 // Get posted action var which determines which function gets called
 if (!is_post_var('action'))
 	gu_ajax_error(t('No action specified in AJAX request'));
-	
+
 $action = get_post_var('action');
 $is_public_action = in_array($action, $public_actions);
 
@@ -55,6 +55,12 @@ switch ($action) {
 	case 'list_delete':
 		$list = is_post_var('list') ? gu_list::get((int)get_post_var('list'), TRUE) : NULL;
 		gu_ajax_list_delete($list);
+		break;
+	case 'add_del_address':# In all/specified lists
+		$address = is_post_var('address') ? get_post_var('address') : '';
+		$lists = is_post_var('lists') ? explode('·', get_post_var('lists')) : FALSE;
+		$add = is_post_var('add') ? TRUE : FALSE;
+		gu_ajax_make_in_all_lists($address, $lists, $add);
 		break;
 	case 'remove_address':
 		$tmp = is_post_var('tmp') ? get_post_var('tmp') : '';
@@ -105,7 +111,7 @@ function gu_ajax_subscribe($list, $address, $subscribe = TRUE){
 	$list_ids = array($list->get_id());
 	if (!gu_subscription_process($address, $list_ids, $subscribe))
 		gu_ajax_return('alert("'.addslashes(strip_tags(@$_SERVER['GU_STATUS_MSG'].' '.@$_SERVER['GU_SUCCESS_MSG'].' '.@$_SERVER['GU_ERROR_MSG'])).'")');
-	$success = t('Thank you for your').' '.t('Subscription').' '.$address.', '.t('the first step is successful!').' '.t('You will receive one email to validate your % for following list: <i>%</i>', array(t('Subscription'),$list->get_name())).'. '.t('Remember to <b>check in spam mails</b> if the message are not found in your <b>inbox</b>');
+	$success = t('Thank you for your').' '.t('Subscription').' '.$address.', '.t('the first step is successful!').' '.t('You will receive one email to validate your % for following list: <i>%</i>', array(t('Subscription'),$list->get_friend())).'. '.t('Remember to <b>check in spam mails</b> if the message are not found in your <b>inbox</b>');
 	gu_ajax_return('alert("'.strip_tags($success).'.")');
 }
 /**
@@ -130,6 +136,65 @@ function gu_ajax_list_delete($list){
 		gu_success(t('List <b><i>%</i></b> deleted',array($list->get_name())));
 		gu_ajax_return('gu_ajax_on_list_delete('.$list->get_id().')');
 	}
+}
+/**
+ * Action = 'add_del_address' to Add / Delete the specified address in all / selected lists
+ * @param string $address The address to add/delete on lists
+ * @param array $alists selected Lists of gu_list to add/remove address (or FALSE to do in all lists)
+ * @param bool $add : true add, false delete
+ * return real size of lists if persons have (un)subscribe in interval time
+ */
+function gu_ajax_make_in_all_lists($address, $alists, $add = FALSE){
+	if (!check_email($address))
+		return gu_error(t('Invalid email address'));
+
+	$tmp = 'i';
+	$sizes = array();
+	$adel = array();
+	$count = array(0,0);
+	while(true){
+		$lists = gu_list::get_all(TRUE, TRUE, $tmp);#get_all($load_addresses = FALSE, $inc_private = TRUE, $tmp = '')
+		foreach($lists as $list){
+			if($alists AND !in_array($list->get_id(), $alists))
+				continue;
+			if($add){
+				if(!$tmp){
+					$count[1]++;#add +1 in total lists
+				}
+			}else{
+				$count[1]++;#del +1 in total lists
+			}
+			#DEL
+			if($list->contains($address, $tmp)){
+				if(!$add){#del mode
+					if($list->remove($address, TRUE, $tmp)){#
+						$sizes[] = $list->get_size() . ':' . $list->get_id() . $tmp;#list_id#[i] : like : 123456789·123456789i·987654321i·****i·****···
+						$count[0]++;# +1 in deleted
+					}
+				}else{#add mode
+					if($tmp){
+						$adel[] = $list->get_id();#save id on var to not insert on normal list····
+					}
+				}
+			#ADD & !tmp
+			}else{#not contain address
+				if($add && !$tmp){#add mode
+					if(!in_array($list->get_id(), $adel)){#not in tmp
+						if ($list->add($address, TRUE, '', 'ADMIN_EDITLIST_FAKE_KEY')){#From editlist.php
+							$sizes[] = $list->get_size() . ':' . $list->get_id();# . $tmp;#list_id#[i] : like : 123456789·123456789·987654321·****·****···
+							$count[0]++;# +1 in added
+						}
+					}
+				}
+			}
+		}
+		if(!$tmp)#stop ;)
+			break;
+		$tmp = '';# loop one time #1st in transit ok & 2nd for normal
+	}
+	$ay = 'Address <b><i>%</i></b> '.($add?'added':'removed');
+	gu_success(t($ay ,array($address)) . ' (' . $count[0] . ' / ' . $count[1] . ')');
+	gu_ajax_return('gu_ajax_on_make_in_all_lists("'.$address.'", "'.implode('·', $sizes).'", "'. intval($add).'")');//
 }
 /**
  * Removes the specified address from the specified list
@@ -158,7 +223,8 @@ function gu_ajax_newsletter_delete($newsletter){
 	if (!$newsletter)
 		return gu_error(t('Invalid newsletter'));
 	if ($newsletter->delete()){
-		gu_success(t('Newsletter deleted'));
+		$subject = trim($newsletter->get_subject());
+		gu_success(t('Newsletter deleted') . ' (' . (!empty($subject)? $subject: t('Empty subject')) . ')');#remove subject EOL
 		gu_ajax_return('gu_ajax_on_newsletter_delete('.$newsletter->get_id().')');
 	}
 }

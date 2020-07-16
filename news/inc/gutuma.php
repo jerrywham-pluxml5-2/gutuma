@@ -1,4 +1,4 @@
-<?php 
+<?php
 /************************************************************************
  * @project Gutuma Newsletter Managment
  * @author Rowan Seymour
@@ -7,9 +7,9 @@
  * @modifications Cyril Maguire
  *
  * Gutama plugin package
- * @version 1.6
- * @date	01/10/2013
- * @author	Cyril MAGUIRE
+ * @version 2.2.1
+ * @date	16/07/2020
+ * @author	Cyril MAGUIRE, Thomas INGLES
 */
 include_once 'misc.php';
 include_once 'session.php';
@@ -27,7 +27,7 @@ define('GUTUMA_VERSION_NAME', $plxMotor->plxPlugins->aPlugins['gutuma']->code);#
 define('GUTUMA_DEMO_MODE', FALSE);#Demonstration mode
 define('GUTUMA_TITLE', t('Gutuma Newsletter Management'));#Application title of Gutuma
 define('GUTUMA_URL', 'http://sudwebdesign.free.fr/index.php?article5');#Homepage of Gutuma : https://web.archive.org/web/20081228162738/http://ijuru.com/gutuma
-define('GUTUMA_UPDATE_URL', 'http://sudwebdesign.free.fr/zips/gutuma/up_git.js?ver='.GUTUMA_VERSION_NUM);#https://cdn.rawgit.com/jerrywham-pluxml5-2/gutuma/master/news/up_git.js inaccessible (CORS policy)
+define('GUTUMA_UPDATE_URL', 'https://cdn.jsdelivr.net/gh/jerrywham-pluxml5-2/gutuma/news/up_git.js?ver='.GUTUMA_VERSION_NUM);#master by jsdelivr ;)
 define('GUTUMA_ENCODING', PLX_CHARSET);#Content encoding 'UTF-8'
 define('GUTUMA_PASSWORD_MIN_LEN', 6);#Minimum password length
 define('GUTUMA_LISTS_DIR', $plxMotor->plxPlugins->aPlugins['gutuma']->listsDir);#Directory where lists are stored
@@ -112,7 +112,7 @@ function gu_is_demo(){
 }
 /**
  * Checks to see if Gutuma is running in debugging mode
- * @return bool TRUE if Gutuma is running in demo mode, else FALSE
+ * @return bool TRUE if &DEBUG=1 is in url and good session, else FALSE
  */
 function gu_is_debugging(){
 	return is_get_var('DEBUG') && gu_session_is_valid();
@@ -148,7 +148,7 @@ function gu_success($msg){
 	return TRUE;
 }
 /**
- * Pass an empty string to $_SESSION['glang'] if you want to add new translations
+ * Pass an empty string to $_SERVER['gu_langs'] if you want to add new translations
  * Otherwise, new translation will not be taken into account until session die
  */
 #$_SESSION['glang'] = '';
@@ -166,16 +166,16 @@ function t($key,$parameters=null,$langage=GU_CONFIG_LANG){//se retrouve coté pu
 		define('RPATH',str_replace('inc'.DIRECTORY_SEPARATOR.'gutuma.php','',__FILE__));
 	}
 	$return = '';
-	if (isset($_SESSION['glang']) && is_array($_SESSION['glang']) && array_key_exists($key,$_SESSION['glang'])){
-		$glang = $_SESSION['glang'];
+	if (isset($_SERVER['gu_langs']) && is_array($_SERVER['gu_langs']) && array_key_exists($key,$_SERVER['gu_langs'])){
+		$glang = $_SERVER['gu_langs'];
 	} else {
-		$glang = $_SESSION['glang'] = getLang($langage);
+		$glang = $_SERVER['gu_langs'] = getLang($langage);
 	}
 	if ($glang != 'en'){
 		$return = (isset($glang[$key])?$glang[$key]:'');
 		if ($return == ''){
-			file_put_contents(RPATH.'lang/'.$langage,$key.'[::->]<span style="color:red;font-weight:bold">TRADUCTION MISS : "'.$key.'" for langage ['.$langage.']</span>'."\n",FILE_APPEND|LOCK_EX);
-			$return = '<span style="color:red;font-weight:bold">TRADUCTION MISS : "'.$key.'" for langage ['.$langage.']</span>';
+			$return = '<span title="TRADUCTION MISS for langage ['.$langage.'] in gutuma">'.$key.'</span>';
+			@file_put_contents(RPATH.'lang/'.$langage, $return."\n",FILE_APPEND|LOCK_EX);
 		}elseif(isset($parameters)){
 			$return = distribParams($return,$key,$parameters,$langage);
 		}
@@ -197,7 +197,7 @@ function t($key,$parameters=null,$langage=GU_CONFIG_LANG){//se retrouve coté pu
  * @author Idleman, Cyril MAGUIRE
  * @echo String $traduction
  */
-function distribParams($return,$key,$parameters,$glang){
+function distribParams($return,$key,$parameters,$glang){//with </i></b> At end of str lost end of tags : </i
 	if ($parameters != null){
 		if ($glang != 'en'){
 			$parametersVars = explode('[%%]',$return);
@@ -227,7 +227,7 @@ function getLang($glang=GU_CONFIG_LANG){
 	if($glang != 'en'){
 		$path = RPATH.'lang'.DIRECTORY_SEPARATOR.$glang;
 		if (!is_file($path)){
-			file_put_contents($path,'');
+			@file_put_contents($path,'');#TRADUCTION MISS
 		}
 		$langLines = file($path);
 		$traductions = array();

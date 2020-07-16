@@ -1,4 +1,4 @@
-<?php 
+<?php
 /************************************************************************
  * @project Gutuma Newsletter Managment
  * @author Rowan Seymour
@@ -17,7 +17,7 @@ foreach($u as $k => $v) {
 		$u['connect'] = $k;
 }
 if (gu_session_is_valid()) { ?>
-			<div id="headerwelcome"><?php echo gu_config::get('collective_name'); ?> | <?php echo t('Welcome ');?><?php echo isset($u['connect']) ? $u['connect'] : gu_config::get('admin_name'); ?><!-- | <a href="login.php?action=logout"><?php echo t('Logout');?></a> --></div>
+			<div id="headerwelcome"><?php echo gu_config::get('collective_name'); ?> | <?php echo t('Welcome');?> <?php echo isset($u['connect']) ? $u['connect'] : gu_config::get('admin_name'); ?><!-- | <a href="login.php?action=logout"><?php echo t('Logout');?></a> --></div>
 <?php } ?>
 		</div>
 		<div id="mainmenu">
@@ -28,7 +28,7 @@ if (gu_session_is_valid()) { ?>
 				<li><a href="index.php" <?php echo (str_ends($_SERVER['SCRIPT_NAME'], '/index.php') ? 'class="current"' : '') ?>><?php echo t('Home');?></a></li>
 <?php endif;?>
 				<li><a href="compose.php" <?php echo (str_ends($_SERVER['SCRIPT_NAME'], '/compose.php') ? 'class="current"' : '') ?>><?php echo t('Newsletters');?></a></li>
-				<li><a href="lists.php" <?php echo (str_ends($_SERVER['SCRIPT_NAME'], '/lists.php') ? 'class="current"' : '') ?>><?php echo t('Lists');?></a></li>
+				<li><a href="lists.php" <?php echo (str_ends($_SERVER['SCRIPT_NAME'], '/lists.php') || str_ends($_SERVER['SCRIPT_NAME'], '/editlist.php') ? 'class="current"' : '') ?>><?php echo t('Lists');?></a></li>
 <?php if ($_SESSION['profil'] == PROFIL_ADMIN) :?>
 				<li><a href="integrate.php" <?php echo (str_ends($_SERVER['SCRIPT_NAME'], '/integrate.php') ? 'class="current"' : '') ?>><?php echo t('Gadgets');?></a></li>
 				<li><a href="settings.php" <?php echo (str_ends($_SERVER['SCRIPT_NAME'], '/settings.php') ? 'class="current"' : '') ?>><?php echo t('Settings');?></a></li>

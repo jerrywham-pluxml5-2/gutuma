@@ -16,6 +16,18 @@
  */
 function gu_theme_start($nomenu = FALSE){//THEMEVERS PluXml 5.3.1 default theme
 	include RPATH.'themes/'.gu_config::get('theme_name').'/header'.(gu_config::get('theme_name')=='default'?THEMEVERS:'').'.php';
+	#evite le repost
+	if(isset($_SESSION['gu_posted'])){
+		gu_success($_SESSION['gu_posted']);
+		unset($_SESSION['gu_posted']);
+	}
+/*
+	#evite le repost (CODE)
+	if($posted){
+		$_SESSION['gu_posted'] = $posted;#gu_success msg
+		gu_redirect($_SERVER['REQUEST_URI']);#'Location: ' . $_SERVER['REQUEST_URI'] + EXIT; #see inc misc
+	}
+*/
 }
 
 /**
@@ -51,7 +63,7 @@ function gu_theme_pager($id, $baseurl, $start, $pagesize, $total){
 		</div>
 		<div class="pagerinfo">
 <?php
-	echo t('Showing <span id="%_start">%</span> to <span id="%_end">%</span> of <span id="%_total">%</span>',array($id,($start + 1),$id,min(($start + $pagesize), $total),$id,$total));	
+	echo t('Showing <span id="%_start">%</span> to <span id="%_end">%</span> of <span id="%_total">%</span>',array($id,($start + 1),$id,min(($start + $pagesize), $total),$id,$total));
 ?>
 		</div>
 	</div>
@@ -61,21 +73,21 @@ function gu_theme_pager($id, $baseurl, $start, $pagesize, $total){
  * Outputs any messages set by gu_error or gu_success
  */
 function gu_theme_messages(){
-	echo '<span id="msg">';
+	echo '<span id="gu_msg">';# class="notification success"
 	if (isset($_SERVER['GU_ERROR_MSG'])){
-		echo '<p id="errormsg" class="notification error">'.trim($_SERVER['GU_ERROR_MSG'],'<br />').'</p>';
+		echo '<p id="gu_errormsg" class="gu_notification error" style="display:block;">'.trim($_SERVER['GU_ERROR_MSG'],'<br />').'</p>';
 		if (isset($_SERVER['GU_ERROR_EXTRA'])){
-			echo '  <div id="errormore" class="notification error"><a onclick="gu_messages_toggle_error_extra()" href="#">'.t('More').'</a></div>';
-			echo '  <div id="errorless" class="notification error" style="display: none"><a onclick="gu_messages_toggle_error_extra()" href="#">'.t('Less').'</a></div>';
-			echo '  <div id="errorextra" class="notification error" style="display: none;">'.$_SERVER['GU_ERROR_EXTRA'].'</div>';
+			echo '  <div id="gu_errormore" class="gu_notification error"><a onclick="gu_messages_toggle_error_extra()" href="#">'.t('More').'</a></div>';
+			echo '  <div id="gu_errorless" class="gu_notification error" style="display: none"><a onclick="gu_messages_toggle_error_extra()" href="#">'.t('Less').'</a></div>';
+			echo '  <div id="gu_errorextra" class="gu_notification error" style="display: none;">'.$_SERVER['GU_ERROR_EXTRA'].'</div>';
 		}
 	} else {
-		echo '<p id="errormsg" class="notification error" style="display:none;"></p>';
+		echo '<p id="gu_errormsg" class="gu_notification error" style="display:none;"></p>';
 	}
 	if (isset($_SERVER['GU_STATUS_MSG'])){
-		echo '<p id="statusmsg" class="notification success">'.$_SERVER['GU_STATUS_MSG'].'</p>';
+		echo '<p id="gu_statusmsg" class="gu_notification success" style="display:block;">'.$_SERVER['GU_STATUS_MSG'].'</p>';
 	} else {
-		echo '<p id="statusmsg" class="notification success" style="display:none;"></p>';
+		echo '<p id="gu_statusmsg" class="gu_notification success" style="display:none;"></p>';
 	}
 	echo '</span>';
 }

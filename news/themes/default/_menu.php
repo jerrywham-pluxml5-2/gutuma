@@ -1,4 +1,4 @@
-<?php 
+<?php
 /************************************************************************
  * @project Gutuma Newsletter Managment
  * @author Rowan Seymour
@@ -24,11 +24,12 @@ foreach($u as $k => $v) {
 				<li>
 					<small><a class="back-site" href="<?php echo $plxAdmin->urlRewrite(); ?>" title="<?php echo L_BACK_TO_SITE_TITLE ?>"><?php echo L_BACK_TO_SITE;?></a></small>
 				</li>
-				<?php if(isset($plxAdmin->aConf['homestatic']) AND !empty($plxAdmin->aConf['homestatic'])) : ?>
 				<li>
+<?php if(isset($plxAdmin->aConf['homestatic']) AND !empty($plxAdmin->aConf['homestatic'])) : ?>
 					<small><a class="back-blog" href="<?php echo $plxAdmin->urlRewrite('?blog'); ?>" title="<?php echo L_BACK_TO_BLOG_TITLE ?>"><?php echo L_BACK_TO_BLOG;?></a></small>
+<?php else: ?>&nbsp;
+<?php endif; ?>
 				</li>
-				<?php endif; ?>
 				<li>
 					<small><a class="logout" href="<?php echo $plxAdmin->urlRewrite(); ?>core/admin/auth.php?d=1" title="<?php echo L_ADMIN_LOGOUT_TITLE ?>"><?php echo L_ADMIN_LOGOUT ?></a></small>
 				</li>
@@ -47,7 +48,7 @@ foreach($u as $k => $v) {
 						else echo L_PROFIL_WRITER; ?>
 					</em>
 				</li>
-				<li><small><a class="version" title="PluXml" href="http://www.pluxml.org">PluXml <?php echo $plxAdmin->aConf['version'] ?></a></small></li>
+				<li><small><a class="version" title="<?php echo gu_config::get('application_name').t(' Powered by') .' ' . t('Gutuma') ?>" href="<?php echo GUTUMA_URL ?>"><?php echo t('Gutuma').'&nbsp;'.GUTUMA_VERSION_NAME ?></a> &amp; <a class="version" title="PluXml" href="http://www.pluxml.org">PluXml&nbsp;<?php echo $plxAdmin->aConf['version'] ?></a></small></li>
 			</ul>
 		</header>
 		<nav class="responsive-menu">
@@ -55,6 +56,27 @@ foreach($u as $k => $v) {
 			<input type="checkbox" id="nav" />
 			<ul id="responsive-menu" class="menu vertical expanded">
 				<?php
+		#menu des fonctionnalités de gutuma
+		$menu_gutuma = '';
+		if($_SESSION['profil'] == PROFIL_ADMIN):
+		$menu_gutuma .= '
+			<li class="menu'.(str_ends($_SERVER['SCRIPT_NAME'], '/index.php') ? ' active ' : ' ').'menu-config"><a href="index.php">'.t('Home').'</a></li>
+			';
+		endif;
+		$menu_gutuma .= '
+			<li class="menu'.(str_ends($_SERVER['SCRIPT_NAME'], '/compose.php') || str_ends($_SERVER['SCRIPT_NAME'], '/newsletters.php') ? ' active ' : ' ').'menu-config"><a href="compose.php">'.t('Newsletters').'</a></li>
+			<li class="menu'.(str_ends($_SERVER['SCRIPT_NAME'], '/lists.php') || str_ends($_SERVER['SCRIPT_NAME'], '/editlist.php') ? ' active ' : ' ').'menu-config"><a href="lists.php">'. t('Lists').'</a></li>'.PHP_EOL;
+		if ($_SESSION['profil'] == PROFIL_ADMIN) :
+		$menu_gutuma .= '
+			<li class="menu'.(str_ends($_SERVER['SCRIPT_NAME'], '/integrate.php') ? ' active ' : ' ').'menu-config"><a href="integrate.php">'. t('Gadgets').'</a></li>
+			<li class="menu'.(str_ends($_SERVER['SCRIPT_NAME'], '/settings.php') ? ' active ' : ' ').'menu-config"><a href="settings.php">'. t('Settings').'</a></li>'.PHP_EOL;
+		endif;
+		$menu_gutuma .= '
+			<li class="menu active menu-config">
+				<img id="imghead" title="'.gu_config::get('application_name').t(' Powered by').' Pluxml '.PLX_VERSION.' &amp; '.t('Gutuma').' '.GUTUMA_VERSION_NAME.'" src="themes/'.gu_config::get('theme_name').'/images/gutuma.png" />
+				<sup id="sitename"><sub><img style="float: right;" title="'.t('Gutuma').' for Pluxml" src="themes/'.gu_config::get('theme_name').'/favicon.png" /><i>'.gu_config::get('application_name').' '.t('Powered by Gutuma').'</i></sub></sup>
+			</li>'.PHP_EOL;
+
 					$menus = array();
 					$userId = ($_SESSION['profil'] < PROFIL_WRITER ? '[0-9]{3}' : $_SESSION['user']);
 					$nbartsmod = $plxAdmin->nbArticles('all', $userId, '_');
@@ -94,28 +116,10 @@ foreach($u as $k => $v) {
 							$menus[] = plxUtils::formatMenu(L_MENU_CONFIG_INFOS, $plxAdmin->urlRewrite().'core/admin/parametres_infos.php', L_MENU_CONFIG_INFOS_TITLE, 'menu-config');
 						}
 					}
-		#menu des fonctionnalités de gutuma
-		$menu_gutuma = '';
-		if($_SESSION['profil'] == PROFIL_ADMIN):
-		$menu_gutuma .= '
-			<li class="menu'.(str_ends($_SERVER['SCRIPT_NAME'], '/index.php') ? ' active ' : ' ').'menu-config"><a href="index.php">'.t('Home').'</a></li>
-			';
-		endif;
-		$menu_gutuma .= '
-			<li class="menu'.(str_ends($_SERVER['SCRIPT_NAME'], '/compose.php') || (str_ends($_SERVER['SCRIPT_NAME'], '/newsletters.php')) ? ' active ' : ' ').'menu-config"><a href="compose.php">'.t('Newsletters').'</a></li>
-			<li class="menu'.(str_ends($_SERVER['SCRIPT_NAME'], '/lists.php') ? ' active ' : ' ').'menu-config"><a href="lists.php">'. t('Lists').'</a></li>'.PHP_EOL;
-		if ($_SESSION['profil'] == PROFIL_ADMIN) :
-		$menu_gutuma .= '
-			<li class="menu'.(str_ends($_SERVER['SCRIPT_NAME'], '/integrate.php') ? ' active ' : ' ').'menu-config"><a href="integrate.php">'. t('Gadgets').'</a></li>
-			<li class="menu'.(str_ends($_SERVER['SCRIPT_NAME'], '/settings.php') ? ' active ' : ' ').'menu-config"><a href="settings.php">'. t('Settings').'</a></li>'.PHP_EOL;
-		endif;
-		$menu_gutuma .= '
-			<li class="menu active menu-config">
-				<img id="imghead" title="'.gu_config::get('application_name').t(' Powered by').' Pluxml '.PLX_VERSION.' &amp; '.t('Gutuma').' '.GUTUMA_VERSION_NAME.'" src="themes/'.gu_config::get('theme_name').'/images/gutuma.png" />
-				<sup id="sitename"><sub><img style="float: right;" title="'.t('Gutuma').' for Pluxml" src="themes/'.gu_config::get('theme_name').'/favicon.png" /><i>'.gu_config::get('application_name').' '.t('Powered by Gutuma').'</i></sub></sup>
-			</li>'.PHP_EOL;
+
 					# récuperation des menus admin pour les plugins
 					foreach($plxAdmin->plxPlugins->aPlugins as $plugName => $plugInstance) {
+						if($plugName == 'gutuma') continue;
 						if($plugInstance AND is_file(PLX_PLUGINS.$plugName.'/admin.php')) {
 							if($plxAdmin->checkProfil($plugInstance->getAdminProfil(),false)) {
 								if($plugInstance->adminMenu) {
@@ -133,6 +137,9 @@ foreach($u as $k => $v) {
 							}
 						}
 					}
+
+					#gutuma on top
+					array_splice($menus, 0, 0, $menu_gutuma);
 
 					# Hook Plugins
 					eval($plxAdmin->plxPlugins->callHook('AdminTopMenus'));

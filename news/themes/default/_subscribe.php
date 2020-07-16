@@ -1,4 +1,4 @@
-<?php 
+<?php
 /************************************************************************
  * @project Gutuma Newsletter Managment
  * @author Rowan Seymour
@@ -7,13 +7,11 @@
  * @modifications Cyril Maguire, thomas Ingles
  *
  * Gutama plugin package
- * @version 2.1.0
- * @date	01/10/2018
+ * @version 2.2.1
+ * @date 16/07/2020
  * @author	Cyril MAGUIRE, Thomas INGLES
 */
-$plxMotor = plxMotor::getInstance();
-$s = '';
-
+$s = '';# Pluriel(s) : click on the link'.$s.' in the email ...
 ?>
 <div style="text-align: center">
 <?php gu_theme_messages(); if(!$list_exist){ echo t('No List').'!</div>'; return;} ?>
@@ -21,9 +19,9 @@ $s = '';
 <form action="" name="subscribe_form" method="post" onsubmit="return checkSubmit(this);">
 <?php
 if (isset($list) && is_object($list))
-	echo '<h2>'.$list->get_name().'</h2><input type="hidden" id="subscribe_list" name="subscribe_list[]" value="'.$list->get_id().'" />';
+	echo '<h2>'.$list->get_friend().'</h2><input type="hidden" id="subscribe_list" name="subscribe_list[]" value="'.$list->get_id().'" />';
 elseif (isset($lists)) {
-	$s = 's';
+	$s = 's';# Pluriels
 	echo '<h2>'.t('Newsletters').'</h2>';
 	echo '<table border="0" style="max-width: 300px; margin: auto" class="results subscribe" cellpadding="0" cellspacing="0">';
 	foreach ($lists as $list) {
@@ -32,17 +30,17 @@ elseif (isset($lists)) {
 ?>
 		<tr>
 			<td class="sml-text-left"><input id="subscribe_list" name="subscribe_list[]" type="checkbox" value="<?php echo $list_id ?>"<?php echo $checked ?> /></td>
-			<td class="sml-text-left should-cut-off"><?php echo $list->get_name(); ?></td>
+			<td class="sml-text-left should-cut-off"><?php echo $list->get_friend(); ?></td>
 		</tr>
 <?php
 	}
 	echo '</table>';
 }
 echo '<p>'.t('Email address').'</p>';
-if ($address != '')
+if ($address != '' && check_email($address))
 	echo '<h3>'.$address.'</h3><input name="subscribe_address" type="hidden" id="subscribe_address" value="'.$address.'" />';
 else
-	echo '<p><input name="subscribe_address" type="text" class="textfield" id="subscribe_address" style="width: 200px" placeholder="address@email.com" required="required" /></p>';
+	echo '<p><input name="subscribe_address" type="email" value="'.@$address.'" class="textfield" id="subscribe_address" style="width: 200px" placeholder="address@email.com" required="required" /></p>';
 ?>
 	<p><input name="subscribe_submit" type="submit" id="subscribe_submit" value="<?php echo t('Subscribe');?>" />
 	<input name="unsubscribe_submit" type="submit" id="unsubscribe_submit" value="<?php echo t('Unsubscribe');?>" />
@@ -59,5 +57,5 @@ else
 <br /><i><?php echo t('Remember to <b>check in spam mails</b> if the message are not found in your <b>inbox</b>') ?>.</i>
 <br /><i><?php echo t('If you encounter problems registering / unsubscribing, please <a href="%">contact the site author</a> so that they can do it for you',array($contact_url)) ?>.</i></p>
 </div><!-- gu_help -->
-	<p<?php echo (!gu_config::get('show_home_link') OR @$_GET["backlink"]=='no')?' style="display:none"':''; ?>><br /><a href="<?php echo $plxMotor->racine; ?>"><?php echo t('Back home'); ?></a></p>
+	<p<?php echo (!gu_config::get('show_home_link') OR @$_GET['backlink']=='no')?' style="display:none"':''; ?>><br /><a href="<?php echo $plxMotor->racine; ?>"><?php echo t('Back home'); ?></a></p>
 </div>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /************************************************************************
  * @project Gutuma Newsletter Managment
  * @author Rowan Seymour
@@ -13,11 +13,15 @@
 */
 ?>
 <div id="sectionheader" class="inline-form action-bar">
-	<h2><?php echo t('Edit list');?> <sup><sub>(<?php echo t((!$tmp?$list->is_private()?'Private':'real':'temporary')) ?>)</sub></sup></h2>
 	<form method="post" name="edit_form" id="edit_form" action="">
-		<p id="sectionmenu" class="plx<?php echo str_replace('.','',PLX_VERSION) ?>">
-			<?php echo t('Name');?>&nbsp;<input type="text" class="textfield" name="list_name" id="list_name" value="<?php echo $list->get_name(); ?>" placeholder="<?php echo t('Name');?>"<?php echo $tmp?' readonly="readonly" style="cursor:not-allowed"':'' ?> /><br class="med-hide"/>
+		<h2>
+			<?php echo t('Edit list');?>
+			<sup><sub>(<?php echo t($list->is_private()?'Private':'Public') . ' ' . t($tmp?'temporary':'real') ?>)</sub></sup>
 			<?php echo t('Private');?>&nbsp;<input name="list_private" type="checkbox" id="list_private" value="1"<?php echo ($list->is_private()?' checked="checked"':'') . ($tmp?' readonly="readonly" style="cursor:not-allowed"':''); ?> /><br />
+		</h2>
+		<p id="sectionmenu" class="plx<?php echo str_replace('.','',PLX_VERSION) ?>">
+			<?php echo t('Name');?>&nbsp;<input type="text" class="textfield" name="list_name" id="list_name" value="<?php echo $list->get_name(); ?>" placeholder="<?php echo t('Name') . ' (' . t('Private');?>)"<?php echo $tmp?' readonly="readonly" style="cursor:not-allowed"':'' ?> /><br class="med-hide"/>
+			<?php echo t('Public');?>&nbsp;<input type="text" class="textfield" name="list_friend" id="list_friend" value="<?php echo $list->get_friend(); ?>" placeholder="<?php echo t('Name') . ' (' . t('Public');?>)"<?php echo $tmp?' readonly="readonly" style="cursor:not-allowed"':'' ?> /><br />
 			<input name="list_back" type="button" id="list_back" class="blue" value="<?php echo t('Back');?>" onclick="location.href='lists.php'" />
 			<input name="see_other_face" type="button" id="see_other_face" style="<?php echo $seeOtherFace?'':'display:none' ?>" onclick="location.href='editlist.php?list=<?php echo $list->get_id().($tmp?'':'&tmp=i') ; ?>'" title="<?php echo t('See').' '.t(($tmp?'real':'temporary')) ?>" value="<?php echo t(($tmp?'real':'temporary')) ?>">
 			<input name="list_update" type="submit" id="list_update" class="green" value="<?php echo t('Save');?>" style="<?php echo $tmp?'display:none':'' ?>" />
@@ -46,12 +50,14 @@
 		</form>
 	</div>
 </div>
+<form>
 <table border="0" cellspacing="0" cellpadding="0" class="results">
 <tr>
-	<td><?php for($n=0;$n<7;$n++)echo '&nbsp;';?></td>
-	<td><strong><?php echo t('Addresses');?></strong></td>  
+	<td class="checkbox"><script type="text/javascript">document.write(gu_editlist_thead_menu())</script><?php for($n=0;$n<7;$n++)echo '&nbsp;';?></td>
+	<td><strong><?php echo t('Addresses');?></strong></td>
 </tr>
 <?php
+#TODO : In function or in editlist.php (init)
 $filtered_total = 0;
 if ($list->get_size() > 0) {
 	$address_id = 1000;
@@ -82,16 +88,18 @@ if ($list->get_size() > 0) {
 			}
 		}
 ?>
+
 	<tr id="row_<?php echo ++$address_id; ?>">
-		<td style="width:36px;"><a href="javascript:gu_remove_address('<?php echo $address; ?>', <?php echo $address_id; ?>, '<?php echo $tmp; ?>')" class="imglink" title="<?php echo t('Delete');?>"><img src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_delete.png" /></a></td>
+		<td style="width:36px;"><input type="checkbox" id="mel-<?php echo $address_id; ?>" name="idMel[]" value="<?php echo $address; ?>">&nbsp;<a href="javascript:gu_remove_address('<?php echo $address; ?>', <?php echo $address_id; ?>, '<?php echo $tmp; ?>')" class="imglink" title="<?php echo t('Delete');?>"><img src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_delete.png" /></a></td>
 		<td><span title="<?php echo $datetmp ?>"><img src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_<?php echo $icon ?>.png" />&nbsp;<?php echo $address; ?></span><?php echo $keycode; ?></td>
 	</tr>
 <?php
 	}
 }
 ?>
-	<tr id="row_empty" style="display: <?php echo ($list->get_size() == 0) ? 'table-row' : 'none'; ?>"><td colspan="2" class="emptyresults"><?php echo t('No addresses');?></td></tr>	
+	<tr id="row_empty" style="display: <?php echo ($list->get_size() == 0) ? 'table-row' : 'none'; ?>"><td colspan="2" class="emptyresults"><?php echo t('No addresses');?></td></tr>
 </table>
+</form>
 <br/>
 <?php
 //gu_theme_pager('pager_addresses', 'editlist.php?list='.$list->get_id().($tmp?'&amp;tmp=i':'').'&amp;filter='.$filter, $start, GUTUMA_PAGE_SIZE, $filtered_total);

@@ -27,6 +27,7 @@ reset($lists);//stackoverflow.com/posts/8131148 key($lists)
 $example_list_id = (count($lists) > 0) ? $lists[key($lists)]->get_id() : 0;
 if ($generate) {
 	$gadget_list = is_post_var('gadget_list') ? get_post_var('gadget_list') : $example_list_id;
+	$gadget_list_all = !strstr($gadget_type,'ajax');
 	switch ($gadget_type) {
 		case 'basic_link':
 			$gadget_text = is_post_var('gadget_text') ? str_replace('"','&quot;',get_post_var('gadget_text')) : t('Subscribe to my newsletter');
@@ -68,7 +69,7 @@ function create_list_control($name, $value, $all_option){
 	if ($all_option)
 		$html .= '<option value="0" '.(($value == 0) ? 'selected="selected"' : '').'>('.t('All').')</option>';
 	foreach ($lists as $l)
-		$html .= '<option value="'.$l->get_id().'" '.(($value == $l->get_id()) ? 'selected="selected"' : '').'>'.$l->get_name().'</option>';
+		$html .= '<option value="'.$l->get_id().'" '.(($value == $l->get_id()) ? 'selected="selected"' : '').'>'.$l->get_friend().'</option>';
 	$html .= '</select>';
 	return $html;
 }
@@ -76,9 +77,6 @@ function create_text_control($name, $value){
 	return '<input id="'.$name.'" name="'.$name.'" type="text" class="textfield" style="width: 95%" value="'.str_replace('"','&quot;',$value).'" />';
 }
 $_GET['noajax']=TRUE;
-?>
-<script type="text/javascript"><?php include("js/gadgets.js.php"); ?></script><!-- <script type="text/javascript" src="js/gadgets.js.php?noajax"></script> error 404 ??? -->
-<?php //gu_theme_messages(); ?>
-<?php
+echo $script_import;
 include_once 'themes/'.gu_config::get('theme_name').'/_integrate.php';//Body
 gu_theme_end();

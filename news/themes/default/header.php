@@ -7,11 +7,28 @@
  * @maintainer : Thomas Ingles
  *
  * Gutama plugin package
- * @version 1.9.0
- * @date	19/05/2018
- * @author	Cyril MAGUIRE
+ * @version 2.2.1
+ * @date	26/05/2020
+ * @author	Cyril MAGUIRE, Thomas Ingles
 */
 $plxAdmin = @plxAdmin::getInstance();
+if(!defined('L_BACK_TO_SITE_TITLE') ) {#if lang 2004 (in dev at this moment, maybe next release 5.8.4)
+  define('L_BACK_TO_SITE_TITLE', L_BACK_HOMEPAGE_TITLE);#
+ if(!defined('L_BACK_TO_SITE'))
+  define('L_BACK_TO_SITE', L_HOMEPAGE);#
+ if(!defined('L_MENU_NEW_ARTICLES_TITLE'))
+  define('L_MENU_NEW_ARTICLES_TITLE', L_NEW_ARTICLE);
+ if(!defined('L_MENU_NEW_ARTICLES'))
+  define('L_MENU_NEW_ARTICLES', L_NEW_ARTICLE);#_NEW
+ if(!defined('L_MENU_COMMENTS'))
+  define('L_MENU_COMMENTS', L_COMMENTS);
+ if(!defined('L_MENU_CATEGORIES'))
+  define('L_MENU_CATEGORIES', L_CATEGORIES);
+ if(!defined('L_MENU_PROFIL'))
+  define('L_MENU_PROFIL', L_PROFIL);
+}
+#multipes PluXml versions compatibility (5.4 ~ 6.0) THEME
+define('GLX_URL_REPO', defined('PLX_URL_REPO')?PLX_URL_REPO:'https://www.pluxml.org');
 if(isset($_GET["del"]) AND $_GET["del"]=="install") {
 	if(@unlink(PLX_ROOT.'install.php'))
 		plxMsg::Info(L_DELETE_SUCCESSFUL);
@@ -28,14 +45,17 @@ if(isset($_GET["del"]) AND $_GET["del"]=="install") {
 	<meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0">
 	<title><?php echo GUTUMA_TITLE; ?> - <?php echo plxUtils::strCheck($plxAdmin->aConf['title']) ?> - <?php echo L_ADMIN ?></title>
 	<meta http-equiv="content-type" content="text/html; charset=<?php echo strtolower(GUTUMA_ENCODING) ?>" />
-	<link rel="stylesheet" type="text/css" href="<?php echo PLX_MORE ?>admin/theme/plucss.css?ver=<?php echo PLX_VERSION ?>" media="screen" />
+	<link rel="stylesheet" type="text/css" href="<?php echo PLX_MORE ?>admin/theme/plucss<?php echo version_compare(@PLX_VERSION,'5.7','>')?'.min':'' ?>.css?ver=<?php echo PLX_VERSION ?>" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<?php echo PLX_MORE ?>admin/theme/theme.css?ver=<?php echo PLX_VERSION ?>" media="screen" />
+	<link rel="stylesheet" type="text/css" href="themes/<?php echo gu_config::get('theme_name');?>/css/style.css?v=<?php echo GUTUMA_VERSION_NAME ?>" media="screen" />
+<?php if(version_compare(@PLX_VERSION,'5.7','>')){ $pathfont = (version_compare(@PLX_VERSION,'5.8.3','>')? 'fontello/css': 'fonts'); ?>
+	<link rel="stylesheet" type="text/css" href="<?php echo PLX_MORE ?>admin/theme/<?=$pathfont?>/fontello.css?v=<?php echo PLX_VERSION ?>" media="screen" />
+<?php } ?>
 	<link rel="icon" href="<?php echo PLX_MORE ?>admin/theme/images/favicon.png" />
-	<?php if(file_exists(PLX_GROOT.$plxAdmin->aConf['custom_admincss_file'])) echo '	<link rel="stylesheet" type="text/css" href="'.PLX_GROOT.$plxAdmin->aConf['custom_admincss_file'].'?v='.PLX_VERSION.'" media="screen" />'."\n" ?>
 <?php
-	if(file_exists(PLX_GROOT.$plxAdmin->aConf['racine_plugins'].'admin.css'))
-		echo '	<link rel="stylesheet" type="text/css" href="'.PLX_GROOT.$plxAdmin->aConf['racine_plugins'].'admin.css" media="screen" />'."\n";
-	if(gu_session_is_valid()){//only valid user
+	if(!empty ($custom_admincss_file = PLX_GROOT.$plxAdmin->aConf['custom_admincss_file']) && is_file($custom_admincss_file)) echo '	<link rel="stylesheet" type="text/css" href="'.$custom_admincss_file.'?v='.filemtime($custom_admincss_file).'" media="screen" />'.PHP_EOL;
+	if(gu_session_is_valid()){#only valid user
+		if(!empty ($admincss_file = PLX_GROOT.$plxAdmin->aConf['racine_plugins'].'admin.css') && is_file($admincss_file)) echo '	<link rel="stylesheet" type="text/css" href="'.$admincss_file.'?v='.filemtime($admincss_file).'" media="screen" />'.PHP_EOL;
 ?>
 <!--
 	<script src="<?php echo PLX_MORE ?>lib/functions.js?ver=<?php echo PLX_VERSION ?>"></script>
@@ -43,9 +63,11 @@ if(isset($_GET["del"]) AND $_GET["del"]=="install") {
 	<script src="<?php echo PLX_MORE ?>lib/mediasManager.js?ver=<?php echo PLX_VERSION ?>"></script>
 	<script defer src="<?php echo PLX_MORE ?>lib/multifiles.js?ver=<?php echo PLX_VERSION ?>"></script>
 -->
-	<?php eval($plxAdmin->plxPlugins->callHook('AdminTopEndHead')) ?>
-	<?php } ?>
-	<link rel="stylesheet" type="text/css" href="themes/<?php echo gu_config::get('theme_name');?>/css/style.css?v=<?php echo GUTUMA_VERSION_NAME ?>" media="screen" />
+<?php
+		# Hook Plugins
+		eval($plxAdmin->plxPlugins->callHook('AdminTopEndHead'));
+	}# fi only valid user
+?>
 	<script type="text/javascript" src="js/misc.min.js?v=<?php echo GUTUMA_VERSION_NAME ?>"></script>
 	<script type="text/javascript" src="js/tw-sack.min.js?v=<?php echo GUTUMA_VERSION_NAME ?>"></script>
 	<script type="text/javascript" src="js/md5.min.js?v=<?php echo GUTUMA_VERSION_NAME ?>"></script>
@@ -68,11 +90,12 @@ if (!$nomenu) {
 				<li>
 					<small><a class="back-site" href="<?php echo PLX_GROOT ?>" title="<?php echo L_BACK_TO_SITE_TITLE ?>"><?php echo L_BACK_TO_SITE;?></a></small>
 				</li>
-				<?php if(isset($plxAdmin->aConf['homestatic']) AND !empty($plxAdmin->aConf['homestatic'])) : ?>
 				<li>
+<?php if(isset($plxAdmin->aConf['homestatic']) AND !empty($plxAdmin->aConf['homestatic'])) : ?>
 					<small><a class="back-blog" href="<?php echo $plxAdmin->urlRewrite('?blog'); ?>" title="<?php echo L_BACK_TO_BLOG_TITLE ?>"><?php echo L_BACK_TO_BLOG;?></a></small>
+<?php else: ?>&nbsp;
+<?php endif; ?>
 				</li>
-				<?php endif; ?>
 				<li>
 					<small><a class="logout" href="<?php echo PLX_MORE ?>admin/auth.php?d=1" title="<?php echo L_ADMIN_LOGOUT_TITLE ?>"><?php echo L_ADMIN_LOGOUT ?></a></small>
 				</li>
@@ -91,7 +114,7 @@ if (!$nomenu) {
 						else echo L_PROFIL_WRITER; ?>
 					</em>
 				</li>
-				<li><small><a class="version" title="PluXml" href="http://www.pluxml.org">PluXml <?php echo $plxAdmin->aConf['version'] ?></a></small></li>
+				<li><small><a class="version" title="<?php echo gu_config::get('application_name').t(' Powered by') .' ' . t('Gutuma') ?>" href="<?php echo GUTUMA_URL ?>"><?php echo t('Gutuma').'&nbsp;'.GUTUMA_VERSION_NAME ?></a> &amp; <a class="version" title="PluXml" href="<?php echo defined('PLX_REPO_URL')?PLX_REPO_URL:GLX_URL_REPO ?>">PluXml&nbsp;<?php echo $plxAdmin->aConf['version'] ?></a></small></li>
 			</ul>
 		</header>
 		<nav class="responsive-menu">
@@ -173,5 +196,6 @@ if (!$nomenu) {
 <?php
 		if(is_file($plxAdmin->urlRewrite().'install.php')) echo '<p class="alert red">'.L_WARNING_INSTALLATION_FILE.'</p>';
 		//plxMsg::Display();
+#hook of pluXml (admin) integration (adhesion hook notice & warning) #tep #NOT IN StandAlone
 if(!$nomenu)
 	eval($plxAdmin->plxPlugins->callHook('AdminTopBottom')) ?>

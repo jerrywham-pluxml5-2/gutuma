@@ -73,21 +73,21 @@ function gu_subscription_process($address, &$list_ids, $subscribe, $hash = ''){
 					if($res){//send text & link to validate 1st time of (un)subscrition
 						$sendkey = TRUE;//For send security key
 						$keycode = $listi->get_tmp_key($address);
-						$keytext .= $EOL.t('To approve your % for list "%" visit: ',array(strtolower($what), $list->get_name())).$EOL.$subscribe_url.'addr='.$address.'&list='.$list->get_id().'&action='.($subscribe ?'':'un').'subscribe&k='.$keycode.$EOL.t('Use this link (or copy in your browser address bar) before %, after this date, you need a request new valid link.',array(date(t('Y-m-d H:i'),($listi->timeAddress + $valtime)))).$EOL.$HR;
+						$keytext .= $EOL.t('To approve your % for list "%" visit:',array(strtolower($what), $list->get_friend())).' '.$EOL.$subscribe_url.'addr='.$address.'&list='.$list->get_id().'&action='.($subscribe ?'':'un').'subscribe&k='.$keycode.$EOL.t('Use this link (or copy in your browser address bar) before %, after this date, you need a request new valid link.',array(date(t('Y-m-d H:i'),($listi->timeAddress + $valtime)))).$EOL.$HR;
 					}
-					$status_msg .= '<br /><b><i>'.t(($list->contains($address)?'':'un').'subscribed').'</i></b> '.t('in').' <b>"'.$list->get_name().'"</b> '.t('and').' <b><i>'.t(($listi->contains($address,TRUE)?'is awaiting a process':'has no pending requests')).'.</i></b>';//#msg : State of address for this list, used in following $_SERVER['GU_STATUS_MSG']
+					$status_msg .= '<br /><b><i>'.t(($list->contains($address)?'':'un').'subscribed').'</i></b> '.t('in').' <b>"'.$list->get_friend().'"</b> '.t('and').' <b><i>'.t(($listi->contains($address,TRUE)?'is awaiting a process':'has no pending requests')).'.</i></b>';//#msg : State of address for this list, used in following $_SERVER['GU_STATUS_MSG']
 				}//FI first time
 			}//FI Public list
 			$isList = ($res?' ('.($firstTime?t('waiting a process'):($lastTime?t('process validated'):'')).')':'');//add temporary/real for #msg
-			$isList = '<br />'.$list->get_name().$isList;
+			$isList = '<br />'.$list->get_friend().$isList;
 			if($res)
 				$succ_list_names[] = $isList;
 			else
 				$fail_list_names[] = $isList;
 		}
 	}//fi foreach lists
-	if ($status_msg AND !$sendkey)// If no ops & have #msg, display it 
-		$_SERVER['GU_STATUS_MSG'] = t('Email <b>"%"</b> is: ',array($address)) . $status_msg;#msg : State of address
+	if ($status_msg AND !$sendkey)// If no ops & have #msg, display it
+		$_SERVER['GU_STATUS_MSG'] = t('Email <b>"%"</b> is:',array($address)) .' '. $status_msg;#msg : State of address
 	$succ_list_count = count($succ_list_names);
 	if ($succ_list_count < 1)// Check if there were any successful
 		return FALSE;
@@ -105,7 +105,7 @@ function gu_subscription_process($address, &$list_ids, $subscribe, $hash = ''){
 			$action = strtolower($what);
 			$text = t('This is an automated message');
 			$text .= t(' to secure the % and certify that you are the initiator of this process for the following list'.($plural?'s':'').':',array($action))."\r\n* ".$succ_list_text.$EOL;
-			$text .= $EOL.str_repeat('=',72).$keytext."\r\n\r\n".t('To change your subscription'.($plural?'s':'').' visit: ').$EOL.$subscribe_url.'addr='.$address.((count($succ_list_names) == 1) ? '&list='.$list_id : '').$EOL;
+			$text .= $EOL.str_repeat('=',72).$keytext."\r\n\r\n".t('To change your subscription'.($plural?'s':'').' visit:').' '.$EOL.$subscribe_url.'addr='.$address.((count($succ_list_names) == 1) ? '&list='.$list_id : '').$EOL;
 			$text .= t('Please do not reply to this message. Thank you.');
 			gu_debug('gu_subscription_process() sendkey message to '.$address.' :<br /> subject :<br />'.$subject.'<br />text :<br />'.$text);
 //var_export('<pre>First step message : subject : '.$subject.PHP_EOL.$text.'</pre>');#dbg
@@ -119,7 +119,7 @@ function gu_subscription_process($address, &$list_ids, $subscribe, $hash = ''){
 				$subject = '['.$subject_prefix.'] '.$what.' '.t('confirmed').' '.t('of').' '.$address;
 				$action = ($subscribe ? t('subscribed'.($plural?'  ':' ').'to') : t('unsubscribed'.($plural?'  ':' ').'from'));
 				$text = t('This is an automated message').t(' to confirm that you have been % the following list'.($plural?'s':'').':',array(str_replace('  ',' ',$action)))."\r\n* ".$succ_list_text.$EOL;
-				$text .= $EOL.t('To change your subscription'.($plural?'s':'').' visit: ').$EOL.$subscribe_url.'addr='.$address.((count($succ_list_names) == 1) ? '&list='.$list_id : '').$EOL;
+				$text .= $EOL.t('To change your subscription'.($plural?'s':'').' visit:').' '.$EOL.$subscribe_url.'addr='.$address.((count($succ_list_names) == 1) ? '&list='.$list_id : '').$EOL;
 				$text .= t('Please do not reply to this message. Thank you.');
 				gu_debug('gu_subscription_process() Send welcome / goodbye message to : '.$address.'<br /> subject :<br />'.$subject.'<br />text :<br />'.$text);
 //echo '<pre>Welcome / goodbye message : subject : '.$subject.PHP_EOL.$text.'</pre>';#dbg

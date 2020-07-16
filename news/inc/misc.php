@@ -11,7 +11,42 @@
  * @author	Thomas INGLES
  * @author	Cyril MAGUIRE
 */
+
 /**
+ * Méthode qui empeche de mettre en cache une page
+ *
+ * @param	type	string 		type de source
+ * @param	charset	string 		type d'encodage
+ * @return	void
+ * @author	Stephane F., Thomas Ingles
+ **/
+function gu_cleanHeaders($type='text/html', $charset=GUTUMA_ENCODING) {
+	header_remove();
+	header('Expires: Wed, 11 Jan 1984 05:00:00 GMT');
+	header('Last-Modified: '.gmdate( 'D, d M Y H:i:s' ).' GMT');
+	header('Cache-Control: no-cache, must-revalidate, max-age=0');
+	header('Cache: no-cache');
+	header('Pragma: no-cache');
+	header('Content-Type: '.$type.'; charset='.$charset);
+}
+#https://www.php.net/manual/en/function.headers-sent.php#60450 + gu_cleanHeaders
+function gu_redirect($filename) {
+	if (!headers_sent())
+		header('Location: '.$filename);
+	else {
+		gu_cleanHeaders();
+		?>
+		<noscript>
+		<meta http-equiv="refresh" content="0;url=<?=$filename?>" />
+		</noscript>
+		<script type="text/javascript">
+		window.location.href='<?=$filename?>';
+		</script>
+		<?php
+	}
+	exit;
+
+}/**
  * Checks the start of the specified string
  * @param string $haystack The string to check
  * @param string $needle The start to check for
@@ -91,6 +126,7 @@ function get_get_var($name){
  * @return bool TRUE is email address is valid, else FALSE
  */
 function check_email($address){
+	$address = trim($address);
 // Reject blank addresses and invalid characters
 	if ($address == '' || preg_match('[^0-9a-zA-Z_@\.\[\]\-]', $address))
 		return FALSE;
@@ -123,13 +159,14 @@ function rm_recursive($path){
 /**
  * Converts a path such as 'login.php' to a full URL, or returns the current absolute url if path is not specified
  * @param string $path The path to convert, blank if the current url should be used
- * @return string The absolute URL
+ * @return string The absolute URL ::: NOTE : $_SERVER["HTTP_X_FORWARDED_PROTO"] is in test to fix for toile-libre.org : Blocage du chargement du contenu mixte actif (mixed active content) « http://sel66.toile-libre.org/plugins/gutuma/news/ajax.php »
  */
 function absolute_url($path = ''){
-	$isHTTPS = (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on");
-	$port = (isset($_SERVER["SERVER_PORT"]) && ((!$isHTTPS && $_SERVER["SERVER_PORT"] != "80") || ($isHTTPS && $_SERVER["SERVER_PORT"] != "443")));
-	$port = ($port) ? ':'.$_SERVER["SERVER_PORT"] : '';
-	$base = ($isHTTPS ? 'https://' : 'http://').$_SERVER["SERVER_NAME"].$port;
+	$isHTTPS = (
+		(isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") OR
+		(isset($_SERVER["HTTP_X_FORWARDED_PROTO"]) && $_SERVER["HTTP_X_FORWARDED_PROTO"] == 'https')
+	);
+	$base = ($isHTTPS ? 'https://' : 'http://').$_SERVER["SERVER_NAME"];
 	if ($path != ''){
 		$abs_path = str_replace("\\", "/", get_absolute_path(rtrim(dirname($_SERVER['PHP_SELF']), '/\\').'/'.$path));
 		return $base.'/'.$abs_path;
@@ -176,7 +213,7 @@ function html_to_text(&$html){
 	// Even tho TinyMCE tends to put newlines into the HTML in the right places,
 	// we can't assume that about the formatting of the HTML, so we start by
 	// removing all new lines
-	$text = str_replace(array("\r\n", "\n"), '', $html);
+	$text = str_replace(array("\r", "\n"), '', $html);
 // table to paragraph
 	$text = str_replace('<table', "<div", $text);
 	$text = str_replace('</table>', "</div>", $text);
@@ -184,6 +221,8 @@ function html_to_text(&$html){
 	$text = str_replace('</tr>', "</p>", $text);
 	$text = str_replace('<td', " <span", $text);
 	$text = str_replace('</td>', "</span> ", $text);
+	$text = str_replace('<th', " <span", $text);
+	$text = str_replace('</th>', "</span> ", $text);
 // Start-tag beginnings that deserve a new line
 	$text = str_replace('<p', "\n<p", $text);
 	$text = str_replace('<h', "\n<h", $text);

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document>
-  <title><![CDATA[Gutuma]]></title>
-  <author><![CDATA[Thomas Ingles]]></author>
-  <version>2.2.0</version>
-  <date>2019.01.16.16</date><!-- AAAA.MM.JJ.HH -->
-  <site>http://sudwebdesign.free.fr/index.php?article5</site>
-  <description><![CDATA[Gérer des cyberlettres avec Gutuma pour Pluxml]]></description>
-  <scope></scope>
+    <title><![CDATA[Gutuma]]></title>
+    <author><![CDATA[Thomas Ingles]]></author>
+    <version>2.2.1</version>
+    <date>2020.07.16.18</date><!-- AAAA.MM.JJ.HH -->
+    <site>http://sudwebdesign.free.fr/index.php?article5</site>
+    <description><![CDATA[Gérer des cyberlettres avec Gutuma pour Pluxml]]></description>
+    <requirements></requirements>
+    <compatible>5.2+</compatible>
+    <scope></scope>
 </document>

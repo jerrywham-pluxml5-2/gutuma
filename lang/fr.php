@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Fichier de traduction pour gutuma
  *
@@ -23,5 +23,6 @@ $LANG = array(
  'L_SEE_ADMIN'         => 'Voir avec un administrateur pour activer votre compte.',
  'L_ERR_EMAIL'         => 'Veuillez renseigner une adresse mail dans le profil Admin 001',// votre profil
  'L_ERR_UPDATE'        => 'Veuillez prévenir un administrateur que Gutuma a besoin de sa connexion au module pour terminer les opérations.',
- 'L_INSTALL_FIRST'     => 'Noyau de Gutuma non installé'
+ 'L_INSTALL_FIRST'     => 'Noyau de Gutuma non installé',
+ 'L_JUNE'              => 'Don en Ğ1, 1ere monnaie numérique libre'
 );

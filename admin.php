@@ -2,24 +2,26 @@
 /**
  * Gestion des utilisateurs pour le module de newsletters
  *
- * @version 2.0.0
- * @date	23/09/2018
+ * @version 2.2.1
+ * @date	16/07/2020
  * @package plugin Gutuma
  * @author	Cyril MAGUIRE, Thomas Ingles
  **/
-# Control du token du formulaire
-plxToken::validateFormToken($_POST);
-# Controle de l'accès à la page en fonction du profil de l'utilisateur connecté
-$plxAdmin->checkProfil(PROFIL_ADMIN,PROFIL_MANAGER);
 
 $aProfils = $plxPlugin->aProfils();# Tableau des profils
 $ok_config = $plxPlugin->getGutumaConfig();#On charge la config de gutuma : $gu_config_version & $gu_config[]
 #echo $ok_config;exit;//dbg
+
+#Need to know of PluXml motor (for inc config in future) #note : PLX_VERSION #created in 5.5
+$_SESSION['GUTUMA_PLX_VERSION'] = defined('PLX_VERSION')? PLX_VERSION : '5.3.1';
+
 if($ok_config){//Le fichier de config existe donc le module est installé
 	eval($ok_config);
 	$ok_config = TRUE;
 }
 if(!empty($_POST)){
+	# Controle du token du formulaire
+	plxToken::validateFormToken($_POST);
 	foreach($_POST['user'] as $key => $value){
 		$plxPlugin->setParam('user_'.$key, $value, 'cdata');
 		$_userid = $key;
@@ -70,7 +72,7 @@ if(isset($_GET['u']) && isset($_GET['del']) && !empty($_GET['u']) && $_GET['del'
 			<th><?php echo L_PROFIL_LOGIN ?></th>
 			<th><?php echo L_PROFIL ?></th>
 			<th><?php echo L_ARTICLE_STATUS ?></th>
-			<th><?php echo L_CONFIG_USERS_ACTION ?></th>
+			<th><?php echo defined('L_ACTION')? L_ACTION: L_CONFIG_USERS_ACTION?></th>
 		</tr>
 	</thead>
 	<tbody>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /************************************************************************
  * @project Gutuma Newsletter Managment
  * @author Rowan Seymour
@@ -11,7 +11,7 @@
  * @date	01/10/2018
  * @author	Cyril MAGUIRE, Thomas INGLES
 */
-$s = '';//pluriel
+$s = '';# Pluriel(s) : click on the link'.$s.' in the email ...
 ?>
 		</div>
 		<div id="content">
@@ -21,9 +21,9 @@ $s = '';//pluriel
 				<form action="" name="subscribe_form" method="post" onsubmit="return checkSubmit(this);">
 <?php
 				if (isset($list) && is_object($list))
-					echo '<h2>'.$list->get_name().'</h2><input type="hidden" id="subscribe_list" name="subscribe_list[]" value="'.$list->get_id().'" />';
+					echo '<h2>'.$list->get_friend().'</h2><input type="hidden" id="subscribe_list" name="subscribe_list[]" value="'.$list->get_id().'" />';
 				elseif (isset($lists)) {
-					$s = 's';
+					$s = 's';# Pluriels
 					echo '<h2>'.t('Newsletters').'</h2>';
 					echo '<table border="0" style="width: 300px; margin: auto" class="results" cellpadding="0" cellspacing="0">';
 					foreach ($lists as $list) {
@@ -31,7 +31,7 @@ $s = '';//pluriel
 						$checked = in_array($list_id,$posted_lists)?' checked':'';
 ?>
 						<tr>
-							<td style="text-align: left;"><?php echo $list->get_name(); ?></td>
+							<td style="text-align: left;"><?php echo $list->get_friend(); ?></td>
 							<td style="text-align: right;"><input id="subscribe_list" name="subscribe_list[]" type="checkbox" value="<?php echo $list->get_id(); ?>"<?php echo $checked ?> /></td>
 						</tr>
 <?php
@@ -39,10 +39,10 @@ $s = '';//pluriel
 					echo '</table>';
 				}
 				echo '<p>'.t('Email address').'</p>';
-				if ($address != '')
+				if ($address != '' && check_email($address))
 					echo '<h3>'.$address.'</h3><input name="subscribe_address" type="hidden" id="subscribe_address" value="'.$address.'" />';
 				else
-					echo '<p><input name="subscribe_address" type="text" class="textfield" id="subscribe_address" style="width: 200px" placeholder="address@email.com" required="required" /></p>';
+					echo '<p><input name="subscribe_address" type="email" value="'.@$address.'" class="textfield" id="subscribe_address" style="width: 200px" placeholder="address@email.com" required="required" /></p>';
 ?>
 					<p><input name="subscribe_submit" type="submit" id="subscribe_submit" value="<?php echo t('Subscribe');?>" />
 					<input name="unsubscribe_submit" type="submit" id="unsubscribe_submit" value="<?php echo t('Unsubscribe');?>" />

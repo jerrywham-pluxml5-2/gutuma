@@ -1,10 +1,10 @@
-<?php 
+<?php
 /************************************************************************
  * @project Gutuma Newsletter Managment
  * @author Rowan Seymour
  * @copyright This source is distributed under the GPL
  * @file included settings page
- * @modifications Cyril Maguire
+ * @modifications Cyril Maguire, Thomas Ingles
  */
 include_once '_menu.php';?>
 
@@ -21,11 +21,11 @@ include_once '_menu.php';?>
 
 <?php gu_theme_messages(); ?>
 
-<form id="edit_form" name="edit_form" method="post" action="" onSubmit="gu_browser_keep_save_pass();">
+<form id="setting form" name="setting_form" method="post" action="">
 	<div class="menubar">
-<?php if ($section == 'transport') { ?>	
+<?php if ($section == 'transport') { ?>
 		<input name="test_settings" type="submit" id="test_settings" value="<?php echo t('Test');?>" />
-<?php } ?>	
+<?php } ?>
 		<input name="save_settings" type="submit" id="save_settings" value="<?php echo t('Save');?>" />
 	</div>
 	<div class="formfieldset">
@@ -128,14 +128,14 @@ include_once '_menu.php';?>
 		$noUser = true;
 		$unified = null;
 		foreach ($users as $key => $value) :
-			if ($plxPlugin->getParam('user_'.$value['id']) == 'activé'&&!isset($unified[$value['id']])) : 
+			if ($plxPlugin->getParam('user_'.$value['id']) == 'activé'&&!isset($unified[$value['id']])) :
 				$noUser = false;
 				$unified[$value['id']]=true;
 ?>
 			<div class="formfieldlabel"><?php echo t('Login of user').' '.$key.'<br />Id:&nbsp;'.$value['id'].' ('.$value['profil'].')';?>:</div>
-			<div class="formfieldcontrols"><input type="text" name="user_<?php echo $key; ?>" class="textfield users" value="<?php echo $value['login'];?>" readonly="readonly" style="width:95%;"/></div>	
+			<div class="formfieldcontrols"><input type="text" name="user_<?php echo $key; ?>" class="textfield users" value="<?php echo $value['login'];?>" readonly="readonly" style="width:95%;"/></div>
 			<div class="formfielddivider"></div>
-<?php 
+<?php
 			endif;
 		endforeach;
 ?>
@@ -146,22 +146,25 @@ include_once '_menu.php';?>
 <?php } elseif ($section == 'transport') { ?>
 		<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('Gutuma will first try to use an SMTP server to send messages. If that fails, <code>Sendmail</code> may be tried followed by PHP <code>mail()</code>');?>.</div>
+		</div>
+		<div class="formfield">
+			<div class="formfielddivider"></div>
 			<div class="formfieldlabel"><?php echo t('Use SMTP');?></div>
 			<div class="formfieldcontrols"><?php gu_theme_bool_control('use_smtp'); ?></div>
 			<div class="formfielddivider"></div>
-			<div class="formfieldcomment"><?php echo t('If server and port are left blank, Gutuma will attempt to auto-detect them');?>.<code></code></div>
-			<div class="formfieldlabel"><?php echo t('SMTP server');?></div>
-			<div class="formfieldcontrols"><?php gu_theme_text_control('smtp_server'); ?></div>
-			<div class="formfielddivider"></div>
-			<div class="formfieldlabel"><?php echo t('SMTP port');?></div>
-		  <div class="formfieldcontrols"><?php gu_theme_int_control('smtp_port', 5); ?>
-			<?php echo t('Encryption');?> <?php gu_theme_list_control('smtp_encryption', array(array('', t('None')), array('SSL', 'SSL'), array('TLS', 'TLS'))); ?></div>
+			<div class="formfieldlabel"><?php echo t('SMTP password');?></div>
+			<div class="formfieldcontrols"><?php gu_theme_password_control('smtp_password', 'readonly="readonly" autocomplete="new-password" onfocus="readonlyToWrite(this);"'); ?></div>
 			<div class="formfielddivider"></div>
 			<div class="formfieldlabel"><?php echo t('SMTP username');?></div>
 			<div class="formfieldcontrols"><?php gu_theme_text_control('smtp_username', 'autocomplete="off"'); ?></div>
 			<div class="formfielddivider"></div>
-			<div class="formfieldlabel"><?php echo t('SMTP password');?></div>
-			<div class="formfieldcontrols"><input type="password" style="display:none;"><?php gu_theme_password_control('smtp_password', 'autocomplete="off"'); ?></div>
+			<div class="formfieldcomment"><?php echo t('If server and port are left blank, Gutuma will attempt to auto-detect them');?>.<code></code></div>
+			<div class="formfieldlabel"><?php echo t('SMTP port');?></div>
+		  <div class="formfieldcontrols"><?php gu_theme_int_control('smtp_port', 5); ?>
+			<?php echo t('Encryption');?> <?php gu_theme_list_control('smtp_encryption', array(array('', t('None')), array('SSL', 'SSL'), array('TLS', 'TLS'))); ?></div>
+			<div class="formfielddivider"></div>
+			<div class="formfieldlabel"><?php echo t('SMTP server');?></div>
+			<div class="formfieldcontrols"><?php gu_theme_text_control('smtp_server'); ?></div>
 		</div>
 		<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('If Sendmail is available on your server you can enable it here');?>.</div>
@@ -176,12 +179,27 @@ include_once '_menu.php';?>
 		<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('Some SMTP servers have restrictions on the number of emails that can be sent per connection so you can limit the number of messages sent in a single batch. You can also set a time limit on batch sends to avoid timeouts');?>.</div>
 			<div class="formfieldlabel"><?php echo t('Max batch size');?></div>
-			<div class="formfieldcontrols"><?php gu_theme_int_control('batch_max_size'); ?><?php echo t(' emails');?></div>
+			<div class="formfieldcontrols"><?php gu_theme_int_control('batch_max_size'); ?> <?php echo t('emails');?></div>
 			<div class="formfielddivider"></div>
 			<div class="formfieldlabel"><?php echo t('Batch time limit');?></div>
 			<div class="formfieldcontrols"><?php gu_theme_int_control('batch_time_limit'); ?> <?php echo t('seconds');?></div>
+			<div class="formfielddivider"></div>
+			<div class="formfieldcomment"><a href="newsletters.php?box=outbox"><img width="16px" src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_send_auto.png" /></a>&nbsp;<?php echo t('NOTE: Theses parameters modify numbers of send mails and countdown progress bar of #AutoBatch tools');?>.</div>
 		</div>
 <?php } elseif ($section == 'messages') { ?>
+		<div class="formfield" title="Batch never Fail">
+			<div class="formfieldcomment">
+				<?php echo t('Replace failed emails at end of batch to attempt a new send on next time.<br />Note: have risk of limitless loop with cron job');?>.
+				<?php echo t('Recipients are moved at end of list to attempt a new send on next round,<br /><b>Be careful!</b> If have error always with same emails or on same times. Remove bad addresses or send newsletters when server have good disponibilities (morning, night, lunch times, ...)');?>.
+			</div>
+			<div class="formfieldlabel messages"><?php echo t('Attempt to send newsletter back on failed emails (Don\'t miss send)');?></div>
+			<div class="formfieldcontrols messages"><?php gu_theme_bool_control('batch_never_fail'); ?></div>
+		</div>
+		<div class="formfield" title="Batch to Drafts">
+			<div class="formfieldcomment"><?php echo t('When batch is finished, restore it to Drafts');?>.</div>
+			<div class="formfieldlabel messages"><?php echo t('Restore posted newsletter to Draft');?></div>
+			<div class="formfieldcontrols messages"><?php gu_theme_bool_control('batch_to_drafts'); ?></div>
+		</div>
 		<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('List names can be automatically added to the subject of sent newsletters, e.g. <code>[List] Subject</code>');?>.</div>
 			<div class="formfieldlabel messages"><?php echo t('Prefix list name on subjects');?>.</div>
@@ -193,7 +211,7 @@ include_once '_menu.php';?>
 			<div class="formfieldcontrols messages"><?php gu_theme_bool_control('msg_coll_name_on_multilist'); ?></div>
 		</div>
 		<div class="formfield">
-			<div class="formfieldcomment"></div><?php echo t('A signature containing an unsubscribe link can be automatically appended to all sent newsletters');?>.</div>
+			<div class="formfieldcomment"><?php echo t('A signature containing an unsubscribe link can be automatically appended to all sent newsletters');?>.</div>
 			<div class="formfieldlabel messages"><?php echo t('Append unsubscribe link to sent newsletters');?></div>
 			<div class="formfieldcontrols messages"><?php gu_theme_bool_control('msg_append_signature'); ?></div>
 		</div>

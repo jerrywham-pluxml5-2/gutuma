@@ -1,4 +1,4 @@
-<?php 
+<?php
 /************************************************************************
  * @project Gutuma Newsletter Managment
  * @author Rowan Seymour
@@ -151,6 +151,8 @@ class gu_config{
 		self::$values['smtp_password'] = '';
 		self::$values['batch_max_size'] = 500;
 		self::$values['batch_time_limit'] = 30;
+		self::$values['batch_never_fail'] = FALSE;// Restore fail emails to recip.php : at end of send batch (Dont delete its, but risk of limitless loop
+		self::$values['batch_to_drafts'] = TRUE;// Dont delete at end of send batch
 		self::$values['msg_prefix_subject'] = TRUE;
 		self::$values['msg_coll_name_on_multilist'] = FALSE;
 		self::$values['msg_append_signature'] = TRUE;
@@ -194,7 +196,7 @@ class gu_config{
 		if (!check_email(self::$values['admin_email']))
 			return gu_error(t('A valid administrator email must be at provided'));
 		if (!is_dir(RPATH.'themes/'.self::$values['theme_name']))
-			return gu_error(t("Theme <em>%</em> doesn't exists. You need to create it first !",array(self::$values['theme_name']) ) );
+			return gu_error(t("Theme <em>%</em> doesn't exists. You need to create it first!",array(self::$values['theme_name']) ) );
 		if (!touch(GUTUMA_CONFIG_FILE))//$lh = @fopen(GUTUMA_CONFIG_FILE, 'w'); if ($lh == FALSE)fclose($lh);
 			return gu_error(t("Unable to create/open % file for writing",array(GUTUMA_CONFIG_FILE)));
 //		$w = (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN');#iswin more simply # 1st idea 4 detect windwos ((strpos(str_replace(":\\","",self::$values[$key]),":\\")!=false))//check is :\ in path (is windows path ?) /:
@@ -217,6 +219,7 @@ class gu_config{
 		file_put_contents(GUTUMA_CONFIG_FILE,"<?php /*\n".base64_encode($f)."\n*/  ?>");// Version encodée (voir ligne 115 & 174)
 /*		file_put_contents(GUTUMA_CONFIG_FILE,"<?php \n".$f."\n?>"); */ // Version décodée (voir ligne 116 & 175)
 		$plxMotor->plxPlugins->aPlugins['gutuma']->saveParams();//2.2.0
+		unset($_SESSION['info']);#genereated by saveparam : fix notification when go on real PluXml #only info : error ok ;)
 		return TRUE;
 	}
 	/**

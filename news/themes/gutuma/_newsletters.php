@@ -1,4 +1,4 @@
-<?php 
+<?php
 /************************************************************************
  * @project Gutuma Newsletter Managment
  * @author Rowan Seymour
@@ -25,44 +25,47 @@ include_once '_menu.php';?>
 	</div>
 </div>
 <?php gu_theme_messages(); ?>
-
 <?php if ($box == 'drafts') { ?>
-<p><?php echo t('These are the newsletters which have not yet been sent.');?> </p>
+<p><?php echo t('These are the newsletters that can be modified before they are sent.');?> </p>
 <?php } elseif ($box == 'outbox') { ?>
 <p><?php echo t('These are the newsletters which have been sent but have not yet been delivered to all recipients.');?> </p>
+<div id="autobatch" style="display:<?php echo($auto_send)? '': 'none'?>"><span id="countdown"></span><span id="autobatchmenu"></span><progress value="0" max="<?php echo $batch_time_limit ?>" id="progressBar"></progress></div>
 <?php } ?>
 <form method="post" name="newsletters_form" id="newsletters_form" action=""><input name="num_newsletters" type="hidden" id="num_newsletters" value="<?php echo count($newsletters); ?>" />
 	<table border="0" cellspacing="0" cellpadding="0" class="results">
-    <tr>
-      <td><strong><?php echo t('Subject');?></strong></td>
-      <td><strong><?php echo t('Recipients');?></strong></td>
+		<tr>
+			<td><strong><?php echo t('Subject');?></strong></td>
+			<td><strong><?php echo t('Recipients');?></strong></td>
 <?php if ($box == 'drafts') { ?>
-			<td>&nbsp;</td>  
+			<td>&nbsp;</td>
 <?php } elseif ($box == 'outbox') { ?>
-      <td><strong><?php echo t('Progress');?></strong></td>
-<?php } ?> 
-			<td>&nbsp;</td> 
-    </tr>
+			<td><strong><?php echo t('Progress');?></strong></td>
+<?php } ?>
+			<td><strong><?php echo t('Modified on');?></strong></td>
+			<td><strong><?php echo t('Created on');?></strong></td>
+			<td title="<?php echo t('Actions');?>" class="action" style="text-align: right"><input id="allin" type="checkbox" onclick="checkAll(this.form, 'idNew[]')" /><script type="text/javascript">document.write(gu_newsletter_thead_menu())</script></td>
+		</tr>
 <?php
 if (count($newsletters) > 0) {
 	foreach($newsletters as $newsletter) {
 ?>
 		<tr id="row_<?php echo $newsletter->get_id(); ?>">
-      <td><?php echo str_limit($newsletter->get_subject(), 40); ?></td> 	  
-      <td><?php echo str_limit($newsletter->get_recipients(), 40); ?></td>
+			<td class="word-wrap"><?php echo str_limit($newsletter->get_subject(), 40); ?></td>
+			<td class="word-wrap"><?php echo str_limit($newsletter->get_recipients(), 40); ?></td>
 <?php if ($box == 'drafts') { ?>
-			<td>&nbsp;</td>    
-			<td style="text-align: right"><script type="text/javascript">document.write(gu_newsletter_draft_menu(<?php echo $newsletter->get_id(); ?>))</script></td>
+			<td>&nbsp;</td>
 <?php } elseif ($box == 'outbox') { ?>
 			<td><?php $stats = $newsletter->get_send_progress(); echo (($stats[1] - $stats[0]).'/'.$stats[1]); ?></td>
-			<td style="text-align: right"><script type="text/javascript">document.write(gu_newsletter_outbox_menu(<?php echo $newsletter->get_id(); ?>))</script></td>
 <?php } ?>
-    </tr>
+			<td class="mini"><?php echo $newsletter->get_msg_date();#v2.2.1 ?></td>
+			<td class="mini"><?php echo $newsletter->get_created_date();#v2.2.1 ?></td>
+			<td class="action" style="text-align: right"><script type="text/javascript">document.write(gu_newsletter_menu(<?php echo $newsletter->get_id(); ?>,'<?php echo $box ?>'))</script></td>
+		</tr>
 <?php
 	}
 }
 ?>
-		<tr id="row_empty" style="display: <?php echo (count($newsletters) == 0) ? 'table-row' : 'none'; ?>"><td colspan="4" class="emptyresults"><?php echo t('No newsletters');?></td></tr>
-	</table> 
+		<tr id="row_empty" style="display: <?php echo (count($newsletters) == 0) ? 'table-row' : 'none'; ?>"><td colspan="6" class="emptyresults"><?php echo t('No newsletters');?></td></tr>
+	</table>
 </form>
 <p>&nbsp;</p>

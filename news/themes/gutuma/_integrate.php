@@ -1,4 +1,4 @@
-<?php 
+<?php
 /************************************************************************
  * @project Gutuma Newsletter Managment
  * @author Rowan Seymour
@@ -14,7 +14,7 @@
 
 include_once '_menu.php';?>
 
-<h2><?php echo t('Gadgets for other sites');?></h2>
+<h2><?php echo t('Gadgets for other sites') . ($generate?' <i><sup><sub><i>'.t('Subscribe '.strtr($gadget_type,'_',' ')).'</sub></sup></i>':'');?></h2>
 
 <?php gu_theme_messages(); ?>
 
@@ -30,19 +30,19 @@ if (!$generate) {
 	</div>
 	<div class="formfieldset">
 		<div class="formfield">
-			<div class="formfieldlabel"><input type="radio" name="gadget_type" value="basic_link" checked="checked" /> <?php echo t('Basic subscribe link');?></div>
+			<div class="formfieldlabel"><input type="radio" name="gadget_type" value="basic_link" checked="checked" /> <?php echo t('Subscribe basic link');?></div>
 			<div class="formfieldcontrols"><script type="text/javascript">gu_gadgets_write_basic_link(<?php echo $example_list_id; ?>, '<?php echo t('Subscribe to my newsletter!');?>');</script></div>
 		</div>
 		<div class="formfield">
-			<div class="formfieldlabel"><input type="radio" name="gadget_type" value="basic_form" /> <?php echo t('Basic subscribe form');?></div>
+			<div class="formfieldlabel"><input type="radio" name="gadget_type" value="basic_form" /> <?php echo t('Subscribe basic form');?></div>
 			<div class="formfieldcontrols"><script type="text/javascript">gu_gadgets_write_basic_form(<?php echo $example_list_id; ?>, '<?php echo t('Subscribe');?>', '<?php echo t('Your email');?>', 'bf_');</script></div>
 		</div>
 		<div class="formfield">
-			<div class="formfieldlabel"><input type="radio" name="gadget_type" value="ajax_link" /> <?php echo t('AJAX subscribe link');?></div>
+			<div class="formfieldlabel"><input type="radio" name="gadget_type" value="ajax_link" /> <?php echo t('Subscribe ajax link');?></div>
 			<div class="formfieldcontrols"><script type="text/javascript">gu_gadgets_write_ajax_link(<?php echo $example_list_id; ?>, '<?php echo t('Subscribe to my newsletter!');?>');</script></div>
 		</div>
 		<div class="formfield">
-			<div class="formfieldlabel"><input type="radio" name="gadget_type" value="ajax_form" /> <?php echo t('AJAX subscribe form');?></div>
+			<div class="formfieldlabel"><input type="radio" name="gadget_type" value="ajax_form" /> <?php echo t('Subscribe ajax form');?></div>
 			<div class="formfieldcontrols"><script type="text/javascript">gu_gadgets_write_ajax_form(<?php echo $example_list_id; ?>, '<?php echo t('Subscribe');?>', '<?php echo t('Your email');?>', 'af_');</script></div>
 		</div>
 	</div>
@@ -52,7 +52,7 @@ if (!$generate) {
 <?php } else { ?>
 
 	<div class="menubar">
-		<input type="button" id="gadget_back" name="gadget_back" value="<?php echo t('Back');?>" onclick="this.form.submit()" />
+		<input type="button" id="gadget_back" name="gadget_back" value="<?php echo t('Back');?>" onclick="window.location=window.location" />
 		<input type="submit" id="gadget_generate" name="gadget_generate" value="<?php echo t('Update');?>" /><input type="hidden" id="gadget_type" name="gadget_type" value="<?php echo $gadget_type; ?>" />
 	</div>
 	<div class="formfieldset">
@@ -62,7 +62,7 @@ if (!$generate) {
 			case 'list':
 				echo '<div class="formfield">';
 				echo '  <div class="formfieldlabel">'.t('Address list').'</div>';
-				echo '  <div class="formfieldcontrols">'.create_list_control('gadget_list', $gadget_list, TRUE).'</div>';
+				echo '  <div class="formfieldcontrols">'.create_list_control('gadget_list', $gadget_list, $gadget_list_all).'</div>';
 				echo '</div>';
 				break;
 			case 'text':
@@ -90,7 +90,7 @@ if (!$generate) {
 				echo '  <div class="formfieldlabel">'.t('Email hint').'</div>';
 				echo '  <div class="formfieldcontrols">'.create_text_control('gadget_email_hint', $gadget_email_hint).'</div>';
 				echo '</div>';
-				break;		
+				break;
 		}
 	}
 ?>
@@ -116,5 +116,4 @@ if (!$generate) {
 </form>
 <script type="text/javascript">document.getElementById('gadget_html').value = <?php echo $script_create; ?></script>
 <?php
-}
-?>
+}# Fi generate

@@ -7,8 +7,8 @@
  * @modifications Cyril Maguire, Thomas Ingles
  *
  * Gutama plugin package
- *  @version 2.0.0
- * @date	23/09/2018
+ *  @version 2.2.1
+ * @date	16/07/2020
  * @author	Cyril MAGUIRE, Thomas Ingles
 */
 /**
@@ -17,6 +17,7 @@
 class gu_list{
 	private $id;
 	private $name;
+	private $friend;#since 2.2.1
 	private $private;
 	private $addresses;
 	private $size;
@@ -33,6 +34,20 @@ class gu_list{
 	 */
 	public function set_id($id){
 		$this->id = (int)$id;
+	}
+	/**
+	 * Get the friendly name #since 2.2.1
+	 * @return string The friendly name or name
+	 */
+	public function get_friend(){
+		return $this->friend? $this->friend: $this->name;
+	}
+	/**
+	 * Set the friendly name #since 2.2.1
+	 * @param string $name The friendly name
+	 */
+	public function set_friend($name){
+		$this->friend = $name;
 	}
 	/**
 	 * Gets the name
@@ -136,7 +151,7 @@ class gu_list{
 	public function add($address, $update, $tmp = '', $k = ''){
 		if ($update){
 			if ($this->contains($address))
-				return gu_error('<br />'.t('Address <b><i>%</i></b> already in the % list of <b><i>%</i></b>',array($address,($tmp?t('temporary'):t('real')), $this->name)));//in the transition list
+				return gu_error('<br />'.t('Address <b><i>%</i></b> already in the % list of <b><i>%</i></b>&nbsp;',array($address,($tmp?t('temporary'):t('real')), $this->name)));//in the transition list
 			if (strlen($address) > GUTUMA_MAX_ADDRESS_LEN)
 				return gu_error('<br />'.t('Addresses cannot be more than % characters',array(GUTUMA_MAX_ADDRESS_LEN)));
 			if (gu_is_demo() && count($this->addresses) >= GUTUMA_DEMO_MAX_LIST_SIZE)
@@ -188,7 +203,7 @@ class gu_list{
 	 * @return array An array containing the addresses
 	 */
 	public function select_addresses($filter, $start, $count, &$filtered_total, $reverse=FALSE){
-		$time_start = microtime();
+		$time_start = (int)microtime();
 		if ($filter == '')
 			$addresses =& $this->addresses;
 		else {
@@ -199,7 +214,7 @@ class gu_list{
 			}
 		}
 		$filtered_total = count($addresses);
-		gu_debug('gu_list::select_addresses("'.$filter.'", '.$start.', '.$count.') '.(microtime() - $time_start).' secs');
+		gu_debug('gu_list::select_addresses("'.$filter.'", '.$start.', '.$count.') '.((int)microtime() - $time_start).' secs');#editlist.php #Fix Notice: A non well formed numeric value encountered
 		if($reverse) $addresses = array_reverse($addresses);
 		return array_slice($addresses, ($start), $count);
 	}
@@ -213,7 +228,7 @@ class gu_list{
 		$lh = @fopen(realpath($dr).'/'.$this->id.($tmp?'.'.$tmp:'').'.php', 'w');
 		if ($lh == FALSE)
 			return gu_error('<br />'.t('Unable to write list file. Check permissions for directory <code>%</code>',array($dr)));
-		fwrite($lh, "<?php die(); ?>".$this->id.'|'.$this->name.'|'.($this->private ? '1' : '0').'|'.count($this->addresses)."\n");
+		fwrite($lh, "<?php die(); ?>".$this->id.'|'.$this->name.'|'.($this->private ? '1' : '0').'|'.count($this->addresses).'|'.$this->friend."\n");
 		if(is_array($this->addresses))#update (install.php) Fix
 			foreach ($this->addresses as $a)#                                       \/if unsubscribe
 				fwrite($lh, $a."\n");#if [1st step?] (tmp) add SALT&Hash :ou:ailleur (add&remove):  ! my@em.ail;SALT&Hash
@@ -240,20 +255,23 @@ class gu_list{
 	 * @return mixed The list or FALSE if an error occured
 	 */
 	public static function get($id, $load_addresses = FALSE, $tmp = ''){
-		$time_start = microtime();
+		$time_start = (int)microtime();
 		$dr = $tmp?GUTUMA_TEMP_DIR:GUTUMA_LISTS_DIR;
+		$list = $dr.'/'.$id.($tmp?'.'.$tmp:'').'.php';
 // Open list file
-		$lh = @fopen(realpath($dr.'/'.$id.($tmp?'.'.$tmp:'').'.php'), 'r');
+		$lh = @fopen(realpath($list), 'r');
 		if ($lh == FALSE)
 			return gu_error('<br />'.t('Unable to read list file'));
 // Read header from first line
-		$header = explode("|", fgetss($lh));
+		//~ $header = explode("|", fgetss($lh));#fgetss is deprecated on php 7.3 : howto remove <?php die(); ? > without this funk
+		$header = explode("|", strip_tags(fgets($lh)));#fgetss is deprecated on php 7.3 : howto remove <?php die(); ? > without this funk
 		$list = new gu_list();
 		$list->id = $header[0];
 		$list->name = $header[1];
+		$list->friend = trim(@$header[4]);#since 2.2.1 : trim remove EOL \n
 		$list->private = (bool)$header[2];
 		$list->size = (int)$header[3];
-		if ($load_addresses){	// Read all address lines
+		if ($load_addresses){// Read all address lines
 			$addresses = array();
 			$update = false; //remove if old tmp address
 			while (!feof($lh)){
@@ -262,8 +280,8 @@ class gu_list{
 					if($tmp){//remove old temporary @dresses (cron)
 						$a = explode(';',$address);
 //cron by user
-						if($a[0]+(gu_config::get('days')*86400) < time()){//86400 seconds = 1 day (24*60*60) :: remove temp > 15 days (default) = 1296000s 
-							$update = true; 
+						if($a[0]+(gu_config::get('days')*86400) < time()){//86400 seconds = 1 day (24*60*60) :: remove temp > 15 days (default) = 1296000s
+							$update = true;
 							continue;
 						}
 					}
@@ -275,7 +293,9 @@ class gu_list{
 				$list->update('i');//remove if old tmp address
 		}
 		fclose($lh);
-		gu_debug('gu_list::get(id: '.$id.', load_addresses: '.($load_addresses ? 'TRUE' : 'FALSE').', istmp: '.($tmp?'Y':'N').') time : '.number_format((int)(microtime() - $time_start), 7).' secs');
+		gu_debug(
+		'gu_list::get(id: '.
+		$id.', load_addresses: '.($load_addresses ? 'TRUE' : 'FALSE').', istmp: '.($tmp?'Y':'N').') time : '.number_format(((int)microtime() - $time_start), 7).' secs');#compose.php #Fix Notice: A non well formed numeric value encountered
 		return $list;
 	}
 	/**
@@ -303,6 +323,7 @@ class gu_list{
 		$list = new gu_list();
 		$list->id = time();
 		$list->name = $name;
+		$list->friend = $name;#since 2.2.1
 		$list->private = $private;
 		$list->addresses = isset($addresses) ? $addresses : array();
 		if (!$list->update())// Save the list
@@ -334,7 +355,7 @@ class gu_list{
 		if (!empty($first) && isset($addresses[0]))
 			unset($addresses[0]);
 		$addresses = array_unique($addresses);
-		natcasesort($addresses);// Sort addresses alphabetically	
+		natcasesort($addresses);// Sort addresses alphabetically
 		return gu_list::create($name, FALSE, $addresses);
 	}
 	/**
@@ -365,9 +386,11 @@ class gu_list{
 		if ($dh = @opendir(realpath($dr))){
 			while (($file = readdir($dh)) !== FALSE){
 				if ($file[0] != "." && !is_dir($file) && str_ends($file, '.php')){
-					$list = gu_list::get(substr($file, 0, strlen($file - 4)), $load_addresses, $tmp);
+					$list = gu_list::get(substr($file, 0, (strlen($file) - (4 + ($tmp? strlen('.'.$tmp): 0)))), $load_addresses, $tmp);#compose.php #Fix Notice: A non well formed numeric value encountered
+					if (!is_object($list))
+						continue;
 					if (!isset($list->name))
-						$list->update('i');
+						$list->update('i');#***here
 					if ($inc_private || !$list->private)
 						$lists[$list->name] = $list;
 				}

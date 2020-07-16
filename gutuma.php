@@ -1,4 +1,4 @@
-<?php
+<?php if (!defined('PLX_ROOT')) exit;
 /**
  * Classe gutuma
  * @version 2.2.0 * @date	16/01/2019 * @author	Thomas Ingles
@@ -11,8 +11,8 @@ class gutuma extends plxPlugin {
 		$this->listsDir = PLX_ROOT.'data/'.__CLASS__;# Définition de l'emplacement des listes de diffusion des newsletters : next PLX_ROOT.PLX_CONFIG_PATH.'plugins/'.__CLASS__;#tmp (uploads) & save .eml
 		parent::__construct($default_lang);# appel du constructeur de la classe plxPlugin (obligatoire)
 		$this->setAdminProfil(PROFIL_ADMIN, PROFIL_MANAGER);# Autorisation d'accès à l'administration du plugin
+		$this->setAdminMenu($this->getLang('L_GUTUMA_MENU_NAME'), 0, $this->getLang('L_GUTUMA_TITLE_MENU'));#Position du Menu : remplacer 0 par tout autre chiffre
 		if(defined('PLX_ADMIN')) {#Déclaration des hooks pour la zone d'administration
-			$this->setAdminMenu($this->getLang('L_GUTUMA_MENU_NAME'), 0, $this->getLang('L_GUTUMA_TITLE_MENU'));#Position du Menu : remplacer 0 par tout autre chiffre
 			$this->addHook('AdminProfilPrepend', 'AdminProfilPrepend');
 			$this->addHook('AdminTopBottom', 'AdminTopBottom');
 			$this->addHook('plxAdminEditUsersXml', 'plxAdminEditUsersXml');
@@ -20,11 +20,11 @@ class gutuma extends plxPlugin {
 		}elseif($this->getParam('subscribe_is_good'))
 			$this->addHook('IndexBegin', 'goodGets');
 	}
- public function AdminMediasFoot(){//changement des onclic target blank en lien retour de tiny du gestionnaire des médias (popup) (Wymeditor base)
+	public function AdminMediasFoot(){//changement des onclic target blank en lien retour de tiny du gestionnaire des médias (popup) (Wymeditor base)
 ?>
 <script type="text/javascript">
 if (window.parent.tinyMCE && window.parent.location.pathname.search('news/compose.php') >= 0){//1 || media manager : gutuma (in compose iframe)
-	sessionStorage.StickyNotes = 'none';//hide notes
+	sessionStorage.setItem('StickyNotes', 'none');//hide StickyNotes plugin notes
 	//stackoverflow.com/a/36108449 : onload chained
 	if(window.onload != null){var fgfm = window.onload;}
 	window.onload=function(){//restore rules
@@ -107,9 +107,15 @@ if (window.parent.tinyMCE && window.parent.location.pathname.search('news/compos
 	var tbody = document.getElementsByTagName('tbody');
 	var ancres = tbody[0].getElementsByTagName('a');
 	for(var i = 0; i < ancres.length; i++){
-		if(ancres[i].getAttribute('onclick')){
+		console.log('gutuma medias man i ancre[i]', i, ancres[i] );
+		//if(ancres[i].getAttribute('onclick') ){
+		if(ancres[i].getAttribute('target') == '_blank'){//fix new system 5.9.0
 			var str = ancres[i].getAttribute('onclick');
-			var res = str.substr(0, 4);// this OR over[lay]
+			if(str)//Fix TypeError: str is null
+				var res = str.substr(0, 4);// this OR over[lay] #old plx
+			else
+				var res = 'this';//ancres[i].className == 'imglink'? 'this': '';//fix new system 5.9.0+
+
 			if(res == 'this'){
 				var type = 'document';
 				if ((/\.(gif|jpg|jpeg|png|svg)$/i).test(ancres[i].href))

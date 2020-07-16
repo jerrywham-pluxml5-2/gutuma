@@ -7,8 +7,8 @@
  * @modifications Cyril Maguire
  *
  * Gutama plugin package
- * @version 2.0.0
- * @date	23/09/2018
+ * @version 2.2.1
+ * @date	16/07/2020
  * @author	Cyril MAGUIRE, Thomas Ingles
 */
 define('FILE_MARKER', "<?php die(); ?>\n");
@@ -36,7 +36,7 @@ class gu_newsletter{
 		$this->subject = '';
 		$this->html = '';
 		$this->text = '';
-		$this->send_progress = NULL;
+		$this->send_progress = array(0,0);
 	}
 	/**
 	 * Gets the ID
@@ -112,14 +112,14 @@ class gu_newsletter{
 	 * Generates the text part of the content automatically from the html part
 	 */
 	public function generate_text(){
-		$this->text = html_to_text($this->html);	
+		$this->text = html_to_text($this->html);
 	}
 	/**
 	 * Gets the sending state
 	 * @return bool TRUE if this newsletter is being sent, else FALSE
 	 */
 	public function is_sending(){
-		return isset($this->send_progress);
+		return !empty($this->send_progress[0]);
 	}
 	/**
 	 * Gets the sending progress
@@ -127,6 +127,28 @@ class gu_newsletter{
 	 */
 	public function get_send_progress(){
 		return $this->send_progress;
+	}
+	/**
+	 * Get the last sended date #since 2.2.1
+	 * @return Text date if have sended one time, else Never
+	 */
+	public function get_sended_date(){
+		$s = $this->get_dir().'/'.LOCK_FILE;
+		return (file_exists($s)) ? date (t('Y-m-d H:i'), filemtime($s)) : t('Never');
+	}
+	/**
+	 * Get the first created date #since 2.2.1
+	 * @return Text date of created time
+	 */
+	public function get_created_date(){
+		return date (t('Y-m-d H:i'), filemtime($this->get_dir().'/index.html'));
+	}
+	/**
+	 * Get the last modified date #since 2.2.1
+	 * @return Text date of msg modified time
+	 */
+	public function get_msg_date(){
+		return date (t('Y-m-d H:i'), filemtime($this->get_dir().'/msg.php'));
 	}
 	/**
 	 * Gets the unique folder associated with this newsletter
@@ -143,12 +165,14 @@ class gu_newsletter{
 		if (gu_is_demo())
 			return gu_error('<br />'.t('Newsletters cannot be saved or sent in demo mode'));
 		$dir = $this->get_dir();
-		if (!file_exists($dir)){// Create newsletter's temp directory if it doesn't already exist
+		if (!file_exists($dir)){# Create newsletter's temp directory if it doesn't already exist
 			mkdir($dir);
-			touch($dir.'/index.html');
+			if(!file_exists($dir.'/index.html')){#used for find 1st created date #since 2.2.1
+				touch($dir.'/index.html');
+			}
 			mkdir($dir.'/attachments');
 		}
-		$fh = @fopen($dir.'/'.MESSAGE_FILE, 'w');// Save message file
+		$fh = @fopen($dir.'/'.MESSAGE_FILE, 'w');# Save message file
 		if ($fh == FALSE)
 			return gu_error('<br />'.t('Unable to save newsletter draft'), ERROR_EXTRA);
 		fwrite($fh, FILE_MARKER);
@@ -158,14 +182,39 @@ class gu_newsletter{
 		fwrite($fh, FILE_MARKER);
 		fwrite($fh, $this->text."\n");
 		fclose($fh);
-		file_put_contents($dir.'/'.LOCK_FILE, FILE_MARKER);// Create lock file
 		return TRUE;
+	}
+	/**
+	 * Replace Outbox newsletter in Drafts #since 2.2.1
+	 */
+	public function send_to_draft(){
+		gu_debug('Replace Outbox newsletter in Drafts : ' . $this->id);
+		$this->acquire_lock();
+		$dir = $this->get_dir();
+		// Newsletter may have been deleted by the process that blocked this process, or may not be ready for sending
+		if (!file_exists($dir.'/'.RECIPIENTS_FILE)){
+			$this->release_lock();
+			return TRUE;
+		}
+		@unlink($dir.'/'.RECIPIENTS_FILE);// Delete recipients file so when we unlock, waiting processes will detect its gone and not try sending
+		$this->release_lock();// Wakeup waiting processes
+	}
+
+	/**
+	 * Mark this newsletter is sended #since 2.2.1
+	 */
+	private function sended(){
+		gu_debug(t('Mark sended file (%)',array($this->id)));
+		@touch($this->get_dir().'/'.LOCK_FILE);
 	}
 	/**
 	 * Acquire a lock on this newsletter - i.e., blocks if another process has aquired it
 	 */
 	private function acquire_lock(){
 		gu_debug(t('Locking recipient file (%)',array($this->id)));
+		if(!file_exists($this->get_dir().'/'.LOCK_FILE)){# Used for find last sended date #since 2.2.1
+			file_put_contents($this->get_dir().'/'.LOCK_FILE, FILE_MARKER);# Create lock file #old: as in save before "return"
+		}
 		$this->lock = @fopen($this->get_dir().'/'.LOCK_FILE, 'w');
 		if (!$this->lock || !flock($this->lock, LOCK_EX))// | LOCK_NB ::: free.fr fix? no
 			return gu_error('<br />'.t('Unable to lock newsletter'));
@@ -182,10 +231,10 @@ class gu_newsletter{
 	 * Prepares newsletter for sending
 	 * @return TRUE if operation was successful, else FALSE
 	 */
-	public function send_prepare(){	
+	public function send_prepare(){
 		if (!$this->save())// Save message to ensure message directory is created
 			return FALSE;
-// Parse recipient list into addresses and list names
+		// Parse recipient list into addresses and list names
 		$addresses = $this->parse_recipients();
 		$num_addresses = count($addresses);
 		$this->acquire_lock();
@@ -194,7 +243,7 @@ class gu_newsletter{
 			$fh = @fopen($dir.'/'.RECIPIENTS_FILE, 'w');
 			if ($fh == FALSE)
 				return gu_error('<br />'.t('Unable to save newsletter recipient list'), ERROR_EXTRA);
-			$this->send_progress = array($num_addresses, $num_addresses);
+			$this->send_progress = array(intval($num_addresses), intval($num_addresses));
 			fwrite($fh, FILE_MARKER);
 			fwrite($fh, $this->send_progress[0].'|'.$this->send_progress[1]."\n");
 			foreach (array_keys($addresses) as $addr)
@@ -215,7 +264,7 @@ class gu_newsletter{
 	public function send_batch(gu_mailer $mailer, $init_start_time = NULL){
 		$this->acquire_lock();
 		$dir = $this->get_dir();
-// Newsletter may have been deleted by the process that blocked this process, or may not be ready for sending
+		// Newsletter may have been deleted by the process that blocked this process, or may not be ready for sending
 		if (!file_exists($dir.'/'.RECIPIENTS_FILE)){
 			$this->release_lock();
 			return TRUE;
@@ -224,9 +273,8 @@ class gu_newsletter{
 		if ($fh == FALSE)
 			return gu_error('<br />'.t('Unable to open newsletter recipient file'), ERROR_EXTRA);
 		try {//free.fr fix
-			flock($fh, LOCK_EX | LOCK_NB);
+			@flock($fh, LOCK_EX | LOCK_NB);
 		} catch (Exception $e) {
-#			var_dump('Exception reçue : ', $e->getMessage(), "\n",$e);//exit;
 			return gu_error('<br />'.t('Unable to lock newsletter recipient list'). ' :<br />' . $e->getMessage(), ERROR_EXTRA);
 		}
 /*
@@ -243,10 +291,10 @@ class gu_newsletter{
 		$header = explode('|', fgets($fh)); // Read header
 		$remaining = $header[0];
 		$total = $header[1];
-// Start the timer - use the passed start time value if there was one
+		// Start the timer - use the passed start time value if there was one
 		$start_time = isset($init_start_time) ? $init_start_time : time();
-// Collect failed recipients
-		$failed_recipients = array();
+		// Collect failed recipients
+		$remaining_recipients = $failed_recipients = array();
 		$total_sent = 0;
 		while (!feof($fh)){// Start sending to recipients
 			$line = trim(fgets($fh));
@@ -256,38 +304,60 @@ class gu_newsletter{
 			$address = $tokens[0];
 			$list = $tokens[1];
 			$res = $mailer->send_newsletter($address, $this, $list);
-			if ($res === FALSE)
+			if ($res === FALSE){
 				return FALSE;
-			elseif ($res === -1)
-				$failed_recipients[] = $address.($list != '' ? (' ('.$list.')') : '');
-			$total_sent++;
+			}elseif ($res === -1){
+				$failed_recipients[] = $tokens;#tokens is array($address,$list); #old $address.($list != '' ? (' ('.$list.')') : '');
+			}else{
+				$total_sent = $total_sent + $res;#++;
+			}
 			if (((time() - $start_time) > (int)gu_config::get('batch_time_limit')) || ($total_sent >= gu_config::get('batch_max_size')))
 				break;
 		}
-		$remaining_recipients = array();
 		while (!feof($fh)){// Read remaining recipients
 			$line = trim(fgets($fh));
 			if (strlen($line) > 0)
 				$remaining_recipients[] = explode('|', $line);
 		}
-// Update recipient list file
+		// Update recipient list file
+		$remain_count = count($remaining_recipients);
+		$restore_fails = gu_config::get('batch_never_fail');
 		fseek($fh, 0);
 		ftruncate($fh, 0);
 		fwrite($fh, FILE_MARKER);
-		fwrite($fh, count($remaining_recipients).'|'.$total);
+
+		if ($restore_fails)# Restore fail emails to recip.php v2.2.1
+			$remain_count = $remain_count + count($failed_recipients);
+
+		$this->send_progress = array(intval($remain_count), intval($total));
+
+		fwrite($fh, $remain_count.'|'.$total);
 		foreach ($remaining_recipients as $recip)
 			fwrite($fh, implode('|', $recip)."\n");
+		if ($restore_fails)# Restore fail emails to recip.php v2.2.1
+			foreach ($failed_recipients as $recip)# save|del failed_recipients at end of file recip batch
+				fwrite($fh, implode('|', $recip)."\n");
 		fclose($fh);
-		if (count($remaining_recipients) == 0){
+		if ($remain_count == 0){
 			@unlink($dir.'/'.RECIPIENTS_FILE);// Delete recipients file so when we unlock, waiting processes will detect its gone and not try sending
 			$this->release_lock();// Wakeup waiting processes
-			if (!$this->delete())
-				return FALSE;
+			//~ $this->send_progress = NULL;
+			if (gu_config::get('batch_to_drafts') )#Return to Draft v2.2.1
+				$this->sended();# touch lock file at end of batch
+			else #delete @ end
+				if (!$this->delete())#old sys
+					return FALSE;
 		}
 		else
 			$this->release_lock();
+
 		if (count($failed_recipients) > 0){
-			$extra = t('Unable to deliver to:<br /><br />').implode('<br />', $failed_recipients);
+			$extra = array();
+			foreach ($failed_recipients as $recip)#
+				$extra[] = $recip[0].($recip[1] != '' ? (' ('.$recip[1].')') : '');
+			if ($restore_fails)# Restore fail emails to recip.php Notice v2.2.1
+				$extra[] = t('Recipients are moved at end of list to attempt a new send on next round,<br /><b>Be careful!</b> If have error always with same emails or on same times. Remove bad addresses or send newsletters when server have good disponibilities (morning, night, lunch times, ...)').'.';
+			$extra = t('Unable to deliver to:<br /><br />').implode('<br />', $extra);#BAF TRADS & ADD IF $restore_fails : Ceux-ci sont placé en fin de liste du batch
 			return gu_error('<br />'.t('Message could not be sent to all recipients'), $extra);
 		}
 		return TRUE;
@@ -302,8 +372,8 @@ class gu_newsletter{
 		if (!$this->save())// Save message to ensure message directory is created
 			return FALSE;
 		$dest_path = $this->get_dir().'/attachments/'.$filename;
-		gu_debug(t('Storing attachment ').$dest_path);
-// Move uploaded file to the newsletter's temp directory
+		gu_debug(t('Storing attachment') .' '. $dest_path);
+		// Move uploaded file to the newsletter's temp directory
 		if (!@move_uploaded_file($path, $dest_path))
 			return gu_error('<br />'.t('Unable to save uploaded file. Check permissions for directory <code>%</code>',array(GUTUMA_TEMP_DIR)));
 		return TRUE;
@@ -357,16 +427,16 @@ class gu_newsletter{
 			else
 				$addresses[$recip] = '';
 		}
-// Add addresses from each list, in reverse order, so that duplicates for addresses on more than one list, come from the first occuring lists
+		// Add addresses from each list, in reverse order, so that duplicates for addresses on more than one list, come from the first occuring lists
 		for ($l = (count($list_names) - 1); $l >= 0; $l--){
 			if ($list = gu_list::get_by_name($list_names[$l], TRUE)){
 				foreach ($list->get_addresses() as $address)
-					$addresses[$address] = $list->get_name();
+					$addresses[$address] = $list->get_friend();#$list->get_name();
 			}
 			else
 				return gu_error('<br />'.t('Unrecognized list name <i>%</i>',array($list_names[$l])));
 		}
-// If admin wants a copy, add the admin address as well
+		// If admin wants a copy, add the admin address as well
 		if (gu_config::get('msg_admin_copy'))
 			$addresses[gu_config::get('admin_email')] = '';
 		return $addresses;
@@ -384,13 +454,13 @@ class gu_newsletter{
 			if (!$this->delete_attachment($attachment['name']))
 				return gu_error('<br />'.t('Unable to delete message attachment'), ERROR_EXTRA);
 		}
-// Delete the newsletter files
+		// Delete the newsletter files
 		$res1 = @rmdir($dir.'/attachments');// (effacement normal ailleurs que chez Free)
 		if (is_dir($dir.'/attachments')) {// l'effacement a échoué
 			$res1 = rename($dir.'/attachments',$dir.'/../../.trash_me');// rename "spécial Free" rename empty folders to .trash_me (effet de bord non garanti de rename)
 		}
 		$res2 = @unlink($dir.'/'.MESSAGE_FILE);
-		$res3 = @unlink($dir.'/'.LOCK_FILE);
+		$res3 = !file_exists($dir.'/'.LOCK_FILE) || @unlink($dir.'/'.LOCK_FILE);
 		$res4 = !file_exists($dir.'/'.RECIPIENTS_FILE) || @unlink($dir.'/'.RECIPIENTS_FILE);
 		$res5 = @unlink($dir.'/index.html');
 		$res6 = @rmdir($dir);
@@ -398,7 +468,7 @@ class gu_newsletter{
 			$res6 = rename($dir,$dir.'/../../.trash_me');// rename "spécial Free" rename empty folders to .trash_me (effet de bord non garanti de rename)
 		}
 		if (!($res1 && $res2 && $res3 && $res4 && $res5))
-			return gu_error('<br />'.t('Some newsletter files could not be deleted'), ERROR_EXTRA);
+			return gu_error('<br />'.t('Some newsletter files could not be deleted') . ' ::: WIP '.$res1  . ' : ' . $res2  . ' : ' . $res3  . ' : ' . $res4  . ' : ' . $res5, ERROR_EXTRA);
 		$this->send_progress = NULL;
 		return TRUE;
 	}
@@ -426,7 +496,7 @@ class gu_newsletter{
 		while (!feof($h))// Read message TEXT as rest of file
 			$newsletter->text .= fgets($h);
 		fclose($h);
-// Check for recips file which means its being sent
+		// Check for recips file which means its being sent
 		$recip_file = GUTUMA_TEMP_DIR.'/'.$id.'/'.RECIPIENTS_FILE;
 		if (file_exists($recip_file)){
 			$rh = @fopen(realpath($recip_file), 'r');// Open list file
@@ -434,7 +504,7 @@ class gu_newsletter{
 				return gu_error('<br />'.t("Unable to read newsletter recipient file"));
 			fgets($rh); // Read file marker line
 			$header = explode("|", fgets($rh));
-			$newsletter->send_progress = array($header[0], $header[1]);
+			$newsletter->send_progress = array(intval($header[0]), intval($header[1]));
 			fclose($rh);
 		}
 		return $newsletter;

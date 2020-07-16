@@ -1,16 +1,19 @@
-<?php 
+<?php
 /**
  * Fichier d'aide pour gutuma
  *
- * @version 1.8.5
+ * @version 2.2.1
  * @date	29/10/2012 * @author	Cyril MAGUIRE
- * @date	02/09/2017 * @author	Thomas Ingles
+ * @date	2017 ~ 16/07/2020 * @author	Thomas Ingles
  **/
-if(!defined('PLX_ROOT')) exit; ?>
-<p class="in-action-bar">Aide du plugin Gutuma, le gestionnaire de Newsletters
-<?php $lp = 'Dons réguliés avec Liberapay.'; ?>
-<br /><span style="z-index:1;margin-left: 10px" title="<?php echo $lp ?>"><script src="https://liberapay.com/sudwebdesign/widgets/button.js"></script><noscript><a href="https://liberapay.com/sudwebdesign/donate"><img alt="<?php echo $lp ?>" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript></span>
-</p>
+if(!defined('PLX_ROOT')) exit;
+$pluginName = end($_GET);//multiple pluxml
+include(PLX_PLUGINS.$pluginName.'/tips.inc.php');#inclure les pourboires
+?>
+<p class="in-action-bar">Aide du plugin Gutuma, le gestionnaire de Newsletters</p>
+<p class="success" style="color:darkgreen;">Réglages du <a href="../../plugins/gutuma/news/settings.php?section=transport"><i>Transport</i></a> pour <b>Utiliser SMTP</b> qui ont fonctionnés pour l'hébergeur IONOS sont&nbsp;:<br />
+Mot de passe et adresse mél pour se connecter a leur webmail comme Mot de passe et Pseudonyme SMTP<br />Port SMTP&nbsp;: <b>587</b><br />Mode de cryptage&nbsp;: <b>TLS</b><br />Serveur SMTP&nbsp;: <b>smtp.ionos.fr</b>.<br />
+Enregistrer et tester, ça devrai rouler...<br /><i>NB: "localhost" est parfois utilisé comme adresse de serveur SMTP.</i></p>
 <p class="warning" style="color:purple;">Astuce : pour facilité la compréhention de vos utilisateurs. Il est possible de changer l'infobulle et le titre du menu de l'admin.<br />
 Il vous suffit d'éditer le(s) fichier(s) de langue <b><em>plugins/gutuma/lang/##.php</em></b> et d'y placer vos textes.</p>
 <p class="warning" style="color:green;">Astuce : <a href="#phpinclude">comme expliqué dans ce chapitre, <b><em>il est possible d'inclure le script "subscribe.php" dans une page statique</em></b></a>.</p>

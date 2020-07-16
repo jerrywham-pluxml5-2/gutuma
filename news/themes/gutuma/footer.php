@@ -1,4 +1,4 @@
-<?php 
+<?php
 /************************************************************************
  * @project Gutuma Newsletter Managment
  * @author Rowan Seymour
@@ -23,6 +23,6 @@
 			}
 ?>
 		</div>
-<script type="text/javascript">setMsge('errormsg');setMsge('statusmsg'<?php echo !$mvto?'':",'".$mvto."'" ?>);</script>
+<script type="text/javascript">setMsge('gu_errormsg');setMsge('gu_statusmsg'<?php echo !$mvto?'':",'".$mvto."'" ?>);</script>
 	</body>
 </html>

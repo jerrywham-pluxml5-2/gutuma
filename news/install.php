@@ -40,22 +40,38 @@ function gu_install($collective_name, $admin_username, $admin_password, $admin_e
  */
 function gu_update(){
 	$lists = gu_list::get_all();//<=1.9.1 to 2.0.0 : get_all($load_addresses = FALSE, $inc_private = TRUE, $tmp = '')
-	foreach($lists as $list){//2.0.0 : for all lists
-		$tmpFile = realpath(GUTUMA_TEMP_DIR.'/'.$list->get_id().'.i.php');
+	foreach($lists as $list){//2.0.0+ : for all lists
+		$tmpFile = realpath(GUTUMA_TEMP_DIR.'/'.$list->get_id().'.i.php');#since 2.0.0
 		if(!file_exists($tmpFile) OR !is_file($tmpFile)){#if unexist
+			$list->addresses = array();#since 2.2.1 #fix count($this->addresses) in list update() (FROM OLD 1.9) : Warning: count(): Parameter must be an array or an object that implements Countable in plugins/gutuma/news/inc/list.php on line 231
 			$list->update('i');//create empty ²opt(in/out) temporary lists (data/gutuma/tmp/##TIME_ID##.i.php)
 		}
 	}
-//2.2.0
+#2.2.0
 	$subscribe_uri = gu_config::get('subscribe_url');
 	$subscribe_ori = absolute_url('subscribe.php');
 	if($subscribe_ori!=$subscribe_uri){
 		global $plxMotor;
 		$plxPlugin = $plxMotor->plxPlugins->getInstance('gutuma');
-		$plxPlugin->setParam('subscribe_url',$subscribe_uri,'string');//2.2.0
-		$plxPlugin->setParam('subscribe_is_good',(int)($subscribe_ori!=$subscribe_uri),'numeric');//2.2.0
-		$plxPlugin->saveParams();//2.2.0
+		$plxPlugin->setParam('subscribe_url',$subscribe_uri,'string');#2.2.0
+		$plxPlugin->setParam('subscribe_is_good',(int)($subscribe_ori!=$subscribe_uri),'numeric');#2.2.0
+		$plxPlugin->saveParams();#2.2.0
 	}
+#2.2.1
+	$lists = gu_list::get_all(TRUE);//<=2.2.0 to 2.2.1 : need $load_addresses to save addresses ;)
+	foreach($lists as $list){//2.2.1 : for all lists
+		$friend = $list->get_friend();
+		if(empty($friend) OR is_numeric($friend)){#2.2.1+ #friendly name
+			$id = $list->get_id();
+			$list->set_friend($list->get_name());#set friendly name var
+			$list->update();
+			#temporary list
+			$iList = gu_list::get($id, TRUE, 'i');#$id, $load_addresses = FALSE, $tmp = ''
+			$iList->set_friend($list->get_name());
+			$iList->update('i');
+		}
+	}
+
 	return gu_config::save();
 }
 if (isset($_profil['salt'])){// If pluxml is used
@@ -75,9 +91,9 @@ if (!$install_success){// Run installtion or update script
 if ($install_success)
 	$title = t('Finished');
 elseif ($update_mode)
-	$title = t('Update to Gutuma ').GUTUMA_VERSION_NAME;
+	$title = t('Update to Gutuma').' '.GUTUMA_VERSION_NAME;
 else
-	$title = t('Install Gutuma ').GUTUMA_VERSION_NAME;
+	$title = t('Install Gutuma').' '.GUTUMA_VERSION_NAME;
 gu_theme_start();
 echo '</div><div id="content"><h2>'.$title.'</h2>';// Output title
 gu_theme_messages();
@@ -109,7 +125,7 @@ if ($install_success){
 			<div class="formfieldcomment"><?php echo t('The following is usually the name of your organization or company. It is used in messages not specific to one list');?></div>
 			<div class="formfieldlabel"><?php echo t('Collective name');?></div>
 			<div class="formfieldcontrols"><?php gu_theme_text_control('collective_name'); ?></div>
-		</div>	
+		</div>
 		<div class="formfield" style="display:none;">
 			<div class="formfieldlabel"><?php echo t('Administrator username');?></div>
 			<div class="formfieldcontrols"><?php gu_theme_text_control('admin_username'); ?></div>

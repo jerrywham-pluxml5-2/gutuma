@@ -7,22 +7,6 @@
 var gu_status_message = "";
 var gu_error_message = "";
 
-function gu_browser_keep_save_pass() {// in edit_form
-	if (window.document.getElementById("smtp_username")){
-		var d = window.document;
-		var f = d.getElementById("setting form");
-		var u = d.getElementById("smtp_username");
-		var p = d.getElementById("smtp_password");
-		f.setAttribute("style","display:none;");
-//disable-browser-save-password-functionality
-		f.setAttribute("autocomplete","off");
-		u.type = "hidden";
-		p.type = "hidden";
-		f.submit();//cnx si form login
-	}
-}
-//function gu_browser_keep_save_pass(){if (window.document.getElementById("smtp_username")){var d = window.document;var f = d.getElementById("setting form");var u = d.getElementById("smtp_username");var p = d.getElementById("smtp_password");f.setAttribute("style","display:none;");f.setAttribute("autocomplete","off");u.type = "hidden";p.type = "hidden";}}
-
 /**
  * Checks the validity of the specified email address
  * @param e The email address to check
@@ -103,26 +87,38 @@ function gu_add_slashes(str){
  * Displays the current status and error messages
  * @param delay The delay in milliseconds
  */
-function gu_messages_display(delay){ 
+//~ console.log('gu_messages_display delay : #BEFORE');
+function gu_messages_display(delay){
+	//~ console.log('gu_messages_display delay : ' + delay);
 	if (gu_status_message != ""){
-		setTimeout('gu_element_set_inner_html("statusmsg", "' + gu_add_slashes(gu_status_message) + '")', delay);
-		if (gu_element_get_display("statusmsg") == "none"){
-			setTimeout('gu_element_fade_in("statusmsg", 1000, "block")', delay);
+		//~ console.log('gu_messages_display gu_status_message : ', gu_status_message);
+		setTimeout('gu_element_set_inner_html("gu_statusmsg", "' + gu_add_slashes(gu_status_message) + '")', delay);
+		if (gu_element_get_display("gu_statusmsg") == "none"){
+			//~ console.log('gu_messages_display gu_status_fade in message gu_element_get_display : ', gu_element_get_display("statusmsg"));
+			setTimeout('gu_element_fade_in("gu_statusmsg", 1000, "block")', delay);
 		}
 	}
-	else
-		setTimeout('gu_element_fade_out("statusmsg", 1000)', delay);
+	else{
+		//~ console.log('gu_messages_display fade out gu_status_message : ', gu_status_message);
+		setTimeout('gu_element_fade_out("gu_statusmsg", 1000)', delay);
+	}
 	if (gu_error_message != ""){
-		if (document.getElementById("errormore")){
-			gu_element_set_display("errormore", "none");
-			gu_element_set_display("errorextra", "none");
+		//~ console.log('gu_messages_display gu_error_message : ', gu_error_message);
+		if (document.getElementById("gu_errormore")){
+			//~ console.log('gu_messages_display gu_error_message : ', gu_error_message);
+			gu_element_set_display("gu_errormore", "none");
+			gu_element_set_display("gu_errorextra", "none");
 		}
 		setTimeout('gu_element_set_inner_html("errormsg", "' + gu_add_slashes(gu_error_message) + '")', delay);
-		if (gu_element_get_display("errormsg") == "none")
-			setTimeout('gu_element_fade_in("errormsg", 1000, "block")', delay);
+		if (gu_element_get_display("gu_errormsg") == "none"){
+			//~ console.log('gu_messages_display fade in gu_error_message gu_element_get_display : ', gu_element_get_display("errormsg"));
+			setTimeout('gu_element_fade_in("gu_errormsg", 1000, "block")', delay);
+		}
 	}
-	else
-		setTimeout('gu_element_fade_out("errormsg", 1000)', delay);
+	else{
+		//~ console.log('gu_messages_display faDe out gu_error_message : ', gu_error_message);
+		setTimeout('gu_element_fade_out("gu_errormsg", 1000)', delay);
+	}
 }
 /**
  * Gets the display value of the specified element
@@ -130,6 +126,7 @@ function gu_messages_display(delay){
  * @return The CSS display value
  */
 function gu_element_get_display(id){
+	//~ console.log('gu_element_get_display(id) : ', id, document.getElementById(id));
 	return document.getElementById(id).style.display;
 }
 /**
@@ -138,6 +135,7 @@ function gu_element_get_display(id){
  * @param display The CSS display value
  */
 function gu_element_set_display(id, display){
+	//~ console.log('gu_element_set_display(id, display) : ', id, display, document.getElementById(id));
 	document.getElementById(id).style.display = display;
 }
 /**
@@ -185,7 +183,7 @@ function gu_element_fade_in(id, duration, display){
  * @param duration The animation duration in milliseconds
  */
 function gu_element_fade_out(id, duration){
-	gu_element_fade(id, duration, 100, 0);// Animate fade out
+	if(duration) gu_element_fade(id, duration, 100, 0);// Animate fade out
 	setTimeout("gu_element_set_display('" + id + "', 'none');", duration);// Hide element completely at end of fade
 }
 /**
@@ -210,14 +208,20 @@ function gu_element_fade(id, duration, start, end){
 	}
 }
 function setMsge(id,mvto){
+	//~ console.log('setMsge 000 ',id,mvto);
 	if(el = document.getElementById(id)){
-		setTimeout("gu_element_fade_out('" + id + "', 1618);"+
-			(mvto?"gu_element_set_inner_html('" + mvto + "', '" + el.innerHTML.replace(/'/g,'’') + "');gu_element_fade('" + mvto + "', 1618,0,100);":""),
+		var txt = !!el.innerHTML.trim();//ça semple faire le taf****
+		//~ console.log('setMsge 111 ',txt ,el);
+		if(txt){//el.style.opacity>0.display=='none'  ****Fix if called on 1st time & have no msg & use ajax tools (del mel, ...) on first 2s : msg blink (one time, after is ok)
+			//~ console.log('setMsge 222 ',el.style.display);
+			setTimeout("gu_element_fade_out('" + id + "', 333);"+
+			(mvto?"gu_element_set_inner_html('" + mvto + "', '" + el.innerHTML.replace(/'/g,'’') + "');gu_element_fade('" + mvto + "', 333,0,100);":""),
 		5663);
+		}
 	}
 }
 //Show or hide keycode in editlist
-function hideShow(id,o){//todo for statusmsg AND errormsg ???
+function hideShow(id,o){//todo for gu_statusmsg AND gu_errormsg ???
 	o = o?o:'';//inline-block
 	if (document.getElementById(id).style.display==o){
 		document.getElementById(id).style.display='none';
@@ -225,4 +229,14 @@ function hideShow(id,o){//todo for statusmsg AND errormsg ???
 	else{
 		document.getElementById(id).style.display=o;
 	}
+}
+//No #savePW Browser Box : stackoverflow.com/a/47055452 mix
+function readonlyToWrite(siht){
+ if (siht.hasAttribute('readonly')) {
+  siht.removeAttribute('readonly');
+  //~ siht.autocomplete ='off';//tep
+  // fix for mobile safari to show virtual keyboard
+  //~ siht.blur();    siht.focus();
+  siht.removeAttribute('onfocus');//tep
+ }
 }

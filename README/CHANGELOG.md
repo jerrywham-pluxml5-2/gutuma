@@ -3,31 +3,52 @@ Gutuma : CyberLettres pour PluXml ;)
 A la possibilité d'intégrer subscibe.php l'apparence du site PluXml qui l'héberge, belle idée...
 	#C'est_fait* avec une page statique, *voir l'aide ;)
 	Plusieurs pistes :
-		*avec une page statique et un <?php include() ?> ou 
+		*avec une page statique et un <?php include() ?> ou
 		alors une frame en html, mais il y a un hic, car les @mails envoyés par gutuma auront l'url standard!
 
 		*Une option du coté des réglages "[i]url de la page publique de gestion des abonnements (subscribe.php)[/i]"
-	 *qui, si présente change l'adresse url des lettres des (dés)inscriptions semble faire l'affaire. 
+	 *qui, si présente change l'adresse url des lettres des (dés)inscriptions semble faire l'affaire.
 		Il y a même la possibilité d'activé une page statique ou de créer un hook a appeler (config du plugin (standard) a créer et ça complique les réglages).
 		@ voir ...
 
+NAMM :
+C'est le fait de changer de date du info.xml qui déclenche la MAJ & non la "version" qui est user friendly ;)
+Si page blanche (install, update, déconexion...) verfier si plugins/gutuma/news/inc/_pluxml.php est comme ceci (ligne 34)
+```
+//PLX_ROOT détermine le chemin des params de XMLFILE_PARAMETERS * uncomment this 3 lines (below) if gutuma is symlinked in an other PluXml (I use it 4 my dev Thom@s)
+#$gu_sub = explode('plugins',$_SERVER['DOCUMENT_ROOT'].$_SERVER['PHP_SELF']);#if gutuma is symlinked
+#$gu_sub = str_replace($_SERVER['DOCUMENT_ROOT'].__GDS__,'',$gu_sub[0]);#4 found subdir where plx is
+#define('PLX_ROOT',$_SERVER['DOCUMENT_ROOT'].__GDS__.$gu_sub);// OR PLX_GROOT **AND UNCOMMENT THIS
+define('PLX_ROOT', PLX_GROOT);# Normal config, gutuma is in plugins folder 4 real * comment this line if gutuma is symlinked & in an other PluXml**
+define('PLX_CORE', PLX_ROOT.'core'.__GDS__);
+```
+#ligne 93 : enlever le @ qui se trouve devant plxMotor pour voir les erreurs
+$plxMotor = $plxAdmin = @plxMotor::getInstance();//$plxShow->plxMotor; # @ fix Notice: Constant PLX_SITE_LANG already defined in pluxml.5.8.3/core/lib/class.plx.motor.php on line 76
+```
+Fatal error: Class 'plxMotor' not found in plugins/gutuma/news/inc/_pluxml.php on line 96
 
 TODO :
-Pourquoi les variables de langues sont en session?
-++Une fois le timer de la notification javascript dépassé l'affichée (mais ou) pour qu'elle soit toujours visible pour l'internaute.
+* Fait : Pourquoi les variables de langues sont en session? : mofifié : $_SESSION['lang'] >>> $_SERVER['gu_lang'] & $_SESSION['gu_langs'] $_SERVER['gu_langs']
+* Fait : Restore Outboxes to Drafs
+* Fait : clone or re'open as project newsletter of sended #tep #tep #params in config ;)
+* Fait : nom externe de la liste : permet de donner un id interne (like adherent) et d'envoyé [Infolettre nom public] ;)
+
+Projets/listes des mels (selecteur pour la sélection : supprimer(, #projets envoyé)
+
+* Fait : ++Une fois le timer de la notification javascript dépassé, l'affichée (mais ou) pour qu'elle soit toujours visible pour l'internaute.
 ---Peut-être remanier le texte sur les pourriel pour y adjoindre "et ajouter [emailProtetégé] a votre carnet d'adresses" NON (les internautes ne le font jamais, et semble ne servir a rien) ::: chouette du taf en moin
 
-Supprimer un courriel global, qui l'efface dans toutes les listes (lists.php)
+* Fait : Supprimer un courriel global, qui l'efface dans toutes les listes (lists.php)
 + 1 profil d'éditeur? (2 possible pour le moment) et/ou le manager peut gérer les gadjets.
 Un param query du formulaire (subscribe) (choix du theme de gutuma)
 Hook : (in plxAdminBar?) Proposer d'envoyer l'article, page statique a son édition.
 Gérer les tableaux avec datatablejs (vanilla) !?
 Historique des cyberlettres avec le liens envoyés et visibles sur le site. (si ok send.lock ==> send.ok)
-Si pluXml est en mono utilisateur : autoinstall/connect ???
+Si pluXml est en mono utilisateur : autoinstall/connect (# Fait pou l'utilisateur Gestionnaire PROFIL_MANAGER) ADMIN SOLO???
 Le smtp_password est à crypté dans la conf, et décrypté pour l'envoi des news, prévoir la MAJ ou prévenir l'admin. (reverse engineering protect)
 eval($plxAdmin->plxPlugins->callHook('AdminTopMenus'));
 Evol: swiftmailer-5.4.6 pour future integration http://swiftmailer.org
-& si theme default -> use static mode & display (site thème au lieu de celui d'admin) ou add gutuma logo (top left|center) [une iframe]
+* FAIT & si theme default -> use static mode & display (site thème au lieu de celui d'admin) ou add gutuma logo (top left|center) [une iframe]
 ?Prévoir en cas de suppression d'un utilisateur, supprimer le param (user activé ou désactivé)
 Possibilité d'utiliser les plugins éditeur de texte Tiers (WYSIWY(M|G)) a la place de celuis inclus (TinyMce) Pour plus de possibilité et de réglages (accés aux medias manager, ...)
 ?Rediriger login.php de gutuma vers plugin?p=gutuma (s'affiche lorsque l'on désactive / réactive le plugin et que l'on se rend sur compose, newsletters.php ,...)
@@ -117,7 +138,72 @@ TD
 #TEP
 Rétablir: subscribe PLX_GROOT + rem var_dump et réactiver les envois
 
+&nbsp; @ end is FIX for no trunk ></b> .....????? IN GUTUMA THEME ::: LIKE
+L'adresse <b><i>del@del.del</i></b> est déjà dans la liste réelle de <b><i>nouvelle liste 2</i></b>&nbsp;
+
+#baf #IN timixml : // tiny in v 4.9.8 (2020-01-28) : 03.2020 zips
 ===============================CHANGELOG================================
+
+
+
+## v2.2.1 16/07/2020 ##
+code mirror : 5.52.2
+tinyMCE : 4.9.8 (2020-01-28)
+[+] $_SESSION['lang'] & $_SESSION['glang'] >>> $_SERVER['gu_lang'] & $_SERVER['gu_langs']
+[+] La fonction de trad t() ne retourne plus un texte en rouge avec le mot TRADUCTION MISS (c'est ds 'title') + erreur de file... cachés par un @
+[+] Compose : lien (link) overlay css déplacé ds le DOM par js ds le head par script.
+[+] Compose : quelques scripts externalisé 'Compose.min.js' minifié par jscompress.com option ECMAScript 2020 (via babel-minify)
+[+] compose : compte a rebours si la sauvegarde automatique est activé + petit message qui dit a quel moment la cyberlettre a été enregistré
+[+] Integrate : Dit quel type est en cours : thèmes (2e étape)
+[+] Newsletters : Envois : #AutoBatch #Checked : Aactive l'envois automatique des lots restant avec son navigateur (laisser la fenêtre ouverte).
+[+] Newsletters : Envois : Option Replacer la lettre dans les Projets (Outbox).
+[+] Newsletters : Option Supprimer les lettres sélectionnées.
+[+] Lists : Option Supprimer les listes sélectionnées.
+[+] Lists : Option Supprimer/Ajouter une adresse de toutes les listes Ou sélectionnées.
+[+] List : Option Supprimer les méls sélectionnées.
+[+] List : Option Nom public. $list->get_friend() & set ;)
+[+] Compatible PluXml 5.8x
+[+] Thème gutuma retouché : élargit, image head & foot
+[+] Thèmes nouvelles imagettes #Draft, #AutoBatch + 1px.png
+[+] update info download link url by https://cdn.jsdelivr.net/gh/jerrywham-pluxml5-2/gutuma/news/up_git.js
+[+] Auto detecte si https
+
+#### new php func's
+newsleter->send_to_draft() : Replace Outbox newsletter in Drafts #since 2.2.1
+newsleter->sended() : Mark this newsletter is sended #since 2.2.1
+#### js
+mailIsValid(mail) #added
+gu_browser_keep_save_pass() #removed
+gu_messages_display(), gu_element_fade_out(), setMsge() #improved
+
+Fix js/gadget.js.php entetes manquantes et externalisé pour les thèmes '_integrate'
+```
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: text/javascript; charset=utf-8');
+```
+Fix integrate themes : POST pour retour ::: bouton gadget_back: onclick this.form.submit() >>> window.location=window.location
+Fix integrate + themes : toute les liste pour lien et formulaire basique ::: $gadget_list_all = !strstr($gadget_type,'ajax');
+Fix Compose : Bouton Ajouter : plusieurs clics ajoute la liste plein de fois.
+Fix index inaccessible (CORS policy) :  GUTUMA_UPDATE_URL : url du js de test de MAJ par cdn.jsdelivr.net :
+::: https://cdn.jsdelivr.net/gh/jerrywham-pluxml5-2/gutuma/news/up_git.js
+::: GUTUMA_UPDATE_URL check if update on https server : Origin rawgit : #https://cdn.rawgit.com/jerrywham-pluxml5-2/gutuma/master/news/up_git.js
+::: define('GUTUMA_UPDATE_URL', 'http://sudwebdesign.free.fr/zips/gutuma/up_git.js?ver='.GUTUMA_VERSION_NUM);#previous in 2.2.0
+Fix : js/gadgets.js.php : mauvaise url abolue = mauvais choix de param pour la query (? OU &)
+:-: $inc_url = gu_config::get('subscribe_url') != absolute_url('subscribe.php');
+:+: $inc_url = gu_config::get('subscribe_url') != absolute_url('../subscribe.php');
+
+Fix : $plxMotor = plxMotor::getInstance(); ki fout@it la M· ds news/themes/default/_subscribe.php : scope : news/subscribe.php
+::: Fix : Notice: Constant PLX_SITE_LANG already defined in /var/www/pluxml-5.8.3/core/lib/class.plx.motor.php on line 76
+```
+Constant PLX_SITE_LANG already defined in /var/www/pluxml-5.8.3/core/lib/class.plx.motor.php on line 76
+Call Stack
+#Function	Location
+1 {main}( )	.../subscribe.php:0
+2 include_once( 'pluxml-5.8.3/plugins/gutuma/news/themes/default/_subscribe.php' )	.../subscribe.php:86
+3 plxMotor::getInstance( )	.../_subscribe.php:14
+4 plxMotor->__construct( )	.../class.plx.motor.php:59
+5 define ( )	.../class.plx.motor.php:76
+```
 
 ## v2.2.0 16/01/2019 ##
 [+] composer lettre* : Auto sauvegarde amélioré (compose.php + overlay)
@@ -129,11 +215,11 @@ Rétablir: subscribe PLX_GROOT + rem var_dump et réactiver les envois
  : : page statique subscribe est compatible avec la réécriture d'url :)
 [+] subscription.php
  : : Messages de la première (fr & en) retouchés (1st In/Out messages)
- : : Fins de ligne unifiés des message (courriels) : $EOL = "\r\n" + $HR (72 =) 
+ : : Fins de ligne unifiés des message (courriels) : $EOL = "\r\n" + $HR (72 =)
  : : Moins de sauts de ligne
  : : Norme des courriels : Fin de ligne des messages de LF à CRLF (\n --> \r\n)
 Fix inc/_pluxml.php : si connecté avec un compte inferieur a gestionnaire : ajax, gadget et subscribe(.php) Bloqué (erreur FrontEnd)
-Fix : image du menu theme 5.3.1 bonne taille avec compose.php, non les autres menu :: graçe a sa règles css "inline" img {height: auto !important;max-width: 100% !important;} theme default 5.3.1 
+Fix : image du menu theme 5.3.1 bonne taille avec compose.php, non les autres menu :: graçe a sa règles css "inline" img {height: auto !important;max-width: 100% !important;} theme default 5.3.1
 Fix : Warning: is_dir(): open_basedir restriction in effect. File(..) is not within the allowed path(s) : in gutuma/news/inc/list.php on line 367
  			  if ($file[0] != ".") //fix Warning: is_dir(): open_basedir restriction in effect. File(..)
 Fix : Notice: A non well formed numeric value encountered in gutuma/news/inc/list.php on line 368 and on line 278
@@ -229,12 +315,12 @@ ren public static function set_adehsion($key) en set_adhesion
 
 ## v1.8.7.plx.5.6 16/03/2018##
 fixé Unable to open message file[::->]Impossible d'ouvrir le fichier de message (surment car le dossier (vide) est tjrs présent
- erreur de fileLock exclusive flock in free.fr 
+ erreur de fileLock exclusive flock in free.fr
  Unable to lock newsletter recipient list[::->]Impossible de verrouiller la liste des destinataires de l'infolettre
  lors de l'envoi de newsletter
  http://manpagesfr.free.fr/man/man2/flock.2.html
- Un appel flock() peut bloquer si un verrou incompatible est tenu par un autre processus. Pour que la requête soit non bloquante, il faut inclure LOCK_NB (par un OU binaire « | » ) avec la constante précisant l'opération. 
-[+] suppression des tmp free 
+ Un appel flock() peut bloquer si un verrou incompatible est tenu par un autre processus. Pour que la requête soit non bloquante, il faut inclure LOCK_NB (par un OU binaire « | » ) avec la constante précisant l'opération.
+[+] suppression des tmp free
 [+] misc(.min).js gu_browser_keep_save_pass() & call onsbmit setting form 2 block savepassbrowserbox
 [+] function gu_theme_password_control($setting_name,$option=false) add option 4 add autocomplete="off"
 [+] gu_sender_test error return system (swift 4 have no multiple?)

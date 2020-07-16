@@ -34,3 +34,9 @@ global $plxMotor;// = @plxMotor::getInstance();
 	<div id="page">
 		<div id="header">
 			<div id="headertitle"><h1><?php echo t('Gutuma');?></h1></div>
+			<noscript><h3 class="warning">Oups, No JS</h3></noscript><?php
+#hook of pluXml (admin) integration (adhesion hook notice & warning) #tep #NOT IN StandAlone
+if (gu_session_is_valid() AND defined('PLX_ADMIN')){
+	$plxAdmin = $plxMotor;
+	eval($plxAdmin->plxPlugins->callHook('AdminTopBottom'));
+}

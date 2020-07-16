@@ -7,4 +7,4 @@ your address lists by exporting them to CSV files or backup data folder.
 
 Replace gutuma folder in "plugin" of your pluxml install
 Go to "Cyberletter" menu and clic "Go to the newsletters" button,
-and click on "Finish" button. 
+click on "Finish" button and follow connection "link".

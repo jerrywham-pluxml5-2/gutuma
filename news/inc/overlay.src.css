@@ -1,6 +1,7 @@
 .gu_overlay{
- visibility: hidden;
+ display: none;
  position: fixed;
+ visibility: hidden;
  top: 0;
  left: 0;
  right: 0;
@@ -11,6 +12,7 @@
  transition: all 0.5s ease;
 }
 .gu_overlay:target{
+ display: block;
  visibility: visible;
  z-index: 1000000000;
  opacity: 1;
@@ -32,23 +34,16 @@
 .gu_overlay span *{
  font-size: 222%;
 }
-
-.button {
-	background-color: #777;
-	border-radius: .3rem;
-	color: #fff;
+.gu_button_blue {
+	color: #eee !important;
 	padding: .9rem .7rem;
+	background-color: #258fd6;
+	border-radius: .3rem;
 	transition-duration: .2s;
 }
-.button:hover {
-	background-color: #555;
+.gu_button_blue:hover {
+	color: #fff;
+	background-color: #1f77b1;
 	text-decoration: none;
 	transition-duration: .2s;
-}
-.button.blue {
-	background-color: #258fd6;
-	color: #eee;
-}
-.button.blue:hover {
-	background-color: #1f77b1;
 }

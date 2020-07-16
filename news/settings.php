@@ -7,13 +7,13 @@
  * @modifications Cyril Maguire, thomas Ingles
  *
  * Gutama plugin package
- * @version 2.2.0
- * @date	16/01/2019
+ * @version 2.2.1
+ * @date	06/06/2020
  * @author	Cyril MAGUIRE, Thomas INGLES
 */
 include_once 'inc/gutuma.php';
 include_once 'inc/mailer.php';
-if ($_SESSION['profil'] != PROFIL_ADMIN){
+if ($_SESSION['profil'] != PROFIL_ADMIN){#here*
 	header('Location:compose.php');
 	exit();
 }
@@ -23,6 +23,7 @@ $section = is_get_var('section') ? get_get_var('section') : 'general';
 $section_titles['general'] = t("General settings");
 $section_titles['transport'] = t("Transport settings");
 $section_titles['messages'] = t("Message settings");
+$posted = FALSE;
 if (is_post_var('save_settings')){// Save settings
 	if ($section == 'general'){
 		gu_config::set('collective_name', get_post_var('collective_name'));
@@ -68,6 +69,8 @@ if (is_post_var('save_settings')){// Save settings
 		gu_config::set('batch_time_limit', (int)get_post_var('batch_time_limit'));
 	}
 	elseif ($section == 'messages'){
+		gu_config::set('batch_never_fail', is_post_var('batch_never_fail'));
+		gu_config::set('batch_to_drafts', is_post_var('batch_to_drafts'));
 		gu_config::set('msg_prefix_subject', is_post_var('msg_prefix_subject'));
 		gu_config::set('msg_coll_name_on_multilist', is_post_var('msg_coll_name_on_multilist'));
 		gu_config::set('msg_append_signature', is_post_var('msg_append_signature'));
@@ -78,12 +81,12 @@ if (is_post_var('save_settings')){// Save settings
 		gu_config::set('list_unsubscribe_notify', is_post_var('list_unsubscribe_notify'));
 	}
 	if (gu_config::save())
-		gu_success(t('Settings successfully saved'));
+		$posted = t('Settings successfully saved');
 }
 // Send test message
 elseif (is_post_var('test_settings')){
 	if (gu_config::get('admin_email') != '')// Don't bother if there is no admin email
-		gu_sender_test();
+		$posted = gu_sender_test();
 	else
 		gu_error(t('Administrator email must be set before mail can be sent'));
 }
@@ -99,7 +102,7 @@ function gu_sender_test(){// Get current settings, which may not have been saved
 	if (!($use_smtp || $use_sendmail || $use_phpmail))
 		return gu_error(t('No method of mail transportation has been configured'));
 	$test_msg = t('If you have received this email then your settings clearly work!');
-$error = '';
+	$error = '';
 	if ($use_smtp){// Test SMTP settings first
 		$mailer = new gu_mailer();
 		if ($mailer->init(TRUE, $smtp_server, $smtp_port, $smtp_encryption, $smtp_username, $smtp_password, FALSE, FALSE)){
@@ -108,7 +111,7 @@ $error = '';
 		}
 		else
 			$error .= '<br />'.t('Unable to initialize mailer with the SMTP settings');
-		$mailer->disconnect();
+		//$mailer->disconnect();
 	}
 	if ($use_sendmail){// Test Sendmail next
 		$mailer = new gu_mailer();
@@ -118,7 +121,7 @@ $error = '';
 		}
 		else
 			$error .= '<br />'.t('Unable to initialize mailer with Sendmail');
-		$mailer->disconnect();
+		//$mailer->disconnect();
 	}
 	if ($use_phpmail){// Test PHP mail next
 		$mailer = new gu_mailer();
@@ -128,11 +131,16 @@ $error = '';
 		}
 		else
 			$error .= '<br />'.t('Unable to initialize mailer with PHP mail');
-		$mailer->disconnect();
+		//$mailer->disconnect();
 	}
 	if ($error)
 		return gu_error($error);
-	gu_success(t('Test messages sent to <b><i>%</i></b>',array(gu_config::get('admin_email'))));
+	return t('Test messages sent to <b><i>%</i></b>',array(gu_config::get('admin_email')));
+}#func gu_sender_test
+#evite le repost
+if($posted){
+	$_SESSION['gu_posted'] = $posted;#gu_success
+	gu_redirect($_SERVER['REQUEST_URI']);#'Location: ' . $_SERVER['REQUEST_URI'] + EXIT;
 }
 gu_theme_start();
 include_once 'themes/'.gu_config::get('theme_name').'/_settings.php';//Body

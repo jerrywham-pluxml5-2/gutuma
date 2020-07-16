@@ -1,4 +1,4 @@
-<?php 
+<?php
 /************************************************************************
  * @project Gutuma Newsletter Managment
  * @author Rowan Seymour
@@ -17,34 +17,39 @@ include_once '_menu.php';?>
 <h2><?php echo t('Manage lists');?></h2>
 
 <?php gu_theme_messages(); ?>
-
+<h3><?php echo t('Tools');?></h3>
+<div class="menubar">
+	<div class="float-left"><script type="text/javascript">document.write(gu_lists_tools_menu())</script></div>
+</div>
 <p><?php echo t('These are the lists which have already been created.');?> </p>
 <form method="post" name="lists_form" id="lists_form" action=""><input name="num_lists" type="hidden" id="num_lists" value="<?php echo count($lists); ?>" />
 	<table border="0" cellspacing="0" cellpadding="0" class="results" id="liststable">
 		<tr>
-			<td><strong><?php echo t('Name');?></strong></td>
+			<td><strong><?php echo t('Name');?></strong> <span>(<?php echo t('Public');?>)</span></td>
 			<td><strong><?php echo t('Addresses');?></strong></td>
 			<td><strong><?php echo t('In transit');?></strong></td>
 			<td><strong><?php echo t('Private');?></strong></td>
-			<td>&nbsp;</td>
+			<td title="<?php echo t('Actions');?>" class="action" style="text-align: right"><script type="text/javascript">document.write(gu_lists_thead_menu())</script></td>
 		</tr>
 <?php
 if (count($lists) > 0) {
 	foreach($lists as $list) {
 		$list_is_private = $list->is_private();
+		$lid = $list->get_id();
+		$lnm = $list->get_name();
 ?>
-		<tr id="row_<?php echo $list->get_id(); ?>">
-			<td class="name" title="<?php echo $list->get_name(); ?>"><?php echo $list->get_name(); ?></td>
-			<td><?php echo $list->get_size(); ?></td>
-			<td><i style="<?php echo ($list_is_private||!@$listsTmpSize[$list->get_id()])?'display:none;':''; ?>"><script type="text/javascript">document.write(gu_list_menu(<?php echo $list->get_id(); ?>, "tmp"))</script></i>&nbsp;<?php echo @$listsTmpSize[$list->get_id()] ?></td>
+		<tr id="row_<?php echo $lid; ?>">
+			<td class="name" title="<?php echo $lnm; ?>"><strong class="should-cut-off"><?php echo $lnm; ?></strong> <span class="should-cut-off">(<?php echo $list->get_friend(); ?>)</span></td>
+			<td><span id="size_<?php echo $lid; ?>"><?php echo $list->get_size(); ?></span></td>
+			<td><i style="<?php echo ($list_is_private||!@$listsTmpSize[$lid])?'display:none;':''; ?>"><script type="text/javascript">document.write(gu_list_menu(<?php echo $lid; ?>, "tmp"))</script></i>&nbsp;<span id="size_<?php echo $lid; ?>i"><?php echo @$listsTmpSize[$lid] ?></span></td>
 			<td><?php echo $list_is_private ? t('Yes') : t('No'); ?></td>
-			<td style="text-align: center"><script type="text/javascript">document.write(gu_list_menu(<?php echo $list->get_id(); ?>))</script></td>
+			<td style="text-align: right"><script type="text/javascript">document.write(gu_list_menu(<?php echo $lid; ?>))</script></td>
 		</tr>
 <?php
 	}
 }
 ?>
-		<tr id="row_empty" style="display: <?php echo (count($lists) == 0) ? 'table-row' : 'none'; ?>"><td colspan="4" class="emptyresults"><?php echo t('No lists');?></td></tr>
+		<tr id="row_empty" style="display: <?php echo (count($lists) == 0) ? 'table-row' : 'none'; ?>"><td colspan="5" class="emptyresults"><?php echo t('No lists');?></td></tr>
 	</table>
 </form>
 <h3><?php echo t('Create new list');?></h3>
@@ -52,11 +57,11 @@ if (count($lists) > 0) {
 <form method="post" name="add_form" id="add_form" action="" onsubmit="gu_list_add(this.new_list_name.value, this.new_list_private.checked); return false;">
 	<div class="menubar">
 		<div style="float: left">
-			<?php echo t('Name');?> <input name="new_list_name" type="text" class="textfield" id="new_list_name" /> <?php echo t('Private');?> <input type="checkbox" id="new_list_private" name="new_list_private" />	
+			<?php echo t('Name');?> <input name="new_list_name" type="text" class="textfield" id="new_list_name" /> <?php echo t('Private');?> <input type="checkbox" id="new_list_private" name="new_list_private" />
 		</div>
 		<div style="float: right">
 			<input name="add_list" type="submit" id="add_list" value="<?php echo t('Add');?>" />
-		</div>	
+		</div>
 	</div>
 </form>
 <h3><?php echo t('Import list');?></h3>

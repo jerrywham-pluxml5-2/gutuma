@@ -6,18 +6,56 @@
  * @modifications thomas Ingles
  *
  * Gutama plugin package
- * @version 2.2.0
- * @date	13/01/2019
+ * @version 2.2.1
+ * @date	06/06/2020
  * @author	Thomas INGLES
  */
 #langs{display:none;}/* hide plxMyMultilinge flags */
 #imghead{display:block;height: auto !important;max-width: 100% !important;}/* img plx admin menu */
+#mvto.success{margin: 5px 5px 5px 20px;}
 [type="file"], select {/* compose (idea of plux > 5.6) */
  margin: 5px 0;/* 8px 0 (select) */
 }
 [type="file"] {
  background-color: #E8FEFA;
  /* height: 23px; */
+}
+#autobatch{text-align:right;}
+#progressBar{width:100%;transition: width 1s ease;}
+#autobatchmenu{float:left;}
+.animate{
+/*
+	-webkit-animation:spin2 .7s infinite linear;
+	animation:spin .7s infinite linear;
+*/
+  -webkit-animation: sk-bounce 1s infinite ease-in-out;
+  animation: sk-bounce 1s infinite ease-in-out;
+}
+@-webkit-keyframes sk-bounce {
+  0%, 100% {
+    -webkit-transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.6);
+  }
+}
+@keyframes  sk-bounce {
+  0%, 100% {
+    transform: scale(0);
+    -webkit-transform: scale(1);
+  }
+  50% {
+    transform: scale(1);
+    -webkit-transform: scale(1.6);
+  }
+}
+@-webkit-keyframes spin2{
+	from{-webkit-transform:rotate(0)}
+	to{-webkit-transform:rotate(360deg)}
+}
+@keyframes spin{
+	from{transform:scale(1) rotate(0)}
+	to{transform:scale(1) rotate(360deg)}
 }
 /* 5.6 */
 .button{
@@ -30,7 +68,10 @@
 	width: 100%;
 }
 #list_name,#new_list_name{
-	width: 55.5%;
+	width: 33.3%;
+}
+#list_friend,#new_list_friend{
+	width: 44.4%;
 }
 .formfield{
 	padding: 0.5rem 0px;
@@ -120,7 +161,7 @@ hr{
 	overflow: hidden;
 }
 /* and Next plx */
-#sectionmenu.plx56, #sectionmenu.plx57{
+#sectionmenu.plx56, #sectionmenu.plx57, #sectionmenu.plx58, #sectionmenu.plx581, #sectionmenu.plx582, #sectionmenu.plx583, #sectionmenu.plx59{
 	line-height: 2.2 ;
 }
 #sectionmenu.plx54,#sectionmenu.plx55{/* pluxml 5.4 et 5.5 fix */
@@ -151,20 +192,21 @@ hr{
 	padding: 10px;
 	min-height: 300px;
 }
-.notification {
-	position:relative;
-	margin: 0px 1rem;
+.gu_notification {
+	margin: 0 auto;
+	position: relative;
+	text-align: center;
 	font-weight: normal;
 	left: 0;
-	right: 0px;
+	right: 0;
 }
-#statusmsg{}
-#errormsg{}
-#debugmsg{
+#gu_statusmsg{}
+#gu_errormsg{}
+#gu_debugmsg{
 	padding: 10px;
 	background-color: #FFFFCC;
 }
-#msg {/* .notification */
+#gu_msg {/* .notification */
 	position:fixed;
 	top:5px;
 	left:5px;
@@ -181,7 +223,11 @@ div.menubar{
 div.menubar.in-action-bar{
 	background-color: transparent;
 }
-.in-action-bar.plx56, .in-action-bar.plx57{
+.in-action-bar.plx58, .in-action-bar.plx581, .in-action-bar.plx582, .in-action-bar.plx583, .in-action-bar.plx590{
+	margin-top: 8rem;
+	z-index: 99;/* au dessus de .mce-fullscreen */
+}
+.in-action-bar.plx56, .in-action-bar.plx57{/* pluxml 5.6 et 5.7 fix */
 	margin-top: 7.2rem;
 	z-index: 99;/* au dessus de .mce-fullscreen */
 }
@@ -231,6 +277,13 @@ table.results tr td.emptyresults{
 	font-style: italic;
 	text-align: center;
 }
+.checkbox{
+	min-width: 80px;
+}
+.checkbox-lrg{
+	min-width: 161px;
+}
+
 .should-cut-off{
 	max-width: 92%;
 	overflow: hidden;
@@ -243,13 +296,25 @@ table.results tr td.emptyresults{
 .cell-off{
 	min-width: 80%;
 }
-.cell-off b{
+.cell-off b, .cell-off>span{
 	min-width: 11rem;
 	text-align: left;
 	padding-right: 1rem;
-	display: inline-block;
+	display: inline-block;/* legacy */
+  display: inline-flex;
 }
+.mini{font-size-adjust:.5}
+/*
+#sectionmenu a.button {
+	color: #fff;
+	padding: .5rem .2rem;
+}
+*/
 @media (max-width: 767px){
+	.gu-hide{
+		display: none;
+	}
+
 	.in-action-bar,.in-action-bar.plx55,.in-action-bar.plx54{
 		z-index: unset;
 		text-align: center;

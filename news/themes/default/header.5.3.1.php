@@ -1,4 +1,4 @@
-<?php 
+<?php
 /************************************************************************
  * @project Gutuma Newsletter Managment
  * @author Rowan Seymour
@@ -19,8 +19,8 @@ $plxMotor = plxMotor::getInstance();
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="content-type" content="text/html;charset=<?php echo GUTUMA_ENCODING; ?>" />
-<meta name="robots" content="none"> 
-<script type="text/javascript" src="js/misc.js"></script>
+<meta name="robots" content="none">
+<script type="text/javascript" src="js/misc.min.js"></script>
 <script type="text/javascript" src="js/tw-sack.js"></script>
 <script type="text/javascript" src="js/md5.js"></script>
 <script type="text/javascript" src="js/sha1.js"></script>
@@ -32,11 +32,11 @@ $plxMotor = plxMotor::getInstance();
 <link rel="icon" type="image/png" href="themes/<?php echo gu_config::get('theme_name'); ?>/favicon.png" />
 <link rel="stylesheet" type="text/css" href="themes/<?php echo gu_config::get('theme_name');?>/css/gutuma.css" media="screen" />
 <!--[if IE]>
-	<link rel="shortcut icon" type="image/x-icon" href="themes/<?php echo gu_config::get('theme_name'); ?>/favicon.ico" /> 
-<![endif]--> 
+	<link rel="shortcut icon" type="image/x-icon" href="themes/<?php echo gu_config::get('theme_name'); ?>/favicon.ico" />
+<![endif]-->
 <title><?php echo GUTUMA_TITLE; ?></title>
 <style style="display:none">
-/* #send_form,#edit_form___{margin-top: -111px;} */ 
+/* #send_form,#edit_form___{margin-top: -111px;} */
 .menubar{margin-top: 0 !important;}
 </style>
 </head>
@@ -69,7 +69,8 @@ if (!$nomenu) {
 ?>
 	</li>
 	<li class="pluxml">
-		<a title="PluXml" href="http://www.pluxml.org">Pluxml <?php echo $plxMotor->aConf['version'] ?></a>
+		<a class="version" title="<?php echo gu_config::get('application_name').t(' Powered by') .' ' . t('Gutuma') ?>" href="<?php echo GUTUMA_URL ?>"><?php echo t('Gutuma').'&nbsp;'.GUTUMA_VERSION_NAME ?></a> &amp;
+		<a title="PluXml" href="http://www.pluxml.org">Pluxml&nbsp;<?php echo $plxMotor->aConf['version'] ?></a>
 		<br/>
 		<a href="<?php echo GUTUMA_URL; ?>" onclick="window.open(this.href);return false;">Gutuma</a> <?php echo t('is released under the GPL');?> | &copy; Rowan
 	</li>

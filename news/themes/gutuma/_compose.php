@@ -1,4 +1,5 @@
-<?php /************************************************************************
+<?php
+/************************************************************************
  * @project Gutuma Newsletter Managment
  * @author Rowan Seymour
  * @copyright This source is distributed under the GPL
@@ -14,7 +15,7 @@
  include_once '_menu.php';?>
 
 <div id="sectionheader">
-	<div style="float: left;"><h2><?php echo $preview_mode ? t('Preview ') : t('Compose '); echo t('newsletter');?></h2></div>
+	<div style="float: left;"><h2><?php echo $preview_mode ? t('Preview') : t('Compose'); echo ' '.t('newsletter');?><sup id="gu_auto_save_msg"></sup></h2></div>
 	<div style="float: right;">
 		<ul id="sectionmenu">
 			<li><a href="compose.php" class="current"><?php echo t('Compose');?></a></li>
@@ -49,11 +50,11 @@ gu_theme_messages();
 		echo '<option value="'.$l->get_name().'">'.$l->get_name().' ('.$l->get_size().')</option>';
 	}
 ?>
-					</select>
-					<input name="send_add_recip" type="button" id="send_add_recip" value="<?php echo t('Add');?>" onclick="gu_add_recipient();" /></div>
+				</select>
+				<input name="send_add_recip" type="button" id="send_add_recip" value="<?php echo t('Add');?>" onclick="gu_add_recipient();" /></div>
 			<div class="formfielddivider"></div>
 			<div class="formfieldlabel" style="width: 100px"><?php echo t('To');?>:</div>
-    	<div class="formfieldcontrols" style="width: 580px"><input name="msg_recips" type="text" class="textfield" id="msg_recips" style="width: 99%" value="<?php echo $newsletter->get_recipients(); ?>" onchange="gu_set_modified(true)" placeholder="<?php echo t('Add recipient list here with Add button');?>" /></div>
+			<div class="formfieldcontrols" style="width: 580px"><input name="msg_recips" type="text" class="textfield" id="msg_recips" style="width: 99%" value="<?php echo $newsletter->get_recipients(); ?>" onchange="gu_set_modified(true)" placeholder="<?php echo t('Add recipient list here with Add button');?>" /></div>
 			<div class="formfielddivider"></div>
 			<div class="formfieldlabel" style="width: 100px"><?php echo t('Subject');?>:</div>
 			<div class="formfieldcontrols" style="width: 580px"><input name="msg_subject" type="text" class="textfield" id="msg_subject" style="width: 99%" value="<?php echo $newsletter->get_subject(); ?>" onchange="gu_set_modified(true)" /></div>
@@ -65,7 +66,7 @@ gu_theme_messages();
 	<textarea name="msg_text" id="msg_text" style="width: 670px; height: 250px" rows="7" cols="30" onchange="gu_set_modified(true)"><?php echo $newsletter->get_text(); ?></textarea>
 <?php } else { ?>
 	<textarea name="msg_html" id="msg_html" style="width: 100%; height: 300px" rows="7" cols="30" onchange="gu_set_modified(true)"><?php echo $newsletter->get_html(); ?></textarea>
-<?php } ?>		
+<?php } ?>
 	<div class="menubar" style="margin-top: 10px">
 		<div style="float: left"><input name="attach_file" type="file" id="attach_file" /> <input name="attach_submit" type="submit" id="attach_submit" value="<?php echo t('Attach');?>" onclick="gu_cancel_unsaved_warning();" /></div>
 		<div style="float: right">
@@ -73,7 +74,7 @@ gu_theme_messages();
 	if (count($attachments) > 0) {
 		echo '<select id="msg_attachments" name="msg_attachments">';
 		foreach ($attachments as $attachment) {
-			$name = str_limit($attachment['name'], 25);		
+			$name = str_limit($attachment['name'], 25);
 			$sizeKB = round($attachment['size'] / 1024.0, 2);
 			echo '<option value="'.$attachment['name'].'">'.$name.' ('.$sizeKB.' KB)</option>';
 		}

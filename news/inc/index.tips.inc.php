@@ -5,14 +5,22 @@
  * @copyright This source is distributed under the GPL
  * @Included file The home page
  *
- * Gutama plugin package
- * @version 1.9
- * @date	19/05/2018
+ * Gutuma plugin package
+ * @version 2.2.1
+ * @date	16/07/2020
  * @author Thomas Ingles
 */
+$juneUrl = 'img/g1/en/june.png';//https://g1.duniter.fr/#/app/wot/C4UAKZW8yteocrV3LCbtJBLGjc5XG8Twrk2Ynv9t1gDr/ThomasIngles
 ?>
-	<div style="float: right; margin-left: 10px" title="<?php echo t('Donate using Liberapay.');?>"><script src="https://liberapay.com/sudwebdesign/widgets/button.js"></script>
-<noscript><a href="https://liberapay.com/sudwebdesign/donate"><img alt="<?php echo t('Donate using Liberapay.');?>" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript>
+<span id="donate" style="float: right; margin-left: 10px">
+ <span id="june" title="<?php echo t('Donate with Ğ1, 1st digital libre money');?>.">
+  <a rel="noreferrer"href="https://demo.cesium.app/#/app/wot/C4UAKZW8yteocrV3LCbtJBLGjc5XG8Twrk2Ynv9t1gDr/ThomasIngles"><img alt="<?php echo t('Donate with Ğ1, 1st digital libre money');?>." src="<?php echo $juneUrl ?>"></a>
+ </span>
+</span>
+<!--
+	<div style="float: right; margin-left: 10px" title="<?php echo t('Donate using Liberapay');?>."><script src="https://liberapay.com/sudwebdesign/widgets/button.js"></script>
+<noscript><a href="https://liberapay.com/sudwebdesign/donate"><img alt="<?php echo t('Donate using Liberapay');?>." src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript>
+-->
 <?php /* #if would be donate to the original conceptor of Gutuma Rowan Seymour, remove this line*
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 	<input type="hidden" name="cmd" value="_s-xclick">
