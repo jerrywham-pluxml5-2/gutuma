@@ -31,10 +31,12 @@ if(defined('PLX_ROOT')){;#Test for include (fix error of Twice PluXml)
  $gu_is_included = TRUE;
  return;
 }
-# PLX_ROOT détermine le chemin des params de XMLFILE_PARAMETERS * uncomment this 3 lines (below) if gutuma is symlinked in an other PluXml (I use it 4 my dev Thom@s)
+# PLX_ROOT détermine le chemin des params de XMLFILE_PARAMETERS
+# * uncomment this 3 lines (below) if gutuma is symlinked in an other PluXml (I use it 4 my dev Thom@s)
 #$gu_sub = explode('plugins',$_SERVER['DOCUMENT_ROOT'].$_SERVER['PHP_SELF']);#if gutuma is symlinked
 #$gu_sub = str_replace($_SERVER['DOCUMENT_ROOT'].__GDS__,'',$gu_sub[0]);#4 found subdir where plx is
 #define('PLX_ROOT',$_SERVER['DOCUMENT_ROOT'].__GDS__.$gu_sub);// OR PLX_GROOT **AND UNCOMMENT THIS
+# * and comment below line
 define('PLX_ROOT', PLX_GROOT);# Normal config, gutuma is in plugins folder 4 real * comment this line if gutuma is symlinked & in an other PluXml**
 
 # On démarre la session
@@ -46,7 +48,7 @@ if(isset($_SESSION['GUTUMA_PLX_VERSION'])){#created in admin.php plugin access p
 }
 #Solve # FIX PLX_CONFIG_PATH & hide error of Multiple Versions on same server by #captbuffer
 ob_start();
-if(version_compare($glx_version,'5.8.4','<')){# 5.8.3 & Olds
+if(version_compare($glx_version,'5.9','<')){# 5.8 & Olds
 	define('PLX_CORE', PLX_ROOT.'core'.__GDS__);#fix : PLX_CORE already defined in PluXml/core/lib/config.php 5.9 & 6.0
 	include(PLX_ROOT.'config.php');# FIX PLX_CONFIG_PATH
 }
