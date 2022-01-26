@@ -7,11 +7,12 @@
  * @maintainer : Thomas Ingles
  *
  * Gutama plugin package
- * @version 1.9.0
- * @date	19/05/2018
- * @author	Cyril MAGUIRE
+ * @version 2.2.2
+ * @date	04/09/2021
+ * @author	Cyril MAGUIRE, Thomas Ingles
 */
-
+$plxthemev = explode('.', PLX_VERSION);#str_replace('.','',PLX_VERSION);
+define('GU_PLXTHEMEV', $plxthemev[0].$plxthemev[1]);
 $plxMotor = plxMotor::getInstance();
 ?><?php if(!defined('PLX_ROOT')) exit; ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"

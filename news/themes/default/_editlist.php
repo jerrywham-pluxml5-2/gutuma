@@ -19,7 +19,7 @@
 			<sup><sub>(<?php echo t($list->is_private()?'Private':'Public') . ' ' . t($tmp?'temporary':'real') ?>)</sub></sup>
 			<?php echo t('Private');?>&nbsp;<input name="list_private" type="checkbox" id="list_private" value="1"<?php echo ($list->is_private()?' checked="checked"':'') . ($tmp?' readonly="readonly" style="cursor:not-allowed"':''); ?> /><br />
 		</h2>
-		<p id="sectionmenu" class="plx<?php echo str_replace('.','',PLX_VERSION) ?>">
+		<p id="sectionmenu" class="<?php echo GU_PLXTHEMEV ?>">
 			<?php echo t('Name');?>&nbsp;<input type="text" class="textfield" name="list_name" id="list_name" value="<?php echo $list->get_name(); ?>" placeholder="<?php echo t('Name') . ' (' . t('Private');?>)"<?php echo $tmp?' readonly="readonly" style="cursor:not-allowed"':'' ?> /><br class="med-hide"/>
 			<?php echo t('Public');?>&nbsp;<input type="text" class="textfield" name="list_friend" id="list_friend" value="<?php echo $list->get_friend(); ?>" placeholder="<?php echo t('Name') . ' (' . t('Public');?>)"<?php echo $tmp?' readonly="readonly" style="cursor:not-allowed"':'' ?> /><br />
 			<input name="list_back" type="button" id="list_back" class="blue" value="<?php echo t('Back');?>" onclick="location.href='lists.php'" />
@@ -77,13 +77,13 @@ if ($list->get_size() > 0) {
 			$datetmp = t('Time of '.$txtDate.':').' '.date(t('Y-m-d H:i'),$address[0]).PHP_EOL.t('Valid until:').' '.date(t('Y-m-d H:i'),($address[0] + $valtime));
 			$address = $address[1];
 			$keycode = $list->get_tmp_key($address);
-			$keycode = '&nbsp;<br class="sml-show med-hide" /> <span title="🔗 '.t(ucfirst(($noci?$noci.'s':'s')).'ubscribe').' ('.t('Basic subscribe form').')"><a class="imglink" target="_blank" href="'.$baseUrl.$address.'&action='.$noci.'subscribe&k='.$keycode.'"><img src="themes/'.gu_config::get('theme_name').'/images/icon_'.$noci.'valid.png" /></a></span> <span class="imglink" title="'.t('View or hide key code with single click').'" onclick="hideShow(\'key_'.$address_id.'\')" style="cursor:pointer"><img src="themes/'.gu_config::get('theme_name').'/images/icon_key.png" /></span> <span id="key_'.$address_id.'" style="display:none">'.$keycode.'</span>';//bep...
+			$keycode = '&nbsp;<br class="sml-show med-hide" /> <span title="🔗 '.t(ucfirst(($noci?$noci.'s':'s')).'ubscribe').' ('.t('Basic form').')"><a class="imglink" target="_blank" href="'.$baseUrl.$address.'&action='.$noci.'subscribe&k='.$keycode.'"><img src="themes/'.gu_config::get('theme_name').'/images/icon_'.$noci.'valid.png" /></a></span> <span class="imglink" title="'.t('View or hide key code with single click').'" onclick="hideShow(\'key_'.$address_id.'\')" style="cursor:pointer"><img src="themes/'.gu_config::get('theme_name').'/images/icon_key.png" /></span> <span id="key_'.$address_id.'" style="display:none">'.$keycode.'</span>';//bep...
 		}else{//real list
 			$icon = (in_array($address,$maddresses))?'out':'in';
 			$datetmp = t('Validated');//icon title
 			if($icon!='in'){//is in real and tmp (goto out)
 				$keycode = $mist->get_tmp_key($address);
-				$keycode = '&nbsp;<br class="sml-show med-hide" /><span title="🔗 '.t('Unsubscribe').' ('.t('Basic subscribe form').')"><a class="imglink" target="_blank" href="'.$baseUrl.$address.'&action=unsubscribe&k='.$keycode.'"><img src="themes/'.gu_config::get('theme_name').'/images/icon_unvalid.png" /></a></span> <span class="imglink" title="'.t('View or hide key code with single click').'" onclick="hideShow(\'key_'.$address_id.'\')" style="cursor:pointer"><img src="themes/'.gu_config::get('theme_name').'/images/icon_key.png" /></span> <span id="key_'.$address_id.'" style="display:none">'.$keycode.'</span>';//bep...
+				$keycode = '&nbsp;<br class="sml-show med-hide" /><span title="🔗 '.t('Unsubscribe').' ('.t('Basic form').')"><a class="imglink" target="_blank" href="'.$baseUrl.$address.'&action=unsubscribe&k='.$keycode.'"><img src="themes/'.gu_config::get('theme_name').'/images/icon_unvalid.png" /></a></span> <span class="imglink" title="'.t('View or hide key code with single click').'" onclick="hideShow(\'key_'.$address_id.'\')" style="cursor:pointer"><img src="themes/'.gu_config::get('theme_name').'/images/icon_key.png" /></span> <span id="key_'.$address_id.'" style="display:none">'.$keycode.'</span>';//bep...
 				$datetmp = t('Time of departure:').' '.date(t('Y-m-d H:i'),$mist->timeAddress).PHP_EOL.t('Valid until:').' '.date(t('Y-m-d H:i'),($mist->timeAddress + $valtime));
 			}
 		}

@@ -127,6 +127,7 @@ temporary[::->]temporaire
 Validated[::->]Validée
 real[::->]réelle
 See[::->]Voir
+Basic form[::->]Formulaire basique
 Error when update % list.[::->]Erreur lors de la mise a jour de la liste [%%].
 Address <b><i>%</i></b> not found in the % list <b><i>%</i></b>[::->]L'adresse <b><i>[%%]</i></b> n'a pas été trouvée dans la liste [%%] <b><i>[%%]</i></b>
 View or hide key code with single click[::->]Un clic pour voir ou cacher la clé de validité

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /************************************************************************
  * @project Gutuma Newsletter Managment
  * @author Rowan Seymour
@@ -15,7 +15,7 @@
 ?>
 <div id="sectionheader" class="inline-form action-bar">
 	<h2><?php echo t('Home');?></h2>
-	<p id="sectionmenu" class="plx<?php echo str_replace('.','',PLX_VERSION) ?>"><?php echo t('Welcome to Gutuma - an easy to use, yet feature rich newsletter management tool, geared towards web designers and people out in the field.');?></p>
+	<p id="sectionmenu" class="<?php echo GU_PLXTHEMEV ?>"><?php echo t('Welcome to Gutuma - an easy to use, yet feature rich newsletter management tool, geared towards web designers and people out in the field.');?></p>
 </div>
 <?php gu_theme_messages(); ?>
 
@@ -24,11 +24,11 @@
 		<h3><?php echo t('Installation checklist');?></h3>
 		<ul>
 			<li><code><?php echo GUTUMA_LISTS_DIR; ?></code> <?php echo t('directory is writable...');?> <?php echo is_writable(GUTUMA_LISTS_DIR) ? '<span class="yes">'.t('Yes').'</span>' : '<span class="no">'.t('No').'</span>'; ?></li>
-			<li><code><?php echo GUTUMA_TEMP_DIR; ?></code> <?php echo t('directory is writable...');?> <?php echo is_writable(GUTUMA_TEMP_DIR) ? '<span class="yes">'.t('Yes').'</span>' : '<span class="no">'.t('No').'</span>'; ?></li>	
+			<li><code><?php echo GUTUMA_TEMP_DIR; ?></code> <?php echo t('directory is writable...');?> <?php echo is_writable(GUTUMA_TEMP_DIR) ? '<span class="yes">'.t('Yes').'</span>' : '<span class="no">'.t('No').'</span>'; ?></li>
 			<li><code><?php echo GUTUMA_CONFIG_FILE; ?></code> <?php echo t('is writable...');?> <?php echo is_writable(GUTUMA_CONFIG_FILE) ? '<span class="yes">'.t('Yes').'</span>' : '<span class="no">'.t('No').'</span>'; ?></li>
-			<li><?php echo t('Admin email address has been set...');?> <?php echo (gu_config::get('admin_email') != '') ? '<span class="yes">'.t('Yes').'</span>' : '<span class="no">'.t('No').'</span>'; ?></li>	
+			<li><?php echo t('Admin email address has been set...');?> <?php echo (gu_config::get('admin_email') != '') ? '<span class="yes">'.t('Yes').'</span>' : '<span class="no">'.t('No').'</span>'; ?></li>
 			<li><?php echo t('Admin password has been changed...');?> <?php echo (gu_config::get('admin_password') != 'admin') ? '<span class="yes">'.t('Yes').'</span>' : '<span class="no">'.t('No').'</span>'; ?></li>
-			<li><?php echo t('Install script');?> <code>install.php</code> <?php echo t('deleted...');?> <?php echo (!file_exists('install.php')) ? '<span class="yes">'.t('Yes').'</span>' : '<span class="no">'.t('No').'</span>'; ?></li>	
+			<li><?php echo t('Install script');?> <code>install.php</code> <?php echo t('deleted...');?> <?php echo (!file_exists('install.php')) ? '<span class="yes">'.t('Yes').'</span>' : '<span class="no">'.t('No').'</span>'; ?></li>
 		</ul>
 	</div>
 	<div style="float: right; width: 50%">
@@ -38,7 +38,7 @@
 			<li><?php echo t('PHP version:');?> <b><?php echo phpversion(); ?></b></li>
 			<li><?php echo t('Currently storing:');?> <?php echo '<b>'.$total_addresses.'</b> '.t('addresse% in',array(($total_addresses<2?'':'s'))).' <b>'.count($lists).'</b> '.t('list%',array((count($lists)<2?'':'s'))); ?></li>
 			<li><?php echo t('Mailbox:');?> <b><?php echo count($mailbox['drafts']); ?></b> <?php echo t('draft%',array((count($mailbox['drafts'])<2?'':'s')));?>, <b><?php echo count($mailbox['outbox']); ?></b> <?php echo t('sending',array(count($mailbox['outbox'])<2?'':'s'));?></li>
-			<li><?php echo t('SMTP server:');?> <?php echo gu_config::get('use_smtp') ? ('<b>'.(gu_config::get('smtp_server') != '' ? gu_config::get('smtp_server') : 'AUTO').'</b>') : '<span class="no">Not enabled</span>' ?></li>	
+			<li><?php echo t('SMTP server:');?> <?php echo gu_config::get('use_smtp') ? ('<b>'.(gu_config::get('smtp_server') != '' ? gu_config::get('smtp_server') : 'AUTO').'</b>') : '<span class="no">Not enabled</span>' ?></li>
 		</ul>
 	</div>
 </div>

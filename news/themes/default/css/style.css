@@ -161,10 +161,15 @@ hr{
 	overflow: hidden;
 }
 /* and Next plx */
-#sectionmenu.plx56, #sectionmenu.plx57, #sectionmenu.plx58, #sectionmenu.plx581, #sectionmenu.plx582, #sectionmenu.plx583, #sectionmenu.plx59{
+#sectionmenu.plx56,
+#sectionmenu.plx57,
+#sectionmenu.plx58,
+#sectionmenu.plx59,
+#sectionmenu.plx60{
 	line-height: 2.2 ;
 }
-#sectionmenu.plx54,#sectionmenu.plx55{/* pluxml 5.4 et 5.5 fix */
+#sectionmenu.plx54,
+#sectionmenu.plx55{/* pluxml 5.4 et 5.5 fix */
 	line-height: 1.5 ;
 }
 #sectionmenu sup sub{
@@ -223,15 +228,21 @@ div.menubar{
 div.menubar.in-action-bar{
 	background-color: transparent;
 }
-.in-action-bar.plx58, .in-action-bar.plx581, .in-action-bar.plx582, .in-action-bar.plx583, .in-action-bar.plx590{
+
+.in-action-bar.plx58,
+.in-action-bar.plx59,
+.in-action-bar.plx60{
 	margin-top: 8rem;
 	z-index: 99;/* au dessus de .mce-fullscreen */
 }
-.in-action-bar.plx56, .in-action-bar.plx57{/* pluxml 5.6 et 5.7 fix */
+
+.in-action-bar.plx56,
+.in-action-bar.plx57{/* pluxml 5.6 et 5.7 fix */
 	margin-top: 7.2rem;
 	z-index: 99;/* au dessus de .mce-fullscreen */
 }
-.in-action-bar.plx54,.in-action-bar.plx55{/* pluxml 5.4 et 5.5 fix */
+.in-action-bar.plx54,
+.in-action-bar.plx55{/* pluxml 5.4 et 5.5 fix */
 	margin-top: 4.5rem;
 	z-index: 9999;/* au dessus de .mce-fullscreen */
 }
@@ -315,7 +326,9 @@ table.results tr td.emptyresults{
 		display: none;
 	}
 
-	.in-action-bar,.in-action-bar.plx55,.in-action-bar.plx54{
+	.in-action-bar,
+	.in-action-bar.plx55,
+	.in-action-bar.plx54{
 		z-index: unset;
 		text-align: center;
 	}

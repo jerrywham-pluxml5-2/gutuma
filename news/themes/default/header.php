@@ -7,10 +7,12 @@
  * @maintainer : Thomas Ingles
  *
  * Gutama plugin package
- * @version 2.2.1
- * @date	26/05/2020
+ * @version 2.2.2
+ * @date	04/09/2021
  * @author	Cyril MAGUIRE, Thomas Ingles
 */
+$plxthemev = explode('.', PLX_VERSION);#str_replace('.','',PLX_VERSION);
+define('GU_PLXTHEMEV', 'plx' . $plxthemev[0] . $plxthemev[1]);
 $plxAdmin = @plxAdmin::getInstance();
 if(!defined('L_BACK_TO_SITE_TITLE') ) {#if lang 2004 (in dev at this moment, maybe next release 5.8.4)
   define('L_BACK_TO_SITE_TITLE', L_BACK_HOMEPAGE_TITLE);#
@@ -48,7 +50,7 @@ if(isset($_GET["del"]) AND $_GET["del"]=="install") {
 	<link rel="stylesheet" type="text/css" href="<?php echo PLX_MORE ?>admin/theme/plucss<?php echo version_compare(@PLX_VERSION,'5.7','>')?'.min':'' ?>.css?ver=<?php echo PLX_VERSION ?>" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<?php echo PLX_MORE ?>admin/theme/theme.css?ver=<?php echo PLX_VERSION ?>" media="screen" />
 	<link rel="stylesheet" type="text/css" href="themes/<?php echo gu_config::get('theme_name');?>/css/style.css?v=<?php echo GUTUMA_VERSION_NAME ?>" media="screen" />
-<?php if(version_compare(@PLX_VERSION,'5.7','>')){ $pathfont = (version_compare(@PLX_VERSION,'5.8.3','>')? 'fontello/css': 'fonts'); ?>
+<?php if(version_compare(@PLX_VERSION,'5.7','>')){ $pathfont = (version_compare(@PLX_VERSION,'5.9','==')? 'fontello/css': 'fonts'); ?>
 	<link rel="stylesheet" type="text/css" href="<?php echo PLX_MORE ?>admin/theme/<?=$pathfont?>/fontello.css?v=<?php echo PLX_VERSION ?>" media="screen" />
 <?php } ?>
 	<link rel="icon" href="<?php echo PLX_MORE ?>admin/theme/images/favicon.png" />

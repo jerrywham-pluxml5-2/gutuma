@@ -15,13 +15,13 @@
 <form id="setting_form" name="setting_form" method="post" action="">
 <div id="sectionheader" class="inline-form action-bar">
 	<h2><?php echo $section_titles[$section]; ?></h2>
-	<p id="sectionmenu" class="plx<?php echo str_replace('.','',PLX_VERSION) ?>">
+	<p id="sectionmenu" class="<?php echo GU_PLXTHEMEV ?>">
 		<a href="settings.php" class="h6 button<?php echo ($section == 'general') ? ' blue' : ''; ?>"><?php echo t('General');?></a>
 		<a href="settings.php?section=transport" class="h6 button<?php echo ($section == 'transport') ? ' blue' : ''; ?>"><?php echo t('Transport');?></a>
 		<a href="settings.php?section=messages" class="h6 button<?php echo ($section == 'messages') ? ' blue' : ''; ?>"><?php echo t('Messages');?></a>
 	</p>
 </div>
-<div class="menubar in-action-bar plx<?php echo str_replace('.','',PLX_VERSION) ?> section sml-12 med-9 med-offset-3 lrg-10 lrg-offset-2">
+<div class="menubar in-action-bar <?php echo GU_PLXTHEMEV ?> section sml-12 med-9 med-offset-3 lrg-10 lrg-offset-2">
 <?php if ($section == 'transport'){ ?>
 	<input name="test_settings" type="submit" id="test_settings" class="h6 orange" value="<?php echo t('Test');?>" />
 <?php } ?>

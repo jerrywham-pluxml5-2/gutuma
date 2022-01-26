@@ -14,7 +14,7 @@
 ?>
 <div id="sectionheader" class="inline-form action-bar">
 	<h2><?php echo $preview_mode ? t('Preview') : t('Compose'); echo ' ' . t('newsletter');?><sup id="gu_auto_save_msg"></sup></h2>
-	<p id="sectionmenu" class="plx<?php echo str_replace('.','',PLX_VERSION) ?>">
+	<p id="sectionmenu" class="<?php echo GU_PLXTHEMEV ?>">
 		<a href="compose.php" class="h6 button blue"><?php echo t('Compose');?></a>
 		<a href="newsletters.php?box=drafts" class="h6 button"><?php echo t('Drafts');?>&nbsp;(<?php echo count($mailbox['drafts']) ?>)</a>
 		<a href="newsletters.php?box=outbox" class="h6 button"><?php echo t('Outbox');?>&nbsp;(<?php echo count($mailbox['outbox']) ?>)</a>
@@ -29,7 +29,7 @@ if (gu_config::get('admin_email') == '')
 gu_theme_messages();
 ?>
 <form enctype="multipart/form-data" id="send_form" name="send_form" method="post" action="compose.php<?php echo gu_is_debugging() ? '?DEBUG' : ''; ?>"><input type="hidden" id="msg_id" name="msg_id" value="<?php echo $newsletter->get_id(); ?>" /><input type="hidden" id="is_modified" name="is_modified" value="<?php echo $is_modified; ?>" /><input type="hidden" id="autosave" name="autosave" value="<?php echo $autosave; ?>" />
-	<div class="menubar in-action-bar plx<?php echo str_replace('.','',PLX_VERSION) ?> section sml-12 med-9 med-offset-3 lrg-10 lrg-offset-2">
+	<div class="menubar in-action-bar <?php echo GU_PLXTHEMEV ?> section sml-12 med-9 med-offset-3 lrg-10 lrg-offset-2">
 		<input class="h6 green" name="save_submit" type="submit" id="save_submit" value="<?php echo t('Save');?>" onclick="gu_cancel_unsaved_warning();" />
 <?php if ($preview_mode) { ?>
 		<input class="h6 blue" name="edit_submit" type="submit" id="edit_submit" value="<?php echo t('Edit');?>" onclick="gu_cancel_unsaved_warning();" />
