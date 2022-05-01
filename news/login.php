@@ -49,23 +49,21 @@ elseif (is_get_var('action') && get_get_var('action') == 'login'){
 	if (gu_session_authenticate($username, $password, $remember)){
 		// Redirect to page that referred here - or to the home page
 		$redirect = is_get_var('ref') ? urldecode(get_get_var('ref')) : absolute_url('index.php');
-		#header('Location: '.$redirect);echo '<meta HTTP-EQUIV="REFRESH" content="0; url='.$redirect.'">';
-		gu_redirect($redirect);#echo '<meta HTTP-EQUIV="REFRESH" content="0; url='.$redirect.'">';
-		#exit;
+		#header('Location: '.$redirect);echo '<meta HTTP-EQUIV="REFRESH" content="0; url='.$redirect.'">';exit;
+		gu_redirect($redirect);
 	}
 	else
 		gu_error(t('Incorrect username or password'));
 }
 elseif (is_get_var('action') && get_get_var('action') == 'logout'){
 	gu_session_set_valid(FALSE);// Invalidate session flag
-}
-//No in Origin go 2 pluxml Login
+}else{//No in Origin, go 2 pluxml Login
+	gu_session_set_valid(FALSE);// Invalidate session flag
 	$redirect = is_get_var('ref') ? '&ref='.get_get_var('ref') : '';
 	$redirect = '../../../core/admin/plugin.php?p=gutuma'.$redirect;
-	//~ header('Location: '.$redirect);echo '<meta HTTP-EQUIV="REFRESH" content="0; url='.$redirect.'">';
-	gu_redirect($redirect);#echo '<meta HTTP-EQUIV="REFRESH" content="0; url='.$redirect.'">';
-	#exit;//go 2 pluxml Login
-//No in Origin
+	#header('Location: '.$redirect);echo '<meta HTTP-EQUIV="REFRESH" content="0; url='.$redirect.'">';exit;
+	gu_redirect($redirect);
+}//No in Origin
 gu_theme_start();
 //gu_theme_messages();
 ?>

@@ -2,8 +2,8 @@
 /**
  * Fichier de traduction pour gutuma
  *
- * @version 2.2
- * @author Thomas INGLES @date 19/05/2018 : 13/01/2019
+ * @version 2.2.2
+ * @author Thomas INGLES @date 19/05/2018 : 2022
  * @author Cyril MAGUIRE @date 29/10/2012
  **/
 $LANG = array(
@@ -14,7 +14,7 @@ $LANG = array(
  'L_WRITE_NEWS'        => 'Accéder aux infolettres',
  'L_ACTIVATE_USER'     => 'Activer l&#039;utilisateur',
  'L_Activé'            => 'Activé',
- 'L_Desactivé'         => 'Désactivé',
+ 'L_Désactivé'         => 'Désactivé',
  'L_'                  => 'Désactivé',//1ere install ou utilisateur jamais activé
  'L_NOT_APPLICABLE'    => 'Non applicable',
  'L_DEL_USER'          => 'Désactiver l&#039;utilisateur',

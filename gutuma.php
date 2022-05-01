@@ -239,7 +239,7 @@ if (window.parent.tinyMCE && window.parent.location.pathname.search('news/compos
 		echo '<?php '; ?>/* gutuma plxAdminEditUsersXml */
 		$Gutumaction = FALSE;
 		if(!isset($Gutuma))
-			$Gutuma = $this->plxPlugins->aPlugins['gutuma'];
+			$Gutuma = $this->plxPlugins->aPlugins['<?php echo __CLASS__ ?>'];
 		if($user_id!='001'){
 			if(!$user['active'] OR $user['profil']>PROFIL_MANAGER OR $user['delete']){
 				if(!$Gutuma->delParam('user_'.$user_id))//unset($Gutuma->aParams['user_'.$user_id]);//delParam

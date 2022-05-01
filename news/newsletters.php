@@ -129,8 +129,8 @@ if(isset($_SESSION['GU_SEND_BATCH'])){
 	unset($_SESSION['GU_SEND_BATCH']);
 }
 #evite le repost
-if($posted){
-	var_dump($posted, $_SERVER['REQUEST_URI']);exit;#'Location: ' . $_SERVER['REQUEST_URI'] + EXIT;
+if($posted){#unused?
+	#var_dump($posted, $_SERVER['REQUEST_URI']);exit;#'Location: ' . $_SERVER['REQUEST_URI'] + EXIT;
 	$_SESSION['gu_posted'] = $posted;#gu_success
 	gu_redirect($_SERVER['REQUEST_URI']);#'Location: ' . $_SERVER['REQUEST_URI'] + EXIT;
 }
