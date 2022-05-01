@@ -100,7 +100,8 @@ function is_post_var($name){
  * @return string The POST variable value
  */
 function get_post_var($name){
-	if (get_magic_quotes_gpc() && isset($_POST[$name]) && !is_array($_POST[$name]))
+	#get_magic_quotes_gpc OBSOLETE PHP 7.4.0 & DEL IN PHP 8.0
+	if ((function_exists('get_magic_quotes_gpc') && @get_magic_quotes_gpc()) && isset($_POST[$name]) && !is_array($_POST[$name]))
 		return stripslashes($_POST[$name]);
 	return $_POST[$name];
 }
