@@ -112,7 +112,7 @@ function gu_session_set_valid($valid){
 	if (!isset($_SESSION[GU_SESSION_SITES]))
 		$_SESSION[GU_SESSION_SITES] = array();
 	if ($valid){
-		session_regenerate_id();
+		#session_regenerate_id();#Fix impossible de se connecté (php 7) +if manager infinite loop : it's instable funk :  see warning in https://www.php.net/manual/fr/function.session-regenerate-id.php
 		$_SESSION[GU_SESSION_SITES][GU_SESSION_SITE_KEY] = TRUE;
 	} else {// Clear the username/password cookies
 		unset($_SESSION[GU_SESSION_SITES][GU_SESSION_SITE_KEY]);

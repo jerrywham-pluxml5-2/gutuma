@@ -143,7 +143,12 @@ L'adresse <b><i>del@del.del</i></b> est déjà dans la liste réelle de <b><i>no
 
 #baf #IN timixml : // tiny in v 4.9.8 (2020-01-28) : 03.2020 zips
 ===============================CHANGELOG================================
-
+## v2.2.2 **/**/**** ##
+Fix : admin : connexion impossible a gutuma #PHP7.4 dù à session_regenerate_id()
+:::    Appel de Fonction commenté : news/inc/session.php : #session_regenerate_id();
+:::    impossible de se connecté (php 7) +if manager infinite loop
+:::    it's instable funk : see warning in https://www.php.net/manual/fr/function.session-regenerate-id.php
+Fix : news/misc.php : get_magic_quotes_gpc #PHP7.4 #PHP8
 
 
 ## v2.2.1 16/07/2020 ##
