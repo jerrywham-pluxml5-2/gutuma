@@ -7,8 +7,8 @@
  * @modifications Cyril Maguire
  *
  * Gutama plugin package
- * @version 2.2.1
- * @date	16/07/2020
+ * @version 2.2.2
+ * @date	07/04/2023
  * @author	Cyril MAGUIRE, Thomas Ingles
 */
 define('FILE_MARKER', "<?php die(); ?>\n");
@@ -287,6 +287,14 @@ class gu_newsletter{
 				return gu_error('<br />'.t('Unable to lock newsletter recipient list'), ERROR_EXTRA);
 		}
 */
+		# load adhesion plugin 4 mailer create_message funk
+		$this->adhesion = false;
+		if (class_exists('adhesion')) {#is adherent list modif to adhesion?q=md5(mel+id)
+			global $plxMotor;//code is in perpetual movement//$plxMotor = defined('PLX_ADMIN')?plxAdmin::getInstance():plxMotor::getInstance();$GLOBALS['plxMotor'];
+			$this->adhesion = &$plxMotor->plxPlugins->aPlugins['adhesion'];
+			$this->adhesion->gutumaPlugin();#load listFriend & more
+		}
+
 		fgets($fh); // Read file marker
 		$header = explode('|', fgets($fh)); // Read header
 		$remaining = $header[0];

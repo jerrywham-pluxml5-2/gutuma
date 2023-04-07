@@ -7,11 +7,11 @@
  * @modifications Cyril Maguire, Thomas Ingles
  *
  * Gutama plugin package
- * @version 2.1.0
- * @date	01/10/2018
+ * @version 2.2.2
+ * @date	07/04/2023
  * @author	Cyril MAGUIRE, Thomas INGLES
 */
-error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+#error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 
 require_once "swift/Swift.php";
 require_once "swift/Swift/Connection/Multi.php";
@@ -198,15 +198,33 @@ class gu_mailer
 			$subject = '['.$list_name.'] '.$newsletter->get_subject();
 		else
 			$subject = '['.gu_config::get('collective_name').'] '.$newsletter->get_subject();
-		$subscribe_url = gu_config::get('subscribe_url') != absolute_url('subscribe.php') ? gu_config::get('subscribe_url').'&' : absolute_url('subscribe.php').'?';//TEP for php include ::: Origin absolute_url('subscribe.php')
 
-		if ($list_name != '' && gu_config::get('msg_append_signature')) {
-			$text = $newsletter->get_text()."\n-------------------------------------------------\n".t('Unsubscribe').' '.t('from this newsletter.').': '.$subscribe_url.'addr='.$address."\n".t('Powered by Gutuma').' ('.GUTUMA_URL.')'."\n";
-			$html = $newsletter->get_html().'<hr /><p><a href="'.$subscribe_url.'addr='.$address.'">'.t('Unsubscribe').'</a> '.t('from this newsletter.').t(' Powered by').' <a href="'.GUTUMA_URL.'">'.t('Gutuma').'</a></p>';
-		}
-		else {
-			$text = $newsletter->get_text();//Strict standards: Only variables should be assigned by reference
-			$html = $newsletter->get_html();//Strict standards: Only variables should be assigned by reference
+		$text = $newsletter->get_text();//Strict standards: Only variables should be assigned by reference
+		$html = $newsletter->get_html();//Strict standards: Only variables should be assigned by reference
+
+		$t_hr = "\r\n" . str_repeat('-', 72) . "\r\n\r\n";
+		if($list_name != '' && gu_config::get('msg_append_signature')) {
+			$classicSys = true;
+			#adhesion is loaded in newsletter send_batch()
+			if ($newsletter->adhesion) {#is adherent list modif to adhesion?q=md5(mel+id)
+				if ($list_name == $newsletter->adhesion->listName or $list_name == $newsletter->adhesion->listFriend) {# 'adherents' && gu_config::get('msg_append_signature')
+					$classicSys = false;
+					if(empty($newsletter->adhesion->gu_mail_id))
+						$newsletter->adhesion->loadGutumaMailId();
+					$text .= $newsletter->adhesion->getGutumaCnil($address,true);
+					$html .= $newsletter->adhesion->getGutumaCnil($address);
+				}
+			}
+
+			if ($classicSys) {
+				$subscribe_url = gu_config::get('subscribe_url') != absolute_url('subscribe.php') ? gu_config::get('subscribe_url').'&' : absolute_url('subscribe.php').'?';//TEP for php include ::: Origin absolute_url('subscribe.php')
+				$text .= $t_hr.t('Unsubscribe').' '.t('from this newsletter.').': '.$subscribe_url.'addr='.$address;
+				$html .= '<hr /><p><a href="'.$subscribe_url.'addr='.$address.'">'.t('Unsubscribe').'</a> '.t('from this newsletter.').'</p>';
+			}
+
+			$text .= $t_hr.t('Newsletter').' '.t('Powered by Gutuma').' ('.GUTUMA_URL.')';
+			$html .= '<hr /><p>'.t('Newsletter').t(' Powered by').' <a href="'.GUTUMA_URL.'">'.t('Gutuma').'</a></p>';
+
 		}
 
 		// Add text and html as separate MIME parts

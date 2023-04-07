@@ -28,6 +28,13 @@ $plxMotor = $plxAdmin = @plxMotor::getInstance();//$plxShow->plxMotor; # @ fix N
 Fatal error: Class 'plxMotor' not found in plugins/gutuma/news/inc/_pluxml.php on line 96
 
 TODO :
+Possibilité de se désinscrire d'une liste privée
+:: s'il n'y a que des liste privées, il est impossible de se désincrire
+
+Param msg_append_poweredby + SETTING + LANG
+:: ET modifier ds mailer->create_message() : voir : msg_append_signature
+::::: pour qu'il ajoute juste les 'Powered by' en signature
+
 * Fait : Pourquoi les variables de langues sont en session? : mofifié : $_SESSION['lang'] >>> $_SERVER['gu_lang'] & $_SESSION['gu_langs'] $_SERVER['gu_langs']
 * Fait : Restore Outboxes to Drafs
 * Fait : clone or re'open as project newsletter of sended #tep #tep #params in config ;)
@@ -44,7 +51,7 @@ Un param query du formulaire (subscribe) (choix du theme de gutuma)
 Hook : (in plxAdminBar?) Proposer d'envoyer l'article, page statique a son édition.
 Gérer les tableaux avec datatablejs (vanilla) !?
 Historique des cyberlettres avec le liens envoyés et visibles sur le site. (si ok send.lock ==> send.ok)
-Si pluXml est en mono utilisateur : autoinstall/connect (# Fait pou l'utilisateur Gestionnaire PROFIL_MANAGER) ADMIN SOLO???
+Si pluXml est en mono utilisateur : autoinstall/connect (# Fait pour l'utilisateur Gestionnaire PROFIL_MANAGER) ADMIN SOLO???
 Le smtp_password est à crypté dans la conf, et décrypté pour l'envoi des news, prévoir la MAJ ou prévenir l'admin. (reverse engineering protect)
 eval($plxAdmin->plxPlugins->callHook('AdminTopMenus'));
 Evol: swiftmailer-5.4.6 pour future integration http://swiftmailer.org
@@ -144,6 +151,7 @@ L'adresse <b><i>del@del.del</i></b> est déjà dans la liste réelle de <b><i>no
 #baf #IN timixml : // tiny in v 4.9.8 (2020-01-28) : 03.2020 zips
 ===============================CHANGELOG================================
 ## v2.2.2 **/**/**** ##
+Fix : mailer create_message : si adhesion (2.3.4 mini) + sa liste "adherents" lien désinscrire fait par adhesion cnil (unsubscribe adhesion link)
 Fix : admin : connexion impossible a gutuma
 :::    #PHP7.4 gu_session_set_valid() dù à session_regenerate_id()
 :::    Appel de Fonction commenté : news/inc/session.php : #session_regenerate_id();
