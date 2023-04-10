@@ -309,9 +309,9 @@ class gu_newsletter{
 			if (strlen($line) == 0)
 				break;
 			$tokens = explode('|', $line);
-			$address = $tokens[0];
-			$list = $tokens[1];
-			$res = $mailer->send_newsletter($address, $this, $list);
+			#$address = $tokens[0];
+			#$list = $tokens[1];
+			$res = $mailer->send_newsletter($tokens, $this);
 			if ($res === FALSE){
 				return FALSE;
 			}elseif ($res === -1){
@@ -438,8 +438,9 @@ class gu_newsletter{
 		// Add addresses from each list, in reverse order, so that duplicates for addresses on more than one list, come from the first occuring lists
 		for ($l = (count($list_names) - 1); $l >= 0; $l--){
 			if ($list = gu_list::get_by_name($list_names[$l], TRUE)){
+				$lst = $list_names[$l] . '|' .intval($list->is_private()) . '|' . $list->get_friend();
 				foreach ($list->get_addresses() as $address)
-					$addresses[$address] = $list->get_friend();#$list->get_name();
+					$addresses[$address] = $lst;# name|private|friend
 			}
 			else
 				return gu_error('<br />'.t('Unrecognized list name <i>%</i>',array($list_names[$l])));

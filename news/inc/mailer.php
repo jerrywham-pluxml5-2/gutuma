@@ -139,14 +139,14 @@ class gu_mailer
 
 	/**
 	 * Sends the specified newsletter to its recipients
-	 * @param string $recipient The recipient address
+	 * @param array $list : (email,name,private(1/0),friend) : The params of the list holding the recipient
 	 * @param gu_newsletter $newsletter The newsletter to send
-	 * @param string $list_name The name of the list holding the recipient
 	 * @return bool TRUE if newsletter sent successfully, -1 if recipient failed, else FALSE
 	 */
-	public function send_newsletter($recipient, gu_newsletter $newsletter, $list_name = NULL)
+	public function send_newsletter($list, gu_newsletter $newsletter)
 	{
-		$message = $this->create_message($newsletter, $recipient, $list_name);
+		$recipient = array_shift($list);
+		$message = $this->create_message($newsletter, $recipient, $list);
 		$recipients = new Swift_RecipientList();
 		$recipients->addTo($recipient);
 
@@ -187,11 +187,13 @@ class gu_mailer
 	 * Creates a Swift message from a Gutuma newsletter
 	 * @param gu_newsletter $newsletter The newsletter
 	 * @param string $recipient The recipient address
-	 * @param string $list_name The name of the list holding the recipient
+	 * @param array $list : (name,private(1/0),friend) : The params of the list holding the recipient
 	 * @return mixed The Swift message if successful, else FALSE
 	 */
-	private function create_message(gu_newsletter $newsletter, $address, $list_name)
+	private function create_message(gu_newsletter $newsletter, $address, $list)
 	{
+		$list_name = empty($list[2])?$list[0]:$list[2];
+		$private = !empty($list[1]);# A vérifier
 		if (!gu_config::get('msg_prefix_subject'))
 			$subject = $newsletter->get_subject();
 		elseif ($list_name != '')
@@ -208,15 +210,17 @@ class gu_mailer
 			#adhesion is loaded in newsletter send_batch()
 			if ($newsletter->adhesion) {#is adherent list modif to adhesion?q=md5(mel+id)
 				if ($list_name == $newsletter->adhesion->listName or $list_name == $newsletter->adhesion->listFriend) {# 'adherents' && gu_config::get('msg_append_signature')
-					$classicSys = false;
 					if(empty($newsletter->adhesion->gu_mail_id))
 						$newsletter->adhesion->loadGutumaMailId();
-					$text .= $newsletter->adhesion->getGutumaCnil($address,true);
-					$html .= $newsletter->adhesion->getGutumaCnil($address);
+					if(!empty($newsletter->adhesion->gu_mail_id[$address])){# A vérifier : be carefully with blacklist (adhesion) #tep
+						$text .= $newsletter->adhesion->getGutumaCnil($address,true);
+						$html .= $newsletter->adhesion->getGutumaCnil($address);
+						$classicSys = false;
+					}
 				}
 			}
 
-			if ($classicSys) {
+			if ($classicSys and !$private) {
 				$subscribe_url = gu_config::get('subscribe_url') != absolute_url('subscribe.php') ? gu_config::get('subscribe_url').'&' : absolute_url('subscribe.php').'?';//TEP for php include ::: Origin absolute_url('subscribe.php')
 				$text .= $t_hr.t('Unsubscribe').' '.t('from this newsletter.').': '.$subscribe_url.'addr='.$address;
 				$html .= '<hr /><p><a href="'.$subscribe_url.'addr='.$address.'">'.t('Unsubscribe').'</a> '.t('from this newsletter.').'</p>';
