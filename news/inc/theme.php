@@ -34,7 +34,8 @@ function gu_theme_start($nomenu = FALSE){//THEMEVERS PluXml 5.3.1 default theme
  * Outputs the end of the site-wide theme
  */
 function gu_theme_end($mvto=''){//$mvto is id to move notify msg
-	include RPATH.'themes/'.gu_config::get('theme_name').'/footer'.(gu_config::get('theme_name')=='default'?THEMEVERS:'').'.php';
+	$t = gu_config::get('theme_name');
+	include RPATH.'themes/'.$t.'/footer'.($t=='default'?THEMEVERS:'').'.php';
 }
 
 /**
@@ -47,18 +48,25 @@ function gu_theme_end($mvto=''){//$mvto is id to move notify msg
  */
 function gu_theme_pager($id, $baseurl, $start, $pagesize, $total){
 	//gu_debug('gu_pager_create("'.$id.'", "'.$baseurl.'", '.$start.', '.$pagesize.', '.$total.')');
+	if(!$total) return;
+	$sp = 1 + intval($start / $pagesize);
+	$tp = 1 + intval($total / $pagesize);#ok if size > 1
 ?>
-	<div class="pager" id="<?php echo $id; ?>" style="display: <?php echo ($total > 0) ? 'block' : 'none'; ?>">
-		<div class="pagercontrols">
-<?php
-	$last_pg = (0==($total % $pagesize))?$pagesize:($total % $pagesize);
-	echo ($start > 0) ? ('<a href="'.$baseurl.'&amp;start=0#'.$id.'">&lt;&lt;</a>') : '&lt;&lt;';
-	echo '&nbsp;&nbsp;';
-	echo ($start > 0) ? ('<a id="'.$id.'_prev" href="'.$baseurl.'&amp;start='.max(0, $start - $pagesize).'#'.$id.'">&lt;</a>&nbsp;&nbsp;') : '&lt;';
-	echo '&nbsp;&nbsp;';
-	echo (($start + $pagesize) < $total) ? ('<a href="'.$baseurl.'&amp;start='.min($start + $pagesize, $total).'#'.$id.'">&gt;</a>&nbsp;&nbsp;') : '&gt;';
-	echo '&nbsp;&nbsp;';
-	echo (($start + $pagesize) < $total) ? ('<a href="'.$baseurl.'&amp;start='.($total - $last_pg).'#'.$id.'">&gt;&gt;</a>') : '&gt;&gt;';
+	<div class="pager" id="<?php echo $id; ?>">
+		<div class="pagercontrols">&nbsp;<?php
+
+	if ($total > $pagesize) {
+		$last_pg = (0==($total % $pagesize))?$pagesize:($total % $pagesize);
+		echo ($start > 0) ? ('<a href="'.$baseurl.'&amp;start=0#'.$id.'">&lt;&lt;</a>') : '&lt;&lt;';
+		echo '&nbsp;&nbsp;';
+		echo ($start > 0) ? ('<a id="'.$id.'_prev" href="'.$baseurl.'&amp;start='.max(0, $start - $pagesize).'#'.$id.'">&lt;</a>&nbsp;&nbsp;') : '&lt;';
+		echo '&nbsp;&nbsp;';
+		echo (($start + $pagesize) < $total) ? ('<a href="'.$baseurl.'&amp;start='.min($start + $pagesize, $total).'#'.$id.'">&gt;</a>&nbsp;&nbsp;') : '&gt;';
+		echo '&nbsp;&nbsp;';
+		echo (($start + $pagesize) < $total) ? ('<a href="'.$baseurl.'&amp;start='.($total - $last_pg).'#'.$id.'">&gt;&gt;</a>') : '&gt;&gt;';
+		echo '&nbsp;';
+	}
+	echo '&nbsp;(&nbsp;'.t('Page').'&nbsp;'.$sp.'&nbsp;/&nbsp;'.$tp.'&nbsp;)';
 ?>
 		</div>
 		<div class="pagerinfo">

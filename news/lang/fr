@@ -187,6 +187,7 @@ Clear[::->]Effacer
 Address[::->]Adresse
 No addresses[::->]Aucune adresse
 Showing <span id="%_start">%</span> to <span id="%_end">%</span> of <span id="%_total">%</span>[::->]Adresses <span id="[%%]_start">[%%]</span> à <span id="[%%]_end">[%%]</span> sur <span id="[%%]_total">[%%]</span>
+Page[::->]Page
 More[::->]Plus
 Less[::->]Moins
 Subscribe to my newsletter[::->]S'abonner à l'infolettre
@@ -434,7 +435,7 @@ unsubscribed  from[::->]désabonné(e) des
 waiting a process[::->]attente d'une démarche
 process validated[::->]démarche validée
 This is an automated message[::->]Ceci est un message automatique
-Use this link (or copy in your browser address bar) before %, after this date, you need a request new valid link.[::->]Utiliser ce lien avant le [%%] (ou copier le dans la barre d'adresse de votre navigateur), après cette date, vous devrez demander un nouveau lien valide..
+Use this link (or copy in your browser address bar) before %, after this date, you need a request new valid link.[::->]Utiliser ce lien avant le [%%] (ou copier le dans la barre d'adresse de votre navigateur), après cette date, vous devrez demander un nouveau lien valide.
  to secure the % and certify that you are the initiator of this process for the following lists:[::->] pour sécuriser votre "[%%]" et certifier que vous êtes bien a l'origine de cette démarche pour les lettres d'informations suivantes :
  to secure the % and certify that you are the initiator of this process for the following list:[::->] pour sécuriser votre "[%%]" en certifiant que vous êtes bien a l'origine de cette démarche pour la lettre d'informations suivante :
  to confirm that you have been % the following lists:[::->] pour confirmer que vous vous êtes [%%] lettres d'informations suivantes :

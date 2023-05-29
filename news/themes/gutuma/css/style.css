@@ -70,7 +70,6 @@ body{
 	text-align: center;
 	padding: 0px;
 	margin: 0px;height: 100%
-
 }
 p{
 	margin: 10px 0px 10px 0px;
@@ -286,9 +285,7 @@ div.pager{
 }
 div.pagercontrols{
 	float: left;
-	width: 140px;
-	text-align: center;
-	margin-left: 270px;
+	width: 410px;
 	padding: 10px 0px 10px 0px;
 }
 div.pagerinfo{

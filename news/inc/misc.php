@@ -6,8 +6,8 @@
  * @file Miscellaneous functions
  *
  * Gutama plugin package
- * @version 1.8.7
- * @date	22/11/2017
+ * @version 2.2.2
+ * @date	20/03/2023
  * @author	Thomas INGLES
  * @author	Cyril MAGUIRE
 */
@@ -46,7 +46,8 @@ function gu_redirect($filename) {
 	}
 	exit;
 
-}/**
+}
+/**
  * Checks the start of the specified string
  * @param string $haystack The string to check
  * @param string $needle The start to check for
@@ -229,12 +230,13 @@ function html_to_text(&$html){
 	$text = str_replace('<h', "\n<h", $text);
 	$text = str_replace('<li', "\n<li", $text);
 // End-tags that deserve a new line
-	$text = str_replace(array('</p>', '</h1>', '</h2>', '</h3>', '</h4>', '</h5>', '</h6>', '</ol>', '</ul>', '<br />'), "\n", $text);
+	$text = str_replace(array('</p>', '</h1>', '</h2>', '</h3>', '</h4>', '</h5>', '</h6>', '</ol>', '</ul>'), "\n", $text);
+	$text = str_replace('<br', "\n<br", $text);#all
 	$text = str_replace("<li>", "* ", $text);
-	$text = str_replace("<hr />", "-------------------------------------------\n", $text);
+	$text = str_replace("<hr", "\n-------------------------------------------\n<hr", $text);
 // Convert entities such as &nbsp; to real characters
 	$text = html_entity_decode($text, ENT_QUOTES, GUTUMA_ENCODING);
-// Strip all but links and images
+// Strip all but links and images???
 	$text = strip_tags($text, '<a>');
 // Replace <a href="http://...">http://...</a> with http://... (or https)
 	$pattern = "/<[aA] .*?[hH][rR][eE][fF]=\"(.*?)\".*?>https?:\/\/(.*?)<\/[aA]>/";

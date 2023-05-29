@@ -8,7 +8,7 @@
  *
  * Gutama plugin package
  * @version 2.2.2
- * @date	07/04/2023
+ * @date	14/04/2023
  * @author	Cyril MAGUIRE, Thomas Ingles
 */
 define('FILE_MARKER', "<?php die(); ?>\n");
@@ -27,6 +27,7 @@ class gu_newsletter{
 	private $text;
 	private $send_progress;
 	private $lock;
+	public $adhesion = false;# see adhesionPlugin()
 	/**
 	 * Constructor - creates a new empty newsletter
 	 */
@@ -253,6 +254,14 @@ class gu_newsletter{
 		$this->release_lock();
 		return TRUE;
 	}
+	# load adhesion plugin 4 self parse_recipients() & mailer create_message()
+	public function adhesionPlugin(){
+		if ($this->adhesion) return;
+		if (class_exists('adhesion')) {#is adherent list modif to adhesion?q=md5(mel+id)
+			global $plxMotor;//code is in perpetual movement//$plxMotor = defined('PLX_ADMIN')?plxAdmin::getInstance():plxMotor::getInstance();$GLOBALS['plxMotor'];
+			$this->adhesion = &$plxMotor->plxPlugins->aPlugins['adhesion'];
+		}
+	}
 	/**
 	 * Newsletters often can't be sent to all recipients in one batch, so this function
 	 * picks up where it left off last, and sends as much as permitted by the batch settings.
@@ -287,13 +296,8 @@ class gu_newsletter{
 				return gu_error('<br />'.t('Unable to lock newsletter recipient list'), ERROR_EXTRA);
 		}
 */
-		# load adhesion plugin 4 mailer create_message funk
-		$this->adhesion = false;
-		if (class_exists('adhesion')) {#is adherent list modif to adhesion?q=md5(mel+id)
-			global $plxMotor;//code is in perpetual movement//$plxMotor = defined('PLX_ADMIN')?plxAdmin::getInstance():plxMotor::getInstance();$GLOBALS['plxMotor'];
-			$this->adhesion = &$plxMotor->plxPlugins->aPlugins['adhesion'];
-			$this->adhesion->gutumaPlugin();#load listFriend & more
-		}
+		# load adhesion PluXml plugin if mailer->create_message() need for CNIL links
+		$this->adhesionPlugin();
 
 		fgets($fh); // Read file marker
 		$header = explode('|', fgets($fh)); // Read header
@@ -435,12 +439,26 @@ class gu_newsletter{
 			else
 				$addresses[$recip] = '';
 		}
+
+		# load adhesion PluXml plugin if mailer->create_message() need for CNIL links
+		$this->adhesionPlugin();
+		if (in_array($this->adhesion->listName, $list_names))
+			$this->adhesion->loadGutumaMailId();
+
 		// Add addresses from each list, in reverse order, so that duplicates for addresses on more than one list, come from the first occuring lists
 		for ($l = (count($list_names) - 1); $l >= 0; $l--){
 			if ($list = gu_list::get_by_name($list_names[$l], TRUE)){
-				$lst = $list_names[$l] . '|' .intval($list->is_private()) . '|' . $list->get_friend();
-				foreach ($list->get_addresses() as $address)
-					$addresses[$address] = $lst;# name|private|friend
+				$lst = $list_names[$l] . '|' . intval($list->is_private()) . '|' . $list->get_friend();
+				$adherents = (
+					$list_names[$l] == $this->adhesion->listName
+					&& $this->adhesion->gu_mail_id_ok
+				);
+				foreach ($list->get_addresses() as $address){
+					$plus = '';
+					if($adherents && isset($this->adhesion->gu_mail_id[$address]))
+						$plus = '|' . $this->adhesion->gu_mail_id[$address];# Add adherent ID for CNIL links
+					$addresses[$address] = $lst . $plus;# name|private|friend [|adherentID]
+				}
 			}
 			else
 				return gu_error('<br />'.t('Unrecognized list name <i>%</i>',array($list_names[$l])));

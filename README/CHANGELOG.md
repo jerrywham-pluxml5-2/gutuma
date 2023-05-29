@@ -151,6 +151,26 @@ L'adresse <b><i>del@del.del</i></b> est déjà dans la liste réelle de <b><i>no
 #baf #IN timixml : // tiny in v 4.9.8 (2020-01-28) : 03.2020 zips
 ===============================CHANGELOG================================
 ## v2.2.2 **/**/**** ##
+v2.2.2 23/05/29 dev
+[+] Alert if inc/config.php unwritable
+[+] Run on php 8.1 & PluXml 5.8.7 fine
+Improved
+  Swift compat php8.1
+   : offset access syntax with curly braces
+   : get_magic_quotes_runtime
+   : Passing null to parameter
+  name & friendly ::: without |
+  misc : html_to_text() br hr
+  inc/subscription php : gu_subscription_process
+  themes : gu_theme_pager
+  themes : [_]editlist Filtered addresses rows now only one funk
+  themes : list label
+  themes : settings : see cron url with key
+  themes  : style.css
+  theme default : plucss.css (nomin) + pathfont
+  adhesion plugin interoparability
+  cron.php print results : adhesionSel plugin interoparability
+
 Fix : mailer create_message : si adhesion (2.3.4 mini) + sa liste "adherents" lien désinscrire fait par adhesion cnil (unsubscribe adhesion link)
 Fix : admin : connexion impossible a gutuma
 :::    #PHP7.4 gu_session_set_valid() dù à session_regenerate_id()

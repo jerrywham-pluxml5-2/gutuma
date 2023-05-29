@@ -49,7 +49,7 @@ if(isset($_GET['u']) && isset($_GET['rec']) && !empty($_GET['u']) && $_GET['rec'
 	exit;
 }
 if(isset($_GET['u']) && isset($_GET['del']) && !empty($_GET['u']) && $_GET['del'] == 'done'){#utilisateur désactivé
-	$plxPlugin->setParam('user_'.$_GET['u'],'desactivé', 'cdata');
+	$plxPlugin->setParam('user_'.$_GET['u'],'désactivé', 'cdata');
 	$plxPlugin->saveParams();
 	header('Location:plugin.php?p=gutuma');
 	exit;

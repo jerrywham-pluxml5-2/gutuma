@@ -40,7 +40,7 @@ class Swift_File
    * @var boolean
    */
   protected $magic_quotes = false;
-  
+
   /**
    * Constructor
    * @param string The path the the file
@@ -49,7 +49,7 @@ class Swift_File
   public function __construct($path)
   {
     $this->setPath($path);
-    $this->magic_quotes = get_magic_quotes_runtime();
+    $this->magic_quotes = !function_exists('get_magic_quotes_runtime')? false: get_magic_quotes_runtime();#Oldies, Fix Fatal error: undefined function
   }
   /**
    * Set the path to the file
@@ -140,9 +140,9 @@ class Swift_File
       $ret = fgets($this->handle);
     }
     else $ret = false;
-    
+
     set_magic_quotes_runtime($this->magic_quotes);
-    
+
     return $ret;
   }
   /**
@@ -173,9 +173,9 @@ class Swift_File
       $ret = fread($this->handle, $bytes);
     }
     else $ret = false;
-    
+
     if ($unquote) ini_set('magic_quotes_runtime', $this->magic_quotes);
-    
+
     return $ret;
   }
   /**

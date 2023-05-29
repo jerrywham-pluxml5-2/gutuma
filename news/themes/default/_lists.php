@@ -5,20 +5,20 @@
  * @copyright This source is distributed under the GPL
  * @file included lists page
  * @modifications Cyril Maguire
- */
-/* Gutama plugin package
- * @version 1.6
- * @date	01/10/2013
- * @author	Cyril MAGUIRE
+ *
+ * Gutama plugin package
+ * @version 2.2.2
+ * @date	07/04/2023
+ * @author	Cyril MAGUIRE, Thomas INGLES
 */
 
 ?>
 <div id="sectionheader" class="inline-form action-bar">
 	<h2><?php echo t('Manage lists');?></h2>
-	<form method="post" name="add_form" id="add_form" action="" onsubmit="gu_list_add(this.new_list_name.value, this.new_list_private.checked); return false;">
+	<form method="post" name="add_form" id="add_form" class="inline-form" action="" onsubmit="gu_list_add(this.new_list_name.value, this.new_list_private.checked); return false;">
 		<p id="sectionmenu" class="<?php echo GU_PLXTHEMEV ?>">
-			<?php echo t('Name');?>&nbsp;<input name="new_list_name" type="text" class="textfield" id="new_list_name" placeholder="(<?php echo t('Create new list');?>)" /><br class="med-hide"/>
-			<?php echo t('Private');?>&nbsp;<input type="checkbox" id="new_list_private" name="new_list_private" /><br />
+			<label for="new_list_name"><?php echo t('Name');?>&nbsp;<input name="new_list_name" type="text" class="textfield" id="new_list_name" placeholder="(<?php echo t('Create new list');?>)" /></label><br class="med-hide"/>
+			<label for="new_list_private"><?php echo t('Private');?>&nbsp;<input type="checkbox" id="new_list_private" name="new_list_private" /></label><br />
 			<input name="add_list" type="submit" id="add_list" class="green" value="<?php echo t('Add');?>" />
 		</p>
 	</form>
@@ -73,11 +73,11 @@ if (count($lists) > 0) {
 		<div class="formfieldcomment"><?php echo t('A new list can be created from a CSV file of addresses. The format of this file should be email addresses in the first column - other columns will be ignored.');?></div>
 	</div>
 </div>
-<form enctype="multipart/form-data" method="post" name="import_form" id="import_form" action="lists.php">
+<form enctype="multipart/form-data" method="post" name="import_form" id="import_form" action="lists.php" class="inline-form">
 	<div class="menubar">
-		<div><input name="import_file" type="file" id="import_file" /><br /><br />
+		<div><input name="import_file" type="file" id="import_file" accept=".csv" /><br /><br />
 			<?php echo t('Separate by').'&nbsp;'; gu_theme_list_control('sep', array(array(';',t('Semicolon (;)')),array(',',t('Comma (,)'))),';') ?> &amp;
-			<?php echo t('Ingnore first line');?>&nbsp;<input type="checkbox" id="first" name="first" checked="" /> &nbsp;<input name="import_submit" type="submit" id="import_submit" class="green" value="<?php echo t('Import');?>" />
+			<label for="first"><?php echo t('Ingnore first line');?>&nbsp;<input type="checkbox" id="first" name="first" checked="" /></label> &nbsp;<input name="import_submit" type="submit" id="import_submit" class="green" value="<?php echo t('Import');?>" />
 		</div>
 	</div>
 </form>

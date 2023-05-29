@@ -47,7 +47,7 @@ class gu_list{
 	 * @param string $name The friendly name
 	 */
 	public function set_friend($name){
-		$this->friend = $name;
+		$this->friend = preg_replace('~\|~', ' ', trim($name));#memo [\W] no alphaNum
 	}
 	/**
 	 * Gets the name
@@ -61,7 +61,7 @@ class gu_list{
 	 * @param string $name The name
 	 */
 	public function set_name($name){
-		$this->name = $name;
+		$this->name = preg_replace('~\|~', ' ', trim($name));#memo [\W] no alphaNum
 	}
 	/**
 	 * Gets the privacy status

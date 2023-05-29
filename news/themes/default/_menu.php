@@ -7,9 +7,9 @@
  * @modifications Thomas Ingles
  */
 /* Gutama plugin package
- * @version 1.9
- * @date	08/06/2017
- * @author	Cyril MAGUIRE
+ * @version 2.2.2
+ * @date	05/04/2023
+ * @author	Cyril MAGUIRE, Thomas Ingles.
 */
 
 $u = gu_config::getUsers();

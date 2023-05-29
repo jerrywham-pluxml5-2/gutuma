@@ -229,6 +229,7 @@ function getLang($glang=GU_CONFIG_LANG){
 		if (!is_file($path)){
 			@file_put_contents($path,'');#TRADUCTION MISS
 		}
+		if(!is_file($path)) return 'en';# Fix Warning: file(plugins/gutuma/news/lang/##): failed to open stream: No such file or directory
 		$langLines = file($path);
 		$traductions = array();
 		foreach($langLines as $langLine){

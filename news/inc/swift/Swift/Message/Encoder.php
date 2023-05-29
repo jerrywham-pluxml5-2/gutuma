@@ -60,7 +60,7 @@ class Swift_Message_Encoder
       $input = substr($input, strlen($matches[0]));
     }
     if ($input != "") $ret[($elements++)] = $input; //Whatever is left over
-        
+
     return $ret;
   }
   /**
@@ -80,7 +80,7 @@ class Swift_Message_Encoder
       $input = substr($input, strlen($matches[0]));
     }
     if ($input != "") $ret[($elements++)] = $input; //Whatever is left over
-        
+
     return $ret;
   }
   /**
@@ -97,20 +97,20 @@ class Swift_Message_Encoder
     $ret = "";
     $chunk -= 2;
     $chunk = $this->getHcf($chunk, 4);
-    
+
     if ($init_chunk >= 2)
     {
       $init_chunk -= 2;
       $init_chunk = $this->getHcf($init_chunk, 4);
     }
-    
+
     if ($headers) $data = $this->quoteChunk($data);
     else $data = array($data);
-    
+
     foreach ($data as $key => $string)
     {
       $key = (string) $key;
-      if ($key{0} == 'a') //This is an address
+      if ($key[0] == 'a') //This is an address#php 8.1 : Fatal error: Array and string offset access syntax with curly braces is no longer supported
       {
         if ($init_chunk && $init_chunk < (strlen($string)+2)) $ret .= $le;
         $ret .= $le . $string;
@@ -124,12 +124,12 @@ class Swift_Message_Encoder
           $string = substr($string, $init_chunk);
         }
         elseif ($init_chunk) $ret .= $le;
-        
+
         $ret .= trim(chunk_split($string, $chunk, $le)) . $le;
       }
       $init_chunk = 0;
     }
-    
+
     return trim($ret);
   }
   /**
@@ -182,12 +182,12 @@ class Swift_Message_Encoder
     $ret = "";
     if ($headers) $data = $this->quoteChunk($data);
     else $data = array($data);
-    
+
     $trailing_spaces = chr(9) . chr(32);
     foreach ($data as $key => $string)
     {
       $key = (string) $key;
-      if ($key{0} == 'a') //An address
+      if ($key[0] == 'a') //An address#php 8.1 : Fatal error: Array and string offset access syntax with curly braces is no longer supported
       {
         if ($init_chunk && $init_chunk < (strlen($string)+3)) $ret .= "=";
         $ret .= $le . $string;
@@ -208,7 +208,7 @@ class Swift_Message_Encoder
           }
         }
         elseif ($init_chunk) $ret .= "=";
-        
+
         while (preg_match('/^.{1,'.($init_chunk-5).'}[^=]{2}(?!=[A-F0-9]{2})/', $string, $matches)
           || preg_match('/^.{1,'.($chunk-6).'}([^=]{0,3})?/', $string, $matches)
           || (strlen($string) > 0 && $matches = array($string)))
@@ -219,7 +219,7 @@ class Swift_Message_Encoder
       }
       $init_chunk = 0;
     }
-    
+
     if (substr($ret, -1) == "=") return trim(substr($ret, 0, -1));
     else return trim($ret);
   }
@@ -240,14 +240,14 @@ class Swift_Message_Encoder
     $len = strlen($string);
     for ($i = 0; $i < $len; $i++)
     {
-      $val = ord($string{$i});
+      $val = ord($string[$i]);#php 8.1 : Fatal error: Array and string offset access syntax with curly braces is no longer supported
       //9, 32 = HT, SP; 10, 13 = CR, LF; 33-60 & 62-126 are ok
       // 63 = '?'; 95 = '_' and need encoding to go in the headers
       if ((!$bin && ($val == 32 || $val == 9 || $val == 10 || $val == 13))
         || ($val >= 33 && $val <= 60) || ($val >= 62 && $val <= 126)
         && $val != 63)
       {
-        $ret .= $string{$i};
+        $ret .= $string[$i];#php 8.1 : Fatal error: Array and string offset access syntax with curly braces is no longer supported
       }
       else
       {
@@ -373,7 +373,7 @@ class Swift_Message_Encoder
    */
   public function isUTF8($data)
   {
-    return preg_match('%(?:
+    return ($data && preg_match('%(?:
     [\xC2-\xDF][\x80-\xBF]				# non-overlong 2-byte
     |\xE0[\xA0-\xBF][\x80-\xBF]			# excluding overlongs
     |[\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}	# straight 3-byte
@@ -381,7 +381,7 @@ class Swift_Message_Encoder
     |\xF0[\x90-\xBF][\x80-\xBF]{2}		# planes 1-3
     |[\xF1-\xF3][\x80-\xBF]{3}			# planes 4-15
     |\xF4[\x80-\x8F][\x80-\xBF]{2}		# plane 16
-    )+%xs', $data);
+    )+%xs', $data));# Deprecated: preg_match(): Passing null to parameter #2
   }
   /**
    * This function checks for 7bit *printable* characters

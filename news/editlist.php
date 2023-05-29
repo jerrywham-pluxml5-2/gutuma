@@ -55,6 +55,51 @@ if($posted){
 	$_SESSION['gu_posted'] = $posted;#gu_success
 	gu_redirect($_SERVER['REQUEST_URI']);#'Location: ' . $_SERVER['REQUEST_URI'] + EXIT;
 }
+
+# Filtered addresses rows
+$theme_name = gu_config::get('theme_name');
+$theme_style = ($theme_name != 'gutuma')? array(1, 'width:36px;'): array(0, 'text-align:right;');
+$address_rows = '	<tr id="row_empty"><td colspan="2" class="emptyresults">'.t('No addresses').'</td></tr>';#default
+$filtered_total = 0;#by ref in list->select_addresses()
+if ($list->get_size() > 0) {
+	$address_id = 1000;
+	$selection = $list->select_addresses($filter, $start, GUTUMA_PAGE_SIZE, $filtered_total,($tmp?TRUE:FALSE));
+	if($filtered_total) $address_rows = '';
+	$valtime = gu_config::get('days')*24*60*60;
+	$subscribe_url = gu_config::get('subscribe_url') != absolute_url('subscribe.php') ? gu_config::get('subscribe_url').'&' : absolute_url('subscribe.php').'?';
+	$baseUrl = $subscribe_url.'list='.$list->get_id().'&addr=';
+	foreach ($selection as $address) {
+		$keycode = '';//uneeded if real list
+//icons of ²opt in/out
+		if ($tmp){//temp list : hide timestamp of io list
+			$address = explode(';', $address);
+			$icon = in_array($address[1],$maddresses)?'out':'ok';
+			$noci = $icon!='ok'?'un':'';
+			$txtDate = $icon!='ok'?'departure':'arrival';
+			$datetmp = t('Time of '.$txtDate.':').' '.date(t('Y-m-d H:i'),$address[0]).PHP_EOL.t('Valid until:').' '.date(t('Y-m-d H:i'),($address[0] + $valtime));
+			$address = $address[1];
+			$keycode = $list->get_tmp_key($address);
+			$keycode = '&nbsp;<br class="sml-show med-hide" /> <span title="🔗 '.t(ucfirst(($noci?$noci.'s':'s')).'ubscribe').' ('.t('Basic form').')"><a class="imglink" target="_blank" href="'.$baseUrl.$address.'&action='.$noci.'subscribe&k='.$keycode.'"><img src="themes/'.gu_config::get('theme_name').'/images/icon_'.$noci.'valid.png" /></a></span> <span class="imglink" title="'.t('View or hide key code with single click').'" onclick="hideShow(\'key_'.$address_id.'\')" style="cursor:pointer"><img src="themes/'.gu_config::get('theme_name').'/images/icon_key.png" /></span> <span id="key_'.$address_id.'" style="display:none">'.$keycode.'</span>';//bep...
+		}else{//real list
+			$icon = (in_array($address,$maddresses))?'out':'in';
+			$datetmp = t('Validated');//icon title
+			if($icon!='in'){//is in real and tmp (goto out)
+				$keycode = $mist->get_tmp_key($address);
+				$keycode = '&nbsp;<br class="sml-show med-hide" /><span title="🔗 '.t('Unsubscribe').' ('.t('Basic form').')"><a class="imglink" target="_blank" href="'.$baseUrl.$address.'&action=unsubscribe&k='.$keycode.'"><img src="themes/'.gu_config::get('theme_name').'/images/icon_unvalid.png" /></a></span> <span class="imglink" title="'.t('View or hide key code with single click').'" onclick="hideShow(\'key_'.$address_id.'\')" style="cursor:pointer"><img src="themes/'.gu_config::get('theme_name').'/images/icon_key.png" /></span> <span id="key_'.$address_id.'" style="display:none">'.$keycode.'</span>';//bep...
+				$datetmp = t('Time of departure:').' '.date(t('Y-m-d H:i'),$mist->timeAddress).PHP_EOL.t('Valid until:').' '.date(t('Y-m-d H:i'),($mist->timeAddress + $valtime));
+			}
+		}
+		$address_id++;
+		$td_cbx = PHP_EOL.'		<td style="'.$theme_style[1].'"><input type="checkbox" id="mel-'.$address_id.'" name="idMel[]" value="'.$address.'">&nbsp;<a href="javascript:gu_remove_address(\''.$address.'\', '.$address_id.', \''.$tmp.'\')" class="imglink" title="'.t('Delete').'"><img src="themes/'.$theme_name.'/images/icon_delete.png" /></a></td>';
+		$td_img = PHP_EOL.'		<td><span title="'.$datetmp.'"><img src="themes/'.$theme_name.'/images/icon_'.$icon.'.png" />&nbsp;'.$address.'</span>'.$keycode.'</td>';
+
+		$address_rows .=
+		PHP_EOL.'	<tr id="row_'.$address_id.'">'
+		.($theme_style[0]? $td_cbx.$td_img: $td_img.$td_cbx)
+		.PHP_EOL.'	</tr>';
+	}
+}
+
 gu_theme_start();
 ?>
 <script type="text/javascript" src="js/functions.js"></script>

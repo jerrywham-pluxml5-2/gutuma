@@ -28,7 +28,7 @@ class gu_config{
 	 * @param string $key The setting name
 	 * @return null
 	 */
-	public static function set_adhesion($key){
+	public static function set_adhesion($key){#WHY?
 		//$plxAdmin = defined('PLX_ADMIN')?@plxAdmin::getInstance():@plxMotor::getInstance();
 		$plxAdmin = $GLOBALS['plxMotor'];
 		if (isset($plxAdmin->plxPlugins->aPlugins["adhesion"])){
@@ -54,8 +54,8 @@ class gu_config{
 	 * @return mixed The setting value
 	 */
 	public static function get($key){
-		if ($key == 'admin_email' OR $key == 'admin_name')
-			self::set_adhesion($key);
+		if ($key == 'admin_email' OR $key == 'admin_name')#WHY?
+			self::set_adhesion($key);#WHY?
 		return self::$values[$key];
 	}
 	/**

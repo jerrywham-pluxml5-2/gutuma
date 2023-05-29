@@ -243,3 +243,8 @@
 <?php } ?>
 	</div>
 </form>
+<div class="formfield">
+	<div class="formfieldcomment"><a href="../../../core/admin/parametres_avances.php"><?php echo L_CONFIG_ADVANCED_ADMIN_KEY ?></a> (PluXml)</div>
+	<div class="formfieldlabel">Cron url:</div>
+	<div class="formfieldcontrols"><a href="cron.php?admin<?php echo $plxMotor->aConf['clef'] ?>">cron.php?admin<?php echo $plxMotor->aConf['clef'] ?></a></div>
+</div>

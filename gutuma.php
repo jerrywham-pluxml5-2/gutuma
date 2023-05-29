@@ -1,7 +1,7 @@
 <?php if (!defined('PLX_ROOT')) exit;
 /**
  * Classe gutuma
- * @version 2.2.0 * @date	16/01/2019 * @author	Thomas Ingles
+ * @version 2.2.2 * @date	02/12/2022 * @author	Thomas Ingles
  **/
 class gutuma extends plxPlugin {
 	public $code;
@@ -196,25 +196,46 @@ if (window.parent.tinyMCE && window.parent.location.pathname.search('news/compos
 		return FALSE;
 	}
 	public function setGutumaConfig($gu_config){//Méthode qui enregistre les MAJ ds gutuma/inc/config.php
-		$this->v();#populate $this->release (& code)
-		$GU_config = "\$gu_config_version = $this->release;\n";
-		foreach($gu_config as $key => $value){
-			$GU_config .="\$gu_config['$key'] = ".($value===false ? "FALSE" : ($value === true ? "TRUE" : "'$value'")).";\n";
+		$filename = $this->listsDir.'/inc/config.php';
+		if(is_writable($filename)){
+			$this->v();#populate $this->release (& code)
+			$GU_config = "\$gu_config_version = $this->release;\n";
+			foreach($gu_config as $key => $value){
+				$GU_config .="\$gu_config['$key'] = ".($value===false ? "FALSE" : ($value === true ? "TRUE" : "'$value'")).";\n";
+			}
+//			Version encodée
+			file_put_contents($filename,"<?php /*\n".base64_encode($GU_config)."\n*/  ?>");
+//			Version décodée
+/*			file_put_contents($filename,"<?php \n".$GU_config."\n?>");*/
 		}
-//		Version encodée
-		file_put_contents($this->listsDir.'/inc/config.php',"<?php /*\n".base64_encode($GU_config)."\n*/  ?>");
-//		Version décodée
-/*		file_put_contents($this->listsDir.'/inc/config.php',"<?php \n".$GU_config."\n?>");*/
+		elseif(!isset($this->conferr)){#one time
+			$this->conferr = true;
+			plxMsg::Error('<b>'.__CLASS__.'</b>' . ' :<br />' . sprintf($this->getLang('L_ERR_READONLY'), '<b>'.$filename.'</b>'));
+		}
+
 	}
 	public function onUpdate(){//si fichier update présent a la racine du plugin
 		//return array('cssCache' => true);#mise a jour du cache des css
 	}
 	public function AdminTopBottom(){//Méthode qui affiche un message s'il y a un message à afficher * @return	stdio * @author	Stephane F, Cyril MAGUIRE
+		$filename = $this->listsDir.'/inc/config.php';
 		echo '<?php '; ?>
-		if(empty($plxAdmin->aUsers["001"]["email"])) {
-			echo '<p class="warning">Plugin <?php echo $this->getLang('L_ADMIN_MENU_NAME') ?><br /><?php echo $this->getLang('L_ERR_EMAIL') ?></p>';
-			plxMsg::Display();
+		$msgShow = false;
+		if(empty($plxAdmin->aUsers['001']['email'])) {
+			echo '<p class="warning">Plugin <?php $this->lang('L_GUTUMA_MENU_NAME') ?><br /><?php $this->lang('L_ERR_EMAIL') ?></p>';
+			$msgShow = true;
 		}
+		$file = PLX_PLUGINS.'<?=__CLASS__?>/lang/'.$plxAdmin->aConf['default_lang'].'.php';
+		if(!file_exists($file)) {
+			echo '<p class="warning">Plugin <?php $this->lang('L_GUTUMA_MENU_NAME') ?><br />'.sprintf('<?php $this->lang('L_LANG_UNAVAILABLE')?>', $file).'</p>';
+			$msgShow = true;
+		}
+		$file = '<?=$filename?>';
+		if(file_exists($file) && !is_writable($file)) {
+			echo '<p class="warning">Plugin <?php $this->lang('L_GUTUMA_MENU_NAME') ?><br />'.sprintf('<?php $this->lang('L_ERR_READONLY')?>', '<b>'.$file.'</b>').'</p>';
+			$msgShow = true;
+		}
+		if($msgShow) plxMsg::Display();
 ?><?php
 	}
 	public function AdminProfilPrepend(){//Méthode pour detecter si connecté (ajax test ds compose) * @return	stdio @author	Thomas Ingles

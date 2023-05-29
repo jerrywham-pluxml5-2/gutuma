@@ -58,7 +58,7 @@ class Swift_Message extends Swift_Message_Mime
     "mixed" => array(),
     "related" => array()
   );
-  
+
   /**
    * Ctor.
    * @param string Message subject
@@ -67,7 +67,7 @@ class Swift_Message extends Swift_Message_Mime
    * @param string Encoding
    * @param string Charset
    */
-  public function __construct($subject="", $body=null, $type="text/plain", $encoding=null, $charset=null)
+  public function __construct($subject="", $body="", $type="text/plain", $encoding="", $charset="")
   {
     parent::__construct();
     if (function_exists("date_default_timezone_set") && function_exists("date_default_timezone_get"))
@@ -88,25 +88,25 @@ class Swift_Message extends Swift_Message_Mime
       $this->headers->set("X-LibVersion", $this->libVersion);
     }
     $this->headers->set("MIME-Version", "1.0");
-    $this->setContentType($type);	
+    $this->setContentType($type);
     $this->setCharset($charset);
     $this->setFlowed(true);
     $this->setEncoding($encoding);
-    
+
     foreach (array_keys($this->references["parent"]) as $key)
     {
       $this->setReference("parent", $key, $this);
     }
-    
+
     $this->setMimeWarning(
     "This is a message in multipart MIME format.  Your mail client should not be displaying this. " .
     "Consider upgrading your mail client to view this message correctly."
     );
-    
-    if ($body !== null)
+
+    if ($body)# !== null
     {
       $this->setData($body);
-      if ($charset === null)
+      if ($charset === "")
       {
         Swift_ClassLoader::load("Swift_Message_Encoder");
         if (Swift_Message_Encoder::instance()->isUTF8($body)) $this->setCharset("utf-8");
@@ -162,13 +162,13 @@ class Swift_Message extends Swift_Message_Mime
    * @return string The generated message ID, including the <> quotes.
    * @author Cristian Rodriguez <judas.iscariote@flyspray.org>
    */
-  public function generateId($idstring=null)
+  public function generateId($idstring="")
   {
     $midparams =  array(
-      "utctime" => gmstrftime("%Y%m%d%H%M%S"),
+      "utctime" => gmdate("YmdHis"),# gmstrftime("%Y%m%d%H%M%S"), #php 8.1 Deprecated: Function gmstrftime() is deprecated
       "pid" => getmypid(),
       "randint" => mt_rand(),
-      "customstr" => (preg_match("/^(?<!\\.)[a-z0-9\\.]+(?!\\.)\$/iD", $idstring) ? $idstring : "swift") ,
+      "customstr" => (preg_match("/^(?<!\\.)[a-z0-9\\.]+(?!\\.)\$/iD", $idstring) ? $idstring : "swift"), # Deprecated: preg_match(): Passing null to parameter #2
       "hostname" => (isset($_SERVER["SERVER_NAME"]) ? $_SERVER["SERVER_NAME"] : php_uname("n")),
     );
     $this->setId(vsprintf("<%s.%d.%d.%s@%s>", $midparams));
@@ -407,8 +407,7 @@ class Swift_Message extends Swift_Message_Mime
    */
   public function setFlowed($flowed=true)
   {
-    $value = null;
-    if ($flowed) $value = "flowed";
+    $value = $flowed? "flowed": "";
     $this->headers->setAttribute("Content-Type", "format", $value);
   }
   /**
@@ -517,6 +516,10 @@ class Swift_Message extends Swift_Message_Mime
    */
   public function attach(Swift_Message_Mime $child, $id=null)
   {
+    /*var_dump($id, $child->getLevel(),$child->hasChild($id));*/
+    //~ Fatal error: Cannot remove child part identified by '6472893235863' as it does not exist. Consider using hasChild() to check.
+    //~ hasChild() to check
+    #if($id&&$child->hasChild($id))#tep
     try {
       switch ($child->getLevel())
       {
@@ -573,7 +576,7 @@ class Swift_Message extends Swift_Message_Mime
       $this->fixContentType();
     } catch (Swift_Message_MimeException $e) {
       throw new Swift_Message_MimeException("Something went wrong whilst trying to move some MIME parts during a detach(). " .
-        "The MIME component threw an exception:<br />" . $e->getMessage());
+        "The MIME component threw an exception:<br />" . html_entity_decode($e->getMessage()));
     }
   }
   /**
@@ -599,7 +602,7 @@ class Swift_Message extends Swift_Message_Mime
     $new = new Swift_Message_Part();
     $new->setContentType($type);
     $this->getReference("parent", $new_branch)->addChild($new, $tag, -1);
-    
+
     switch ($new_branch)
     {
       case "related": $this->setReference("related", $tag, $new);//relatedRefs[$tag] = $new;
@@ -607,7 +610,7 @@ class Swift_Message extends Swift_Message_Mime
       case "mixed": $this->setReference("mixed", $tag, $new);//mixedRefs[$tag] = $new;
         break;
     }
-    
+
     foreach ($from as $id => $ref)
     {
       if (!$ref) $ref = $this;
@@ -788,7 +791,7 @@ class Swift_Message extends Swift_Message_Mime
         $this->setData($this->getMimeWarning());
         $this->setLineWrap(76);
       }
-      
+
       if ($this->getCharset() !== null) $this->setCharset(null);
       if ($this->isFlowed()) $this->setFlowed(false);
       $this->setEncoding("7bit");

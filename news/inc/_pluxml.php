@@ -25,7 +25,8 @@ if(strstr($_SERVER['PHP_SELF'],'gadgets.js.php')){//4 gadget call
 }
 define('PLX_GROOT', $gdgt.'..'.__GDS__.'..'.__GDS__.'..'.__GDS__);// GROOT 4 SYMBIOLINK
 define('PLX_MORE', PLX_GROOT.'core'.__GDS__);
-if(defined('PLX_ROOT')){;#Test for include (fix error of Twice PluXml)
+if(defined('PLX_ROOT')){
+ #Test for include (fix error of Twice PluXml)
  $plxMotor = $this->plxMotor;
  $lang = $glang = $plxMotor->aConf['default_lang'];
  $gu_is_included = TRUE;
@@ -107,15 +108,23 @@ $plxMotor->mode='gutuma';//4 future ::: & solved bug header 404 in demarrage & p
 # Creation de l'objet d'affichage*
 #$plxShow = plxShow::getInstance();# origin :: FIXED* myMultiLingue ::: MML CALL PLX_MY_MULTILINGUE TWICE ::: $plxShow NOT IN global
 
-# Pages publiques
+# Pages publiques/privé
+$gu_front = FALSE;# other redirect (if not connected in PluXml backend)
 switch(true){
  case strpos($plxMotor->path_url,'news/ajax.php') !== FALSE:
  case strpos($plxMotor->path_url,'news/js/gadgets.js.php') !== FALSE:
  case strpos($plxMotor->path_url,'news/subscribe.php') !== FALSE:
   $gu_front = TRUE;# grant access 4 public php files subscript mode
  break;
+ case strpos($plxMotor->path_url,'news/cron.php') !== FALSE:#tep 2.2.2
+  if($plxMotor->get AND preg_match('#^admin([\w-]+)?$#',$plxMotor->get,$capture)) {
+   $plxMotor->mode = 'gutumadmincron'; # 4 the fun
+   if ($capture[1] == $plxMotor->aConf['clef']) {
+    $gu_front = TRUE;# private access 4 cron php file like PluXml rss com's draft mode
+   }
+  }
+ break;
  default:
-  $gu_front = FALSE;# other redirect (if not connected in PluXml backend)
 }
 
 if(!$gu_front) {# Back office (admin)

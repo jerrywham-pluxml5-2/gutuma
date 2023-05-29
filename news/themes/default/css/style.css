@@ -68,10 +68,10 @@
 	width: 100%;
 }
 #list_name,#new_list_name{
-	width: 33.3%;
+	min-width: 33.3%;
 }
 #list_friend,#new_list_friend{
-	width: 44.4%;
+	min-width: 44.4%;
 }
 .formfield{
 	padding: 0.5rem 0px;
@@ -336,9 +336,10 @@ table.results tr td.emptyresults{
 		font-size: 1.1em;
 	}
 	#imghead{display:none;}/* hide foot img in plx admin menu */
-	.imglink img{
-		width:27px;
-		height:27px;
+	.imglink img, img.imglink{
+		width: 24px;
+		height: 24px;
+		max-width: 24px;
 	}
 }
 @media (max-width: 480px){

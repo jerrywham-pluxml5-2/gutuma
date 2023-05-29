@@ -47,10 +47,10 @@ if(isset($_GET["del"]) AND $_GET["del"]=="install") {
 	<meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0">
 	<title><?php echo GUTUMA_TITLE; ?> - <?php echo plxUtils::strCheck($plxAdmin->aConf['title']) ?> - <?php echo L_ADMIN ?></title>
 	<meta http-equiv="content-type" content="text/html; charset=<?php echo strtolower(GUTUMA_ENCODING) ?>" />
-	<link rel="stylesheet" type="text/css" href="<?php echo PLX_MORE ?>admin/theme/plucss<?php echo version_compare(@PLX_VERSION,'5.7','>')?'.min':'' ?>.css?ver=<?php echo PLX_VERSION ?>" media="screen" />
+	<link rel="stylesheet" type="text/css" href="<?php echo PLX_MORE ?>admin/theme/plucss.css?ver=<?php echo PLX_VERSION ?>" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<?php echo PLX_MORE ?>admin/theme/theme.css?ver=<?php echo PLX_VERSION ?>" media="screen" />
 	<link rel="stylesheet" type="text/css" href="themes/<?php echo gu_config::get('theme_name');?>/css/style.css?v=<?php echo GUTUMA_VERSION_NAME ?>" media="screen" />
-<?php if(version_compare(@PLX_VERSION,'5.7','>')){ $pathfont = (version_compare(@PLX_VERSION,'5.9','==')? 'fontello/css': 'fonts'); ?>
+<?php if(version_compare(@PLX_VERSION,'5.7','>')){ $pathfont = (version_compare(@PLX_VERSION,'5.9','>=')? 'fontello/css': 'fonts'); ?>
 	<link rel="stylesheet" type="text/css" href="<?php echo PLX_MORE ?>admin/theme/<?=$pathfont?>/fontello.css?v=<?php echo PLX_VERSION ?>" media="screen" />
 <?php } ?>
 	<link rel="icon" href="<?php echo PLX_MORE ?>admin/theme/images/favicon.png" />
