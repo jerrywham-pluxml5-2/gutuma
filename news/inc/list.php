@@ -7,8 +7,8 @@
  * @modifications Cyril Maguire, Thomas Ingles
  *
  * Gutama plugin package
- *  @version 2.2.1
- * @date	16/07/2020
+ *  @version 2.2.2
+ * @date	29/05/2023
  * @author	Cyril MAGUIRE, Thomas Ingles
 */
 /**
@@ -268,7 +268,7 @@ class gu_list{
 		$list = new gu_list();
 		$list->id = $header[0];
 		$list->name = $header[1];
-		$list->friend = trim(@$header[4]);#since 2.2.1 : trim remove EOL \n
+		$list->friend = empty($header[4])?$list->name:trim($header[4]);#since 2.2.1 : trim remove EOL \n
 		$list->private = (bool)$header[2];
 		$list->size = (int)$header[3];
 		if ($load_addresses){// Read all address lines
