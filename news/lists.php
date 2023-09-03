@@ -130,15 +130,16 @@ gu_theme_start();
 
 	//remove checkeds
 	function gu_lists_thead_menu(){/* In table header. After "Action" */
-		return '<input type="checkbox" onclick="checkAll(this.form, \'idList[]\')"/><?php echo $img;?>&nbsp;&nbsp;<a href="javascript:gu_lists_delete()" class="imglink" title="<?php echo t('Delete');?>"><img src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_delete_red.png" /></a>';
+		return '<input id="allin" type="checkbox" onclick="checkAll(this.form, \'idList[]\')"/><?php echo $img;?>&nbsp;&nbsp;<a href="javascript:gu_lists_delete()" class="imglink" title="<?php echo t('Delete');?>"><img src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_delete_red.png" /></a>';
 	}
 
-	delAllList = false;/* global */
+	delAllList = false;//global
 	function gu_lists_delete(){
 		var lists = document.getElementsByName('idList[]');
-		var fadeTime = ok = 0;
+		var ok, ck, fadeTime = 0;
 		for(var i = 0; i < lists.length; i++){
 			if(lists[i].checked){
+				ck = !0;
 				if(!ok){
 					ok = confirm("<?php echo t('Are you sure you want to delete checked lists? All addresses will be lost!');?>");
 					if(!ok) return;//only one time ;)
@@ -148,9 +149,9 @@ gu_theme_start();
 				fadeTime = fadeTime + 444;
 			}
 		}
+		//Check before anim
+		if(!ck) {gu_allin_anim();return;}
 	}
-//todo add event listener on check TO SHOW btn deleteChecks to gu_lists_delete()
-
 	function gu_list_delete(list_id, fadeTime){
 		var fadeTime = fadeTime?fadeTime:1000;
 		var all = !(fadeTime == 1000);
@@ -190,7 +191,7 @@ gu_theme_start();
 			}
 			lists = ids.trim('·');
 			if(!lists){//zero checked list
-				gu_success("<?php echo t('Check one or more list before!');?>");
+				gu_error(T['Check before use']);
 				gu_messages_display(0);
 				return;
 			}

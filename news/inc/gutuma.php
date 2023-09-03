@@ -13,7 +13,7 @@
 */
 include_once 'misc.php';
 include_once 'session.php';
-include_once ('_pluxml.php');#Inclusion des librairies de plxuml
+include_once ('_pluxml.php');#Inclusion des librairies de plxuml + redir (si besoin)
 define('GU_CONFIG_LANG', isset($slang)?$slang:$glang);//For subscribe.php url query ?lng= (slang)
 if (version_compare(phpversion(), '5', '<'))#Check for PHP5+
 	die(t('Sorry - Gutuma requires at least PHP5. Please contact your hosting provider and ask them to upgrade.'));

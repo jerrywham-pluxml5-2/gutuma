@@ -274,13 +274,15 @@ class gu_list{
 		if ($load_addresses){// Read all address lines
 			$addresses = array();
 			$update = false; //remove if old tmp address
+			$days = gu_config::get('days')*86400;//86400 seconds = 1 day (24*60*60)
+			$time = time();
 			while (!feof($lh)){
 				$address = trim(fgets($lh));
 				if (strlen($address) > 0){
 					if($tmp){//remove old temporary @dresses (cron)
 						$a = explode(';',$address);
 //cron by user
-						if($a[0]+(gu_config::get('days')*86400) < time()){//86400 seconds = 1 day (24*60*60) :: remove temp > 15 days (default) = 1296000s
+						if(($a[0]+$days) < $time){//remove tmp address > 15 days (default) = 1296000s
 							$update = true;
 							continue;
 						}

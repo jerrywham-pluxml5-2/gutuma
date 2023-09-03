@@ -22,9 +22,9 @@ $_SESSION['gu_timer'] = $autosave;
 $query = '';#?msg=
 // Get all available lists
 $lists = gu_list::get_all();
-if (is_get_var('msg'))// Load newsletter from draft if one was specified
-	$newsletter = gu_newsletter::get((int)get_get_var('msg'));
-else{// Create empty newsletter, and fill from post vars if they exist
+// Load newsletter from draft if one was specified
+if (!(is_get_var('msg') && $newsletter = gu_newsletter::get((int)get_get_var('msg')))){
+	//else Create empty newsletter, and fill from post vars if they exist
 	$newsletter = new gu_newsletter();
 	if (is_post_var('msg_id')) 			$newsletter->set_id((int)get_post_var('msg_id'));
 	if (is_post_var('msg_recips')) 	$newsletter->set_recipients(get_post_var('msg_recips'));

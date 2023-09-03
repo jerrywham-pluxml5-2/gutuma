@@ -8,13 +8,13 @@
  *
  * Gutama plugin package
  * @version 2.2.2
- * @date	14/04/2023
+ * @date	25/06/2023
  * @author	Cyril MAGUIRE, Thomas Ingles
 */
 define('FILE_MARKER', "<?php die(); ?>\n");
 define('MESSAGE_FILE', 'msg.php');
 define('RECIPIENTS_FILE', 'recips.php');
-define('LOCK_FILE', "send.lock");
+define('LOCK_FILE', 'send.lock');
 define('ERROR_EXTRA', t('Check permissions for directory <code>%</code>',array(GUTUMA_TEMP_DIR)));
 /**
  * The newsletter class
@@ -135,21 +135,57 @@ class gu_newsletter{
 	 */
 	public function get_sended_date(){
 		$s = $this->get_dir().'/'.LOCK_FILE;
-		return (file_exists($s)) ? date (t('Y-m-d H:i'), filemtime($s)) : t('Never');
+		return (file_exists($s)) ? date(t('Y-m-d H:i'), filemtime($s)) : t('Never');
+	}
+	/**
+	 * Get the last sended date #since 2.2.2
+	 * @return int date if have sended one time, else 0
+	 */
+	public function get_sended_time(){
+		$s = $this->get_dir().'/'.LOCK_FILE;
+		return (file_exists($s)) ? filemtime($s) : 0;
 	}
 	/**
 	 * Get the first created date #since 2.2.1
 	 * @return Text date of created time
 	 */
 	public function get_created_date(){
-		return date (t('Y-m-d H:i'), filemtime($this->get_dir().'/index.html'));
+		return date(t('Y-m-d H:i'), $this->get_created_time());
+	}
+	/**
+	 * Get the first created time #since 2.2.2
+	 * @return int timestamp of created it
+	 */
+	public function get_created_time(){
+		return $this->id?$this->id:filemtime($this->get_dir().'/index.html');
 	}
 	/**
 	 * Get the last modified date #since 2.2.1
 	 * @return Text date of msg modified time
 	 */
 	public function get_msg_date(){
-		return date (t('Y-m-d H:i'), filemtime($this->get_dir().'/msg.php'));
+		return date (t('Y-m-d H:i'), filemtime($this->get_dir().'/'.MESSAGE_FILE));
+	}
+	/**
+	 * Get the last modified time #since 2.2.2
+	 * @return int timestamp of msg modified
+	 */
+	public function get_msg_time(){
+		return filemtime($this->get_dir().'/'.MESSAGE_FILE);
+	}
+	/**
+	 * Get if msg file is writeable #since 2.2.2
+	 * @return bool
+	 */
+	public function is_writable(){
+		return is_writable($this->get_dir().'/'.MESSAGE_FILE);
+	}
+	/**
+	 *Return this newsletter is unlocked #since 2.2.2
+	 */
+	public function is_unlocked(){
+		$f = $this->get_dir().'/'.LOCK_FILE;
+		return $this->is_writable() && (!file_exists($f) || (file_exists($f) && is_writeable($f)));
 	}
 	/**
 	 * Gets the unique folder associated with this newsletter
@@ -159,7 +195,7 @@ class gu_newsletter{
 		return realpath(GUTUMA_TEMP_DIR).'/'.$this->id;
 	}
 	/**
-	 * Saves this newsletter
+	 * Saves this newsletter : trim datas since 2.2.2 #ReSend TITLE FIX
 	 * @return bool TRUE if operation was successful, else FALSE
 	 */
 	public function save(){
@@ -175,15 +211,30 @@ class gu_newsletter{
 		}
 		$fh = @fopen($dir.'/'.MESSAGE_FILE, 'w');# Save message file
 		if ($fh == FALSE)
-			return gu_error('<br />'.t('Unable to save newsletter draft'), ERROR_EXTRA);
-		fwrite($fh, FILE_MARKER);
-		fwrite($fh, $this->recipients."\n");
-		fwrite($fh, $this->subject."\n");
-		fwrite($fh, $this->html."\n");
-		fwrite($fh, FILE_MARKER);
-		fwrite($fh, $this->text."\n");
+			return gu_error('<br />'.t('Unable to save newsletter draft'), ERROR_EXTRA .'/'.$this->id);
+		fwrite($fh, FILE_MARKER
+		. trim($this->recipients)."\n"
+		. trim($this->subject)."\n"
+		. trim($this->html)."\n"
+		. FILE_MARKER
+		. trim($this->text)."\n");
 		fclose($fh);
 		return TRUE;
+	}
+	/**
+	 * Replace Outbox newsletter in Drafts #since 2.2.1
+	 */
+	public function draft_to_send(){
+		gu_debug('Replace Drafts newsletter in Outbox : ' . $this->id);
+		$this->acquire_lock();
+		$dir = $this->get_dir();
+		// Newsletter may have been deleted by the process that blocked this process, or may not be ready for sending
+		if (file_exists($dir.'/'.RECIPIENTS_FILE)){
+			@unlink($dir.'/'.RECIPIENTS_FILE);// Delete recipients file so when we unlock, waiting processes will detect its gone and not try sending
+		}
+		if(!$this->send_prepare())// acquire & release lock
+			$this->release_lock();// Wakeup waiting processes
+		return file_exists($dir.'/'.RECIPIENTS_FILE);
 	}
 	/**
 	 * Replace Outbox newsletter in Drafts #since 2.2.1
@@ -199,8 +250,8 @@ class gu_newsletter{
 		}
 		@unlink($dir.'/'.RECIPIENTS_FILE);// Delete recipients file so when we unlock, waiting processes will detect its gone and not try sending
 		$this->release_lock();// Wakeup waiting processes
+		return TRUE;
 	}
-
 	/**
 	 * Mark this newsletter is sended #since 2.2.1
 	 */
@@ -216,7 +267,7 @@ class gu_newsletter{
 		if(!file_exists($this->get_dir().'/'.LOCK_FILE)){# Used for find last sended date #since 2.2.1
 			file_put_contents($this->get_dir().'/'.LOCK_FILE, FILE_MARKER);# Create lock file #old: as in save before "return"
 		}
-		$this->lock = @fopen($this->get_dir().'/'.LOCK_FILE, 'w');
+		$this->lock = fopen($this->get_dir().'/'.LOCK_FILE, 'w');
 		if (!$this->lock || !flock($this->lock, LOCK_EX))// | LOCK_NB ::: free.fr fix? no
 			return gu_error('<br />'.t('Unable to lock newsletter'));
 	}
@@ -243,7 +294,7 @@ class gu_newsletter{
 		if (!file_exists($dir.'/'.RECIPIENTS_FILE)){// Save address list
 			$fh = @fopen($dir.'/'.RECIPIENTS_FILE, 'w');
 			if ($fh == FALSE)
-				return gu_error('<br />'.t('Unable to save newsletter recipient list'), ERROR_EXTRA);
+				return gu_error('<br />'.t('Unable to save newsletter recipient list'), ERROR_EXTRA .'/'.$this->id);
 			$this->send_progress = array(intval($num_addresses), intval($num_addresses));
 			fwrite($fh, FILE_MARKER);
 			fwrite($fh, $this->send_progress[0].'|'.$this->send_progress[1]."\n");
@@ -280,11 +331,11 @@ class gu_newsletter{
 		}
 		$fh = @fopen($dir.'/'.RECIPIENTS_FILE, 'r+');// Open recipient list file
 		if ($fh == FALSE)
-			return gu_error('<br />'.t('Unable to open newsletter recipient file'), ERROR_EXTRA);
+			return gu_error('<br />'.t('Unable to open newsletter recipient file'), ERROR_EXTRA .'/'.$this->id);
 		try {//free.fr fix
 			@flock($fh, LOCK_EX | LOCK_NB);
 		} catch (Exception $e) {
-			return gu_error('<br />'.t('Unable to lock newsletter recipient list'). ' :<br />' . $e->getMessage(), ERROR_EXTRA);
+			return gu_error('<br />'.t('Unable to lock newsletter recipient list'). ' :<br />' . $e->getMessage(), ERROR_EXTRA .'/'.$this->id);
 		}
 /*
 		if (!flock($fh, LOCK_EX | LOCK_NB)){//free.fr fix test no
@@ -293,7 +344,7 @@ class gu_newsletter{
 			$fh = @fopen($dir.'/'.RECIPIENTS_FILE, 'r+');// Re Open recipient list file
 
 			if (!flock($fh, LOCK_EX | LOCK_NB))//free.fr fix
-				return gu_error('<br />'.t('Unable to lock newsletter recipient list'), ERROR_EXTRA);
+				return gu_error('<br />'.t('Unable to lock newsletter recipient list'), ERROR_EXTRA .'/'.$this->id);
 		}
 */
 		# load adhesion PluXml plugin if mailer->create_message() need for CNIL links
@@ -305,6 +356,8 @@ class gu_newsletter{
 		$total = $header[1];
 		// Start the timer - use the passed start time value if there was one
 		$start_time = isset($init_start_time) ? $init_start_time : time();
+		$batch_time_limit = (int)gu_config::get('batch_time_limit');
+		$batch_max_size = gu_config::get('batch_max_size');
 		// Collect failed recipients
 		$remaining_recipients = $failed_recipients = array();
 		$total_sent = 0;
@@ -323,7 +376,7 @@ class gu_newsletter{
 			}else{
 				$total_sent = $total_sent + $res;#++;
 			}
-			if (((time() - $start_time) > (int)gu_config::get('batch_time_limit')) || ($total_sent >= gu_config::get('batch_max_size')))
+			if (((time() - $start_time) > $batch_time_limit) || ($total_sent >= $batch_max_size))
 				break;
 		}
 		while (!feof($fh)){// Read remaining recipients
@@ -479,23 +532,20 @@ class gu_newsletter{
 			return TRUE;
 		foreach ($this->get_attachments() as $attachment){// Delete individual attachments to ensure directory is empty
 			if (!$this->delete_attachment($attachment['name']))
-				return gu_error('<br />'.t('Unable to delete message attachment'), ERROR_EXTRA);
+				return gu_error('<br />'.t('Unable to delete message attachment'), ERROR_EXTRA .'/'.$this->id);
 		}
 		// Delete the newsletter files
-		$res1 = @rmdir($dir.'/attachments');// (effacement normal ailleurs que chez Free)
-		if (is_dir($dir.'/attachments')) {// l'effacement a échoué
-			$res1 = rename($dir.'/attachments',$dir.'/../../.trash_me');// rename "spécial Free" rename empty folders to .trash_me (effet de bord non garanti de rename)
-		}
+		$res1 = @rmdir($dir.'/attachments');
 		$res2 = @unlink($dir.'/'.MESSAGE_FILE);
 		$res3 = !file_exists($dir.'/'.LOCK_FILE) || @unlink($dir.'/'.LOCK_FILE);
 		$res4 = !file_exists($dir.'/'.RECIPIENTS_FILE) || @unlink($dir.'/'.RECIPIENTS_FILE);
 		$res5 = @unlink($dir.'/index.html');
-		$res6 = @rmdir($dir);
+		$res6 = @rmdir($dir);// effacement normal ailleurs que chez Free
 		if (is_dir($dir)) {// l'effacement a échoué
-			$res6 = rename($dir,$dir.'/../../.trash_me');// rename "spécial Free" rename empty folders to .trash_me (effet de bord non garanti de rename)
+			$res6 = @rename($dir,$dir.'/../../.trash_me');// rename "spécial Free" rename empty folders to .trash_me (effet de bord non garanti de rename)
 		}
-		if (!($res1 && $res2 && $res3 && $res4 && $res5))
-			return gu_error('<br />'.t('Some newsletter files could not be deleted') . ' ::: WIP '.$res1  . ' : ' . $res2  . ' : ' . $res3  . ' : ' . $res4  . ' : ' . $res5, ERROR_EXTRA);
+		if (!($res1 && $res2 && $res3 && $res4 && $res5))#maybe only $res6 ???
+			return gu_error('<br />'.t('Some newsletter files could not be deleted') . ' ::: WIP '.$res1  . ' : ' . $res2  . ' : ' . $res3  . ' : ' . $res4  . ' : ' . $res5, ERROR_EXTRA .'/'.$this->id);
 		$this->send_progress = NULL;
 		return TRUE;
 	}
@@ -505,9 +555,19 @@ class gu_newsletter{
 	 * @return mixed The newsletter if it was loaded successfully, else FALSE if an error occured
 	 */
 	public static function get($id){
-		$h = @fopen(realpath(GUTUMA_TEMP_DIR.'/'.$id.'/'.MESSAGE_FILE), 'r');// Open message file
+		//~ var_dump($id, realpath(GUTUMA_TEMP_DIR.'/'.$id.'/'.MESSAGE_FILE));
+		//~ $e = new \Exception;var_export($e->getTraceAsString());echo'<br><br><br><br>';
+
+		$p = realpath(GUTUMA_TEMP_DIR.'/'.$id);
+		if ($p == FALSE)
+			return gu_error('<br />'.t("Folder unexist").' : '.GUTUMA_TEMP_DIR.'/'.$id);
+		$p = realpath(GUTUMA_TEMP_DIR.'/'.$id.'/'.MESSAGE_FILE);
+		if ($p == FALSE)
+			return gu_error('<br />'.t("Message file unexist").' : '.GUTUMA_TEMP_DIR.'/'.$id.'/'.MESSAGE_FILE);
+		$h = @fopen($p, 'r');// Open message file
 		if ($h == FALSE)
 			return gu_error('<br />'.t("Unable to open message file").' : '.GUTUMA_TEMP_DIR.'/'.$id.'/'.MESSAGE_FILE);
+
 		fgets($h); // Discard first line
 		$newsletter = new gu_newsletter();
 		$newsletter->id = $id;

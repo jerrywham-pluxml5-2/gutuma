@@ -7,8 +7,8 @@
  * @modifications Cyril Maguire, thomas Ingles
  *
  * Gutama plugin package
- * @version 2.1.0
- * @date	01/10/2018
+ * @version 2.2.2
+ * @date	12/08/2023
  * @author	Cyril MAGUIRE, Thomas INGLES
 */
 header('Content-Type: application/x-javascript; charset=utf-8');
@@ -26,14 +26,14 @@ $public_actions = array('subscribe', 'unsubscribe');
 
 // Get posted action var which determines which function gets called
 if (!is_post_var('action'))
-	gu_ajax_error(t('No action specified in AJAX request'));
+	return gu_ajax_error(t('No action specified in AJAX request'));
 
 $action = get_post_var('action');
 $is_public_action = in_array($action, $public_actions);
 
 // Check for valid session if not a public action
 if (!gu_session_is_valid() && !$is_public_action)
-	gu_ajax_error(t('This action requires a valid session. Try logging in again.'));
+	return gu_ajax_error(t('This action requires a valid session. Try logging in again.'));
 
 // Call the appropriate function
 switch ($action) {
@@ -69,9 +69,25 @@ switch ($action) {
 		$address_id = is_post_var('address_id') ? (int)get_post_var('address_id') : 0;
 		gu_ajax_remove_address($list, $address, $address_id, $tmp);
 		break;
+	case 'newsletter_msg':
+		$newsletter = is_post_var('newsletter') ? gu_newsletter::get((int)get_post_var('newsletter')) : NULL;
+		gu_ajax_newsletter_msg($newsletter);
+		break;
 	case 'newsletter_delete':
 		$newsletter = is_post_var('newsletter') ? gu_newsletter::get((int)get_post_var('newsletter')) : NULL;
 		gu_ajax_newsletter_delete($newsletter);
+		break;
+	case 'newsletter_deletes':
+		$ids = is_post_var('newsletter') ? get_post_var('newsletter') : NULL;
+		gu_ajax_newsletter_deletes($ids);
+		break;
+	case 'newsletter_move':
+		$newsletter = is_post_var('newsletter') ? gu_newsletter::get((int)get_post_var('newsletter')) : NULL;
+		gu_ajax_newsletter_move($newsletter);
+		break;
+	case 'newsletter_moves':
+		$ids = is_post_var('newsletter') ? get_post_var('newsletter') : NULL;
+		gu_ajax_newsletter_moves($ids);
 		break;
 }
 // If action function hasn't already returned due to error, return now
@@ -83,7 +99,8 @@ gu_ajax_return();
  */
 function gu_ajax_error($msg){
 	gu_error($msg);
-	gu_ajax_return();
+	# gu_ajax_return('gu_messages_display(9000);');
+	gu_ajax_return(); # Fix dbl msg show
 }
 /**
  * Returns the specified Javascript snippet to the client
@@ -216,15 +233,96 @@ function gu_ajax_remove_address($list, $address, $address_id, $tmp = ''){
 	}
 }
 /**
- * Deletes the specified newsletter
+ * show the message of the specified newsletter
+ * @param gu_newsletter $newsletter The newsletter to show msg
+ */
+function gu_ajax_newsletter_msg($newsletter){
+	#var_dump('tep');#$newsletter->get_html(),__file__.__line__.'gu_ajax_newsletter_msg',$newsletter);
+	if (!$newsletter)
+		return gu_error(t('Invalid newsletter'));
+	$subject = trim($newsletter->get_subject());#remove subject EOL
+	$subject = (t('Newsletter') . ' #html (' . (!empty($subject)? $subject: t('Empty subject')) . ')');#remove subject EOL
+	gu_success($subject);
+	$subject = '<h2 class="title"><i>'.$subject.'</i></h2><hr />';#Add title in popup
+	gu_ajax_return('gu_ajax_on_newsletter_msg('.$newsletter->get_id().',"'.urlencode($subject.$newsletter->get_html()).'")');#die
+}
+/**
+ * Delete the specified newsletter
  * @param gu_newsletter $newsletter The newsletter to delete
  */
-function gu_ajax_newsletter_delete($newsletter){
+function gu_ajax_newsletter_delete($newsletter, $notify = true){
 	if (!$newsletter)
 		return gu_error(t('Invalid newsletter'));
 	if ($newsletter->delete()){
-		$subject = trim($newsletter->get_subject());
-		gu_success(t('Newsletter deleted') . ' (' . (!empty($subject)? $subject: t('Empty subject')) . ')');#remove subject EOL
-		gu_ajax_return('gu_ajax_on_newsletter_delete('.$newsletter->get_id().')');
+		if($notify){
+			$subject = trim($newsletter->get_subject());
+			gu_success(t('Newsletter deleted') . ' (' . (!empty($subject)? $subject: t('Empty subject')) . ')');#remove subject EOL
+			gu_ajax_return('gu_ajax_on_newsletter_delete('.$newsletter->get_id().')');#die
+		}
+		return true;
 	}
+	return false;
+}
+/**
+ * Delete the specified newsletters
+ * @param ids (separated by letter O) to delete
+ */
+function gu_ajax_newsletter_deletes($ids){
+	if (!$ids)# = gu_newsletter::get((int)$newsletter);
+		return gu_error(t('Invalid newsletter'));
+	$aId = explode('O', $ids);
+	$a = $z = array();
+	foreach($aId as $id){
+		$newsletter = gu_newsletter::get((int)$id);
+		if(gu_ajax_newsletter_delete($newsletter, false)){
+			$a[] = $id;
+		}else{
+			$z[] = $id;
+		}
+	}
+	#tep gestion d'erreur de droit de dossier
+	$t = count($a);
+	gu_success($t . ' / ' . count($aId) . ' ' . t('Newsletter'.($t>1?'s':'').' deleted'));#remove subject EOL
+	gu_ajax_return('gu_ajax_on_newsletter_deletes("'.implode('O',$a).'","'.implode('O',$z).'")');
+}
+/**
+ * Move the specified newsletter to draft|outbox( other side)
+ * @param gu_newsletter $newsletter The newsletter to move
+ */
+function gu_ajax_newsletter_move($newsletter, $notify = true){
+	if (!$newsletter)# = gu_newsletter::get((int)$newsletter);
+		return gu_error(t('Invalid newsletter'));
+	$p = $newsletter->get_send_progress();
+	$rtrn = false;
+	$outb = (empty($p[0])&&empty($p[1]));
+	if($outb) $rtrn = $newsletter->draft_to_send();# to outbox
+	else $rtrn = $newsletter->send_to_draft();# to drafts
+	if($notify&&$rtrn){
+		$subject = trim($newsletter->get_subject());
+		gu_success(t('Newsletter moved') . ' -&gt; '.t($outb?'Outbox':'Drafts').' (' . (!empty($subject)? $subject: t('Empty subject')) . ')');#remove subject EOL
+		gu_ajax_return('gu_ajax_on_newsletter_move('.$newsletter->get_id().')');#die
+	}
+	return $rtrn; # bool
+}
+/**
+ * Move the specified newsletters to draft|outbox( other side)
+ * @param ids (separated by letter O) to move
+ */
+function gu_ajax_newsletter_moves($ids){
+	if (!$ids)# = gu_newsletter::get((int)$newsletter);
+		return gu_error(t('Invalid newsletter'));
+	$aId = explode('O', $ids);
+	$a = $z = array();
+	foreach($aId as $id){
+		$newsletter = gu_newsletter::get((int)$id);
+		if(gu_ajax_newsletter_move($newsletter, false)){
+			$a[] = $id;
+		}else{
+			$z[] = $id;
+		}
+	}
+	#bep gestion d'erreur de droit de dossier
+	$t = count($a);
+	gu_success($t . ' / ' . count($aId) . ' ' . t('Newsletter'.($t>1?'s':'').' moved'));#remove subject EOL
+	gu_ajax_return('gu_ajax_on_newsletter_moves("'.implode('O',$a).'","'.implode('O',$z).'")');
 }

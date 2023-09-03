@@ -6,11 +6,43 @@
  * @file Theme functions
  * @modifications Cyril Maguire
  * Gutama plugin package
- * @version 2.0.0
- * @date	23/09/2018
- * @author	Cyril MAGUIRE, Thomas Ingles
+ * @version 2.2.2
+ * @date	  09/08/2023
+ * @author  Cyril MAGUIRE, Thomas Ingles
 */
 
+
+/**
+ * Méthode qui inclus dataTable (balise css & js) Inspiré d'adhesion
+ * dataTableIncHead(
+ * @return	stdio
+ * @author	Thomas Ingles
+ **/
+function gu_theme_inc_head($w=false) {//cdn idée
+?>
+	<link rel="stylesheet" type="text/css" href="inc/pop.css?v=1.0.0" media="screen" />
+	<script type="text/javascript">
+		T = new Array();//bep multilingue
+		T['Check before use'] = "<?php echo t('Check one or more line before!');?>";//misc.js : gu_allin_anim()
+	</script>
+
+<?php
+	if(defined('GU_DATATABLE')){#newsletters only #tep
+		$v = 'js/Vanilla-DataTables/vanilla-dataTables.min.';//github.com/Mobius1/Vanilla-DataTables/pull/65 & jscompress.com
+		if($w)
+			$v = $w;
+?>
+	<link rel="stylesheet" type="text/css" href="<?= $v ?>css?v=1.6.17" media="screen" />
+	<script type="text/javascript" src="<?= $v ?>js?v=1.6.17"></script>
+<?php
+/*
+<!-- https://fiduswriter.github.io/Simple-DataTables-classic/7-init-destroy-import-export/
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables-classic@latest/dist/style.css" rel="stylesheet" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables-classic@latest" type="text/javascript"></script>
+-->
+*/
+	}
+}
 /**
  * Outputs the start of the site-wide theme
  */
@@ -58,11 +90,11 @@ function gu_theme_pager($id, $baseurl, $start, $pagesize, $total){
 	if ($total > $pagesize) {
 		$last_pg = (0==($total % $pagesize))?$pagesize:($total % $pagesize);
 		echo ($start > 0) ? ('<a href="'.$baseurl.'&amp;start=0#'.$id.'">&lt;&lt;</a>') : '&lt;&lt;';
-		echo '&nbsp;&nbsp;';
-		echo ($start > 0) ? ('<a id="'.$id.'_prev" href="'.$baseurl.'&amp;start='.max(0, $start - $pagesize).'#'.$id.'">&lt;</a>&nbsp;&nbsp;') : '&lt;';
-		echo '&nbsp;&nbsp;';
-		echo (($start + $pagesize) < $total) ? ('<a href="'.$baseurl.'&amp;start='.min($start + $pagesize, $total).'#'.$id.'">&gt;</a>&nbsp;&nbsp;') : '&gt;';
-		echo '&nbsp;&nbsp;';
+		echo '&nbsp;&nbsp;&nbsp;';
+		echo ($start > 0) ? ('<a id="'.$id.'_prev" href="'.$baseurl.'&amp;start='.max(0, $start - $pagesize).'#'.$id.'">&lt;</a>') : '&lt;';
+		echo '&nbsp;&nbsp;&nbsp;';
+		echo (($start + $pagesize) < $total) ? ('<a href="'.$baseurl.'&amp;start='.min($start + $pagesize, $total).'#'.$id.'">&gt;</a>') : '&gt;';
+		echo '&nbsp;&nbsp;&nbsp;';
 		echo (($start + $pagesize) < $total) ? ('<a href="'.$baseurl.'&amp;start='.($total - $last_pg).'#'.$id.'">&gt;&gt;</a>') : '&gt;&gt;';
 		echo '&nbsp;';
 	}

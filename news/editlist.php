@@ -7,8 +7,8 @@
  * @modifications Cyril Maguire
  *
  * Gutama plugin package
- * @version 2.0.0
- * @date	23/09/2018
+ * @version 2.2.2
+ * @date	12/08/2023
  * @author	Cyril MAGUIRE, Thomas Ingles
 */
 include_once 'inc/gutuma.php';
@@ -70,7 +70,7 @@ if ($list->get_size() > 0) {
 	$baseUrl = $subscribe_url.'list='.$list->get_id().'&addr=';
 	foreach ($selection as $address) {
 		$keycode = '';//uneeded if real list
-//icons of ²opt in/out
+		//icons of ²opt in/out
 		if ($tmp){//temp list : hide timestamp of io list
 			$address = explode(';', $address);
 			$icon = in_array($address[1],$maddresses)?'out':'ok';
@@ -121,19 +121,18 @@ gu_theme_start();
 		}
 		return true;
 	}
-
 	//remove checkeds
 	function gu_editlist_thead_menu(){/* In table header. After "Action" */
-		return '<input type="checkbox" onclick="checkAll(this.form, \'idMel[]\')"/>&nbsp;<a href="javascript:gu_remove_addresses()" class="imglink" title="<?php echo t('Delete');?>"><img src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_delete_red.png" /></a>';
+		return '<input id="allin" type="checkbox" onclick="checkAll(this.form, \'idMel[]\')"/>&nbsp;<a href="javascript:gu_remove_addresses()" class="imglink" title="<?php echo t('Delete');?>"><img src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_delete_red.png" /></a>';
 	}
-
-	delAllMel = false;/* global */
+	delAllMel = false;//global
 	function gu_remove_addresses(){
 		var tmp = '';//Or 'i'
 		var lists = document.getElementsByName('idMel[]');
-		var fadeTime = ok = 0;
+		var ok, ck, fadeTime = 0;
 		for(var i = 0; i < lists.length; i++){
 			if(lists[i].checked){
+				ck = !0;
 				if(!ok){
 					ok = confirm("<?php echo t('Are you sure you want to remove checked addresses?');?>");
 					if(!ok) return;//only one time ;)
@@ -145,9 +144,9 @@ gu_theme_start();
 				fadeTime = fadeTime + 444;
 			}
 		}
+		//Check before anim
+		if(!ck) {gu_allin_anim();return;}
 	}
-//todo add event listener on check TO SHOW btn deleteChecks to gu_lists_delete()
-
 	function gu_remove_address(address, address_id, tmp, fadeTime){
 		var fadeTime = fadeTime?fadeTime:1000;
 		var all = !(fadeTime == 1000);
@@ -179,7 +178,6 @@ gu_theme_start();
 		var old_pg_size = parseInt(document.getElementById("pager_addresses_end").innerHTML);
 		var new_pg_size = old_pg_size - 1;
 		document.edit_form.num_addresses.value = new_size;
-		//~ document.getElementById("pager_addresses_end").innerHTML = new_size % <?php echo GUTUMA_PAGE_SIZE; ?>;
 		document.getElementById("pager_addresses_end").innerHTML = new_pg_size;
 		document.getElementById("pager_addresses_total").innerHTML = new_size_filter;
 		document.edit_form.num_addresses.value = new_size;
@@ -197,7 +195,7 @@ gu_theme_start();
 				return false;
 			}
 		}
-		delAllMel = false;/* global */
+		delAllMel = false;//global
 	}
 /* ]]> */
 </script>

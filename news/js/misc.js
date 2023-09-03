@@ -1,12 +1,48 @@
 /************************************************************************
  * @project Gutuma Newsletter Managment
- * @author Rowan Seymour
+ * @author Rowan Seymour, Thomas Ingles
  * @copyright This source is distributed under the GPL
  * @file Miscellaneous Javascript functions
  */
 var gu_status_message = "";
 var gu_error_message = "";
 
+//stackoverflow.com/a/2480287 + jsben.ch/AAGDc (see: stackoverflow.com/a/68201460)
+var gu_memo_pg = location.href.replace(/\/|\?|\&|\=|\.|\:/g,'');
+
+/**
+ * set, get or remove the specified key sessionStorage
+ * @param e The element (key) to set, get or remove
+ * @param s The txt to set
+ * @param r true/1 to reset
+ * @return stored txt if exist or setted, TRUE when deleted else FALSE
+ */
+function gu_memo(e,s,r){
+	e = e + gu_memo_pg;
+	//console.log('#gu_memo',e,s,r);
+	if (e || sessionStorage.getItem(e) != null) {//fix sessget return null if is not set ::: v1.1.0 !== undefined ::: IS '' or 'none ::: restore hide or not :)
+		//~ console.log('#gu_memo removed?',e);
+		if(r) return sessionStorage.removeItem(e);//remove
+		//~ console.log('#gu_memo Not, Setted?',s);
+		if(s) sessionStorage.setItem(e,s);//set
+		//~ console.log('#gu_memo Not, Getted?',s);
+		var i = sessionStorage.getItem(e);//get
+		//~ console.trace('#gu_memo stored : ' + e,i);
+		return i;//exist
+	}
+	//~ console.log('#gu_memo FALSE',e,s);
+	return false;
+}
+// Check #allin before anim demo
+function gu_allin_anim(){
+	document.getElementById('allin').checked = true;
+	setTimeout(function(){
+			document.getElementById('allin').checked = false;
+		},
+	777);
+	gu_error(T['Check before use']);
+	gu_messages_display(777);
+}
 /**
  * Checks the validity of the specified email address
  * @param e The email address to check
@@ -62,15 +98,15 @@ function gu_error(msg){
  * Called when user clicks the "more" or "less" links on an error message
  */
 function gu_messages_toggle_error_extra(){
-	if (gu_element_get_display("errorextra") == "none"){
-		gu_element_set_display("errorextra", "block");
-		gu_element_set_display("errormore", "none");
-		gu_element_set_display("errorless", "block");
+	if (gu_element_get_display("gu_errorextra") == "none"){
+		gu_element_set_display("gu_errorextra", "block");
+		gu_element_set_display("gu_errormore", "none");
+		gu_element_set_display("gu_errorless", "block");
 	}
 	else{
-		gu_element_set_display("errorextra", "none");
-		gu_element_set_display("errormore", "block");
-		gu_element_set_display("errorless", "none");
+		gu_element_set_display("gu_errorextra", "none");
+		gu_element_set_display("gu_errormore", "block");
+		gu_element_set_display("gu_errorless", "none");
 	}
 }
 /**
@@ -109,7 +145,7 @@ function gu_messages_display(delay){
 			gu_element_set_display("gu_errormore", "none");
 			gu_element_set_display("gu_errorextra", "none");
 		}
-		setTimeout('gu_element_set_inner_html("errormsg", "' + gu_add_slashes(gu_error_message) + '")', delay);
+		setTimeout('gu_element_set_inner_html("gu_errormsg", "' + gu_add_slashes(gu_error_message) + '")', delay);
 		if (gu_element_get_display("gu_errormsg") == "none"){
 			//~ console.log('gu_messages_display fade in gu_error_message gu_element_get_display : ', gu_element_get_display("errormsg"));
 			setTimeout('gu_element_fade_in("gu_errormsg", 1000, "block")', delay);
@@ -152,6 +188,7 @@ function gu_element_set_inner_html(id, html){
  * @param color The CSS color value
  */
 function gu_element_set_background(id, color){
+	//~ console.log('gu_element_set_background', id, color);
 	document.getElementById(id).style.backgroundColor = color;
 }
 /**
@@ -161,6 +198,7 @@ function gu_element_set_background(id, color){
  */
 function gu_element_set_opacity(id, opacity){
 	var element = document.getElementById(id);
+	//~ console.log('gu_element_set_opacity',id, opacity,element);
 	element.style.MozOpacity = (opacity / 100);// For Mozilla
 	element.style.filter = "alpha(opacity=" + opacity + ")";// For IE
 	element.style.opacity = (opacity / 100);// For others
@@ -216,7 +254,7 @@ function setMsge(id,mvto){
 			//~ console.log('setMsge 222 ',el.style.display);
 			setTimeout("gu_element_fade_out('" + id + "', 333);"+
 			(mvto?"gu_element_set_inner_html('" + mvto + "', '" + el.innerHTML.replace(/'/g,'’') + "');gu_element_fade('" + mvto + "', 333,0,100);":""),
-		5663);
+			5663);
 		}
 	}
 }

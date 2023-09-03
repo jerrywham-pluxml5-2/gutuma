@@ -65,8 +65,15 @@ if($_SESSION['GUTUMA_PLX_VERSION'] != $glx_version) {#reload if needed
   $_SESSION = array(); //destroy all of the session variables  //~ session_destroy();
   $_SESSION['GUTUMA_PLX_VERSION'] = $glx_version;//solve inter version in same server (same php session)
 	//~ header('Location: ' . PLX_MORE . 'admin' . __GDS__ . 'plugin.php?p=gutuma');#si moteur different : on recharge ;)
+	# AMHA c'est ici que ce fait la redir 302 lors de l'appel a ajax.php si session morte
+	if(strpos($_SERVER['REQUEST_URI'], 'news/ajax.php') && !empty($_POST['action']))
+		$_SESSION['GUTUMA_AJAX_POST'] = $_POST['action'];
 	header('Location: ');#si moteur different : on recharge la page & retour admin/auth ;)
 	exit;
+}
+if(!empty($_SESSION['GUTUMA_AJAX_POST'])) { # Pour retourner le bon message d'erreur
+	$_POST['action'] = $_SESSION['GUTUMA_AJAX_POST'];
+	unset($_SESSION['GUTUMA_AJAX_POST']);
 }
 #END ready for next gen maybe? ;)
 
@@ -119,7 +126,7 @@ switch(true){
  case strpos($plxMotor->path_url,'news/cron.php') !== FALSE:#tep 2.2.2
   if($plxMotor->get AND preg_match('#^admin([\w-]+)?$#',$plxMotor->get,$capture)) {
    $plxMotor->mode = 'gutumadmincron'; # 4 the fun
-   if ($capture[1] == $plxMotor->aConf['clef']) {
+   if ($capture[1] == md5($plxMotor->aConf['clef'] . $plxMotor->aConf['clef'])) {// privacy clef don't show publicly ;-)
     $gu_front = TRUE;# private access 4 cron php file like PluXml rss com's draft mode
    }
   }

@@ -148,6 +148,10 @@ Rétablir: subscribe PLX_GROOT + rem var_dump et réactiver les envois
 &nbsp; @ end is FIX for no trunk ></b> .....????? IN GUTUMA THEME ::: LIKE
 L'adresse <b><i>del@del.del</i></b> est déjà dans la liste réelle de <b><i>nouvelle liste 2</i></b>&nbsp;
 
+Add DKIM FUNC
+https://www.jv-conseil.net/blog/2019-11-17-dkim-php-mail-signature.png/
+https://github.com/JV-conseil-Internet-Consulting/dkim-php-mail-signature
+
 #baf #IN timixml : // tiny in v 4.9.8 (2020-01-28) : 03.2020 zips
 ===============================CHANGELOG================================
 ## v2.2.2 **/**/**** ##

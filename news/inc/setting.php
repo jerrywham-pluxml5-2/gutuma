@@ -124,6 +124,7 @@ class gu_config{
 	 */
 	public static function load(){
 		global $plxMotor;//code is in perpetual movement//$plxMotor = defined('PLX_ADMIN')?plxAdmin::getInstance():plxMotor::getInstance();
+#		var_dump($plxMotor);
 		$profil = $plxMotor->aUsers['001'];//default 4 1st install
 		if (empty($profil['email']) && strpos($plxMotor->path_url,'news/ajax.php') === FALSE  && strpos($plxMotor->path_url,'news/js/gadgets.js.php') === FALSE && strpos($plxMotor->path_url,'news/subscribe.php') === FALSE){
 			header('Location: '.PLX_MORE.'admin/profil.php');

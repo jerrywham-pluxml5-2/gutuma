@@ -63,6 +63,7 @@ function checkAll(inputs, field) {
 		if(inputs[i].type == "checkbox" && inputs[i].name==field) {
 			inputs[i].checked = !inputs[i].checked ;
 		}
+		else if(inputs[i].id=='allin') inputs[i].checked = false;
 	}
 }
 function confirmAction(inputs, selfield, selvalue, field, msg) {
