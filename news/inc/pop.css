@@ -1,0 +1,84 @@
+/* popup css box (from plxShariff plx.css) */
+.box {
+ margin: 0 auto;
+ padding: 35px 1px;
+ background-clip: padding-box;
+}
+.overlay {
+ position: fixed;
+ top: 0;
+ bottom: 0;
+ left: 0;
+ right: 0;
+ visibility: hidden;
+ z-index: -2;
+ opacity: 0;
+ background: rgba(0, 0, 0, 0.7);
+ transition: all 0.5s ease;
+/* transition: z-index 0.1s,
+             visibility 0.5s,
+             opacity 0.3s;
+*/
+}
+.overlay:target {
+ visibility: visible;
+ z-index: 100000;/* 99999 .in-action-bar */
+ opacity: 1;
+ width:100%;
+ height:100%;
+}
+.popup, .section {
+ background: #fff url("../../plugins/plxShariff/shariff_watermark.png") no-repeat;
+ background-position: 96% 100%;/* right bottom */
+ background-size:320px;
+ /* background-attachment:fixed; */
+}
+.popup {
+ position: relative;
+ margin: 2em auto;
+ padding: 20px;
+ border-radius: 5px;
+ width: 90%;
+ height: 90%;
+ transition: all 5s ease-in-out;
+}
+
+.popup h2.title {
+ margin: 0;
+ color: #000;
+ text-align: right;
+ font-size: 123%
+}
+.popup .close {
+ position: absolute;
+ top: -10px;
+ right: 0px;
+ padding: 0 2px;
+ color: #aeaeae;
+ font-size: 30px;
+ font-weight: bold;
+ line-height: 20px;
+ text-decoration: none;
+ background-color: #fff;
+ -moz-border-radius: 5px;
+ -webkit-border-radius: 5px;
+ border-radius: 5px;
+ -moz-transition: all 200ms;
+ -webkit-transition: all 200ms;
+ transition: all 200ms;
+}
+.popup .close:hover {
+ color: #969696;
+}
+.popup .content {
+ max-height: 90%;
+ overflow: auto;
+}
+/* fi popup css box */
+
+@media (max-width: 767px) {
+  .popup, .section {
+   background-position: 100% 100%;/* right bottom */
+   background-size:49.5%;
+  }
+}
