@@ -44,6 +44,11 @@ class Swift_Connection_SMTP extends Swift_ConnectionBase
    */
   const AUTO_DETECT = -2;
   /**
+   * A Server address
+   * @var string
+   */
+  protected $server = null;
+  /**
    * A connection handle
    * @var resource
    */
@@ -237,7 +242,8 @@ class Swift_Connection_SMTP extends Swift_ConnectionBase
   public function read()
   {
     if (!$this->handle) throw new Swift_ConnectionException(
-      "The SMTP connection is not alive and cannot be read from."  . $this->smtpErrors());
+      "The SMTP connection is not alive and cannot be read from."  . $this->smtpErrors()
+    );
     $ret = "";
     $line = 0;
     while (!feof($this->handle))
@@ -245,7 +251,7 @@ class Swift_Connection_SMTP extends Swift_ConnectionBase
       $line++;
       stream_set_timeout($this->handle, $this->timeout);
       $tmp = @fgets($this->handle);
-      if ($tmp === false && !feof($this->handle))
+      if ($tmp === false/* && !feof($this->handle)*/)
       {
         throw new Swift_ConnectionException(
         "There was a problem reading line " . $line . " of an SMTP response. The response so far was:<br />[" . $ret .
@@ -253,7 +259,7 @@ class Swift_Connection_SMTP extends Swift_ConnectionBase
         $this->smtpErrors());
       }
       $ret .= trim($tmp) . "\r\n";
-      if ($tmp[3] == " ") break;#php 8.1 : Fatal error: Array and string offset access syntax with curly braces is no longer supported
+      if ($tmp[3] == " ") break;#Fix Trying to access array offset on false (mailhog+jim) php 8.1 : Fatal error: Array and string offset access syntax with curly braces is no longer supported
     }
     return $ret = substr($ret, 0, -2);
   }
