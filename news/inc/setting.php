@@ -31,8 +31,8 @@ class gu_config{
 	public static function set_adhesion($key){#WHY?
 		//$plxAdmin = defined('PLX_ADMIN')?@plxAdmin::getInstance():@plxMotor::getInstance();
 		$plxAdmin = $GLOBALS['plxMotor'];
-		if (isset($plxAdmin->plxPlugins->aPlugins["adhesion"])){
-			$adhesion = $plxAdmin->plxPlugins->aPlugins["adhesion"];
+		if (isset($plxAdmin->plxPlugins->aPlugins['adhesion'])){
+			$adhesion = $plxAdmin->plxPlugins->aPlugins['adhesion'];
 			$admin = $adhesion->getParam('nom_asso');
 			$mail = $adhesion->getParam('email');
 			if($mail != ''){
