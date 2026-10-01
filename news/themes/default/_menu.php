@@ -48,7 +48,7 @@ foreach($u as $k => $v) {
 						else echo L_PROFIL_WRITER; ?>
 					</em>
 				</li>
-				<li><small><a class="version" title="<?php echo gu_config::get('application_name').t(' Powered by') .' ' . t('Gutuma') ?>" href="<?php echo GUTUMA_URL ?>"><?php echo t('Gutuma').'&nbsp;'.GUTUMA_VERSION_NAME ?></a> &amp; <a class="version" title="PluXml" href="http://www.pluxml.org">PluXml&nbsp;<?php echo $plxAdmin->aConf['version'] ?></a></small></li>
+				<li><small><a class="version" title="<?php echo gu_config::get('application_name').t(' Powered by') .' ' . t('Gutuma') ?>" href="<?php echo GUTUMA_URL ?>"><?php echo t('Gutuma').'&nbsp;'.GUTUMA_VERSION_NAME ?></a> &amp; <a class="version" title="PluXml" href="http://www.pluxml.org">PluXml&nbsp;<?php echo defined('PLX_VERSION')?PLX_VERSION:$plxAdmin->aConf['version'] ?></a></small></li>
 			</ul>
 		</header>
 		<nav class="responsive-menu">
@@ -80,40 +80,40 @@ foreach($u as $k => $v) {
 					$menus = array();
 					$userId = ($_SESSION['profil'] < PROFIL_WRITER ? '[0-9]{3}' : $_SESSION['user']);
 					$nbartsmod = $plxAdmin->nbArticles('all', $userId, '_');
-					$arts_mod = $nbartsmod>0 ? '<span class="badge" onclick="window.location=\''.$plxAdmin->urlRewrite().'core/admin/index.php?sel=mod&amp;page=1\';return false;">'.$nbartsmod.'</span>':'';
-					$menus[] = plxUtils::formatMenu(L_MENU_ARTICLES, $plxAdmin->urlRewrite().'core/admin/index.php?page=1', L_MENU_ARTICLES_TITLE, false, false,$arts_mod,'',false);// Fix articles : no highlight Plux/index.php menu is active (white) when admin consult info page (news/index.php) in gutuma menu
+					$arts_mod = $nbartsmod>0 ? '<span class="badge" onclick="window.location=\''.PLX_MORE.'admin/index.php?sel=mod&amp;page=1\';return false;">'.$nbartsmod.'</span>':'';
+					$menus[] = plxUtils::formatMenu(L_MENU_ARTICLES, PLX_MORE.'admin/index.php?page=1', L_MENU_ARTICLES_TITLE, false, false,$arts_mod,'',false);// Fix articles : no highlight Plux/index.php menu is active (white) when admin consult info page (news/index.php) in gutuma menu
 
 					if(isset($_GET['a'])) # edition article
-						$menus[] = plxUtils::formatMenu(L_MENU_NEW_ARTICLES_TITLE, $plxAdmin->urlRewrite().'core/admin/article.php', L_MENU_NEW_ARTICLES, false, false, '', false);
+						$menus[] = plxUtils::formatMenu(L_MENU_NEW_ARTICLES_TITLE, PLX_MORE.'admin/article.php', L_MENU_NEW_ARTICLES, false, false, '', false);
 					else # nouvel article
-						$menus[] = plxUtils::formatMenu(L_MENU_NEW_ARTICLES_TITLE, $plxAdmin->urlRewrite().'core/admin/article.php', L_MENU_NEW_ARTICLES);
+						$menus[] = plxUtils::formatMenu(L_MENU_NEW_ARTICLES_TITLE, PLX_MORE.'admin/article.php', L_MENU_NEW_ARTICLES);
 
-					$menus[] = plxUtils::formatMenu(L_MENU_MEDIAS, $plxAdmin->urlRewrite().'core/admin/medias.php', L_MENU_MEDIAS_TITLE);
+					$menus[] = plxUtils::formatMenu(L_MENU_MEDIAS, PLX_MORE.'admin/medias.php', L_MENU_MEDIAS_TITLE);
 
 					if($_SESSION['profil'] <= PROFIL_MANAGER)
-						$menus[] = plxUtils::formatMenu(L_MENU_STATICS, $plxAdmin->urlRewrite().'core/admin/statiques.php', L_MENU_STATICS_TITLE);
+						$menus[] = plxUtils::formatMenu(L_MENU_STATICS, PLX_MORE.'admin/statiques.php', L_MENU_STATICS_TITLE);
 
 					if($_SESSION['profil'] <= PROFIL_MODERATOR) {
 						$nbcoms = $plxAdmin->nbComments('offline');
-						$coms_offline = $nbcoms>0 ? '<span class="badge" onclick="window.location=\''.$plxAdmin->urlRewrite().'core/admin/comments.php?sel=offline&amp;page=1\';return false;">'.$plxAdmin->nbComments('offline').'</span>':'';
-						$menus[] = plxUtils::formatMenu(L_MENU_COMMENTS, $plxAdmin->urlRewrite().'core/admin/comments.php?page=1', L_MENU_COMMENTS_TITLE, false, false, $coms_offline);
+						$coms_offline = $nbcoms>0 ? '<span class="badge" onclick="window.location=\''.PLX_MORE.'admin/comments.php?sel=offline&amp;page=1\';return false;">'.$plxAdmin->nbComments('offline').'</span>':'';
+						$menus[] = plxUtils::formatMenu(L_MENU_COMMENTS, PLX_MORE.'admin/comments.php?page=1', L_MENU_COMMENTS_TITLE, false, false, $coms_offline);
 					}
 
 					if($_SESSION['profil'] <= PROFIL_EDITOR)
-						$menus[] = plxUtils::formatMenu(L_MENU_CATEGORIES, $plxAdmin->urlRewrite().'core/admin/categories.php', L_MENU_CATEGORIES_TITLE);
+						$menus[] = plxUtils::formatMenu(L_MENU_CATEGORIES, PLX_MORE.'admin/categories.php', L_MENU_CATEGORIES_TITLE);
 
-					$menus[] = plxUtils::formatMenu(L_MENU_PROFIL, $plxAdmin->urlRewrite().'core/admin/profil.php', L_MENU_PROFIL_TITLE);
+					$menus[] = plxUtils::formatMenu(L_MENU_PROFIL, PLX_MORE.'admin/profil.php', L_MENU_PROFIL_TITLE);
 
 					if($_SESSION['profil'] == PROFIL_ADMIN) {
-						$menus[] = plxUtils::formatMenu(L_MENU_CONFIG, $plxAdmin->urlRewrite().'core/admin/parametres_base.php', L_MENU_CONFIG_TITLE, false, false, '', false);
+						$menus[] = plxUtils::formatMenu(L_MENU_CONFIG, PLX_MORE.'admin/parametres_base.php', L_MENU_CONFIG_TITLE, false, false, '', false);
 						if (preg_match('/parametres/',basename($_SERVER['SCRIPT_NAME']))) {
-							$menus[] = plxUtils::formatMenu(L_MENU_CONFIG_BASE, $plxAdmin->urlRewrite().'core/admin/parametres_base.php', L_MENU_CONFIG_BASE_TITLE, 'menu-config');
-							$menus[] = plxUtils::formatMenu(L_MENU_CONFIG_VIEW, $plxAdmin->urlRewrite().'core/admin/parametres_affichage.php', L_MENU_CONFIG_VIEW_TITLE, 'menu-config');
-							$menus[] = plxUtils::formatMenu(L_MENU_CONFIG_USERS, $plxAdmin->urlRewrite().'core/admin/parametres_users.php', L_MENU_CONFIG_USERS_TITLE, 'menu-config');
-							$menus[] = plxUtils::formatMenu(L_MENU_CONFIG_ADVANCED, $plxAdmin->urlRewrite().'core/admin/parametres_avances.php', L_MENU_CONFIG_ADVANCED_TITLE, 'menu-config');
-							$menus[] = plxUtils::formatMenu(L_THEMES, $plxAdmin->urlRewrite().'core/admin/parametres_themes.php', L_THEMES_TITLE, 'menu-config');
-							$menus[] = plxUtils::formatMenu(L_MENU_CONFIG_PLUGINS, $plxAdmin->urlRewrite().'core/admin/parametres_plugins.php', L_MENU_CONFIG_PLUGINS_TITLE, 'menu-config');
-							$menus[] = plxUtils::formatMenu(L_MENU_CONFIG_INFOS, $plxAdmin->urlRewrite().'core/admin/parametres_infos.php', L_MENU_CONFIG_INFOS_TITLE, 'menu-config');
+							$menus[] = plxUtils::formatMenu(L_MENU_CONFIG_BASE, PLX_MORE.'admin/parametres_base.php', L_MENU_CONFIG_BASE_TITLE, 'menu-config');
+							$menus[] = plxUtils::formatMenu(L_MENU_CONFIG_VIEW, PLX_MORE.'admin/parametres_affichage.php', L_MENU_CONFIG_VIEW_TITLE, 'menu-config');
+							$menus[] = plxUtils::formatMenu(L_MENU_CONFIG_USERS, PLX_MORE.'admin/parametres_users.php', L_MENU_CONFIG_USERS_TITLE, 'menu-config');
+							$menus[] = plxUtils::formatMenu(L_MENU_CONFIG_ADVANCED, PLX_MORE.'admin/parametres_avances.php', L_MENU_CONFIG_ADVANCED_TITLE, 'menu-config');
+							$menus[] = plxUtils::formatMenu(L_THEMES, PLX_MORE.'admin/parametres_themes.php', L_THEMES_TITLE, 'menu-config');
+							$menus[] = plxUtils::formatMenu(L_MENU_CONFIG_PLUGINS, PLX_MORE.'admin/parametres_plugins.php', L_MENU_CONFIG_PLUGINS_TITLE, 'menu-config');
+							$menus[] = plxUtils::formatMenu(L_MENU_CONFIG_INFOS, PLX_MORE.'admin/parametres_infos.php', L_MENU_CONFIG_INFOS_TITLE, 'menu-config');
 						}
 					}
 
@@ -123,7 +123,7 @@ foreach($u as $k => $v) {
 						if($plugInstance AND is_file(PLX_PLUGINS.$plugName.'/admin.php')) {
 							if($plxAdmin->checkProfil($plugInstance->getAdminProfil(),false)) {
 								if($plugInstance->adminMenu) {
-									$menu = plxUtils::formatMenu(plxUtils::strCheck($plugInstance->adminMenu['title']), $plxAdmin->urlRewrite().'core/admin/plugin.php?p='.$plugName, plxUtils::strCheck($plugInstance->adminMenu['caption']));
+									$menu = plxUtils::formatMenu(plxUtils::strCheck($plugInstance->adminMenu['title']), PLX_MORE.'admin/plugin.php?p='.$plugName, plxUtils::strCheck($plugInstance->adminMenu['caption']));
 									if($plugInstance->adminMenu['position']!='')
 										array_splice($menus, ($plugInstance->adminMenu['position']-1), 0, $menu.($plugName == 'gutuma'?$menu_gutuma:''));
 									else
@@ -132,7 +132,7 @@ foreach($u as $k => $v) {
 									if ($plugName == 'gutuma')
 										$menus[] = '<li id="mnu_gutuma" class="menu in_gutuma"><a href="'.$plxAdmin->racine.'core/admin/plugin.php?p='.$plugName.'" title="'.t('Gutuma version:').' '.GUTUMA_VERSION_NAME.'">'.$plugInstance->getLang('L_ADMIN_MENU_NAME').'</a></li>'.$menu_gutuma;
 									else
-										$menus[] = plxUtils::formatMenu(plxUtils::strCheck($plugInstance->getInfo('title')), $plxAdmin->urlRewrite().'core/admin/plugin.php?p='.$plugName, plxUtils::strCheck($plugInstance->getInfo('title')));
+										$menus[] = plxUtils::formatMenu(plxUtils::strCheck($plugInstance->getInfo('title')), PLX_MORE.'admin/plugin.php?p='.$plugName, plxUtils::strCheck($plugInstance->getInfo('title')));
 								}
 							}
 						}
