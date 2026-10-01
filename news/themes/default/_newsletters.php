@@ -15,7 +15,7 @@
 <div id="sectionheader" class="inline-form action-bar">
 	<h2><?php echo t('Newsletters');?> (<?php echo t(ucfirst($box)); ?>)</h2>
 	<p id="sectionmenu" class="<?php echo GU_PLXTHEMEV ?>">
-		<a href="compose.php" class="h6 button"><?php echo t('Compose');?></a></li>
+		<a href="compose.php" class="h6 button"><?php echo t('Compose');?></a>
 		<a href="newsletters.php?box=drafts" class="h6 button<?php echo ($box == 'drafts') ? ' blue' : '' ?>"><?php echo t('Drafts');?> (<span id="mailbox_drafts_count"><?php echo count($mailbox['drafts']) ?></span>)</a>
 		<a href="newsletters.php?box=outbox" class="h6 button<?php echo ($box == 'outbox') ? ' blue' : '' ?>"><?php echo t('Outbox');?> (<span id="mailbox_outbox_count"><?php echo count($mailbox['outbox']) ?></span>)</a>
 	</p>
@@ -25,7 +25,7 @@
 <p><?php echo t('These are the newsletters that can be modified before they are sent.');?> </p>
 <?php } elseif ($box == 'outbox') { ?>
 <p><?php echo t('These are the newsletters which have been sent but have not yet been delivered to all recipients.');?> </p>
-<div id="autobatch" style="display:<?php echo($auto_send)? '': 'none'?>"><span id="countdown"></span><span id="autobatchmenu"></span><progress value="0" max="<?php echo $batch_time_limit ?>" id="progressBar"></progress></div>
+<div id="autobatch" style="display:<?php echo($auto_send)? '': 'none'?>"><i><?php echo $batch_max_size . ' ' . t('emails') . ' / ' . $batch_time_limit . ' ' . t('seconds') ?></i> <span id="countdown"></span><span id="autobatchmenu"></span><progress value="0" max="<?php echo $batch_time_limit ?>" id="progressBar"></progress></div>
 <?php } ?>
 <p id="mvto" class="success" style="opacity:0"></p>
 <form method="post" name="newsletters_form" id="newsletters_form" action=""><input name="num_newsletters" type="hidden" id="num_newsletters" value="<?php echo count($newsletters); ?>" />

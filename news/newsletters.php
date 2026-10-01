@@ -59,8 +59,9 @@ if (is_get_var('send')){
 	if ($newsletter !== FALSE && $batch_max_size){
 		$mailer = new gu_mailer();
 		if ($mailer->init()){
+			# news->send_progress : array 0=>remain, 1=>total
 			$sended = $newsletter->get_send_progress();//$afaire = $sended[1] - $sended[0];
-			$sendreal = $sended[0] > $batch_max_size? $batch_max_size: $sended[0]; # $sended[1] . ' - ' . $sended[0];
+			$sendreal = $sended[0];# > $batch_max_size? $batch_max_size: $sended[0]; # $sended[1] . ' - ' . $sended[0];
 			$send_time_max = time() + $batch_time_limit;
 			$newsletter->send_batch($mailer);#envoi
 			$sended = $newsletter->get_send_progress();//$fait = $sended[1] - $sended[0];#BAF
@@ -85,7 +86,6 @@ if (is_get_var('send')){
 					# For calculate rest size
 					$loop_size = $batch_max_size - $total;
 
-					//~ if($total < $batch_max_size){#AutoBatch
 					if(empty($sended[0])){#AutoBatch
 						# Remove news
 						$send_ids = array_diff($send_ids, array($send_id));
@@ -188,7 +188,7 @@ if (is_get_var('send')){
 			else{
 				//~ $_SESSION['GU_SEND_BATCH'] = array('error', '#AutoBatch LIST : '. $send_id . ' NO (' . $sendreal . ' / ' . $sended[0] . ' ' . t('emails') . ')');#AutoBatch success
 				$type = 'success';
-				$msg = '#Batch : ' .t('Outbox') . ' #' . $send_id . ' (' . $sendreal . ' / ' . $sended[0] . ' ' . t('emails') . ')';#gu_error|success()
+				$msg = '#Batch : ' .t('Outbox') . ' #' . $send_id . ' (' . $total . ' / ' . $sendreal . ' ' . t('emails') . ')';#gu_error|success()
 				if(isset($_SERVER['GU_ERROR_MSG'])){
 					$type = 'error';
 					$msg .=' ' . $_SERVER['GU_ERROR_MSG'];#gu_error()
@@ -234,7 +234,7 @@ gu_theme_start();
 			  +'&nbsp;<span class="gu-hide">&nbsp;</span>'
 			  +'<a href="newsletters.php?box=outbox&amp;send=' + id + '&amp;auto=<?php echo $batch_time_limit ?>&amp;count=<?php echo count($newsletters) ?>&amp;check=' + id + '" class="imglink" title="<?php echo t('Send to remaining recipients') ?> #AutoBatch : <?php echo $batch_max_size . ' ' . t('emails') . ' / ' . $batch_time_limit . ' ' . t('seconds') ?>"><img width="16px" class="icon_send_auto' + auto_class + '" src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_send_auto.png" /></a>'
 			  +'&nbsp;<span class="gu-hide">&nbsp;</span>'
-			  +'<a href="newsletters.php?box=outbox&amp;send=' + id + '" class="imglink" title="<?php echo t('Send to remaining recipients');?> (<?php echo $batch_max_size . t('emails') ?>)"><img width="16px" src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_send.png" /></a>'
+			  +'<a href="newsletters.php?box=outbox&amp;send=' + id + '" class="imglink" title="<?php echo t('Send to remaining recipients');?> (<?php echo $batch_max_size . ' ' . t('emails') ?>)"><img width="16px" src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_send.png" /></a>'
 			  :'<a href="compose.php?msg=' + id + '" class="imglink" title="<?php echo t('Edit and send');?>"><img width="16px" src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_mail.png" /></a>'
 			  +'&nbsp;<span class="gu-hide">&nbsp;</span>'
 			  +'<a href="newsletters.php?box=outbox&amp;send=' + id + '&amp;out=1" class="imglink" title="<?php echo t('Go to outbox');?>" onclick="return confirm(\'<?php echo t('Go to outbox');?>?\')"><img width="16px" src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_send.png" /></a>')
@@ -250,7 +250,7 @@ gu_theme_start();
 			  ?'&nbsp;&nbsp;<a href="javascript:gu_newsletters_move_autobatch_checked()" class="imglink" title="<?php echo t('Send to remaining recipients') ?> #AutoBatchChecked : <?php echo $batch_max_size . t('emails') . ' / ' . $batch_time_limit . ' ' . t('seconds') ?>"><img width="16px" class="icon_send_auto' + auto_class + '" src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_send_auto.png" /></a>'
 			  :'&nbsp;&nbsp;<a href="javascript:gu_newsletters_move_autobatch_checked()" class="imglink" title="<?php echo t('Send to all recipients') ?> #AutoSendChecked"><img width="16px" class="icon_send_auto' + auto_class + '" src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_send_auto.png" /></a>')//Draft2Send
 			  +''
-			  <?php
+<?php
 				$mg = ($box == 'drafts')? 1: 2;
 				for($i=0;$i<$mg;$i++) echo "+'" . '<span'.(!$i?' class="gu-hide"':'').'>&nbsp;&nbsp;<img width="16px" class="imglink" width="16px" src="themes/'.gu_config::get('theme_name').'/images/1px.png"></span>'."'";
 ?>			+'&nbsp;&nbsp;'
@@ -398,7 +398,7 @@ var memo_perpage = gu_memo('gu_perpage');//get
 		var urlParams = new URLSearchParams(window.location.search);
 		r = (urlParams.get('box') == 'drafts'?333:0);
 		if(r){//drafts
-			gu_success('Praparatif en cours, patience...');//todo trad
+			gu_success("<?php echo t('Preparations are underway—please be patient...'); ?>");
 			gu_messages_display(0);
 			gu_newsletter_ajax_post(ids.join('O'), 1111, 'moves', 'na');//goto outbox AllInOneTime
 		}
