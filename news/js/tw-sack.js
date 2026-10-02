@@ -1,4 +1,4 @@
-/* Simple AJAX Code-Kit (SACK) v1.6.1
+/* Simple AJAX Code-Kit (SACK) v1.6.2-gutuma
  * ©2005 Gregory Wild-Smith
  * www.twilightuniverse.com
  * Software licenced under a modified X11 licence,
@@ -9,24 +9,24 @@ function sack(file) {
 
 	this.resetData = function() {
 		this.method = "POST";
-  		this.queryStringSeparator = "?";
+		this.queryStringSeparator = "?";
 		this.argumentSeparator = "&";
 		this.URLString = "";
 		this.encodeURIString = true;
-  		this.execute = false;
-  		this.element = null;
+		this.execute = false;
+		this.element = null;
 		this.elementObj = null;
 		this.requestFile = file;
 		this.vars = new Object();
 		this.responseStatus = new Array(2);
-  	};
+	};
 
 	this.resetFunctions = function() {
-  		this.onLoading = function() { };
-  		this.onLoaded = function() { };
-  		this.onInteractive = function() { };
-  		this.onCompletion = function() { };
-  		this.onError = function() { };
+		this.onLoading = function() { };
+		this.onLoaded = function() { };
+		this.onInteractive = function() { };
+		this.onCompletion = function() { };
+		this.onError = function() { };
 		this.onFail = function() { };
 	};
 
@@ -94,8 +94,17 @@ function sack(file) {
 			}
 		}
 
-		// prevents caching of URLString
-		this.setVar("rndval", new Date().getTime());
+		// prevents caching of URLString for POST (no 302) or GET
+		if (this.method == "GET") {
+			this.setVar("rndval", new Date().getTime());// same as origin (Only GET)
+		}else{
+			if(this.requestFile.search(/\?/) > -1) {
+				this.requestFile += this.argumentSeparator + "rndval=" + new Date().getTime();
+			}else{// ? is this.queryStringSeparator
+				this.requestFile += "?rndval=" + new Date().getTime();
+			}
+		}
+
 
 		urlstringtemp = new Array();
 		for (key in this.vars) {
