@@ -57,7 +57,7 @@ foreach($u as $k => $v) {
 			<ul id="responsive-menu" class="menu vertical expanded">
 				<?php
 		#menu des fonctionnalités de gutuma
-		$menu_gutuma = '';
+		$menu_gutuma = '<li class="menu text-left"><strong><em>' . $plxAdmin->plxPlugins->aPlugins['gutuma']->getLang('L_GUTUMA_MENU_NAME') . '</em></strong></li>';
 		if($_SESSION['profil'] == PROFIL_ADMIN):
 		$menu_gutuma .= '
 			<li class="menu'.(str_ends($_SERVER['SCRIPT_NAME'], '/index.php') ? ' active ' : ' ').'menu-config"><a href="index.php">'.t('Home').'</a></li>
@@ -125,14 +125,11 @@ foreach($u as $k => $v) {
 								if($plugInstance->adminMenu) {
 									$menu = plxUtils::formatMenu(plxUtils::strCheck($plugInstance->adminMenu['title']), PLX_MORE.'admin/plugin.php?p='.$plugName, plxUtils::strCheck($plugInstance->adminMenu['caption']));
 									if($plugInstance->adminMenu['position']!='')
-										array_splice($menus, ($plugInstance->adminMenu['position']-1), 0, $menu.($plugName == 'gutuma'?$menu_gutuma:''));
+										array_splice($menus, ($plugInstance->adminMenu['position']-1), 0, $menu);
 									else
-										$menus[] = $menu.($plugName == 'gutuma'?$menu_gutuma:'');
+										$menus[] = $menu;
 								} else {
-									if ($plugName == 'gutuma')
-										$menus[] = '<li id="mnu_gutuma" class="menu in_gutuma"><a href="'.$plxAdmin->racine.'core/admin/plugin.php?p='.$plugName.'" title="'.t('Gutuma version:').' '.GUTUMA_VERSION_NAME.'">'.$plugInstance->getLang('L_ADMIN_MENU_NAME').'</a></li>'.$menu_gutuma;
-									else
-										$menus[] = plxUtils::formatMenu(plxUtils::strCheck($plugInstance->getInfo('title')), PLX_MORE.'admin/plugin.php?p='.$plugName, plxUtils::strCheck($plugInstance->getInfo('title')));
+									$menus[] = plxUtils::formatMenu(plxUtils::strCheck($plugInstance->getInfo('title')), PLX_MORE.'admin/plugin.php?p='.$plugName, plxUtils::strCheck($plugInstance->getInfo('title')));
 								}
 							}
 						}
