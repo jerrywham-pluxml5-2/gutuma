@@ -170,7 +170,7 @@ class gu_mailer
 		}
 		catch (Swift_ConnectionException $e) {
 			gu_debug($e->getMessage());
-			return gu_error('<br />'.t('Unable to send message due to connection error'));
+			return -1;
 		}
 
 		if (gu_is_debugging()) {

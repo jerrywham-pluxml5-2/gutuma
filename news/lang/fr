@@ -389,7 +389,6 @@ No method of mail transportation has been configured[::->]Aucune méthode de tra
 Created SMTP connection (%:% Enc:% User:% Pass:%)[::->]Connexion SMTP créée ([%%]:[%%] Enc:[%%] User:[%%] Pass:[%%])
 Unable to initialize mailer. Check transport settings.[::->]Impossible d'initialiser la messagerie. Vérifiez les réglages de transport.
 Unable to send message in demo mode[::->]Impossible d'envoyer un message en mode de démonstration
-Unable to send message due to connection error[::->]Impossible d'envoyer un message à cause d'une erreur de connexion
 //************************************************************************
 //			COMPOSE
 //************************************************************************
