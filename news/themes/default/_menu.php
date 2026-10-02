@@ -22,16 +22,16 @@ foreach($u as $k => $v) {
 		<header class="header sml-text-center med-text-right">
 			<ul class="unstyled-list head">
 				<li>
-					<small><a class="back-site" href="<?php echo $plxAdmin->urlRewrite(); ?>" title="<?php echo L_BACK_TO_SITE_TITLE ?>"><?php echo L_BACK_TO_SITE;?></a></small>
+					<small><a class="back-site" href="<?php echo PLX_MORE ?>" title="<?php echo L_BACK_TO_SITE_TITLE ?>"><?php echo L_BACK_TO_SITE;?></a></small>
 				</li>
 				<li>
 <?php if(isset($plxAdmin->aConf['homestatic']) AND !empty($plxAdmin->aConf['homestatic'])) : ?>
-					<small><a class="back-blog" href="<?php echo $plxAdmin->urlRewrite('?blog'); ?>" title="<?php echo L_BACK_TO_BLOG_TITLE ?>"><?php echo L_BACK_TO_BLOG;?></a></small>
+					<small><a class="back-blog" href="<?php echo $plxAdmin->urlRewrite('../index.php?blog'); ?>" title="<?php echo L_BACK_TO_BLOG_TITLE ?>"><?php echo L_BACK_TO_BLOG;?></a></small>
 <?php else: ?>&nbsp;
 <?php endif; ?>
 				</li>
 				<li>
-					<small><a class="logout" href="<?php echo $plxAdmin->urlRewrite(); ?>core/admin/auth.php?d=1" title="<?php echo L_ADMIN_LOGOUT_TITLE ?>"><?php echo L_ADMIN_LOGOUT ?></a></small>
+					<small><a class="logout" href="<?php echo PLX_MORE ?>admin/auth.php?d=1" title="<?php echo L_ADMIN_LOGOUT_TITLE ?>"><?php echo L_ADMIN_LOGOUT ?></a></small>
 				</li>
 			</ul>
 			<ul class="unstyled-list profil">
