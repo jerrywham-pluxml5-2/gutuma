@@ -38,7 +38,7 @@ function gu_session_authenticate($username = NULL, $password = NULL, $remember =
 	}
 	if (gu_session_is_valid())// Check the session variable next
 		return TRUE;
-	if (isset($_COOKIE['username']) && isset($_COOKIE['password'])){// Then try authenticating with cookie values
+	if (isset($_COOKIE['username'], $_COOKIE['password'])){// Then try authenticating with cookie values
 		if (gu_session_check_credentials($_COOKIE['username'], $_COOKIE['password'])){
 			gu_session_set_valid(TRUE);
 			return TRUE;
@@ -62,7 +62,7 @@ function gu_session_check_credentials($username, $password){
  */
 function plx_gu_session_authenticate($name = FALSE, $username = NULL, $password = NULL, $remember = FALSE, $user = FALSE){
 	if (isset($name) && isset($username) && isset($password)){// Check aganist specified credentials
-		if (plx_gu_session_check_credentials($name, $username, $password,$user)){
+		if (plx_gu_session_check_credentials($name, $username, $password, $user)){
 			if ($remember){
 				setcookie('username', $username, time()+60*60*24*7);
 				setcookie('password', $password, time()+60*60*24*7);
@@ -77,7 +77,7 @@ function plx_gu_session_authenticate($name = FALSE, $username = NULL, $password 
 	}
 	if (gu_session_is_valid())// Check the session variable next
 		return TRUE;
-	if (isset($_COOKIE['username']) && isset($_COOKIE['password'])){// Then try authenticating with cookie values
+	if (isset($_COOKIE['username'], $_COOKIE['password'])){// Then try authenticating with cookie values
 		if (plx_gu_session_check_credentials($_COOKIE['username'], $_COOKIE['password'], FALSE)){
 			gu_session_set_valid(TRUE);
 			return TRUE;
