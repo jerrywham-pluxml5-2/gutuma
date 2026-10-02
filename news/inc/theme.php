@@ -162,7 +162,7 @@ function gu_theme_bool_control($setting_name){
  */
 function gu_theme_int_control($setting_name,$max_chars=10){
 	$val = is_post_var($setting_name) ? get_post_var($setting_name) : gu_config::get($setting_name);
-	echo '<input id="'.$setting_name.'" name="'.$setting_name.'" type="text" class="textfield" style="width: 70px" maxlength="'.$max_chars.'" onkeypress="return gu_is_numeric_key(event);" value="'.$val.'" />';
+	echo '<input id="'.$setting_name.'" name="'.$setting_name.'" type="number" class="textfield" style="width: 70px" maxlength="'.$max_chars.'" onkeypress="return gu_is_numeric_key(event);" value="'.$val.'" />';
 }
 /**
  * Outputs a dropdown list control for the specified config setting
