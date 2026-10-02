@@ -7,3 +7,17 @@ $juneUrl = PLX_PLUGINS . $pluginName . '/news/img/g1/en/june.png';//https://g1.d
   <a rel="noreferrer" href="https://cesium2.axiom-team.fr/wot/g1NhERfeDnxJGZr18FCNSAKoicEUxrxcpDNVE2EnvRYvG2JfC"><img alt="<?php $greffe->lang('L_JUNE');?>." src="<?php echo $juneUrl ?>"></a>
  </span>
 </span>
+<script>
+if(typeof(window.toggleDiv) == 'undefined'){
+  function toggleDiv(divId,togglerId,on,off){
+    var toggler = document.getElementById(togglerId);
+    if(document.getElementById(divId).style.display == 'none') {
+      document.getElementById(divId).style.display = 'block';
+      toggler.innerHTML=off;
+    } else {
+      document.getElementById(divId).style.display = 'none';
+      toggler.innerHTML=on;
+    }
+  }
+}
+</script>
