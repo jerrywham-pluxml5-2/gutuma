@@ -21,6 +21,7 @@ class gu_list{
 	private $private;
 	private $addresses;
 	private $size;
+	public $timeAddress;//For calculate key code & display date time (inc/subscription.php)
 	/**
 	 * Gets the ID
 	 * @return int The ID
@@ -108,7 +109,7 @@ class gu_list{
 	public function contains($address, $tmp = '', $k = ''){
 		if($tmp){
 			$addressesStr = $this->addresses;
-			array_walk($addressesStr, array('self', 'get_tmp_address'));
+			array_walk($addressesStr, array(self::class, 'get_tmp_address'));
 			$addresses = array();
 			foreach($addressesStr as $key => $val){
 				$addresses[] = $val[0];#mail only
@@ -257,9 +258,11 @@ class gu_list{
 	public static function get($id, $load_addresses = FALSE, $tmp = ''){
 		$time_start = (int)microtime();
 		$dr = $tmp?GUTUMA_TEMP_DIR:GUTUMA_LISTS_DIR;
-		$list = $dr.'/'.$id.($tmp?'.'.$tmp:'').'.php';
+		$list = realpath($dr.'/'.$id.($tmp?'.'.$tmp:'').'.php');
+		if (empty($list))
+			return gu_error('<br />'.t('Unable to read list file'));
 // Open list file
-		$lh = @fopen(realpath($list), 'r');
+		$lh = @fopen($list, 'r');
 		if ($lh == FALSE)
 			return gu_error('<br />'.t('Unable to read list file'));
 // Read header from first line
