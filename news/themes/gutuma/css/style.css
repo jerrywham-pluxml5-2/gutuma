@@ -150,12 +150,16 @@ div#page{
 	margin-bottom: 20px;
 	width: 100%;
 	max-width: 960px;
-	min-width: 480px;
+	min-width: 360px;
 }
 div#header{
-	height: 70px;
-	background-image: url(../images/header_bg.jpg);
+	height: 5.5rem;
+	background: url(../images/header_bg.jpg);
+	background-repeat: no-repeat;
+	background-color: #24292f;
+	background-size: 100%;
 }
+
 div#headertitle{
 	float: left;
 }
@@ -188,7 +192,7 @@ div#mainmenu ul{
 }
 div#mainmenu ul li{
 	display: inline;
-	padding-left: 20px;
+	padding-left: 1rem;
 	font-weight: bold;
 }
 div#mainmenu ul li a{
@@ -332,7 +336,6 @@ table {
   height: 100%;
   border-collapse: collapse;
   width: 100%;
-  margin: 10px;
   font-size: 0.8em;
 }
 
@@ -400,8 +403,8 @@ width: 50%;
 }
 @media (max-width:767px){
 	div#content * {
-		padding: 1px;
-		font-size: 100%;
+		/* padding: 1px; */
+		/* font-size: 100%; */
 	}
 	.middle{
 		width: 100%;
