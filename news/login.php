@@ -17,7 +17,7 @@ if (is_get_var('action') && get_get_var('action') == 'plxlogin'){
 	$name = is_post_var('n') ? get_post_var('n') : '';
 	$username = is_post_var('u') ? get_post_var('u') : '';
 	$password = is_post_var('p') ? get_post_var('p') : '';
-	$remember = true;
+	$remember = false;
 	$user = false;
 	if (isset($_GET['u'])){
 		$user = true;
