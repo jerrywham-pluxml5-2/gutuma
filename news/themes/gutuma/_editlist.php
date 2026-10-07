@@ -36,13 +36,15 @@ include_once '_menu.php';?>
 </form>
 <h3><?php echo t('Subscribers') . ($tmp?' ('.t('In transit') . ')':'');?></h3>
 <div class="menubar">
-	<div style="<?php echo $tmp?'display:none':'float: left' ?>">
+<?php if(! $tmp):?>
+	<div class="formleft">
 		<form method="post" name="add_form" id="add_form" action="" onsubmit="return check_add(this);">
 			<input name="new_address" type="text" class="textfield" id="new_address" />
 			<input name="add_address" type="submit" id="add_address" value="<?php echo t('Add');?>" />
 		</form>
 	</div>
-	<div style="float: right">
+<?php endif; ?>
+	<div class="formright">
 		<form method="get" name="filter_form" id="filter_form" action="" onsubmit="filter_addresses(this); return false;">
 			<input name="filter_list_name" type="text" class="textfield" id="filter_list_name" value="<?php echo $filter; ?>" />
 			<input id="filter_submit" name="filter_submit" type="submit" value="<?php echo t('Search');?>" /><?php if (!empty($filter)){?><input id="filter_clear" name="filter_clear" type="button" value="<?php echo t('Clear');?>" onclick="reset_filter(this.form);" /><?php } ?>

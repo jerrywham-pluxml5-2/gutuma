@@ -25,7 +25,7 @@ include_once '_menu.php';?>
 <form method="post" name="lists_form" id="lists_form" action=""><input name="num_lists" type="hidden" id="num_lists" value="<?php echo count($lists); ?>" />
 	<table border="0" cellspacing="0" cellpadding="0" class="results" id="liststable">
 		<tr>
-			<td><strong><?php echo t('Name');?></strong> <span>(<?php echo t('Public');?>)</span></td>
+			<td><strong><?php echo t('Name');?></strong><br/><span>(<?php echo t('Public');?>)</span></td>
 			<td><strong><?php echo t('Addresses');?></strong></td>
 			<td><strong><?php echo t('In transit');?></strong></td>
 			<td><strong><?php echo t('Private');?></strong></td>
@@ -39,7 +39,7 @@ if (count($lists) > 0) {
 		$lnm = $list->get_name();
 ?>
 		<tr id="row_<?php echo $lid; ?>">
-			<td class="name" title="<?php echo $lnm; ?>"><strong class="should-cut-off"><?php echo $lnm; ?></strong> <span class="should-cut-off">(<?php echo $list->get_friend(); ?>)</span></td>
+			<td class="name" title="<?php echo $lnm; ?>"><strong class="should-cut-off"><?php echo $lnm; ?></strong><br/><span class="should-cut-off">(<?php echo $list->get_friend(); ?>)</span></td>
 			<td><span id="size_<?php echo $lid; ?>"><?php echo $list->get_size(); ?></span></td>
 			<td><i style="<?php echo ($list_is_private||!@$listsTmpSize[$lid])?'display:none;':''; ?>"><script type="text/javascript">document.write(gu_list_menu(<?php echo $lid; ?>, "tmp"))</script></i>&nbsp;<span id="size_<?php echo $lid; ?>i"><?php echo @$listsTmpSize[$lid] ?></span></td>
 			<td><?php echo $list_is_private ? t('Yes') : t('No'); ?></td>
