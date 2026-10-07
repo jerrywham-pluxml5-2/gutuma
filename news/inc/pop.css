@@ -28,10 +28,7 @@
  height:100%;
 }
 .popup, .section {
- background: #fff url("../../plugins/plxShariff/shariff_watermark.png") no-repeat;
- background-position: 96% 100%;/* right bottom */
- background-size:320px;
- /* background-attachment:fixed; */
+ background: #fff url("../../news/themes/default/favicon.png") no-repeat;
 }
 .popup {
  position: relative;
