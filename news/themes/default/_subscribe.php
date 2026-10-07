@@ -57,5 +57,5 @@ else
 <br /><i><?php echo t('Remember to <b>check in spam mails</b> if the message are not found in your <b>inbox</b>') ?>.</i>
 <br /><i><?php echo t('If you encounter problems registering / unsubscribing, please <a href="%">contact the site author</a> so that they can do it for you',array($contact_url)) ?>.</i></p>
 </div><!-- gu_help -->
-	<p<?php echo (!gu_config::get('show_home_link') OR @$_GET['backlink']=='no')?' style="display:none"':''; ?>><br /><a href="<?php echo $plxMotor->racine; ?>"><?php echo t('Back home'); ?></a></p>
+	<p<?php echo (!gu_config::get('show_home_link') OR @$_GET['backlink']=='no')?' style="display:none"':''; ?>><br /><a href="<?php echo PLX_GROOT; ?>"><?php echo t('Back home'); ?></a></p>
 </div>
