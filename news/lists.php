@@ -118,7 +118,7 @@ gu_theme_start();
 
 <?php
 	$img = '';
-	for($i=0;$i<3;$i++) $img .= '&nbsp;&nbsp;<img width="16px" class="imglink" width="16px" src="themes/'.gu_config::get('theme_name').'/images/1px.png">';
+	for($i=0;$i<3;$i++) $img .= '&nbsp;&nbsp;<img width="16px" class="imglink" src="themes/'.gu_config::get('theme_name').'/images/1px.png">';
 ?>
 
 	function gu_lists_tools_menu(){//Idea to simplify themes #tep: add to all (checked) lists
