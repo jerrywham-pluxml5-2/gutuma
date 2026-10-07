@@ -9,7 +9,7 @@
 if(!defined('PLX_ROOT')) exit;
 $pluginName = basename(dirname(__DIR__, 1));//multiple pluxml
 include(__DIR__.'/../tips.inc.php');#inclure les pourboires+js
-$transportUrl = isset($_SESSION['GUTUMA_PLX_VERSION']) ? '../../plugins/gutuma/news/settings.php?section=transport' : 'plugin.php?p=gutuma';
+$transportUrl = '../../plugins/gutuma/news/settings.php?section=transport'; // si déconnecté, retourne à plugin.php?p=gutuma
 ?>
 <p class="in-action-bar">Aide du plugin Gutuma, le gestionnaire de Newsletters</p>
 <p class="success" style="color:darkgreen;">Réglages du <a href="<?=$transportUrl?>"><i>Transport</i></a> pour <b>Utiliser SMTP</b> qui ont fonctionnés pour l'hébergeur IONOS sont&nbsp;:<br />
