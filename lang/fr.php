@@ -26,6 +26,7 @@ $LANG = array(
  'L_INSTALL_FIRST'     => 'Noyau de Gutuma non installé',
  'L_ERR_READONLY'      => 'Le fichier %s qui sauvegarde les paramètres est en lecture seule. Impossible de règler les utilisateurs, veuillez le rendre accessible en écriture.',
  'L_LANG_UNAVAILABLE'  => 'Langue indisponible : %s',
-
+ 'L_UPDATED'           => 'Est à jour',
+ 'L_UPDATE_ERROR'      => ': Erreur de mise à jour !',
  'L_JUNE'              => 'Don en Ğ1, 1ere monnaie numérique libre'
 );

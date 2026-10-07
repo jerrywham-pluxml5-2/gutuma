@@ -8,7 +8,7 @@ class gutuma extends plxPlugin {
 	public $release;
 	public $listsDir;
 	public function __construct($default_lang){
-		$this->listsDir = PLX_ROOT.'data/'.__CLASS__;# Définition de l'emplacement des listes de diffusion des newsletters : next PLX_ROOT.PLX_CONFIG_PATH.'plugins/'.__CLASS__;#tmp (uploads) & save .eml
+		$this->listsDir = PLX_ROOT.PLX_CONFIG_PATH.__CLASS__;# Définition de l'emplacement des listes de diffusion des newsletters : next PLX_ROOT.PLX_CONFIG_PATH.__CLASS__;#tmp (uploads) & save .eml
 		parent::__construct($default_lang);# appel du constructeur de la classe plxPlugin (obligatoire)
 		$this->setAdminProfil(PROFIL_ADMIN, PROFIL_MANAGER);# Autorisation d'accès à l'administration du plugin
 		$this->setAdminMenu($this->getLang('L_GUTUMA_MENU_NAME'), 0, $this->getLang('L_GUTUMA_TITLE_MENU'));#Position du Menu : remplacer 0 par tout autre chiffre
@@ -17,8 +17,9 @@ class gutuma extends plxPlugin {
 			$this->addHook('AdminTopBottom', 'AdminTopBottom');
 			$this->addHook('plxAdminEditUsersXml', 'plxAdminEditUsersXml');
 			$this->addHook('AdminMediasFoot', 'AdminMediasFoot');
-		}elseif($this->getParam('subscribe_is_good'))
+		}elseif($this->getParam('subscribe_is_good')) {
 			$this->addHook('IndexBegin', 'goodGets');
+		}
 	}
 	public function AdminMediasFoot(){//changement des onclic target blank en lien retour de tiny du gestionnaire des médias (popup) (Wymeditor base)
 ?>
@@ -215,6 +216,18 @@ if (window.parent.tinyMCE && window.parent.location.pathname.search('news/compos
 
 	}
 	public function onUpdate(){//si fichier update présent a la racine du plugin
+		if( ! class_exists('plxMsg')) {
+			include_once PLX_CORE.'lib/class.plx.msg.php';
+		}
+		$listsDirOld = PLX_ROOT.'data/'.__CLASS__;# Ancienne Définition de l'emplacement des listes de diffusion des newsletters
+		# next PLX_ROOT.PLX_CONFIG_PATH.__CLASS__;#tmp (uploads) & save .eml
+		if(is_dir($this->listsDir) or (is_dir($listsDirOld) && rename($listsDirOld, $this->listsDir)))
+			plxMsg::Info(__CLASS__ . ' ' . $this->getLang('L_UPDATED'));
+		else
+			plxMsg::Error(__CLASS__ . ' ' . $this->getLang('L_UPDATE_ERROR') . '<br>"' . $listsDirOld . '"-&gt;"' . $this->listsDir . '"');
+		//gutumaindex.html ↓ gutuma/index.html (fix)
+		@unlink($this->listsDir . 'index.html');
+		@touch($this->listsDir . '/index.html');
 		//return array('cssCache' => true);#mise a jour du cache des css
 	}
 	public function AdminTopBottom(){//Méthode qui affiche un message s'il y a un message à afficher * @return	stdio * @author	Stephane F, Cyril MAGUIRE

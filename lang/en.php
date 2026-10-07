@@ -24,5 +24,7 @@ $LANG = array(
  'L_ERR_EMAIL'         => 'Please enter an email address in 001 profile Admin',
  'L_ERR_UPDATE'        => 'Gutuma need one administrator to enter in Gutuma module and finish operation, Please notify one.',
  'L_INSTALL_FIRST'     => 'Gutuma Core not installed',
+ 'L_UPDATED'           => 'Is Updated',
+ 'L_UPDATE_ERROR'      => ': Update error!',
  'L_JUNE'              => 'Donate with Ğ1, 1st digital libre money'
 );
