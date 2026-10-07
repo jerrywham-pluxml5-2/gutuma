@@ -63,16 +63,16 @@ Uploaded file is not a csv file[::->]Le fichier téléchargé n'est pas un fichi
 Manage lists[::->]Gérer les listes
 Edit[::->]Éditer
 Tools[::->]Outils
-Add address on all list[::->]Ajouter cette adresse de toutes les listes
+Add address on all list[::->]Ajouter cette adresse à toutes les listes
 Add on all[::->]Ajouter partout
-Add address on all checked list[::->]Ajouter cette adresse de toutes les listes cochées
+Add address on all checked list[::->]Ajouter cette adresse à toutes les listes cochées
 Add on checked[::->]Ajouter aux cochées
 Delete address on all list[::->]Supprimer cette adresse de toutes les listes
 Clear on all[::->]Effacer partout
 Delete address on all checked list[::->]Supprimer cette adresse de toutes les listes cochées
 Clear on checked[::->]Effacer aux cochées
 Check one or more line before![::->]Cocher une ou plusieurs lignes avant!
-Enter a valid email address to "+(add?"add":"delete")+" it on all"+(lists?" checked":"")+" lists[::->]Saisir une adresse courriel valide pour la "+(add?"rajouter":"supprimer")+" de toutes les listes"+(lists?" cochées":"")+"?
+Enter a valid email address to "+(add?"add":"delete")+" it on all"+(lists?" checked":"")+" lists[::->]Saisir une adresse courriel valide pour la "+(add?"rajouter à":"supprimer de")+" toutes les listes"+(lists?" cochées":"")+"?
 Are you sure to "+(add?"add":"remove")+" the following address on all"+(lists?" checked":"")+" lists?[::->]Êtes vous sûr de vouloir "+(add?"ajouter":"supprimer")+" le courriel suivant de toutes les listes"+(lists?" cochées":"")+"?
 is invalid![::->]est invalide!
 Retry?[::->]Retenter?
