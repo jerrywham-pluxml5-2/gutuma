@@ -216,7 +216,7 @@ document.getElementsByTagName('head')[0].appendChild(fileref);
 	});//fi tinyinit
 //Inspiré par RoxyFileBrowser (field_name, url, type, win)
 	function mediaMan(field_name, url, type, win) {//gutuma 2.2.0
-		var plxMedMan = '<?php echo plxUtils::getRacine() ?>core/admin/medias.php';//?integration=tinymce4
+		var plxMedMan = '<?php echo PLX_MORE ?>admin/medias.php';//?integration=tinymce4
 		if (plxMedMan.indexOf("?") < 0) {
 			plxMedMan += "?type=" + type;
 		}
