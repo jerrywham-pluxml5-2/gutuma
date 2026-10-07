@@ -494,8 +494,7 @@ class gu_newsletter{
 		}
 
 		# load adhesion PluXml plugin if mailer->create_message() need for CNIL links
-		$this->adhesionPlugin();
-		if (in_array($this->adhesion->listName, $list_names))
+		if ($this->adhesionPlugin() && $this->adhesion && in_array($this->adhesion->listName, $list_names))
 			$this->adhesion->loadGutumaMailId();
 
 		// Add addresses from each list, in reverse order, so that duplicates for addresses on more than one list, come from the first occuring lists
@@ -503,7 +502,8 @@ class gu_newsletter{
 			if ($list = gu_list::get_by_name($list_names[$l], TRUE)){
 				$lst = $list_names[$l] . '|' . intval($list->is_private()) . '|' . $list->get_friend();
 				$adherents = (
-					$list_names[$l] == $this->adhesion->listName
+					$this->adhesion
+					&& $list_names[$l] == $this->adhesion->listName
 					&& $this->adhesion->gu_mail_id_ok
 				);
 				foreach ($list->get_addresses() as $address){
