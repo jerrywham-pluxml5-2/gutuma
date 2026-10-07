@@ -65,7 +65,7 @@ $htaccess .= "</Files>\n";
 $htaccess .= "Options -Indexes\n";
 if (!is_dir(GUTUMA_LISTS_DIR)){#Make lists directory
 	mkdir(GUTUMA_LISTS_DIR);
-	touch(GUTUMA_LISTS_DIR.'index.html');
+	touch(GUTUMA_LISTS_DIR.'/index.html');
 	touch(GUTUMA_LISTS_DIR.'/.htaccess');
 	file_put_contents(GUTUMA_LISTS_DIR.'/.htaccess', $htaccess);
 }
