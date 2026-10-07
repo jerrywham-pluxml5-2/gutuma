@@ -2,6 +2,7 @@
 
 /**
  * Swift Mailer Message Encoder
+ * Note for gutuma: isUTF8 Always return true
  * Please read the LICENSE file
  * @copyright Chris Corbyn <chris@w3style.co.uk>
  * @author Chris Corbyn <chris@w3style.co.uk>
@@ -373,7 +374,7 @@ class Swift_Message_Encoder
    */
   public function isUTF8($data)
   {
-    return ($data && preg_match('%(?:
+    return (1 || $data && preg_match('%(?:
     [\xC2-\xDF][\x80-\xBF]				# non-overlong 2-byte
     |\xE0[\xA0-\xBF][\x80-\xBF]			# excluding overlongs
     |[\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}	# straight 3-byte
