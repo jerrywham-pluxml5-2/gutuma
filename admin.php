@@ -2,18 +2,69 @@
 /**
  * Gestion des utilisateurs pour le module de newsletters
  *
- * @version 2.2.1
- * @date	16/07/2020
+ * @version 2.2.2
+ * @date	08/10/2026
  * @package plugin Gutuma
  * @author	Cyril MAGUIRE, Thomas Ingles
  **/
+// Préparatif de session pour gutuma
+// Chemin de gutuma (Session Cookie)
+$cookie_path = dirname($_SERVER['PHP_SELF'], 3) . '/plugins/gutuma/news';
+// Même du cookie de session de PluXml
+$gu_cook = session_get_cookie_params();
+// Nom de la session PluXml
+$my_name = session_name();
+// Garde session courrante
+$my_data = session_encode();
+// Prepare la session de gutuma # 1e idée : preg_replace('~core/[\w-]+~', 'plugins/gutuma/news', __dir__);
+$plxdomain = $_SESSION['domain'];// pour autosave (don't disconnect)
+$_SESSION['domain'] = __dir__ . '/news';
+// Encode pour garder la modif
+$gu_data = session_encode();
+
+session_destroy();
+//voir core/lib de PluXml 5.10
+//	'cookie_path'		=> $gu_cook['path']; // !empty($_SERVER['REDIRECT_URL']) ? preg_replace('#(?:/|/\w[\w-]+\w\.(?:php|html?))$#', '', $_SERVER['REDIRECT_URL']) : dirname($_SERVER['PHP_SELF']),
+$session_site = array(
+	'name'			=> $my_name,             // PHPSESSID / PLX_ADMIN / PLX_SITE
+	'cookie_lifetime'	=> $gu_cook['lifetime'], // SESSION_LIFETIME,
+	'cookie_path'		=> $cookie_path,         // Path: /core/admin (Go to: /plugins/gutuma/news)
+	'cookie_domain'		=> $gu_cook['domain'],   // $_SERVER['SERVER_NAME'],
+	'cookie_secure'		=> $gu_cook['secure'],   // isset($_SERVER['HTTPS']),
+	'cookie_httponly'	=> $gu_cook['httponly'], // true,
+	'cookie_samesite'	=> $gu_cook['samesite'], // 'Strict',
+	'use_strict_mode'	=> true,
+);
+
+session_start($session_site);// Add for transmit to gutuma path
+// decode $data (the encoded session data, either from a file or database). Remember, decoded data is put directly into $_SESSION
+session_decode($gu_data);
+
+#Need to know of PluXml motor (for inc config in future) #note : PLX_VERSION #created in 5.5
+$_SESSION['GUTUMA_PLX_VERSION'] = defined('PLX_VERSION') ? PLX_VERSION : '5.3.1';
+$_SESSION['plxdomain'] = $plxdomain;// pour autosave (don't disconnect)
+
+// Pour transmettre les info de session à gutuma (PluXml 5.10-rc4)
+setcookie('PLX2GUTUMA', session_encode(), // time() + 7200, $cookie_path, $_SERVER['SERVER_NAME']);
+    [
+        'expires'  => time() + 7200,
+        'path'     => $cookie_path,
+        'domain'   => $_SERVER['SERVER_NAME'],
+        'secure'   => isset($_SERVER['HTTPS']),
+        'httponly' => true,
+        'samesite' => 'Strict',
+    ]
+);
+//Restore original session
+$session_site['cookie_path'] = $gu_cook['path'];
+session_destroy();
+session_start($session_site);
+session_decode($my_data);
+// Fin des preparatif de session
 
 $aProfils = $plxPlugin->aProfils();# Tableau des profils
 $ok_config = $plxPlugin->getGutumaConfig();#On charge la config de gutuma : $gu_config_version & $gu_config[]
 #echo $ok_config;exit;//dbg
-
-#Need to know of PluXml motor (for inc config in future) #note : PLX_VERSION #created in 5.5
-$_SESSION['GUTUMA_PLX_VERSION'] = defined('PLX_VERSION')? PLX_VERSION : '5.3.1';
 
 if($ok_config){//Le fichier de config existe donc le module est installé
 	eval($ok_config);
@@ -49,7 +100,7 @@ if(isset($_GET['u']) && isset($_GET['rec']) && !empty($_GET['u']) && $_GET['rec'
 	exit;
 }
 if(isset($_GET['u']) && isset($_GET['del']) && !empty($_GET['u']) && $_GET['del'] == 'done'){#utilisateur désactivé
-	$plxPlugin->setParam('user_'.$_GET['u'],'desactivé', 'cdata');
+	$plxPlugin->setParam('user_'.$_GET['u'],'désactivé', 'cdata');
 	$plxPlugin->saveParams();
 	header('Location:plugin.php?p=gutuma');
 	exit;

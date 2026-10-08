@@ -105,7 +105,7 @@ function gu_subscription_process($address, &$list_ids, $subscribe, $hash = ''){
 			$action = strtolower($what);
 			$text = t('This is an automated message');
 			$text .= t(' to secure the % and certify that you are the initiator of this process for the following list'.($plural?'s':'').':',array($action))."\r\n* ".$succ_list_text.$EOL;
-			$text .= $EOL.str_repeat('=',72).$keytext."\r\n\r\n".t('To change your subscription'.($plural?'s':'').' visit:').' '.$EOL.$subscribe_url.'addr='.$address.((count($succ_list_names) == 1) ? '&list='.$list_id : '').$EOL;
+			$text .= $EOL.$HR.$keytext.$EOL.$EOL.t('To change your subscription'.($plural?'s':'').' visit:').' '.$EOL.$subscribe_url.'addr='.$address.((count($succ_list_names) == 1) ? '&list='.$list_id : '').$EOL;
 			$text .= t('Please do not reply to this message. Thank you.');
 			gu_debug('gu_subscription_process() sendkey message to '.$address.' :<br /> subject :<br />'.$subject.'<br />text :<br />'.$text);
 //var_export('<pre>First step message : subject : '.$subject.PHP_EOL.$text.'</pre>');#dbg

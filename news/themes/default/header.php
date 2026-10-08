@@ -8,7 +8,7 @@
  *
  * Gutama plugin package
  * @version 2.2.2
- * @date	04/09/2021
+ * @date	08/10/2026
  * @author	Cyril MAGUIRE, Thomas Ingles
 */
 $plxthemev = explode('.', PLX_VERSION);#str_replace('.','',PLX_VERSION);
@@ -47,18 +47,30 @@ if(isset($_GET["del"]) AND $_GET["del"]=="install") {
 	<meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0">
 	<title><?php echo GUTUMA_TITLE; ?> - <?php echo plxUtils::strCheck($plxAdmin->aConf['title']) ?> - <?php echo L_ADMIN ?></title>
 	<meta http-equiv="content-type" content="text/html; charset=<?php echo strtolower(GUTUMA_ENCODING) ?>" />
-	<link rel="stylesheet" type="text/css" href="<?php echo PLX_MORE ?>admin/theme/plucss<?php echo version_compare(@PLX_VERSION,'5.7','>')?'.min':'' ?>.css?ver=<?php echo PLX_VERSION ?>" media="screen" />
+	<link rel="stylesheet" type="text/css" href="<?php echo PLX_MORE ?>admin/theme/plucss.css?ver=<?php echo PLX_VERSION ?>" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<?php echo PLX_MORE ?>admin/theme/theme.css?ver=<?php echo PLX_VERSION ?>" media="screen" />
 	<link rel="stylesheet" type="text/css" href="themes/<?php echo gu_config::get('theme_name');?>/css/style.css?v=<?php echo GUTUMA_VERSION_NAME ?>" media="screen" />
 <?php if(version_compare(@PLX_VERSION,'5.7','>')){ $pathfont = (version_compare(@PLX_VERSION,'5.9','==')? 'fontello/css': 'fonts'); ?>
 	<link rel="stylesheet" type="text/css" href="<?php echo PLX_MORE ?>admin/theme/<?=$pathfont?>/fontello.css?v=<?php echo PLX_VERSION ?>" media="screen" />
 <?php } ?>
-	<link rel="icon" href="<?php echo PLX_MORE ?>admin/theme/images/favicon.png" />
+	<link rel="icon" href="<?php echo PLX_PLUGINS ?>gutuma/news/themes/gutuma/favicon.png" />
 <?php
 	if(!empty ($custom_admincss_file = PLX_GROOT.$plxAdmin->aConf['custom_admincss_file']) && is_file($custom_admincss_file)) echo '	<link rel="stylesheet" type="text/css" href="'.$custom_admincss_file.'?v='.filemtime($custom_admincss_file).'" media="screen" />'.PHP_EOL;
 	if(gu_session_is_valid()){#only valid user
-		if(!empty ($admincss_file = PLX_GROOT.$plxAdmin->aConf['racine_plugins'].'admin.css') && is_file($admincss_file)) echo '	<link rel="stylesheet" type="text/css" href="'.$admincss_file.'?v='.filemtime($admincss_file).'" media="screen" />'.PHP_EOL;
+#		if(!empty ($admincss_file = PLX_GROOT.$plxAdmin->aConf['racine_plugins'].'admin.css') && is_file($admincss_file)) echo '	<link rel="stylesheet" type="text/css" href="'.$admincss_file.'?v='.filemtime($admincss_file).'" media="screen" />'.PHP_EOL;
+#		exit($admincss_file.':::'.PLX_MORE.'::: '.__file__.__line__);
+		# Legacy plugins/admin.css + Fix 404 (bad url) on PluXml 5.8[.7]
+		$admincss_file = $plxAdmin->aConf['racine_plugins'];
+		if(defined('PLX_PLUGINS_CSS_PATH'))# From PluXml 5.8[.7]
+			$admincss_file = PLX_PLUGINS_CSS_PATH;
+		$admincss_file .= 'admin.css';
+		if(is_file(PLX_ROOT . $admincss_file))
+		  echo '	<link rel="stylesheet" type="text/css" href="'.PLX_GROOT.$admincss_file.'?v='.filemtime(PLX_ROOT.$admincss_file).'" media="screen" />'.PHP_EOL;
+
+		#tep for newsletters (list???)
+		gu_theme_inc_head();
 ?>
+<noscript><style>.noscript{display:initial;}</style></noscript>
 <!--
 	<script src="<?php echo PLX_MORE ?>lib/functions.js?ver=<?php echo PLX_VERSION ?>"></script>
 	<script src="<?php echo PLX_MORE ?>lib/visual.js?ver=<?php echo PLX_VERSION ?>"></script>
@@ -68,7 +80,7 @@ if(isset($_GET["del"]) AND $_GET["del"]=="install") {
 <?php
 		# Hook Plugins
 		eval($plxAdmin->plxPlugins->callHook('AdminTopEndHead'));
-	}# fi only valid user
+	}# fi gu_session_is_valid : only valid user
 ?>
 	<script type="text/javascript" src="js/misc.min.js?v=<?php echo GUTUMA_VERSION_NAME ?>"></script>
 	<script type="text/javascript" src="js/tw-sack.min.js?v=<?php echo GUTUMA_VERSION_NAME ?>"></script>

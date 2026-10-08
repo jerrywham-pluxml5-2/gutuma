@@ -22,9 +22,9 @@ $plxMotor = plxMotor::getInstance();
 <meta http-equiv="content-type" content="text/html;charset=<?php echo GUTUMA_ENCODING; ?>" />
 <meta name="robots" content="none">
 <script type="text/javascript" src="js/misc.min.js"></script>
-<script type="text/javascript" src="js/tw-sack.js"></script>
-<script type="text/javascript" src="js/md5.js"></script>
-<script type="text/javascript" src="js/sha1.js"></script>
+<script type="text/javascript" src="js/tw-sack.min.js"></script>
+<script type="text/javascript" src="js/md5.min.js"></script>
+<script type="text/javascript" src="js/sha1.min.js"></script>
 <script type="text/javascript" src="<?php echo $plxMotor->urlRewrite(); ?>core/lib/functions.js"></script>
 <script type="text/javascript" src="<?php echo $plxMotor->urlRewrite(); ?>core/lib/visual.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo $plxMotor->urlRewrite(); ?>core/admin/theme/base.css" media="screen" />
@@ -40,6 +40,11 @@ $plxMotor = plxMotor::getInstance();
 /* #send_form,#edit_form___{margin-top: -111px;} */
 .menubar{margin-top: 0 !important;}
 </style>
+<?php
+ 		#tep for newsletters (list???)
+		gu_theme_inc_head();
+?>
+<noscript><style>.noscript{display:initial;}</style></noscript>
 </head>
 
 <body<?php echo ($nomenu)?' class="subscribe"':'';?>>

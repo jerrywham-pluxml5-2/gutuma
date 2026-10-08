@@ -285,7 +285,7 @@ class Swift_Message_Headers
       Swift_ClassLoader::load("Swift_Message_Encoder");
       if (!$this->getCharset() && Swift_Message_Encoder::instance()->isUTF8($value)) $this->setCharset("utf-8");
       if (!isset($this->attributes[$lheader])) $this->attributes[$lheader] = array();
-      if ($value !== null) $this->attributes[$lheader][$name] = (string) $value;
+      if ($value) $this->attributes[$lheader][$name] = (string) $value;
       else $this->attributes[$lheader][$name] = $value;
     }
   }
@@ -501,13 +501,13 @@ class Swift_Message_Headers
     $ret = "";
     foreach ($this->attributes[$header_name] as $attribute => $att_value)
     {
-      if ($att_value === null) continue;
+      if (!$att_value) continue;#origin if ($att_value === null) continue;
       // 70 to account for LWSP, CRLF, quotes and a semi-colon
       // + length of attribute
       // + 4 for a 2 digit number and 2 asterisks
       $avail_len = 70 - (strlen($attribute) + 4);
       $encoded = Swift_Message_Encoder::instance()->rfc2047Encode($att_value, $this->charset, $this->language, $avail_len, $this->LE);
-      $lines = explode($this->LE, $encoded);
+      $lines = explode($this->LE, $encoded);#Deprecated: explode(): Passing null to parameter #2
       foreach ($lines as $i => $line)
       {
         //Add quotes if needed (RFC 2045)

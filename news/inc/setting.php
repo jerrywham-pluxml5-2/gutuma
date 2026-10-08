@@ -28,11 +28,11 @@ class gu_config{
 	 * @param string $key The setting name
 	 * @return null
 	 */
-	public static function set_adhesion($key){
+	public static function set_adhesion($key){#WHY?
 		//$plxAdmin = defined('PLX_ADMIN')?@plxAdmin::getInstance():@plxMotor::getInstance();
 		$plxAdmin = $GLOBALS['plxMotor'];
-		if (isset($plxAdmin->plxPlugins->aPlugins["adhesion"])){
-			$adhesion = $plxAdmin->plxPlugins->aPlugins["adhesion"];
+		if (isset($plxAdmin->plxPlugins->aPlugins['adhesion'])){
+			$adhesion = $plxAdmin->plxPlugins->aPlugins['adhesion'];
 			$admin = $adhesion->getParam('nom_asso');
 			$mail = $adhesion->getParam('email');
 			if($mail != ''){
@@ -54,8 +54,8 @@ class gu_config{
 	 * @return mixed The setting value
 	 */
 	public static function get($key){
-		if ($key == 'admin_email' OR $key == 'admin_name')
-			self::set_adhesion($key);
+		if ($key == 'admin_email' OR $key == 'admin_name')#WHY?
+			self::set_adhesion($key);#WHY?
 		return self::$values[$key];
 	}
 	/**
@@ -124,8 +124,9 @@ class gu_config{
 	 */
 	public static function load(){
 		global $plxMotor;//code is in perpetual movement//$plxMotor = defined('PLX_ADMIN')?plxAdmin::getInstance():plxMotor::getInstance();
+#		var_dump($plxMotor);
 		$profil = $plxMotor->aUsers['001'];//default 4 1st install
-		if (empty($profil['email']) && strpos($plxMotor->path_url,'news/ajax.php') === FALSE  && strpos($plxMotor->path_url,'news/js/gadgets.js.php') === FALSE && strpos($plxMotor->path_url,'news/subscribe.php') === FALSE){
+		if (empty($profil['email']) && strpos(GU_PLX_PATH_URL,'news/ajax.php') === FALSE  && strpos(GU_PLX_PATH_URL,'news/js/gadgets.js.php') === FALSE && strpos(GU_PLX_PATH_URL,'news/subscribe.php') === FALSE){
 			header('Location: '.PLX_MORE.'admin/profil.php');
 			exit;
 		}

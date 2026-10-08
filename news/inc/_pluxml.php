@@ -11,9 +11,9 @@
 #
 # ------------------- END LICENSE BLOCK -------------------
 /* Gutama plugin package (from core/admin/prepend.php)
- * @version 2.2.1
- * @date	16/07/2020
- * @author	Thomas INGLES.
+ * @version 2.2.2
+ * @date	08/10/2026
+ * @author	Thomas INGLES
 */
 # Définition des constantes
 define('__GRN__', "\r\n");//Gutuma EOL
@@ -24,8 +24,9 @@ if(strstr($_SERVER['PHP_SELF'],'gadgets.js.php')){//4 gadget call
 	header('Content-Type: application/x-javascript');
 }
 define('PLX_GROOT', $gdgt.'..'.__GDS__.'..'.__GDS__.'..'.__GDS__);// GROOT 4 SYMBIOLINK
-define('PLX_MORE', PLX_GROOT.'core'.__GDS__);
-if(defined('PLX_ROOT')){;#Test for include (fix error of Twice PluXml)
+define('PLX_MORE', PLX_GROOT.'core'.__GDS__);// Like PLX_CORE
+if(defined('PLX_ROOT')){
+ #Test for include (fix error of Twice PluXml)
  $plxMotor = $this->plxMotor;
  $lang = $glang = $plxMotor->aConf['default_lang'];
  $gu_is_included = TRUE;
@@ -40,7 +41,25 @@ if(defined('PLX_ROOT')){;#Test for include (fix error of Twice PluXml)
 define('PLX_ROOT', PLX_GROOT);# Normal config, gutuma is in plugins folder 4 real * comment this line if gutuma is symlinked & in an other PluXml**
 
 # On démarre la session
-session_start();
+// if(function_exists('plx_session_start')) plx_session_start(); # 5.9RC2+ (never released)
+// else session_start(); # PluXml < 5.10 (même session et cookie de session : cookie_path = '/')
+// Sessions séparé voir core/lib/config.php de PluXml 5.10-rc4
+$my_name = 'PLX_ADMIN'; // session_name() : no session_start but is PHPSESSID
+$cookie_path = !empty($_SERVER['REDIRECT_URL']) ? preg_replace('#(?:/|/\w[\w-]+\w\.(?:php|html?))$#', '', $_SERVER['REDIRECT_URL']) : dirname($_SERVER['PHP_SELF']);
+$session_site = array(
+	'name'				=> $my_name,             // PLX_ADMIN / PLX_SITE
+	'cookie_lifetime'	=> 7200,  //SESSION_LIFETIME,
+	'cookie_path'		=> $cookie_path, // , // Path: /PluXml/core/admin (Go to: /PluXml/plugins/gutuma/news)
+	'cookie_domain'		=> $_SERVER['SERVER_NAME'],
+	'cookie_secure'		=> isset($_SERVER['HTTPS']),
+	'cookie_httponly'	=> true,
+	'cookie_samesite'	=> 'Strict',
+	'use_strict_mode'	=> true,
+);
+
+session_start($session_site);// New sys in plx 5.10-rc4
+isset($_COOKIE['PLX2GUTUMA']) && session_decode($_COOKIE['PLX2GUTUMA']); // Get plx session data plx 5.10-rc4
+setcookie('PLX2GUTUMA', '', 1);//remove it PLX 5.10-rc4
 #ready for next gen ? ;) like 5.8.4, 5.9, 6.0 ...
 $glx_version = '5.3.1';#5.8.3
 if(isset($_SESSION['GUTUMA_PLX_VERSION'])){#created in admin.php plugin access page
@@ -48,11 +67,15 @@ if(isset($_SESSION['GUTUMA_PLX_VERSION'])){#created in admin.php plugin access p
 }
 #Solve # FIX PLX_CONFIG_PATH & hide error of Multiple Versions on same server by #captbuffer
 ob_start();
-if(version_compare($glx_version,'5.9','<')){# 5.8 & Olds
-	define('PLX_CORE', PLX_ROOT.'core'.__GDS__);#fix : PLX_CORE already defined in PluXml/core/lib/config.php 5.9 & 6.0
+if(is_readable(PLX_ROOT.'config.php') && version_compare($glx_version,'5.9','<')){# 5.8x & Olds
 	include(PLX_ROOT.'config.php');# FIX PLX_CONFIG_PATH
 }
 include(PLX_ROOT.'core'.__GDS__.'lib'.__GDS__.'config.php');//hide error
+if(!defined('PLX_CORE')){# 5.9rc2 officiel as classic but inc root config  in lib/config #tep + 5.9.0 legacy : 2024.01.13 : Fix Fatal error: Uncaught Error: Undefined constant "PLX_CORE" in plugins/gutuma/news/inc/_pluxml.php on line 95 (now 99)
+	define('PLX_CORE', PLX_ROOT.'core'.__GDS__);
+	if(!defined('PLX_CONFIG_PATH'))// in PluXml 5.10 is defined
+		include(PLX_ROOT.'config.php');// moved to PLX_CORE/lib/plx_config.php & included by lib/config.php (plx 5.10-rc4)
+}
 ob_end_clean();#clear buffer to hide errors if need redirect
 
 #PLX_VERSION #created in 5.5
@@ -61,15 +84,22 @@ $_SESSION['GUTUMA_PLX_VERSION'] = defined('PLX_VERSION')? PLX_VERSION : '5.3.1';
 # On verifie quel PluXml est installé
 if($_SESSION['GUTUMA_PLX_VERSION'] != $glx_version) {#reload if needed
 	$glx_version = $_SESSION['GUTUMA_PLX_VERSION'];
-  $_SESSION = array(); //destroy all of the session variables  //~ session_destroy();
-  $_SESSION['GUTUMA_PLX_VERSION'] = $glx_version;//solve inter version in same server (same php session)
+	$_SESSION = array(); //destroy all of the session variables  //~ session_destroy();
+	$_SESSION['GUTUMA_PLX_VERSION'] = $glx_version;//solve inter version in same server (same php session)
 	//~ header('Location: ' . PLX_MORE . 'admin' . __GDS__ . 'plugin.php?p=gutuma');#si moteur different : on recharge ;)
+	# AMHA c'est ici que ce fait la redir 302 lors de l'appel a ajax.php si session morte
+	if(strpos($_SERVER['REQUEST_URI'], 'news/ajax.php') && !empty($_POST['action']))
+		$_SESSION['GUTUMA_AJAX_POST'] = $_POST['action'];
 	header('Location: ');#si moteur different : on recharge la page & retour admin/auth ;)
 	exit;
 }
+if(!empty($_SESSION['GUTUMA_AJAX_POST'])) { # Pour retourner le bon message d'erreur
+	$_POST['action'] = $_SESSION['GUTUMA_AJAX_POST'];
+	unset($_SESSION['GUTUMA_AJAX_POST']);
+}
 #END ready for next gen maybe? ;)
 
-# On démarre la session
+# Fin On démarre la session
 #session_start();
 
 $session_domain = dirname(__FILE__);
@@ -107,20 +137,30 @@ $plxMotor->mode='gutuma';//4 future ::: & solved bug header 404 in demarrage & p
 # Creation de l'objet d'affichage*
 #$plxShow = plxShow::getInstance();# origin :: FIXED* myMultiLingue ::: MML CALL PLX_MY_MULTILINGUE TWICE ::: $plxShow NOT IN global
 
-# Pages publiques
+# Pages publiques/privé
+$gu_front = FALSE;# other redirect (if not connected in PluXml backend)
+#plx 5.10-rc4 $plxMotor->path_url removed (used in Old urlRewrite), restore to legacy
+define('GU_PLX_PATH_URL', isset($plxMotor->racine_path) ? str_replace(ltrim($plxMotor->racine_path, '\/'), '', ltrim($_SERVER['REQUEST_URI'], '\/')) : $plxMotor->path_url); #plx 5.10-rc4
 switch(true){
- case strpos($plxMotor->path_url,'news/ajax.php') !== FALSE:
- case strpos($plxMotor->path_url,'news/js/gadgets.js.php') !== FALSE:
- case strpos($plxMotor->path_url,'news/subscribe.php') !== FALSE:
+ case strpos(GU_PLX_PATH_URL,'news/ajax.php') !== FALSE:
+ case strpos(GU_PLX_PATH_URL,'news/js/gadgets.js.php') !== FALSE:
+ case strpos(GU_PLX_PATH_URL,'news/subscribe.php') !== FALSE:
   $gu_front = TRUE;# grant access 4 public php files subscript mode
  break;
+ case strpos(GU_PLX_PATH_URL,'news/cron.php') !== FALSE:#tep 2.2.2
+  if($plxMotor->get AND preg_match('#^admin([\w-]+)?$#',$plxMotor->get,$capture)) {
+   $plxMotor->mode = 'gutumadmincron'; # 4 the fun
+   if ($capture[1] == md5($plxMotor->aConf['clef'] . $plxMotor->aConf['clef'])) {// privacy clef don't show publicly ;-)
+    $gu_front = TRUE;# private access 4 cron php file like PluXml rss com's draft mode
+   }
+  }
+ break;
  default:
-  $gu_front = FALSE;# other redirect (if not connected in PluXml backend)
 }
 
 if(!$gu_front) {# Back office (admin)
 	$access = TRUE;
-	if(isset($_SESSION['user']) AND !empty($_SESSION['user'])) {#Si connecté
+	if(!empty($_SESSION['user'])) {#Si connecté
 		$_profil = $plxMotor->aUsers[$_SESSION['user']];// $_profil is called in install.php
 		if(!$_profil['active'] OR $_profil['profil']>PROFIL_MANAGER OR $_profil['delete']){//déconnecte l'utilisteur si n'est plus autorisé
 			$access = FALSE;

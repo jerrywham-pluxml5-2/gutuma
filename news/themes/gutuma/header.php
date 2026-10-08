@@ -28,7 +28,10 @@ global $plxMotor;// = @plxMotor::getInstance();
 <script type="text/javascript" src="js/tw-sack.min.js?v=<?php echo GUTUMA_VERSION_NAME ?>"></script>
 <script type="text/javascript" src="js/md5.min.js?v=<?php echo GUTUMA_VERSION_NAME ?>"></script>
 <script type="text/javascript" src="js/sha1.min.js?v=<?php echo GUTUMA_VERSION_NAME ?>"></script>
-</head>
+<?php
+ 		#tep for newsletters (list???)
+		gu_theme_inc_head();
+?></head>
 <body>
 	<?php if (gu_is_demo()) { ?><div id="demobanner">DEMO MODE</div><?php } ?>
 	<div id="page">

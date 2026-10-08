@@ -148,9 +148,75 @@ Rétablir: subscribe PLX_GROOT + rem var_dump et réactiver les envois
 &nbsp; @ end is FIX for no trunk ></b> .....????? IN GUTUMA THEME ::: LIKE
 L'adresse <b><i>del@del.del</i></b> est déjà dans la liste réelle de <b><i>nouvelle liste 2</i></b>&nbsp;
 
+Add DKIM FUNC
+https://www.jv-conseil.net/blog/2019-11-17-dkim-php-mail-signature.png/
+https://github.com/JV-conseil-Internet-Consulting/dkim-php-mail-signature
+
 #baf #IN timixml : // tiny in v 4.9.8 (2020-01-28) : 03.2020 zips
 ===============================CHANGELOG================================
-## v2.2.2 **/**/**** ##
+## vnext **/**/**** ##
+
+## v2.2.2 08/10/2026 ##
+**Améliorations et fixes pour PHP-8.4 & compatible PluXml 5.10**
+
+- **SELF SESSION COOKIE**: Session autonome inspiré du nouveau système de PluXml-5.10
+- **Fix PHP-8.4 Deprecated**: Constructeur Swift_Message_Image, Ajout de ? (Type nullable explicite) pour $data (introduit en PHP 7.1.)
+- **Fix fr-help.php transport link**: Révise l'URL pour qu'elle soit correcte.
+- **Typo lang fr**: Corriger les erreurs de français.
+- **Fix width²**: Améliorer la résolution des images.
+- **Gutuma theme : plus responsive** (éditeur et liste)
+- **WIP Gutuma theme : plus responsive (composition)**: Améliorer l'expérience utilisateur pour les compositions.
+- **HardFix subject error : Swift_Message_Encoder::isUTF8**: Réviser le code pour que Swift_Message_Encoder::isUTF8 soit toujours vrai.
+- **themes/gutuma/_menu.php : move PluXml link à la welcome (droite)**: Mover la liane PluXml dans le menu de bienvenue.
+- **Login : n'oubliez pas par défaut pour plxlogin**: Mettre à jour le paramètre d'authentification de base pour plxlogin.
+- **Fix pop.css watermark**: Fixer le watermark CSS pour les affichages.
+- **Fix newsletter::parse_recipients**: Vérifier les adhérents en utilisant l'utilité $this->adhesion.
+- **Move data to PLX_ROOT.PLX_CONFIG_PATH (on update)**: Mettre à jour la configuration des données pour les mises à jour de base.
+- **themes/*/_subscribe : home_link : racine -> PLX_GROOT**: Mettre à jour le lien d'accès aux articles dans les newsletters.
+- **news/compose.php : plxUtils::getRacine() -> PLX_MORE**: Mettre à jour la racine pour les notifications en utilisant PLX_MORE.
+- **Fix Make lists directory (gutumaindex.html 2 gutuma/index.html)**: Réviser le directeur des listes pour qu'il soit correct.
+- **Fix subscibe : deprecated Use of "self" in callables + Create dyna prop**: Mettre à jour les appels de methodes pour éviter la déclaration de variables répétées.
+- **Fix Help : add toggleDiv js code**: Ajouter le code JavaScript de toggling div dans l'aide.
+- **Help : Change tips url : Ğ1 v2 public key + Cesium2 official demo**: Mise à jour de l'URL pour la URL des conseils.
+- **typo session**: Réviser les erreurs de français.
+- **Improve menu : theme default : Ajouter le nom du menu au haut** (à haut de page)
+- **Fix menu : theme default : mauvais chemin path (site, ?blog & logout)**: Vérifier la chaîne de chemins pour les menus dans les sites et les blogs.
+- **Prepare themes/default/header for PluXml-5.8.10**: Mettre à jour le haut de page pour PluXml 5.8.10.
+- **tw-sacks.js-1.6.2 : Fix 302 when createURLString for POST method**: Améliorer la mise en forme de l'URL lorsqu'on crée une string de URL pour le POST.
+- **Improve gu_theme_int_control : text 2 number attr + settings themes** (ajout d'un paramètre à gTheme_int_control)
+- **Fix inc/mailer : return real sended mail (mailhog+jim)**: Mettre à jour la méthode pour envoyer des e-mails réels.
+- **typo : news/inc/setting.php**: Vérifier les erreurs de français.
+- **Add news/.htaccess**: Ajouter l'accès d'HTAccess aux newsletters.
+- **Fix MAIL FROM is rejected by server (mailhog+jim)**: Mettre à jour le paramètre Mail From pour éviter la rejet du mail par le serveur.
+- **Fix php 8 + Trying to access array offset on false (mailhog+jim)** : Vérifier les erreurs de PHP avec l'utilisation d'arrayoffset.
+- **Improve themes _menu.php : urlRewrite to PLX_MORE (default)**: Mettre à jour le routage pour les menus dans PluXml 5.8.10.
+- **Fix & Improve admin newsletters**: Améliorer l'expérience des newsletters administratives.
+
+v2.2.2 23/09/04 dev (unreleased)
+Fix oups css popup + info.xml
+[+] Alpha2 move, dataTable, seeOnPopup, newbatchs & fixes
+Fix Deprecated: trim(): Passing null to parameter #1
+
+v2.2.2 23/05/29 dev (unreleased)
+[+] Alert if inc/config.php unwritable
+[+] Run on php 8.1 & PluXml 5.8.7 fine
+Improved
+  Swift compat php8.1
+   : offset access syntax with curly braces
+   : get_magic_quotes_runtime
+   : Passing null to parameter
+  name & friendly ::: without |
+  misc : html_to_text() br hr
+  inc/subscription php : gu_subscription_process
+  themes : gu_theme_pager
+  themes : [_]editlist Filtered addresses rows now only one funk
+  themes : list label
+  themes : settings : see cron url with key
+  themes  : style.css
+  theme default : plucss.css (nomin) + pathfont
+  adhesion plugin interoparability
+  cron.php print results : adhesionSel plugin interoparability
+
 Fix : mailer create_message : si adhesion (2.3.4 mini) + sa liste "adherents" lien désinscrire fait par adhesion cnil (unsubscribe adhesion link)
 Fix : admin : connexion impossible a gutuma
 :::    #PHP7.4 gu_session_set_valid() dù à session_regenerate_id()

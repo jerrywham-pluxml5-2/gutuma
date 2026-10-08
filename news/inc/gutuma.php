@@ -13,10 +13,10 @@
 */
 include_once 'misc.php';
 include_once 'session.php';
-include_once ('_pluxml.php');#Inclusion des librairies de plxuml
+include_once ('_pluxml.php');#Inclusion des librairies de plxuml + redir (si besoin)
 define('GU_CONFIG_LANG', isset($slang)?$slang:$glang);//For subscribe.php url query ?lng= (slang)
-if (version_compare(phpversion(), '5', '<'))#Check for PHP5+
-	die(t('Sorry - Gutuma requires at least PHP5. Please contact your hosting provider and ask them to upgrade.'));
+if (version_compare(phpversion(), '7.1', '<'))#Check for PHP7.1+
+	die(t('Sorry - Gutuma requires at least PHP7.1. Please contact your hosting provider and ask them to upgrade.'));
 include_once 'setting.php';
 include_once 'list.php';
 include_once 'theme.php';
@@ -43,7 +43,7 @@ if(!defined('RPATH')){//semble inutilisé
 		define('RPATH',str_replace('inc'.DIRECTORY_SEPARATOR.'gutuma.php','',__FILE__));
 	}else{
 		header('Location: '.absolute_url('install.php'));
-		exit();
+		exit;
 	}
 }
 #Demo mode restrictions
@@ -65,7 +65,7 @@ $htaccess .= "</Files>\n";
 $htaccess .= "Options -Indexes\n";
 if (!is_dir(GUTUMA_LISTS_DIR)){#Make lists directory
 	mkdir(GUTUMA_LISTS_DIR);
-	touch(GUTUMA_LISTS_DIR.'index.html');
+	touch(GUTUMA_LISTS_DIR.'/index.html');
 	touch(GUTUMA_LISTS_DIR.'/.htaccess');
 	file_put_contents(GUTUMA_LISTS_DIR.'/.htaccess', $htaccess);
 }
@@ -229,6 +229,7 @@ function getLang($glang=GU_CONFIG_LANG){
 		if (!is_file($path)){
 			@file_put_contents($path,'');#TRADUCTION MISS
 		}
+		if(!is_file($path)) return 'en';# Fix Warning: file(plugins/gutuma/news/lang/##): failed to open stream: No such file or directory
 		$langLines = file($path);
 		$traductions = array();
 		foreach($langLines as $langLine){

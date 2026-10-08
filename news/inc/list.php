@@ -7,8 +7,8 @@
  * @modifications Cyril Maguire, Thomas Ingles
  *
  * Gutama plugin package
- *  @version 2.2.1
- * @date	16/07/2020
+ *  @version 2.2.2
+ * @date	29/05/2023
  * @author	Cyril MAGUIRE, Thomas Ingles
 */
 /**
@@ -21,6 +21,7 @@ class gu_list{
 	private $private;
 	private $addresses;
 	private $size;
+	public $timeAddress;//For calculate key code & display date time (inc/subscription.php)
 	/**
 	 * Gets the ID
 	 * @return int The ID
@@ -47,7 +48,7 @@ class gu_list{
 	 * @param string $name The friendly name
 	 */
 	public function set_friend($name){
-		$this->friend = $name;
+		$this->friend = preg_replace('~\|~', ' ', trim($name));#memo [\W] no alphaNum
 	}
 	/**
 	 * Gets the name
@@ -61,7 +62,7 @@ class gu_list{
 	 * @param string $name The name
 	 */
 	public function set_name($name){
-		$this->name = $name;
+		$this->name = preg_replace('~\|~', ' ', trim($name));#memo [\W] no alphaNum
 	}
 	/**
 	 * Gets the privacy status
@@ -108,7 +109,7 @@ class gu_list{
 	public function contains($address, $tmp = '', $k = ''){
 		if($tmp){
 			$addressesStr = $this->addresses;
-			array_walk($addressesStr, array('self', 'get_tmp_address'));
+			array_walk($addressesStr, array(self::class, 'get_tmp_address'));
 			$addresses = array();
 			foreach($addressesStr as $key => $val){
 				$addresses[] = $val[0];#mail only
@@ -257,9 +258,11 @@ class gu_list{
 	public static function get($id, $load_addresses = FALSE, $tmp = ''){
 		$time_start = (int)microtime();
 		$dr = $tmp?GUTUMA_TEMP_DIR:GUTUMA_LISTS_DIR;
-		$list = $dr.'/'.$id.($tmp?'.'.$tmp:'').'.php';
+		$list = realpath($dr.'/'.$id.($tmp?'.'.$tmp:'').'.php');
+		if (empty($list))
+			return gu_error('<br />'.t('Unable to read list file'));
 // Open list file
-		$lh = @fopen(realpath($list), 'r');
+		$lh = @fopen($list, 'r');
 		if ($lh == FALSE)
 			return gu_error('<br />'.t('Unable to read list file'));
 // Read header from first line
@@ -268,19 +271,21 @@ class gu_list{
 		$list = new gu_list();
 		$list->id = $header[0];
 		$list->name = $header[1];
-		$list->friend = trim(@$header[4]);#since 2.2.1 : trim remove EOL \n
+		$list->friend = empty($header[4])?$list->name:trim($header[4]);#since 2.2.1 : trim remove EOL \n
 		$list->private = (bool)$header[2];
 		$list->size = (int)$header[3];
 		if ($load_addresses){// Read all address lines
 			$addresses = array();
 			$update = false; //remove if old tmp address
+			$days = gu_config::get('days')*86400;//86400 seconds = 1 day (24*60*60)
+			$time = time();
 			while (!feof($lh)){
 				$address = trim(fgets($lh));
 				if (strlen($address) > 0){
 					if($tmp){//remove old temporary @dresses (cron)
 						$a = explode(';',$address);
 //cron by user
-						if($a[0]+(gu_config::get('days')*86400) < time()){//86400 seconds = 1 day (24*60*60) :: remove temp > 15 days (default) = 1296000s
+						if(($a[0]+$days) < $time){//remove tmp address > 15 days (default) = 1296000s
 							$update = true;
 							continue;
 						}

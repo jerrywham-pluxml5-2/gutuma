@@ -6,8 +6,8 @@
  * @modifications thomas Ingles
  *
  * Gutama plugin package
- * @version 2.2.1
- * @date	06/06/2020
+ * @version 2.2.2
+ * @date	08/10/2026
  * @author	Thomas INGLES
  */
 #langs{display:none;}/* hide plxMyMultilinge flags */
@@ -23,6 +23,8 @@
 #autobatch{text-align:right;}
 #progressBar{width:100%;transition: width 1s ease;}
 #autobatchmenu{float:left;}
+.noscript{display:none;}
+.dataTable-sorter:hover{text-decoration:none;}
 .animate{
 /*
 	-webkit-animation:spin2 .7s infinite linear;
@@ -39,7 +41,7 @@
     -webkit-transform: scale(1.6);
   }
 }
-@keyframes  sk-bounce {
+@keyframes sk-bounce {
   0%, 100% {
     transform: scale(0);
     -webkit-transform: scale(1);
@@ -68,10 +70,10 @@
 	width: 100%;
 }
 #list_name,#new_list_name{
-	width: 33.3%;
+	min-width: 33.3%;
 }
 #list_friend,#new_list_friend{
-	width: 44.4%;
+	min-width: 44.4%;
 }
 .formfield{
 	padding: 0.5rem 0px;
@@ -165,6 +167,7 @@ hr{
 #sectionmenu.plx57,
 #sectionmenu.plx58,
 #sectionmenu.plx59,
+#sectionmenu.plx510,
 #sectionmenu.plx60{
 	line-height: 2.2 ;
 }
@@ -231,6 +234,7 @@ div.menubar.in-action-bar{
 
 .in-action-bar.plx58,
 .in-action-bar.plx59,
+.in-action-bar.plx510,
 .in-action-bar.plx60{
 	margin-top: 8rem;
 	z-index: 99;/* au dessus de .mce-fullscreen */
@@ -276,14 +280,29 @@ div.pagerinfo{
 	padding: 10px 0px 10px 0px;
 }
 /* Results table classes */
-table{
-	width: 100%;
+/* https://stackoverflow.com/questions/55673873/sticky-table-header-with-two-header-rows */
+table {
+  height: 100%;
+  border-collapse: collapse;
+  width: 100%;
+  margin: 10px;
+  font-size: 0.8em;
 }
+
+thead {
+  position: sticky;
+  top: 0;
+  background: #eee;
+}
+
 table.results tr td{
 	border-bottom: 1px dotted black;
 	padding: 5px;
 }
-table.results tr td.emptyresults{
+table.results thead tr td {
+    font-weight: bold;
+}
+.emptyresults{
 	padding: 10px;
 	font-style: italic;
 	text-align: center;
@@ -323,7 +342,8 @@ table.results tr td.emptyresults{
 */
 @media (max-width: 767px){
 	.gu-hide{
-		display: none;
+		display: inline-block;
+		width: 3rem;
 	}
 
 	.in-action-bar,
@@ -336,9 +356,10 @@ table.results tr td.emptyresults{
 		font-size: 1.1em;
 	}
 	#imghead{display:none;}/* hide foot img in plx admin menu */
-	.imglink img{
-		width:27px;
-		height:27px;
+	.imglink img, img.imglink{
+		width: 24px;
+		height: 24px;
+		max-width: 24px;
 	}
 }
 @media (max-width: 480px){

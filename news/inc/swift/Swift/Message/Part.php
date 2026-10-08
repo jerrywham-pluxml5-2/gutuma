@@ -26,19 +26,19 @@ class Swift_Message_Part extends Swift_Message_Mime
    * @param string The encoding format used
    * @param string The charset used
    */
-  public function __construct($data=null, $type="text/plain", $encoding=null, $charset=null)
+  public function __construct($data=null, $type="text/plain", $encoding="", $charset="")
   {
     parent::__construct();
-    
+
     $this->setContentType($type);
     $this->setEncoding($encoding);
     $this->setCharset($charset);
     $this->setFlowed(false);
-    
+
     if ($data !== null)
     {
       $this->setData($data);
-      if ($charset === null)
+      if ($charset === "")
       {
         Swift_ClassLoader::load("Swift_Message_Encoder");
         if (is_string($data) && Swift_Message_Encoder::instance()->isUTF8($data)) $this->setCharset("utf-8");
@@ -101,8 +101,7 @@ class Swift_Message_Part extends Swift_Message_Mime
    */
   public function setFlowed($flowed=true)
   {
-    $value = null;
-    if ($flowed) $value = "flowed";
+    $value = $flowed? "flowed": "";
     $this->headers->setAttribute("Content-Type", "format", $value);
   }
   /**
@@ -127,7 +126,7 @@ class Swift_Message_Part extends Swift_Message_Mime
     }
     elseif ($this->numChildren())
     {
-      $this->setCharset(null);
+      $this->setCharset("");
       $this->setEncoding("7bit");
     }
   }

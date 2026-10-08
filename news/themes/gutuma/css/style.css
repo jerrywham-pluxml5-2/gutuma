@@ -6,8 +6,8 @@
  * @modifications Cyril Maguire, thomas Ingles
  *
  * Gutama plugin package
- * @version 2.2.1
- * @date	26/05/2020
+ * @version 2.2.2
+ * @date	02/09/2023
  * @author	Cyril MAGUIRE, Thomas INGLES
 */
 .warning{/* adhesion */
@@ -18,11 +18,17 @@
 word-wrap{
 	word-wrap: anywhere;
 }
+.error {/* PluXml 5.8 */
+    background-color: #ffcfcf;
+    border-color: #df8f8f;
+}
 td.action {
-	min-width: 107px;
+	min-width: 120px;
 }
 #autobatch{text-align:right;}
 #progressBar{width:100%;transition: width 1s ease;}
+.noscript{display:none;}
+.dataTable-sorter:hover{text-decoration:none;}
 .animate{
 /*
 	-webkit-animation:spin2 .7s infinite linear;
@@ -39,7 +45,7 @@ td.action {
     -webkit-transform: scale(1.6);
   }
 }
-@keyframes  sk-bounce {
+@keyframes sk-bounce {
   0%, 100% {
     transform: scale(0);
     -webkit-transform: scale(1);
@@ -63,14 +69,14 @@ td.action {
 	line-height: 16px;
 }
 html{
-	height: 100%;
+/* 	height: 100%; */
 }
 body{
 	background-color: #cde8e3;
 	text-align: center;
 	padding: 0px;
-	margin: 0px;height: 100%
-
+	margin: 0px;
+	height: 100%
 }
 p{
 	margin: 10px 0px 10px 0px;
@@ -87,7 +93,7 @@ a{
 	text-decoration: none;
 	border-bottom: 1px dotted #467dc0;
 }
-a.imglink{
+a.imglink, table a{
 	border: none;
 }
 code{
@@ -144,12 +150,16 @@ div#page{
 	margin-bottom: 20px;
 	width: 100%;
 	max-width: 960px;
-	min-width: 480px;
+	min-width: 360px;
 }
 div#header{
-	height: 70px;
-	background-image: url(../images/header_bg.jpg);
+	height: 5.5rem;
+	background: url(../images/header_bg.jpg);
+	background-repeat: no-repeat;
+	background-color: #24292f;
+	background-size: 100%;
 }
+
 div#headertitle{
 	float: left;
 }
@@ -182,7 +192,7 @@ div#mainmenu ul{
 }
 div#mainmenu ul li{
 	display: inline;
-	padding-left: 20px;
+	padding-left: 1rem;
 	font-weight: bold;
 }
 div#mainmenu ul li a{
@@ -286,9 +296,7 @@ div.pager{
 }
 div.pagercontrols{
 	float: left;
-	width: 140px;
-	text-align: center;
-	margin-left: 270px;
+	width: 410px;
 	padding: 10px 0px 10px 0px;
 }
 div.pagerinfo{
@@ -323,15 +331,28 @@ div.pagerinfo{
 	background-color: #FFFFCC;
 }
 /* Results table classes */
-
-table{
-	width: 100%;
+/* https://stackoverflow.com/questions/55673873/sticky-table-header-with-two-header-rows */
+table {
+  height: 100%;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.8em;
 }
+
+thead {
+  position: sticky;
+  top: 0;
+  background: #eee;
+}
+
 table.results tr td{
 	border-bottom: 1px dotted black;
 	padding: 5px;
 }
-table.results tr td.emptyresults{
+table.results thead tr td {
+    font-weight: bold;
+}
+.emptyresults{
 	padding: 10px;
 	font-style: italic;
 	text-align: center;
@@ -380,10 +401,32 @@ width: 50%;
 .med-hide{
 	display: none;
 }
-@media (max-width: 640px){
-	div#content * {
-		padding: 1px;
-		font-size: 100%;
+.imglink img, .imglink {
+	width: 16px;
+	height: 16px;
+}
+.formleft{
+	float: left;
+}
+.formright{
+	float: right;
+}
+@media (max-width:464px){
+	.formleft, .formright{
+		float: left;
+		margin: 1rem;
+	}
+}
+@media (max-width:767px){
+	.dataTable-table td {
+		padding: 0 !important;
+	}
+	.dataTable-sorter {
+		width: 93% !important;
+		height: 3.21rem !important;
+	}
+	ul#sectionmenu{
+		padding-bottom: 20px;
 	}
 	.middle{
 		width: 100%;
@@ -391,11 +434,17 @@ width: 50%;
 		word-spacing: inherit;
 		word-break: keep-all;
 	}
-	.imglink img{
-		width:27px;
-		height:27px;
+	.imglink img, .imglink{
+		width: 27px;
+		height: 27px;
 	}
 	.sml-show {
 		display: block;
+	}
+	div#content .dataTable-pagination a{
+		padding: 6px 12px;
+	}
+	table.results tr td {
+		padding: .1rem;
 	}
 }

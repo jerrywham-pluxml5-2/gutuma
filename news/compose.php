@@ -7,9 +7,9 @@
  * @modifications Cyril Maguire
  *
  * Gutama plugin package
- * @version 1.6
- * @date	01/10/2013
- * @author	Cyril MAGUIRE
+ * @version 2.2.2
+ * @date	08/10/2026
+ * @author	Cyril MAGUIRE, Thomas ingles
 */
 include_once 'inc/gutuma.php';
 include_once 'inc/newsletter.php';
@@ -22,9 +22,9 @@ $_SESSION['gu_timer'] = $autosave;
 $query = '';#?msg=
 // Get all available lists
 $lists = gu_list::get_all();
-if (is_get_var('msg'))// Load newsletter from draft if one was specified
-	$newsletter = gu_newsletter::get((int)get_get_var('msg'));
-else{// Create empty newsletter, and fill from post vars if they exist
+// Load newsletter from draft if one was specified
+if (!(is_get_var('msg') && $newsletter = gu_newsletter::get((int)get_get_var('msg')))){
+	//else Create empty newsletter, and fill from post vars if they exist
 	$newsletter = new gu_newsletter();
 	if (is_post_var('msg_id')) 			$newsletter->set_id((int)get_post_var('msg_id'));
 	if (is_post_var('msg_recips')) 	$newsletter->set_recipients(get_post_var('msg_recips'));
@@ -216,7 +216,7 @@ document.getElementsByTagName('head')[0].appendChild(fileref);
 	});//fi tinyinit
 //Inspiré par RoxyFileBrowser (field_name, url, type, win)
 	function mediaMan(field_name, url, type, win) {//gutuma 2.2.0
-		var plxMedMan = '<?php echo plxUtils::getRacine() ?>core/admin/medias.php';//?integration=tinymce4
+		var plxMedMan = '<?php echo PLX_MORE ?>admin/medias.php';//?integration=tinymce4
 		if (plxMedMan.indexOf("?") < 0) {
 			plxMedMan += "?type=" + type;
 		}
@@ -305,7 +305,7 @@ gu_theme_list_control('gu_timer',
 	gu_timeoutHandle = false;
 	gu_is_edited = <?php echo (int)$edit_mode ?>;
 	gu_is_previewed = <?php echo (int)$preview_mode ?>;
-	gu_plx_domain = gu_now_domain = "<?php echo $_SESSION['domain'] ?>";
+	gu_plx_domain = gu_now_domain = "<?php echo $_SESSION['plxdomain']; // For AutoSave need same as PluXml ?>";
 	const l_gu_presend_check_alert = "<?php echo strip_tags(t('Please specify at least one recipient list!'));?>";
 	const l_gu_presend_check_confirm = "<?php echo strip_tags(t('Are you sure you want to send a message with an empty subject?'));?>";
 	const gu_ajax_url_auto_save_renew = "<?php echo PLX_MORE.'admin'.__GDS__ ?>auth.php?d=1";

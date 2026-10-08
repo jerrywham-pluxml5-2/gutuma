@@ -7,17 +7,18 @@
  * @modifications Cyril Maguire, thomas Ingles
  *
  * Gutama plugin package
- * @version 2.2.1
- * @date	06/06/2020
+ * @version 2.2.2
+ * @date	06/06/2023
  * @author	Cyril MAGUIRE, Thomas INGLES
 */
 include_once 'inc/gutuma.php';
 include_once 'inc/mailer.php';
 if ($_SESSION['profil'] != PROFIL_ADMIN){#here*
 	header('Location:compose.php');
-	exit();
+	exit;
 }
 $plxPlugin = $plxMotor->plxPlugins->getInstance('gutuma');
+$plxClefs = md5($plxMotor->aConf['clef'] . $plxMotor->aConf['clef']); # Auth cron.php?admin + md5(plxClef²)
 gu_init();
 $section = is_get_var('section') ? get_get_var('section') : 'general';
 $section_titles['general'] = t("General settings");

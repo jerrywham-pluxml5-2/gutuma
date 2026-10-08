@@ -160,7 +160,7 @@ include_once '_menu.php';?>
 			<div class="formfielddivider"></div>
 			<div class="formfieldcomment"><?php echo t('If server and port are left blank, Gutuma will attempt to auto-detect them');?>.<code></code></div>
 			<div class="formfieldlabel"><?php echo t('SMTP port');?></div>
-		  <div class="formfieldcontrols"><?php gu_theme_int_control('smtp_port', 5); ?>
+		  <div class="formfieldcontrols"><?php gu_theme_int_control('smtp_port', '5" min="0" max="65535'); ?>
 			<?php echo t('Encryption');?> <?php gu_theme_list_control('smtp_encryption', array(array('', t('None')), array('SSL', 'SSL'), array('TLS', 'TLS'))); ?></div>
 			<div class="formfielddivider"></div>
 			<div class="formfieldlabel"><?php echo t('SMTP server');?></div>
@@ -179,10 +179,10 @@ include_once '_menu.php';?>
 		<div class="formfield">
 			<div class="formfieldcomment"><?php echo t('Some SMTP servers have restrictions on the number of emails that can be sent per connection so you can limit the number of messages sent in a single batch. You can also set a time limit on batch sends to avoid timeouts');?>.</div>
 			<div class="formfieldlabel"><?php echo t('Max batch size');?></div>
-			<div class="formfieldcontrols"><?php gu_theme_int_control('batch_max_size'); ?> <?php echo t('emails');?></div>
+			<div class="formfieldcontrols"><?php gu_theme_int_control('batch_max_size', '10" min="1'); ?> <?php echo t('emails');?></div>
 			<div class="formfielddivider"></div>
 			<div class="formfieldlabel"><?php echo t('Batch time limit');?></div>
-			<div class="formfieldcontrols"><?php gu_theme_int_control('batch_time_limit'); ?> <?php echo t('seconds');?></div>
+			<div class="formfieldcontrols"><?php gu_theme_int_control('batch_time_limit', '10" min="7'); ?> <?php echo t('seconds');?></div>
 			<div class="formfielddivider"></div>
 			<div class="formfieldcomment"><a href="newsletters.php?box=outbox"><img width="16px" src="themes/<?php echo gu_config::get('theme_name'); ?>/images/icon_send_auto.png" /></a>&nbsp;<?php echo t('NOTE: Theses parameters modify numbers of send mails and countdown progress bar of #AutoBatch tools');?>.</div>
 		</div>
@@ -239,4 +239,9 @@ include_once '_menu.php';?>
 <?php } ?>
 	</div>
 </form>
+<div class="formfield">
+	<div class="formfieldcomment"><a href="<?php echo PLX_MORE; ?>admin/parametres_avances.php"><?php echo L_CONFIG_ADVANCED_ADMIN_KEY ?></a> (PluXml)</div>
+	<div class="formfieldlabel">Cron url:</div>
+	<div class="formfieldcontrols"><a href="cron.php?admin<?php echo $plxClefs; ?>">cron.php?admin<?php echo $plxClefs; ?></a></div>
+</div>
 <p>&nbsp;</p>

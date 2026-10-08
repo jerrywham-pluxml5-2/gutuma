@@ -8,7 +8,7 @@
  *
  * Gutama plugin package
  * @version 2.2.2
- * @date	07/04/2023
+ * @date	14/04/2023
  * @author	Cyril MAGUIRE, Thomas INGLES
 */
 #error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
@@ -170,7 +170,7 @@ class gu_mailer
 		}
 		catch (Swift_ConnectionException $e) {
 			gu_debug($e->getMessage());
-			return gu_error('<br />'.t('Unable to send message due to connection error'));
+			return -1;
 		}
 
 		if (gu_is_debugging()) {
@@ -192,8 +192,8 @@ class gu_mailer
 	 */
 	private function create_message(gu_newsletter $newsletter, $address, $list)
 	{
-		$list_name = empty($list[2])?$list[0]:$list[2];
-		$private = !empty($list[1]);# A vérifier
+		$list_name = empty($list[2])?$list[0]:$list[2];# friend or name
+		$private = !empty($list[1]);# bool
 		if (!gu_config::get('msg_prefix_subject'))
 			$subject = $newsletter->get_subject();
 		elseif ($list_name != '')
@@ -209,12 +209,10 @@ class gu_mailer
 			$classicSys = true;
 			#adhesion is loaded in newsletter send_batch()
 			if ($newsletter->adhesion) {#is adherent list modif to adhesion?q=md5(mel+id)
-				if ($list_name == $newsletter->adhesion->listName or $list_name == $newsletter->adhesion->listFriend) {# 'adherents' && gu_config::get('msg_append_signature')
-					if(empty($newsletter->adhesion->gu_mail_id))
-						$newsletter->adhesion->loadGutumaMailId();
-					if(!empty($newsletter->adhesion->gu_mail_id[$address])){# A vérifier : be carefully with blacklist (adhesion) #tep
-						$text .= $newsletter->adhesion->getGutumaCnil($address,true);
-						$html .= $newsletter->adhesion->getGutumaCnil($address);
+				if ($list[0] == $newsletter->adhesion->listName) {# 'adherents'
+					if(!empty($list[3])){# adherent ID : be carefully with blacklist (adhesion) #tep
+						$text .= $newsletter->adhesion->cnil($list[3], $address, true);
+						$html .= $newsletter->adhesion->cnil($list[3], $address);
 						$classicSys = false;
 					}
 				}

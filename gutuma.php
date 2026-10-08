@@ -1,24 +1,31 @@
 <?php if (!defined('PLX_ROOT')) exit;
 /**
  * Classe gutuma
- * @version 2.2.0 * @date	16/01/2019 * @author	Thomas Ingles
+ * @version 2.2.2 * @date	08/10/2026 * @author	Thomas Ingles
  **/
 class gutuma extends plxPlugin {
 	public $code;
 	public $release;
 	public $listsDir;
 	public function __construct($default_lang){
-		$this->listsDir = PLX_ROOT.'data/'.__CLASS__;# Définition de l'emplacement des listes de diffusion des newsletters : next PLX_ROOT.PLX_CONFIG_PATH.'plugins/'.__CLASS__;#tmp (uploads) & save .eml
+		$this->listsDir = PLX_ROOT.PLX_CONFIG_PATH.__CLASS__;# Définition de l'emplacement des listes de diffusion des newsletters : next PLX_ROOT.PLX_CONFIG_PATH.__CLASS__;#tmp (uploads) & save .eml
 		parent::__construct($default_lang);# appel du constructeur de la classe plxPlugin (obligatoire)
 		$this->setAdminProfil(PROFIL_ADMIN, PROFIL_MANAGER);# Autorisation d'accès à l'administration du plugin
 		$this->setAdminMenu($this->getLang('L_GUTUMA_MENU_NAME'), 0, $this->getLang('L_GUTUMA_TITLE_MENU'));#Position du Menu : remplacer 0 par tout autre chiffre
 		if(defined('PLX_ADMIN')) {#Déclaration des hooks pour la zone d'administration
+			$this->addHook('AdminAuth', 'AdminAuth');
 			$this->addHook('AdminProfilPrepend', 'AdminProfilPrepend');
 			$this->addHook('AdminTopBottom', 'AdminTopBottom');
 			$this->addHook('plxAdminEditUsersXml', 'plxAdminEditUsersXml');
 			$this->addHook('AdminMediasFoot', 'AdminMediasFoot');
-		}elseif($this->getParam('subscribe_is_good'))
+		}elseif($this->getParam('subscribe_is_good')) {
 			$this->addHook('IndexBegin', 'goodGets');
+		}
+	}
+	public function AdminAuth(){//Appelle la page de déconnexion qui qui ferme et nettoie le cookie de session de gutuma
+		//On évite la redir vers auth si aucune session en cours. 1 session séparé comme PluXml 5.10 ;)
+		$getout = dirname($_SERVER['PHP_SELF'], 3) . '/plugins/gutuma/news/login.php?action=plxlogout';
+		echo "<script>const reponse=fetch(`$getout`,{redirect:'manual'});</script>\n";
 	}
 	public function AdminMediasFoot(){//changement des onclic target blank en lien retour de tiny du gestionnaire des médias (popup) (Wymeditor base)
 ?>
@@ -153,8 +160,10 @@ if (window.parent.tinyMCE && window.parent.location.pathname.search('news/compos
 				$plxPage = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 				$gu_sub_page = strstr($plxPage,$gu_subscribe_url);
 				if($gu_sub_page){//IndexBegin restore GET's
+					// path_url not replaced by racine_path plx 5.10rc4 (emulate)
+					$gu_plx_path_url = isset($plxMotor->racine_path) ? str_replace(ltrim($plxMotor->racine_path, '\/'), '', ltrim($_SERVER['REQUEST_URI'], '\/')) : $plxMotor->path_url;
 					/*#://my.site/gerer-mes-infolettres.html?backlink=no&help=no&list=##########&addr=adr@e.ss&action=subscribe&k=########... */
-					$gu_sub_p = parse_url($plxMotor->path_url);
+					$gu_sub_p = parse_url($gu_plx_path_url);
 					$gu_sub_q = parse_str($gu_sub_p['query'],$_GET);
 				}
 			}
@@ -196,25 +205,58 @@ if (window.parent.tinyMCE && window.parent.location.pathname.search('news/compos
 		return FALSE;
 	}
 	public function setGutumaConfig($gu_config){//Méthode qui enregistre les MAJ ds gutuma/inc/config.php
-		$this->v();#populate $this->release (& code)
-		$GU_config = "\$gu_config_version = $this->release;\n";
-		foreach($gu_config as $key => $value){
-			$GU_config .="\$gu_config['$key'] = ".($value===false ? "FALSE" : ($value === true ? "TRUE" : "'$value'")).";\n";
+		$filename = $this->listsDir.'/inc/config.php';
+		if(is_writable($filename)){
+			$this->v();#populate $this->release (& code)
+			$GU_config = "\$gu_config_version = $this->release;\n";
+			foreach($gu_config as $key => $value){
+				$GU_config .="\$gu_config['$key'] = ".($value===false ? "FALSE" : ($value === true ? "TRUE" : "'$value'")).";\n";
+			}
+//			Version encodée
+			file_put_contents($filename,"<?php /*\n".base64_encode($GU_config)."\n*/  ?>");
+//			Version décodée
+/*			file_put_contents($filename,"<?php \n".$GU_config."\n?>");*/
 		}
-//		Version encodée
-		file_put_contents($this->listsDir.'/inc/config.php',"<?php /*\n".base64_encode($GU_config)."\n*/  ?>");
-//		Version décodée
-/*		file_put_contents($this->listsDir.'/inc/config.php',"<?php \n".$GU_config."\n?>");*/
+		elseif(!isset($this->conferr)){#one time
+			$this->conferr = true;
+			plxMsg::Error('<b>'.__CLASS__.'</b>' . ' :<br />' . sprintf($this->getLang('L_ERR_READONLY'), '<b>'.$filename.'</b>'));
+		}
+
 	}
 	public function onUpdate(){//si fichier update présent a la racine du plugin
+		if( ! class_exists('plxMsg')) {
+			include_once PLX_CORE.'lib/class.plx.msg.php';
+		}
+		$listsDirOld = PLX_ROOT.'data/'.__CLASS__;# Ancienne Définition de l'emplacement des listes de diffusion des newsletters
+		# next PLX_ROOT.PLX_CONFIG_PATH.__CLASS__;#tmp (uploads) & save .eml
+		if(is_dir($this->listsDir) or (is_dir($listsDirOld) && rename($listsDirOld, $this->listsDir)))
+			plxMsg::Info(__CLASS__ . ' ' . $this->getLang('L_UPDATED'));
+		else
+			plxMsg::Error(__CLASS__ . ' ' . $this->getLang('L_UPDATE_ERROR') . '<br>"' . $listsDirOld . '"-&gt;"' . $this->listsDir . '"');
+		//gutumaindex.html ↓ gutuma/index.html (fix)
+		@unlink($this->listsDir . 'index.html');
+		@touch($this->listsDir . '/index.html');
 		//return array('cssCache' => true);#mise a jour du cache des css
 	}
 	public function AdminTopBottom(){//Méthode qui affiche un message s'il y a un message à afficher * @return	stdio * @author	Stephane F, Cyril MAGUIRE
+		$filename = $this->listsDir.'/inc/config.php';
 		echo '<?php '; ?>
-		if(empty($plxAdmin->aUsers["001"]["email"])) {
-			echo '<p class="warning">Plugin <?php echo $this->getLang('L_ADMIN_MENU_NAME') ?><br /><?php echo $this->getLang('L_ERR_EMAIL') ?></p>';
-			plxMsg::Display();
+		$msgShow = false;
+		if(empty($plxAdmin->aUsers['001']['email'])) {
+			echo '<p class="warning">Plugin <?php $this->lang('L_GUTUMA_MENU_NAME') ?><br /><?php $this->lang('L_ERR_EMAIL') ?></p>';
+			$msgShow = true;
 		}
+		$file = PLX_PLUGINS.'<?=__CLASS__?>/lang/'.$plxAdmin->aConf['default_lang'].'.php';
+		if(!file_exists($file)) {
+			echo '<p class="warning">Plugin <?php $this->lang('L_GUTUMA_MENU_NAME') ?><br />'.sprintf('<?php $this->lang('L_LANG_UNAVAILABLE')?>', $file).'</p>';
+			$msgShow = true;
+		}
+		$file = '<?=$filename?>';
+		if(file_exists($file) && !is_writable($file)) {
+			echo '<p class="warning">Plugin <?php $this->lang('L_GUTUMA_MENU_NAME') ?><br />'.sprintf('<?php $this->lang('L_ERR_READONLY')?>', '<b>'.$file.'</b>').'</p>';
+			$msgShow = true;
+		}
+		if($msgShow) plxMsg::Display();
 ?><?php
 	}
 	public function AdminProfilPrepend(){//Méthode pour detecter si connecté (ajax test ds compose) * @return	stdio @author	Thomas Ingles

@@ -2,16 +2,17 @@
 /**
  * Fichier d'aide pour gutuma
  *
- * @version 2.2.1
+ * @version 2.2.2
  * @date	29/10/2012 * @author	Cyril MAGUIRE
- * @date	2017 ~ 16/07/2020 * @author	Thomas Ingles
+ * @date	2017 ~ 02/10/2026 * @author	Thomas Ingles
  **/
 if(!defined('PLX_ROOT')) exit;
-$pluginName = end($_GET);//multiple pluxml
-include(PLX_PLUGINS.$pluginName.'/tips.inc.php');#inclure les pourboires
+$pluginName = basename(dirname(__DIR__, 1));//multiple pluxml
+include(__DIR__.'/../tips.inc.php');#inclure les pourboires+js
+$transportUrl = '../../plugins/gutuma/news/settings.php?section=transport'; // si déconnecté, retourne à plugin.php?p=gutuma
 ?>
 <p class="in-action-bar">Aide du plugin Gutuma, le gestionnaire de Newsletters</p>
-<p class="success" style="color:darkgreen;">Réglages du <a href="../../plugins/gutuma/news/settings.php?section=transport"><i>Transport</i></a> pour <b>Utiliser SMTP</b> qui ont fonctionnés pour l'hébergeur IONOS sont&nbsp;:<br />
+<p class="success" style="color:darkgreen;">Réglages du <a href="<?=$transportUrl?>"><i>Transport</i></a> pour <b>Utiliser SMTP</b> qui ont fonctionnés pour l'hébergeur IONOS sont&nbsp;:<br />
 Mot de passe et adresse mél pour se connecter a leur webmail comme Mot de passe et Pseudonyme SMTP<br />Port SMTP&nbsp;: <b>587</b><br />Mode de cryptage&nbsp;: <b>TLS</b><br />Serveur SMTP&nbsp;: <b>smtp.ionos.fr</b>.<br />
 Enregistrer et tester, ça devrai rouler...<br /><i>NB: "localhost" est parfois utilisé comme adresse de serveur SMTP.</i></p>
 <p class="warning" style="color:purple;">Astuce : pour facilité la compréhention de vos utilisateurs. Il est possible de changer l'infobulle et le titre du menu de l'admin.<br />

@@ -15,7 +15,7 @@ include_once 'inc/gutuma.php';
 include_once 'inc/newsletter.php';
 if ($_SESSION['profil'] != PROFIL_ADMIN){
 	header('Location:compose.php');
-	exit();
+	exit;
 }
 gu_init();
 // Calculate some stats

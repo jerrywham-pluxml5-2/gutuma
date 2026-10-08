@@ -10,7 +10,7 @@
  * @authors	Cyril MAGUIRE, Thomas Ingles
  */
 Gutuma Newsletter Management[::->]Gestion des Infolettres
-Sorry - Gutuma requires at least PHP5. Please contact your hosting provider and ask them to upgrade.[::->]Désolé - Gutuma nécessite au moins PHP5. Merci de contacter votre hébergeur afin de lui demander une mise à niveau.
+Sorry - Gutuma requires at least PHP7.1. Please contact your hosting provider and ask them to upgrade.[::->]Désolé - Gutuma nécessite au moins PHP7.1. Merci de contacter votre hébergeur afin de lui demander une mise à niveau.
 Welcome[::->]Bienvenue
 Logout[::->]Déconnexion
 Home[::->]Informations
@@ -63,16 +63,16 @@ Uploaded file is not a csv file[::->]Le fichier téléchargé n'est pas un fichi
 Manage lists[::->]Gérer les listes
 Edit[::->]Éditer
 Tools[::->]Outils
-Add address on all list[::->]Ajouter cette adresse de toutes les listes
+Add address on all list[::->]Ajouter cette adresse à toutes les listes
 Add on all[::->]Ajouter partout
-Add address on all checked list[::->]Ajouter cette adresse de toutes les listes cochées
+Add address on all checked list[::->]Ajouter cette adresse à toutes les listes cochées
 Add on checked[::->]Ajouter aux cochées
 Delete address on all list[::->]Supprimer cette adresse de toutes les listes
 Clear on all[::->]Effacer partout
 Delete address on all checked list[::->]Supprimer cette adresse de toutes les listes cochées
 Clear on checked[::->]Effacer aux cochées
-Check one or more list before![::->]Cocher une ou plusieurs liste avant!
-Enter a valid email address to "+(add?"add":"delete")+" it on all"+(lists?" checked":"")+" lists[::->]Saisir une adresse courriel valide pour la "+(add?"rajouter":"supprimer")+" de toutes les listes"+(lists?" cochées":"")+"?
+Check one or more line before![::->]Cocher une ou plusieurs lignes avant!
+Enter a valid email address to "+(add?"add":"delete")+" it on all"+(lists?" checked":"")+" lists[::->]Saisir une adresse courriel valide pour la "+(add?"rajouter à":"supprimer de")+" toutes les listes"+(lists?" cochées":"")+"?
 Are you sure to "+(add?"add":"remove")+" the following address on all"+(lists?" checked":"")+" lists?[::->]Êtes vous sûr de vouloir "+(add?"ajouter":"supprimer")+" le courriel suivant de toutes les listes"+(lists?" cochées":"")+"?
 is invalid![::->]est invalide!
 Retry?[::->]Retenter?
@@ -106,7 +106,6 @@ Subscription[::->]Abonnement
 Unsubscription[::->]Désabonnement
 the first step is successful![::->]la première étape est réussie!
 Invalid newsletter[::->]Infolettre non valide
-Newsletter deleted[::->]Infolettre supprimée
 Address <b><i>%</i></b> already in the % list of <b><i>%</i></b>&nbsp;[::->]L'adresse <b><i>[%%]</i></b> est déjà dans la liste [%%] de <b><i>[%%]</i></b>&nbsp;
 Addresses cannot be more than % characters[::->]Une adresse ne peut pas avoir plus de [%%] caractères
 Lists can have a maximum of % addresses in demo mode[::->]Les listes peuvent contenir un maximum de [%%] adresses en mode de démonstration
@@ -150,7 +149,6 @@ Newsletter saved as draft[::->]L'infolettre a été enregistrée comme un projet
 Please specify at least one recipient list![::->]Veuillez spécifier au moins une liste de destinataires!
 Are you sure you want to send a message with an empty subject?[::->]Êtes-vous sûr de vouloir envoyer ce message sans spécifier le sujet de l'envoi?
 Your message has not been sent or saved, and will be lost if you leave this page.[::->]Votre message n'a été ni envoyé ni sauvegardé, et il sera définitivement perdu si vous quittez cette page.
-Preview[::->]Aperçu de
 Compose[::->]Écrire
 newsletter[::->]une infolettre
 Drafts[::->]Projets
@@ -187,6 +185,7 @@ Clear[::->]Effacer
 Address[::->]Adresse
 No addresses[::->]Aucune adresse
 Showing <span id="%_start">%</span> to <span id="%_end">%</span> of <span id="%_total">%</span>[::->]Adresses <span id="[%%]_start">[%%]</span> à <span id="[%%]_end">[%%]</span> sur <span id="[%%]_total">[%%]</span>
+Page[::->]Page
 More[::->]Plus
 Less[::->]Moins
 Subscribe to my newsletter[::->]S'abonner à l'infolettre
@@ -224,19 +223,38 @@ If you need to customize the gadget, you can copy and paste the actual HTML inst
 Newsletter[::->]Infolettre
 Edit and send[::->]Modifier et envoyer
 Send to remaining recipients[::->]Envoyer aux destinataires restants
-Restore to drafts[::->]Replacer dans les projets
+Send to all recipients[::->]Envoyer aux destinataires
+Go to drafts[::->]Replacer dans les Projets
+Go to outbox[::->]Placer dans les Envois
+Move to[::->]Déplacer vers
+Newsletter moved[::->]Infolettre déplacée
+Newsletters moved[::->]Infolettres déplacées
+Newsletter deleted[::->]Infolettre supprimée
+Newsletters deleted[::->]Infolettres supprimées
 Autobatch with selected newsletters[::->]Batch Automatique avec les infolettres sélectionnées
 Are you sure you want to delete this newsletter?[::->]Êtes vous sûr de vouloir supprimer cette infolettre?
+Are you sure you want to delete selected newsletter?[::->]Êtes vous sûr de vouloir supprimer l’infolettre sélectionnée?
 Are you sure you want to delete selected newsletters?[::->]Êtes vous sûr de vouloir supprimer les infolettres sélectionnées?
+Are you sure you want to move this newsletter?[::->]Êtes vous sûr de vouloir déplacer cette infolettre?
+Are you sure you want to move selected newsletter?[::->]Êtes vous sûr de vouloir déplacer l’infolettre sélectionnée?
+Are you sure you want to move selected newsletters?[::->]Êtes vous sûr de vouloir déplacer les infolettres sélectionnées?
 These are the newsletters that can be modified before they are sent.[::->]Voici les infolettres qui peuvent être modifiés avant leurs envois.
 These are the newsletters which have been sent but have not yet been delivered to all recipients.[::->]Voici les infolettres qui ont été envoyées mais non délivrées à tous les destinataires.
 Recipients[::->]Destinataires
 No newsletters[::->]Aucune infolettre
-Progress[::->]Progression
+Progress[::->]Progrés
+Status[::->]État
+Draft[::->]Projet
+Sended[::->]Envoyé
 Last send[::->]Dernier envoi
 Never[::->]Aucun
 Modified on[::->]Modifiée le
 Created on[::->]Créée le
+Type to search[::->]Écrire pour chercher
+{select} per-page[::->]{select} par page
+No Results[::->]Aucun résultat
+Showing {start} to {end} of {rows} letters[::->]Affichage de {start} à {end} sur {rows} lettres
+
 //************************************************************************
 //			SETTINGS
 //************************************************************************
@@ -371,7 +389,6 @@ No method of mail transportation has been configured[::->]Aucune méthode de tra
 Created SMTP connection (%:% Enc:% User:% Pass:%)[::->]Connexion SMTP créée ([%%]:[%%] Enc:[%%] User:[%%] Pass:[%%])
 Unable to initialize mailer. Check transport settings.[::->]Impossible d'initialiser la messagerie. Vérifiez les réglages de transport.
 Unable to send message in demo mode[::->]Impossible d'envoyer un message en mode de démonstration
-Unable to send message due to connection error[::->]Impossible d'envoyer un message à cause d'une erreur de connexion
 //************************************************************************
 //			COMPOSE
 //************************************************************************
@@ -398,6 +415,8 @@ Unrecognized list name <i>%</i>[::->]Liste de noms <i>[%%]</i> inconnue
 Deleting newsletter files (%)[::->]Suppression du fichier de l'infolettre ([%%])
 Unable to delete message attachment[::->]Impossible de supprimer le message joint
 Some newsletter files could not be deleted[::->]Certains fichiers d'infolettre ne peuvent pas être supprimés
+Folder unexist[::->]Dossier inexistant
+Message file unexist[::->]Fichier de message inexistant
 Unable to open message file[::->]Impossible d'ouvrir le fichier de message
 Unable to read newsletter recipient file[::->]Impossible de lire le fichier destinataire de l'infolettre
 Unable to open newsletter folder[::->]Impossible d'ouvrir le dossier des infolettres
@@ -434,7 +453,7 @@ unsubscribed  from[::->]désabonné(e) des
 waiting a process[::->]attente d'une démarche
 process validated[::->]démarche validée
 This is an automated message[::->]Ceci est un message automatique
-Use this link (or copy in your browser address bar) before %, after this date, you need a request new valid link.[::->]Utiliser ce lien avant le [%%] (ou copier le dans la barre d'adresse de votre navigateur), après cette date, vous devrez demander un nouveau lien valide..
+Use this link (or copy in your browser address bar) before %, after this date, you need a request new valid link.[::->]Utiliser ce lien avant le [%%] (ou copier le dans la barre d'adresse de votre navigateur), après cette date, vous devrez demander un nouveau lien valide.
  to secure the % and certify that you are the initiator of this process for the following lists:[::->] pour sécuriser votre "[%%]" et certifier que vous êtes bien a l'origine de cette démarche pour les lettres d'informations suivantes :
  to secure the % and certify that you are the initiator of this process for the following list:[::->] pour sécuriser votre "[%%]" en certifiant que vous êtes bien a l'origine de cette démarche pour la lettre d'informations suivante :
  to confirm that you have been % the following lists:[::->] pour confirmer que vous vous êtes [%%] lettres d'informations suivantes :
@@ -492,3 +511,5 @@ Please enter your email address[::->]Merci de renseigner votre adresse courriel
 An error occured whilst requesting subscription[::->]Une erreur est survenue durant la demande d'inscription
 Requesting...[::->]Demande...
 Back Home[::->]Retour à l'accueil
+Preparations are underway—please be patient...[::->]Les préparatifs sont en cours — merci de patienter...
+
