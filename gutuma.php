@@ -1,7 +1,7 @@
 <?php if (!defined('PLX_ROOT')) exit;
 /**
  * Classe gutuma
- * @version 2.2.2 * @date	02/12/2022 * @author	Thomas Ingles
+ * @version 2.2.2 * @date	08/10/2026 * @author	Thomas Ingles
  **/
 class gutuma extends plxPlugin {
 	public $code;
@@ -13,6 +13,7 @@ class gutuma extends plxPlugin {
 		$this->setAdminProfil(PROFIL_ADMIN, PROFIL_MANAGER);# Autorisation d'accès à l'administration du plugin
 		$this->setAdminMenu($this->getLang('L_GUTUMA_MENU_NAME'), 0, $this->getLang('L_GUTUMA_TITLE_MENU'));#Position du Menu : remplacer 0 par tout autre chiffre
 		if(defined('PLX_ADMIN')) {#Déclaration des hooks pour la zone d'administration
+			$this->addHook('AdminAuth', 'AdminAuth');
 			$this->addHook('AdminProfilPrepend', 'AdminProfilPrepend');
 			$this->addHook('AdminTopBottom', 'AdminTopBottom');
 			$this->addHook('plxAdminEditUsersXml', 'plxAdminEditUsersXml');
@@ -20,6 +21,11 @@ class gutuma extends plxPlugin {
 		}elseif($this->getParam('subscribe_is_good')) {
 			$this->addHook('IndexBegin', 'goodGets');
 		}
+	}
+	public function AdminAuth(){//Appelle la page de déconnexion qui qui ferme et nettoie le cookie de session de gutuma
+		//On évite la redir vers auth si aucune session en cours. 1 session séparé comme PluXml 5.10 ;)
+		$getout = dirname($_SERVER['PHP_SELF'], 3) . '/plugins/gutuma/news/login.php?action=plxlogout';
+		echo "<script>const reponse=fetch(`$getout`,{redirect:'manual'});</script>\n";
 	}
 	public function AdminMediasFoot(){//changement des onclic target blank en lien retour de tiny du gestionnaire des médias (popup) (Wymeditor base)
 ?>
@@ -154,8 +160,10 @@ if (window.parent.tinyMCE && window.parent.location.pathname.search('news/compos
 				$plxPage = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 				$gu_sub_page = strstr($plxPage,$gu_subscribe_url);
 				if($gu_sub_page){//IndexBegin restore GET's
+					// path_url not replaced by racine_path plx 5.10rc4 (emulate)
+					$gu_plx_path_url = isset($plxMotor->racine_path) ? str_replace(ltrim($plxMotor->racine_path, '\/'), '', ltrim($_SERVER['REQUEST_URI'], '\/')) : $plxMotor->path_url;
 					/*#://my.site/gerer-mes-infolettres.html?backlink=no&help=no&list=##########&addr=adr@e.ss&action=subscribe&k=########... */
-					$gu_sub_p = parse_url($plxMotor->path_url);
+					$gu_sub_p = parse_url($gu_plx_path_url);
 					$gu_sub_q = parse_str($gu_sub_p['query'],$_GET);
 				}
 			}

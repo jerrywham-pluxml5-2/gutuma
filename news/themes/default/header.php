@@ -8,7 +8,7 @@
  *
  * Gutama plugin package
  * @version 2.2.2
- * @date	01/06/2023
+ * @date	08/10/2026
  * @author	Cyril MAGUIRE, Thomas Ingles
 */
 $plxthemev = explode('.', PLX_VERSION);#str_replace('.','',PLX_VERSION);
@@ -53,7 +53,7 @@ if(isset($_GET["del"]) AND $_GET["del"]=="install") {
 <?php if(version_compare(@PLX_VERSION,'5.7','>')){ $pathfont = (version_compare(@PLX_VERSION,'5.9','==')? 'fontello/css': 'fonts'); ?>
 	<link rel="stylesheet" type="text/css" href="<?php echo PLX_MORE ?>admin/theme/<?=$pathfont?>/fontello.css?v=<?php echo PLX_VERSION ?>" media="screen" />
 <?php } ?>
-	<link rel="icon" href="<?php echo PLX_MORE ?>admin/theme/images/favicon.png" />
+	<link rel="icon" href="<?php echo PLX_PLUGINS ?>gutuma/news/themes/gutuma/favicon.png" />
 <?php
 	if(!empty ($custom_admincss_file = PLX_GROOT.$plxAdmin->aConf['custom_admincss_file']) && is_file($custom_admincss_file)) echo '	<link rel="stylesheet" type="text/css" href="'.$custom_admincss_file.'?v='.filemtime($custom_admincss_file).'" media="screen" />'.PHP_EOL;
 	if(gu_session_is_valid()){#only valid user

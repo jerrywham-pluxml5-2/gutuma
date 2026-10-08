@@ -7,9 +7,9 @@
  * @modifications Cyril Maguire
  *
  * Gutama plugin package
- * @version 1.6
- * @date	01/10/2013
- * @author	Cyril MAGUIRE
+ * @version 2.2.2
+ * @date	08/10/2026
+ * @author	Cyril MAGUIRE, Thomas ingles
 */
 include_once 'inc/gutuma.php';
 include_once 'inc/newsletter.php';
@@ -305,7 +305,7 @@ gu_theme_list_control('gu_timer',
 	gu_timeoutHandle = false;
 	gu_is_edited = <?php echo (int)$edit_mode ?>;
 	gu_is_previewed = <?php echo (int)$preview_mode ?>;
-	gu_plx_domain = gu_now_domain = "<?php echo $_SESSION['domain'] ?>";
+	gu_plx_domain = gu_now_domain = "<?php echo $_SESSION['plxdomain']; // For AutoSave need same as PluXml ?>";
 	const l_gu_presend_check_alert = "<?php echo strip_tags(t('Please specify at least one recipient list!'));?>";
 	const l_gu_presend_check_confirm = "<?php echo strip_tags(t('Are you sure you want to send a message with an empty subject?'));?>";
 	const gu_ajax_url_auto_save_renew = "<?php echo PLX_MORE.'admin'.__GDS__ ?>auth.php?d=1";

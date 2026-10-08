@@ -7,9 +7,9 @@
  * @modifications Cyril Maguire
  *
  * Gutama plugin package
- * @version 1.6
- * @date	01/10/2013
- * @author	Cyril MAGUIRE
+ * @version 2.2.2
+ * @date	08/10/2026
+ * @author	Cyril MAGUIRE, Thomas Ingles
 */
 include 'inc/gutuma.php';
 gu_init(FALSE);
@@ -57,6 +57,10 @@ elseif (is_get_var('action') && get_get_var('action') == 'login'){
 }
 elseif (is_get_var('action') && get_get_var('action') == 'logout'){
 	gu_session_set_valid(FALSE);// Invalidate session flag
+}
+elseif (is_get_var('action') && get_get_var('action') == 'plxlogout'){
+	gu_session_set_valid(FALSE);// Invalidate session flag
+	exit(0);
 }else{//No in Origin, go 2 pluxml Login
 	gu_session_set_valid(FALSE);// Invalidate session flag
 	$redirect = is_get_var('ref') ? '&ref='.get_get_var('ref') : '';

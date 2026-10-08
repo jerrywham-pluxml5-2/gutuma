@@ -7,7 +7,7 @@
  *
  * Gutama plugin package
  * @version 2.2.2
- * @date	26/06/2023
+ * @date	08/10/2026
  * @author	Thomas INGLES
  */
 #langs{display:none;}/* hide plxMyMultilinge flags */
@@ -167,6 +167,7 @@ hr{
 #sectionmenu.plx57,
 #sectionmenu.plx58,
 #sectionmenu.plx59,
+#sectionmenu.plx510,
 #sectionmenu.plx60{
 	line-height: 2.2 ;
 }
@@ -233,6 +234,7 @@ div.menubar.in-action-bar{
 
 .in-action-bar.plx58,
 .in-action-bar.plx59,
+.in-action-bar.plx510,
 .in-action-bar.plx60{
 	margin-top: 8rem;
 	z-index: 99;/* au dessus de .mce-fullscreen */

@@ -6,9 +6,9 @@
  * @file Session functions
  */
  /* Gutama plugin package
- * @version 1.6
- * @date	01/10/2013
- * @author	Cyril MAGUIRE
+ * @version 2.2.2
+ * @date	08/10/2026
+ * @author	Cyril MAGUIRE, Thomas Ingles
 */
 define('GU_SESSION_SITES', 'valid_sites');
 // In order to maintain separate authentication states for different Gutuma
@@ -116,6 +116,7 @@ function gu_session_set_valid($valid){
 		$_SESSION[GU_SESSION_SITES][GU_SESSION_SITE_KEY] = TRUE;
 	} else {// Clear the username/password cookies
 		unset($_SESSION[GU_SESSION_SITES][GU_SESSION_SITE_KEY]);
+		setcookie(session_name(), '', 1);
 		setcookie('username', '', 1);
 		setcookie('password', '', 1);
 	}
