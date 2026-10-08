@@ -15,8 +15,8 @@ include_once 'misc.php';
 include_once 'session.php';
 include_once ('_pluxml.php');#Inclusion des librairies de plxuml + redir (si besoin)
 define('GU_CONFIG_LANG', isset($slang)?$slang:$glang);//For subscribe.php url query ?lng= (slang)
-if (version_compare(phpversion(), '5', '<'))#Check for PHP5+
-	die(t('Sorry - Gutuma requires at least PHP5. Please contact your hosting provider and ask them to upgrade.'));
+if (version_compare(phpversion(), '7.1', '<'))#Check for PHP7.1+
+	die(t('Sorry - Gutuma requires at least PHP7.1. Please contact your hosting provider and ask them to upgrade.'));
 include_once 'setting.php';
 include_once 'list.php';
 include_once 'theme.php';
@@ -43,7 +43,7 @@ if(!defined('RPATH')){//semble inutilisé
 		define('RPATH',str_replace('inc'.DIRECTORY_SEPARATOR.'gutuma.php','',__FILE__));
 	}else{
 		header('Location: '.absolute_url('install.php'));
-		exit();
+		exit;
 	}
 }
 #Demo mode restrictions

@@ -10,7 +10,7 @@
  * @authors	Cyril MAGUIRE, Thomas Ingles
  */
 Gutuma Newsletter Management[::->]Gestion des Infolettres
-Sorry - Gutuma requires at least PHP5. Please contact your hosting provider and ask them to upgrade.[::->]Désolé - Gutuma nécessite au moins PHP5. Merci de contacter votre hébergeur afin de lui demander une mise à niveau.
+Sorry - Gutuma requires at least PHP7.1. Please contact your hosting provider and ask them to upgrade.[::->]Désolé - Gutuma nécessite au moins PHP7.1. Merci de contacter votre hébergeur afin de lui demander une mise à niveau.
 Welcome[::->]Bienvenue
 Logout[::->]Déconnexion
 Home[::->]Informations

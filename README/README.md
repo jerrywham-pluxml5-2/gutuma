@@ -22,7 +22,7 @@ Features:
   try another method if one fails
 + Wizard for creating subscribe gadgets for your website, including
   AJAX gadgets
-	
+
 Requirements:
 
-+ As of version 2x, Gutuma requires PHP5+
++ As of version 2x, Gutuma requires PHP7.1+

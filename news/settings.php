@@ -15,7 +15,7 @@ include_once 'inc/gutuma.php';
 include_once 'inc/mailer.php';
 if ($_SESSION['profil'] != PROFIL_ADMIN){#here*
 	header('Location:compose.php');
-	exit();
+	exit;
 }
 $plxPlugin = $plxMotor->plxPlugins->getInstance('gutuma');
 $plxClefs = md5($plxMotor->aConf['clef'] . $plxMotor->aConf['clef']); # Auth cron.php?admin + md5(plxClef²)

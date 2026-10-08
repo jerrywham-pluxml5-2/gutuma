@@ -14,7 +14,7 @@
 include 'inc/gutuma.php';
 if ($_SESSION['profil'] != PROFIL_ADMIN){
 	header('Location:compose.php');
-	exit();
+	exit;
 }
 gu_init();
 gu_theme_start();
